@@ -1,0 +1,510 @@
+/* =========================================
+   POPULAR DESTINATIONS
+========================================= */
+
+.popular-destinations {
+  width: 100%;
+  padding: 35px 6%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.popular-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 50px;
+  margin-bottom: 40px;
+}
+
+.popular-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #43bcc9;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.popular-header h2 {
+  margin: 14px 0 0;
+  font-size: 50px;
+  line-height: 1.08;
+  font-weight: 700;
+  color: #182230;
+}
+
+.popular-header h2 span {
+  color: #43acc9;
+}
+
+.popular-header-right {
+  max-width: 450px;
+}
+
+.popular-header-right p {
+  margin: 0 0 20px;
+  color: #697382;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   VIEW ALL
+========================================= */
+
+.view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: none;
+  background: transparent;
+  color: #182230;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================================
+   SLIDER WRAPPER
+========================================= */
+
+.destination-slider {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  cursor: grab;
+
+  scrollbar-width: none;
+
+  -webkit-overflow-scrolling: touch;
+
+  scroll-behavior: smooth;
+
+  touch-action: pan-x;
+}
+
+.destination-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.destination-slider:active {
+  cursor: grabbing;
+}
+
+/* =========================================
+   DESTINATION GRID
+========================================= */
+
+.destination-grid {
+  display: flex;
+  gap: 24px;
+
+  width: max-content;
+
+  padding: 5px 5px 15px;
+
+  animation: destinationAutoSlide 45s linear infinite;
+
+  will-change: transform;
+}
+
+/* Mouse / touch par animation stop */
+.destination-slider:hover .destination-grid,
+.destination-slider:active .destination-grid {
+  animation-play-state: paused;
+}
+
+/* =========================================
+   DESTINATION CARD
+========================================= */
+
+.destination-card {
+  position: relative;
+
+  flex: 0 0 330px;
+
+  width: 330px;
+  height: 455px;
+
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  background: #ddd;
+
+  cursor: pointer;
+
+  isolation: isolate;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+}
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.destination-image {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition: transform 0.7s ease;
+}
+
+.destination-card:hover .destination-image {
+  transform: scale(1.045);
+}
+
+/* =========================================
+   OVERLAY
+========================================= */
+
+.destination-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.04) 0%,
+      rgba(0, 0, 0, 0.10) 35%,
+      rgba(0, 0, 0, 0.82) 100%
+    );
+}
+
+/* =========================================
+   TOP
+========================================= */
+
+.destination-top {
+  position: absolute;
+
+  top: 20px;
+  left: 20px;
+  right: 20px;
+
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.destination-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 8px 12px;
+
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.17);
+
+  backdrop-filter: blur(9px);
+
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.destination-arrow {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #fff;
+  color: #182230;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.destination-arrow:hover {
+  background: #c99a43;
+  color: #fff;
+  transform: rotate(45deg);
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.destination-content {
+  position: absolute;
+
+  left: 22px;
+  right: 22px;
+  bottom: 22px;
+
+  z-index: 3;
+
+  color: #fff;
+}
+
+.destination-content h3 {
+  margin: 0 0 9px;
+
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.destination-content p {
+  margin: 0 0 20px;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.destination-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  border: none;
+  background: transparent;
+
+  color: #fff;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.destination-explore svg {
+  transition: transform 0.3s ease;
+}
+
+.destination-explore:hover svg {
+  transform: translateX(5px);
+}
+
+/* =========================================
+   AUTO MOVEMENT
+========================================= */
+
+@keyframes destinationAutoSlide {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-700px);
+  }
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .popular-destinations {
+    padding: 55px 5%;
+  }
+
+  .popular-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    margin-bottom: 35px;
+  }
+
+  .popular-header h2 {
+    font-size: 43px;
+  }
+
+  .popular-header-right {
+    max-width: 600px;
+  }
+
+  .popular-header-right p {
+    font-size: 16px;
+  }
+
+  .destination-grid {
+    gap: 20px;
+    animation-duration: 40s;
+  }
+
+  .destination-card {
+    flex: 0 0 310px;
+    width: 310px;
+    height: 430px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .popular-destinations {
+    padding: 45px 16px;
+  }
+
+  .popular-header {
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .popular-label {
+    font-size: 16px;
+  }
+
+  .popular-header h2 {
+    margin-top: 9px;
+    font-size: 36px;
+    line-height: 1.12;
+  }
+
+  .popular-header-right {
+    width: 100%;
+  }
+
+  .popular-header-right p {
+    margin-bottom: 18px;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .view-all-btn {
+    font-size: 17px;
+  }
+
+  /* MOBILE SCROLL */
+
+  .destination-slider {
+    margin-left: -2px;
+    margin-right: -2px;
+
+    padding: 0 2px;
+
+    overflow-x: auto;
+
+    cursor: grab;
+  }
+
+  .destination-grid {
+    gap: 16px;
+
+    padding-right: 20px;
+
+    animation-duration: 38s;
+  }
+
+  /* MOBILE CARD */
+
+  .destination-card {
+    flex: 0 0 275px;
+
+    width: 275px;
+    height: 390px;
+
+    border-radius: 20px;
+  }
+
+  .destination-top {
+    top: 17px;
+    left: 17px;
+    right: 17px;
+  }
+
+  .destination-location {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .destination-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .destination-content {
+    left: 19px;
+    right: 19px;
+    bottom: 19px;
+  }
+
+  .destination-content h3 {
+    font-size: 29px;
+    margin-bottom: 8px;
+  }
+
+  .destination-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 17px;
+  }
+
+  .destination-explore {
+    font-size: 16px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+
+  .popular-destinations {
+    padding: 40px 13px;
+  }
+
+  .popular-header h2 {
+    font-size: 32px;
+  }
+
+  .popular-header-right p {
+    font-size: 16px;
+  }
+
+  .destination-grid {
+    gap: 14px;
+    padding-right: 15px;
+  }
+
+  .destination-card {
+    flex: 0 0 255px;
+    width: 255px;
+    height: 365px;
+  }
+
+  .destination-content h3 {
+    font-size: 27px;
+  }
+
+  .destination-content p {
+    font-size: 15px;
+  }
+}

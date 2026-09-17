@@ -1,0 +1,1631 @@
+/* =========================================================
+   BOOKING SUMMARY / CHECKOUT
+========================================================= */
+
+.booking-summary-page {
+  min-height: 100vh;
+  background: #f7f5f0;
+  color: #1b1b1b;
+  padding: 82px 6% 70px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.checkout-header {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.checkout-back {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.checkout-back:hover {
+  color: #b28a3d;
+}
+
+.checkout-title {
+  text-align: center;
+}
+
+.checkout-title > span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: #a47c32;
+  margin-bottom: 5px;
+}
+
+.checkout-title h1 {
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #191919;
+}
+
+.secure-label {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: #666;
+}
+
+.secure-label svg {
+  color: #a47c32;
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.checkout-progress {
+  max-width: 650px;
+  margin: 32px auto 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #999;
+}
+
+.progress-step span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #e1ded7;
+  color: #777;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.progress-step p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.progress-step.active {
+  color: #1b1b1b;
+}
+
+.progress-step.active span {
+  background: #b28a3d;
+  color: #fff;
+}
+
+.progress-line {
+  width: 65px;
+  height: 1px;
+  background: #ddd8ce;
+  margin: 0 13px;
+}
+
+.progress-line.active-line {
+  background: #b28a3d;
+}
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.checkout-layout {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 370px;
+  gap: 30px;
+  align-items: start;
+}
+
+/* =========================================================
+   PAYMENT SECTION
+========================================================= */
+
+.payment-section {
+  background: #fff;
+  border: 1px solid #e9e5dc;
+  border-radius: 20px;
+  padding: 28px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.section-eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  color: #b28a3d;
+  font-weight: 800;
+}
+
+.section-heading h2 {
+  margin: 6px 0 4px;
+  font-size: 22px;
+  line-height: 1.25;
+  color: #181818;
+}
+
+.section-heading p {
+  margin: 0;
+  font-size: 14px;
+  color: #777;
+}
+
+.payment-security {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #777;
+  white-space: nowrap;
+}
+
+.payment-security svg {
+  color: #b28a3d;
+}
+
+/* =========================================================
+   PAYMENT METHODS
+========================================================= */
+
+.payment-methods {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.payment-method {
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid #e4e0d7;
+  background: #fff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.payment-method:hover {
+  border-color: #c9a86b;
+}
+
+.payment-method.active {
+  border-color: #b28a3d;
+  background: #fbf7ef;
+}
+
+.payment-method > svg {
+  font-size: 20px;
+  color: #b28a3d;
+  flex-shrink: 0;
+}
+
+.payment-method span:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.payment-method strong {
+  font-size: 13px;
+  color: #222;
+}
+
+.payment-method small {
+  font-size: 11px;
+  color: #888;
+}
+
+.upi-symbol,
+.bank-symbol {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: #f1eadc;
+  color: #9b742e;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.bank-symbol {
+  font-size: 14px;
+}
+
+/* =========================================================
+   DEMO CARD
+========================================================= */
+
+.demo-card {
+  width: 100%;
+  max-width: 430px;
+  min-height: 205px;
+  margin: 25px auto 28px;
+  padding: 24px;
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      135deg,
+      #28251f,
+      #4a4234
+    );
+  color: #fff;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.demo-card-top,
+.demo-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.demo-card-top {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+.demo-card-number {
+  margin: 45px 0 28px;
+  font-size: 21px;
+  letter-spacing: 2px;
+  font-family: monospace;
+}
+
+.demo-card-bottom {
+  gap: 20px;
+}
+
+.demo-card-bottom div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.demo-card-bottom small {
+  font-size: 8px;
+  letter-spacing: 1px;
+  opacity: 0.65;
+}
+
+.demo-card-bottom strong {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.payment-form {
+  margin-top: 8px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.full-field {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-field input,
+.form-field select {
+  width: 100%;
+  min-height: 47px;
+  padding: 0 13px;
+  border: 1px solid #ddd8ce;
+  border-radius: 9px;
+  background: #fff;
+  color: #222;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  border-color: #b28a3d;
+  box-shadow: 0 0 0 3px rgba(178, 138, 61, 0.08);
+}
+
+.form-field input::placeholder {
+  color: #aaa;
+}
+
+.field-error {
+  color: #b7352c;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+/* =========================================================
+   SIMPLE PAYMENT
+========================================================= */
+
+.simple-payment {
+  padding: 35px 15px;
+}
+
+.payment-icon-large {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #f4ecdd;
+  color: #a47c32;
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.simple-payment h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.simple-payment > p {
+  margin: 0 0 25px;
+  font-size: 13px;
+  color: #777;
+}
+
+.upi-hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #999;
+}
+
+/* =========================================================
+   PAY BUTTON
+========================================================= */
+
+.pay-button {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 28px;
+  border: 0;
+  border-radius: 10px;
+  background: #1e1d1a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pay-button:hover:not(:disabled) {
+  background: #b28a3d;
+}
+
+.pay-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.payment-loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: paymentSpin 0.7s linear infinite;
+}
+
+@keyframes paymentSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.payment-note {
+  margin-top: 15px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 7px;
+  color: #888;
+  font-size: 11px;
+  text-align: center;
+}
+
+.payment-note svg {
+  color: #b28a3d;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   TRIP SUMMARY
+========================================================= */
+
+.trip-summary {
+  position: sticky;
+  top: 25px;
+  background: #fff;
+  border: 1px solid #e9e5dc;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.summary-heading > span {
+  font-size: 10px;
+  letter-spacing: 1.6px;
+  color: #b28a3d;
+  font-weight: 800;
+}
+
+.summary-heading h2 {
+  margin: 5px 0 18px;
+  font-size: 21px;
+  color: #1c1c1c;
+}
+
+.summary-image {
+  height: 190px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.summary-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.summary-image-overlay {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+}
+
+.summary-image-overlay span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 10px;
+}
+
+.summary-destination {
+  margin: 17px 0;
+}
+
+.summary-destination h3 {
+  margin: 0 0 3px;
+  font-size: 20px;
+  color: #1d1d1d;
+}
+
+.summary-destination p {
+  margin: 0;
+  font-size: 12px;
+  color: #888;
+}
+
+/* =========================================================
+   SUMMARY DETAILS
+========================================================= */
+
+.summary-details {
+  display: grid;
+  gap: 14px;
+}
+
+.summary-detail {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.summary-detail > svg {
+  color: #b28a3d;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.summary-detail div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.summary-detail span {
+  font-size: 10px;
+  color: #999;
+}
+
+.summary-detail strong {
+  font-size: 13px;
+  color: #333;
+}
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.summary-divider {
+  height: 1px;
+  background: #ece8df;
+  margin: 20px 0;
+}
+
+.summary-price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.summary-price span {
+  font-size: 13px;
+  color: #666;
+}
+
+.summary-price strong {
+  font-size: 22px;
+  color: #1d1d1d;
+}
+
+.summary-included {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #777;
+}
+
+.summary-included svg {
+  color: #b28a3d;
+  font-size: 13px;
+}
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.payment-success-card {
+  width: min(560px, 100%);
+  margin: 90px auto;
+  padding: 45px 35px;
+  background: #fff;
+  border: 1px solid #e8e3d9;
+  border-radius: 22px;
+  text-align: center;
+}
+
+.success-icon {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #f2eadb;
+  color: #a47c32;
+  font-size: 29px;
+}
+
+.success-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  color: #a47c32;
+}
+
+.payment-success-card h1 {
+  margin: 8px 0;
+  font-size: 28px;
+}
+
+.success-description {
+  max-width: 420px;
+  margin: 0 auto;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.success-details {
+  margin: 28px 0;
+  padding: 18px;
+  border-radius: 12px;
+  background: #faf8f3;
+  display: grid;
+  gap: 15px;
+}
+
+.success-details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  text-align: left;
+}
+
+.success-details span {
+  color: #888;
+  font-size: 12px;
+}
+
+.success-details strong {
+  color: #333;
+  font-size: 12px;
+  text-align: right;
+}
+
+.success-bookings-btn {
+  width: 100%;
+  min-height: 50px;
+  border: 0;
+  border-radius: 9px;
+  background: #1e1d1a;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.success-bookings-btn:hover {
+  background: #b28a3d;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.booking-empty {
+  width: min(500px, 100%);
+  margin: 120px auto;
+  padding: 40px;
+  background: #fff;
+  border: 1px solid #e5e0d6;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.booking-empty h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.booking-empty p {
+  margin: 0 0 25px;
+  color: #777;
+  font-size: 14px;
+}
+
+.booking-empty button {
+  border: 0;
+  background: #1e1d1a;
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .booking-summary-page {
+    padding: 75px 4% 55px;
+  }
+
+  /* HEADER */
+
+  .checkout-header {
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+  }
+
+  .checkout-back {
+    font-size: 17px;
+  }
+
+  .checkout-title > span {
+    font-size: 11px;
+  }
+
+  .checkout-title h1 {
+    font-size: 25px;
+  }
+
+  .secure-label {
+    font-size: 15px;
+  }
+
+
+  /* PROGRESS */
+
+  .checkout-progress {
+    margin: 30px auto 38px;
+  }
+
+  .progress-step {
+    gap: 8px;
+  }
+
+  .progress-step span {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .progress-step p {
+    font-size: 17px;
+  }
+
+  .progress-line {
+    width: 55px;
+    margin: 0 12px;
+  }
+
+
+  /* MAIN LAYOUT */
+
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+
+  /* PAYMENT */
+
+  .payment-section {
+    padding: 28px;
+    border-radius: 18px;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+  }
+
+  .section-heading h2 {
+    font-size: 24px;
+  }
+
+  .section-heading p {
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .payment-security {
+    font-size: 15px;
+  }
+
+
+  /* PAYMENT METHODS */
+
+  .payment-methods {
+    gap: 12px;
+  }
+
+  .payment-method {
+    min-height: 75px;
+    padding: 14px;
+  }
+
+  .payment-method > svg {
+    font-size: 22px;
+  }
+
+  .payment-method strong {
+    font-size: 17px;
+  }
+
+  .payment-method small {
+    font-size: 14px;
+  }
+
+  .upi-symbol,
+  .bank-symbol {
+    width: 31px;
+    height: 31px;
+    font-size: 11px;
+  }
+
+
+  /* CARD */
+
+  .demo-card {
+    max-width: 460px;
+    min-height: 215px;
+    padding: 25px;
+  }
+
+  .demo-card-top {
+    font-size: 13px;
+  }
+
+  .demo-card-number {
+    margin: 45px 0 28px;
+    font-size: 21px;
+  }
+
+  .demo-card-bottom small {
+    font-size: 9px;
+  }
+
+  .demo-card-bottom strong {
+    font-size: 13px;
+  }
+
+
+  /* FORM */
+
+  .form-grid {
+    gap: 20px;
+  }
+
+  .form-field {
+    gap: 8px;
+  }
+
+  .form-field label {
+    font-size: 17px;
+  }
+
+  .form-field input,
+  .form-field select {
+    min-height: 50px;
+    padding: 0 14px;
+    font-size: 17px;
+  }
+
+  .field-error {
+    font-size: 13px;
+  }
+
+
+  /* SIMPLE PAYMENT */
+
+  .simple-payment h3 {
+    font-size: 21px;
+  }
+
+  .simple-payment > p {
+    font-size: 16px;
+  }
+
+  .upi-hint {
+    font-size: 13px;
+  }
+
+
+  /* PAY BUTTON */
+
+  .pay-button {
+    min-height: 55px;
+    font-size: 17px;
+  }
+
+  .payment-note {
+    font-size: 13px;
+  }
+
+
+  /* =====================================================
+     BOOKING SUMMARY / ASIDE
+  ===================================================== */
+
+  .trip-summary {
+    position: static;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px;
+    border-radius: 18px;
+  }
+
+  .summary-heading > span {
+    font-size: 11px;
+  }
+
+  .summary-heading h2 {
+    font-size: 23px;
+  }
+
+  .summary-image {
+    height: 240px;
+  }
+
+  .summary-image-overlay span {
+    font-size: 13px;
+  }
+
+  .summary-destination h3 {
+    font-size: 21px;
+  }
+
+  .summary-destination p {
+    font-size: 14px;
+  }
+
+  .summary-details {
+    gap: 17px;
+  }
+
+  .summary-detail > svg {
+    font-size: 19px;
+  }
+
+  .summary-detail span {
+    font-size: 12px;
+  }
+
+  .summary-detail strong {
+    font-size: 17px;
+  }
+
+  .summary-price span {
+    font-size: 16px;
+  }
+
+  .summary-price strong {
+    font-size: 24px;
+  }
+
+  .summary-included {
+    font-size: 13px;
+  }
+
+
+  /* SUCCESS */
+
+  .payment-success-card {
+    margin: 70px auto;
+    padding: 45px 30px;
+  }
+
+  .payment-success-card h1 {
+    font-size: 28px;
+  }
+
+  .success-description {
+    font-size: 16px;
+  }
+
+  .success-details span,
+  .success-details strong {
+    font-size: 15px;
+  }
+
+  .success-bookings-btn {
+    font-size: 17px;
+  }
+
+
+  /* EMPTY */
+
+  .booking-empty h2 {
+    font-size: 24px;
+  }
+
+  .booking-empty p {
+    font-size: 16px;
+  }
+
+  .booking-empty button {
+    font-size: 16px;
+  }
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .booking-summary-page {
+    padding: 78px 14px 45px;
+  }
+
+
+  /* HEADER */
+
+  .checkout-header {
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+  }
+
+  .checkout-back {
+    font-size: 17px;
+  }
+
+  .checkout-back svg {
+    font-size: 17px;
+  }
+
+  .checkout-title {
+    text-align: right;
+  }
+
+  .checkout-title > span {
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+
+  .checkout-title h1 {
+    font-size: 21px;
+  }
+
+  .secure-label {
+    display: none;
+  }
+
+
+  /* PROGRESS */
+
+  .checkout-progress {
+    margin: 25px auto 32px;
+    width: 100%;
+  }
+
+  .progress-step {
+    gap: 6px;
+  }
+
+  .progress-step span {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .progress-step p {
+    font-size: 15px;
+  }
+
+  .progress-line {
+    flex: 1;
+    width: auto;
+    max-width: 45px;
+    margin: 0 7px;
+  }
+
+
+  /* MAIN LAYOUT */
+
+  .checkout-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+
+  /* =====================================================
+     BOOKING SUMMARY / ASIDE
+  ===================================================== */
+
+  .trip-summary {
+    order: -1;
+    position: static;
+    width: 100%;
+    padding: 19px;
+    box-sizing: border-box;
+    border-radius: 16px;
+  }
+
+  .summary-heading > span {
+    font-size: 10px;
+  }
+
+  .summary-heading h2 {
+    margin: 6px 0 17px;
+    font-size: 21px;
+  }
+
+  .summary-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 12px;
+  }
+
+  .summary-image-overlay {
+    left: 11px;
+    bottom: 11px;
+  }
+
+  .summary-image-overlay span {
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .summary-destination {
+    margin: 17px 0;
+  }
+
+  .summary-destination h3 {
+    font-size: 20px;
+  }
+
+  .summary-destination p {
+    font-size: 13px;
+  }
+
+  .summary-details {
+    gap: 15px;
+  }
+
+  .summary-detail {
+    gap: 10px;
+  }
+
+  .summary-detail > svg {
+    font-size: 18px;
+  }
+
+  .summary-detail span {
+    font-size: 11px;
+  }
+
+  .summary-detail strong {
+    font-size: 16px;
+  }
+
+  .summary-divider {
+    margin: 19px 0;
+  }
+
+  .summary-price span {
+    font-size: 15px;
+  }
+
+  .summary-price strong {
+    font-size: 22px;
+  }
+
+  .summary-included {
+    font-size: 12px;
+  }
+
+
+  /* =====================================================
+     PAYMENT
+  ===================================================== */
+
+  .payment-section {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .section-heading {
+    display: block;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+  }
+
+  .section-heading h2 {
+    margin: 6px 0 6px;
+    font-size: 21px;
+  }
+
+  .section-heading p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .payment-security {
+    margin-top: 11px;
+    font-size: 13px;
+  }
+
+
+  /* PAYMENT METHODS */
+
+  .payment-methods {
+    grid-template-columns: 1fr;
+    gap: 9px;
+    margin-top: 21px;
+  }
+
+  .payment-method {
+    min-height: 62px;
+    padding: 11px 13px;
+    border-radius: 10px;
+  }
+
+  .payment-method > svg {
+    font-size: 20px;
+  }
+
+  .payment-method strong {
+    font-size: 16px;
+  }
+
+  .payment-method small {
+    font-size: 13px;
+  }
+
+  .upi-symbol,
+  .bank-symbol {
+    width: 27px;
+    height: 27px;
+    font-size: 9px;
+  }
+
+
+  /* =====================================================
+     DEMO CARD
+  ===================================================== */
+
+  .demo-card {
+    width: 100%;
+    min-height: 185px;
+    margin: 23px auto 27px;
+    padding: 19px;
+    border-radius: 15px;
+    box-sizing: border-box;
+  }
+
+  .demo-card-top {
+    font-size: 11px;
+  }
+
+  .demo-card-number {
+    margin: 37px 0 24px;
+    font-size: 17px;
+    letter-spacing: 1.5px;
+  }
+
+  .demo-card-bottom small {
+    font-size: 8px;
+  }
+
+  .demo-card-bottom strong {
+    font-size: 11px;
+  }
+
+
+  /* =====================================================
+     FORM
+  ===================================================== */
+
+  .payment-form {
+    margin-top: 7px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .full-field {
+    grid-column: auto;
+  }
+
+  .form-field {
+    gap: 7px;
+  }
+
+  .form-field label {
+    font-size: 16px;
+  }
+
+  .form-field input,
+  .form-field select {
+    min-height: 49px;
+    padding: 0 13px;
+    font-size: 17px;
+    border-radius: 9px;
+  }
+
+  .field-error {
+    font-size: 12px;
+  }
+
+
+  /* =====================================================
+     UPI / NET BANKING
+  ===================================================== */
+
+  .simple-payment {
+    padding: 30px 5px;
+  }
+
+  .payment-icon-large {
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+  }
+
+  .simple-payment h3 {
+    font-size: 19px;
+  }
+
+  .simple-payment > p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .upi-hint {
+    font-size: 12px;
+  }
+
+
+  /* =====================================================
+     PAY BUTTON
+  ===================================================== */
+
+  .pay-button {
+    min-height: 52px;
+    margin-top: 24px;
+    font-size: 17px;
+    border-radius: 9px;
+  }
+
+  .payment-note {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+
+  /* =====================================================
+     SUCCESS
+  ===================================================== */
+
+  .payment-success-card {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 55px auto;
+    padding: 32px 19px;
+    border-radius: 17px;
+  }
+
+  .success-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 25px;
+  }
+
+  .success-label {
+    font-size: 9px;
+  }
+
+  .payment-success-card h1 {
+    font-size: 24px;
+  }
+
+  .success-description {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .success-details {
+    margin: 23px 0;
+    padding: 15px;
+    gap: 14px;
+  }
+
+  .success-details span,
+  .success-details strong {
+    font-size: 13px;
+  }
+
+  .success-bookings-btn {
+    min-height: 49px;
+    font-size: 16px;
+  }
+
+
+  /* EMPTY */
+
+  .booking-empty {
+    margin: 75px auto;
+    padding: 32px 19px;
+  }
+
+  .booking-empty h2 {
+    font-size: 22px;
+  }
+
+  .booking-empty p {
+    font-size: 15px;
+  }
+
+  .booking-empty button {
+    font-size: 15px;
+  }
+}
+
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .booking-summary-page {
+    padding: 52px 11px 35px;
+  }
+
+  .checkout-back {
+    font-size: 16px;
+  }
+
+  .checkout-title h1 {
+    font-size: 19px;
+  }
+
+  .progress-step p {
+    font-size: 14px;
+  }
+
+
+  /* SUMMARY */
+
+  .trip-summary {
+    padding: 16px;
+  }
+
+  .summary-heading h2 {
+    font-size: 20px;
+  }
+
+  .summary-image {
+    height: 180px;
+  }
+
+  .summary-destination h3 {
+    font-size: 19px;
+  }
+
+  .summary-destination p {
+    font-size: 13px;
+  }
+
+  .summary-detail strong {
+    font-size: 15px;
+  }
+
+  .summary-price span {
+    font-size: 14px;
+  }
+
+  .summary-price strong {
+    font-size: 21px;
+  }
+
+
+  /* PAYMENT */
+
+  .payment-section {
+    padding: 17px;
+  }
+
+  .section-heading h2 {
+    font-size: 20px;
+  }
+
+  .section-heading p {
+    font-size: 14px;
+  }
+
+  .payment-method strong {
+    font-size: 15px;
+  }
+
+  .payment-method small {
+    font-size: 12px;
+  }
+
+
+  /* CARD */
+
+  .demo-card {
+    min-height: 170px;
+    padding: 17px;
+  }
+
+  .demo-card-number {
+    font-size: 16px;
+  }
+
+
+  /* FORM */
+
+  .form-field label {
+    font-size: 15px;
+  }
+
+  .form-field input,
+  .form-field select {
+    min-height: 47px;
+    font-size: 16px;
+  }
+
+  .pay-button {
+    min-height: 49px;
+    font-size: 16px;
+  }
+
+
+  /* SUCCESS */
+
+  .payment-success-card h1 {
+    font-size: 22px;
+  }
+
+  .success-description {
+    font-size: 14px;
+  }
+
+  .success-bookings-btn {
+    font-size: 15px;
+  }
+}
+

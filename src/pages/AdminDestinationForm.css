@@ -1,0 +1,226 @@
+/* =========================================
+   DESTINATION FORM PAGE
+========================================= */
+
+.destination-form-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 10px 5px 40px;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.destination-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.destination-form-header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #172033;
+}
+
+.destination-form-header p {
+  margin: 7px 0 0;
+  color: #7b8494;
+  font-size: 14px;
+}
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.destination-back-btn {
+  border: 1px solid #e2e6ec;
+  background: #ffffff;
+  color: #343b48;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.destination-back-btn:hover {
+  background: #f5f7fa;
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   FORM CARD
+========================================= */
+
+.destination-form-card {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border: 1px solid #e8ebef;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 8px 30px rgba(20, 30, 50, 0.06);
+}
+
+/* =========================================
+   GRID
+========================================= */
+
+.destination-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+/* =========================================
+   FIELD
+========================================= */
+
+.destination-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.destination-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #303847;
+}
+
+.destination-field input,
+.destination-field select {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+  background: #fafbfc;
+  color: #252c38;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: 0.25s;
+}
+
+.destination-field input::placeholder {
+  color: #a5acb7;
+}
+
+.destination-field input:focus,
+.destination-field select:focus {
+  border-color: #d6a84f;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(214, 168, 79, 0.12);
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.destination-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #edf0f3;
+}
+
+.destination-cancel-btn,
+.destination-save-btn {
+  min-width: 145px;
+  height: 46px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.destination-cancel-btn {
+  border: 1px solid #dfe3e8;
+  background: #ffffff;
+  color: #4d5665;
+}
+
+.destination-cancel-btn:hover {
+  background: #f5f6f8;
+}
+
+.destination-save-btn {
+  border: none;
+  background: #c99a3e;
+  color: #ffffff;
+}
+
+.destination-save-btn:hover {
+  background: #b6872f;
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+
+  .destination-form-page {
+    padding: 5px 0 30px;
+  }
+
+  .destination-form-header {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .destination-form-header h1 {
+    font-size: 25px;
+  }
+
+  .destination-form-card {
+    padding: 22px;
+  }
+
+  .destination-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 500px) {
+
+  .destination-form-header {
+    flex-direction: column;
+  }
+
+  .destination-back-btn {
+    width: 100%;
+  }
+
+  .destination-form-header h1 {
+    font-size: 23px;
+  }
+
+  .destination-form-card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .destination-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .destination-cancel-btn,
+  .destination-save-btn {
+    width: 100%;
+  }
+}

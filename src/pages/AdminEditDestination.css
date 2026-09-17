@@ -1,0 +1,364 @@
+/* =========================================
+   ADMIN DESTINATION FORM PAGE
+========================================= */
+
+.destination-form-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 24px 50px;
+  box-sizing: border-box;
+  background: #f7f8fa;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.destination-form-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.destination-form-header h1 {
+  margin: 0;
+  color: #182230;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.destination-form-header p {
+  margin: 7px 0 0;
+  color: #7c8796;
+  font-size: 14px;
+}
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.destination-back-btn {
+  border: 1px solid #e1e5ea;
+  background: #ffffff;
+  color: #303946;
+
+  height: 44px;
+  padding: 0 18px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.destination-back-btn:hover {
+  background: #f2f4f6;
+  border-color: #d5d9df;
+  transform: translateY(-1px);
+}
+
+
+/* =========================================
+   FORM CARD
+========================================= */
+
+.destination-form-card {
+  width: 100%;
+  max-width: 920px;
+
+  background: #ffffff;
+
+  border: 1px solid #e7eaee;
+  border-radius: 18px;
+
+  padding: 32px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 10px 30px rgba(20, 30, 45, 0.06);
+}
+
+
+/* =========================================
+   FORM GRID
+========================================= */
+
+.destination-form-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+
+/* =========================================
+   FORM FIELD
+========================================= */
+
+.destination-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.destination-field label {
+  color: #303947;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   INPUT + SELECT
+========================================= */
+
+.destination-field input,
+.destination-field select {
+  width: 100%;
+  height: 48px;
+
+  padding: 0 14px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+
+  background: #fafbfc;
+
+  color: #252d39;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition: all 0.25s ease;
+}
+
+.destination-field input::placeholder {
+  color: #a3abb6;
+}
+
+.destination-field input:hover,
+.destination-field select:hover {
+  border-color: #cdd3da;
+  background: #ffffff;
+}
+
+.destination-field input:focus,
+.destination-field select:focus {
+  border-color: #c89b45;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(200, 155, 69, 0.12);
+}
+
+
+/* =========================================
+   SELECT
+========================================= */
+
+.destination-field select {
+  cursor: pointer;
+}
+
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.destination-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  margin-top: 32px;
+  padding-top: 24px;
+
+  border-top: 1px solid #edf0f3;
+}
+
+
+/* =========================================
+   CANCEL BUTTON
+========================================= */
+
+.destination-cancel-btn {
+  min-width: 130px;
+  height: 46px;
+
+  padding: 0 20px;
+
+  border: 1px solid #dfe3e8;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #4c5665;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.destination-cancel-btn:hover {
+  background: #f5f6f8;
+  border-color: #d2d7de;
+}
+
+
+/* =========================================
+   UPDATE BUTTON
+========================================= */
+
+.destination-save-btn {
+  min-width: 175px;
+  height: 46px;
+
+  padding: 0 22px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #c99a43;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 16px rgba(201, 154, 67, 0.18);
+
+  transition: all 0.25s ease;
+}
+
+.destination-save-btn:hover {
+  background: #b98730;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 20px rgba(201, 154, 67, 0.24);
+}
+
+.destination-save-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+  .destination-form-page {
+    padding: 18px 18px 40px;
+  }
+
+  .destination-form-card {
+    max-width: 100%;
+  }
+
+  .destination-form-grid {
+    gap: 20px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+  .destination-form-page {
+    padding: 15px 12px 35px;
+  }
+
+  .destination-form-header {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .destination-form-header h1 {
+    font-size: 24px;
+  }
+
+  .destination-form-header p {
+    font-size: 13px;
+  }
+
+  .destination-back-btn {
+    height: 40px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  .destination-form-card {
+    padding: 22px 18px;
+    border-radius: 14px;
+  }
+
+  .destination-form-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .destination-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .destination-cancel-btn,
+  .destination-save-btn {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 400px) {
+
+  .destination-form-header {
+    flex-direction: column;
+  }
+
+  .destination-back-btn {
+    width: 100%;
+  }
+
+  .destination-form-card {
+    padding: 18px 14px;
+  }
+
+  .destination-form-header h1 {
+    font-size: 22px;
+  }
+
+}

@@ -1,0 +1,1217 @@
+
+/* =========================================================
+   TRAVEL NOTES
+========================================================= */
+
+.travel-notes {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  padding: 42px 5% 30px;
+
+  background:
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(40, 143, 201, 0.13),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 92% 82%,
+      rgba(75, 174, 225, 0.10),
+      transparent 25%
+    ),
+    linear-gradient(
+      135deg,
+      #f5faff 0%,
+      #eef7fc 52%,
+      #f8fbfd 100%
+    );
+
+  color: #123b56;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.notes-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(65px);
+}
+
+.notes-orb-one {
+  width: 180px;
+  height: 180px;
+  left: -100px;
+  top: 130px;
+  background: rgba(31, 145, 207, 0.12);
+}
+
+.notes-orb-two {
+  width: 160px;
+  height: 160px;
+  right: -75px;
+  bottom: 50px;
+  background: rgba(71, 174, 224, 0.10);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.notes-header {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1160px;
+
+  margin: 0 auto 30px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.notes-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 10px;
+
+  color: #1977ad;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  white-space: nowrap;
+}
+
+.notes-eyebrow span {
+  width: 24px;
+  height: 2px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #3fa6d6;
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.notes-header h2 {
+  margin: 0;
+
+  color: #0b3552;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(44px, 5vw, 68px);
+
+  line-height: 0.98;
+
+  letter-spacing: -3px;
+
+  font-weight: 400;
+
+  white-space: nowrap;
+}
+
+.notes-header h2 em {
+  color: #2188bd;
+
+  font-style: italic;
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.notes-intro {
+  width: 100%;
+  max-width: 300px;
+
+  margin-bottom: 1px;
+}
+
+.notes-intro p {
+  margin: 0 0 11px;
+
+  color: #708b9c;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+========================================================= */
+
+.notes-view-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 8px 13px;
+
+  border: 1px solid rgba(31, 119, 165, 0.18);
+
+  border-radius: 100px;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  color: #176994;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 16px rgba(22, 93, 126, 0.05);
+
+  transition: all 0.3s ease;
+}
+
+.notes-view-btn svg {
+  font-size: 14px;
+}
+
+.notes-view-btn:hover {
+  background: #ffffff;
+
+  color: #0d5c88;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(22, 93, 126, 0.10);
+}
+
+
+/* =========================================================
+   NOTES WALL
+========================================================= */
+
+.notes-wall {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1160px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: 38px minmax(0, 1fr);
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   SIDE LABEL
+========================================================= */
+
+.notes-side-label {
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border-right:
+    1px solid rgba(29, 105, 139, 0.13);
+
+  color: #8ba4b2;
+
+  writing-mode: vertical-rl;
+
+  text-orientation: mixed;
+}
+
+.notes-side-label span {
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.notes-side-label strong {
+  color: #327c9f;
+
+  font-size: 12px;
+
+  letter-spacing: 3px;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.notes-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   NOTE CARD
+========================================================= */
+
+.travel-note {
+  position: relative;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  border:
+    1px solid rgba(26, 103, 139, 0.10);
+
+  box-shadow:
+    0 9px 25px rgba(25, 82, 110, 0.065);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.travel-note:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 17px 34px rgba(25, 82, 110, 0.12);
+}
+
+
+/* =========================================================
+   EDITORIAL ANGLES
+========================================================= */
+
+.note-1 {
+  transform: rotate(-0.5deg);
+}
+
+.note-2 {
+  transform:
+    translateY(5px)
+    rotate(0.45deg);
+}
+
+.note-3 {
+  transform: rotate(-0.35deg);
+}
+
+.note-1:hover,
+.note-2:hover,
+.note-3:hover {
+  transform:
+    translateY(-5px)
+    rotate(0deg);
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.note-image {
+  position: relative;
+
+  width: 100%;
+
+  height: 175px;
+
+  overflow: hidden;
+}
+
+.note-image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.65s ease;
+}
+
+.travel-note:hover .note-image img {
+  transform: scale(1.05);
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
+
+.note-image-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 36, 57, 0.02),
+      transparent 44%,
+      rgba(3, 42, 68, 0.58)
+    );
+}
+
+
+/* =========================================================
+   NUMBER
+========================================================= */
+
+.note-number {
+  position: absolute;
+
+  top: 10px;
+  left: 10px;
+
+  width: 29px;
+  height: 29px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.88);
+
+  color: #236c91;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  backdrop-filter: blur(5px);
+}
+
+
+/* =========================================================
+   PLACE
+========================================================= */
+
+.note-place {
+  position: absolute;
+
+  left: 12px;
+  bottom: 11px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+
+  text-shadow:
+    0 2px 7px rgba(0, 0, 0, 0.25);
+}
+
+.note-place svg {
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   PAPER
+========================================================= */
+
+.note-paper {
+  position: relative;
+
+  padding: 15px 15px 13px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fafdff 100%
+    );
+}
+
+
+/* =========================================================
+   TOP
+========================================================= */
+
+.note-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+
+  color: #91a5b1;
+
+  font-size: 11px;
+
+  letter-spacing: 1.3px;
+
+  font-weight: 700;
+}
+
+.note-top svg {
+  font-size: 15px;
+
+  color: #8aaebb;
+
+  transition: 0.3s ease;
+}
+
+.travel-note:hover .note-top svg {
+  color: #268bc0;
+
+  transform: scale(1.1);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.note-paper h3 {
+  width: 100%;
+
+  margin: 0 0 8px;
+
+  color: #174663;
+
+  font-size: 20px;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.4px;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.note-paper p {
+  margin: 0;
+
+  color: #7b929f;
+
+  font-size: 15px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   CARD BOTTOM
+========================================================= */
+
+.note-bottom {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 12px;
+
+  padding-top: 9px;
+
+  border-top:
+    1px solid rgba(34, 105, 133, 0.09);
+}
+
+
+/* =========================================================
+   AUTHOR
+========================================================= */
+
+.note-author {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.author-circle {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e4f3fb;
+
+  color: #277da5;
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+.note-author > div:last-child {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.note-author strong {
+  color: #42687a;
+
+  font-size: 11px;
+}
+
+.note-author span {
+  color: #9aabb3;
+
+  font-size: 9px;
+
+  letter-spacing: 0.8px;
+}
+
+
+/* =========================================================
+   TIME
+========================================================= */
+
+.note-time {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #93a5ae;
+
+  font-size: 10px;
+
+  letter-spacing: 0.8px;
+
+  font-weight: 700;
+}
+
+.note-time svg {
+  font-size: 11px;
+
+  color: #3b94bc;
+}
+
+
+/* =========================================================
+   NOTES FOOTER
+========================================================= */
+
+.notes-footer {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1160px;
+
+  margin: 15px auto 0;
+
+  padding-left: 56px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  color: #849ca9;
+}
+
+.notes-footer > span {
+  color: #318db7;
+
+  font-size: 13px;
+}
+
+.notes-footer p {
+  margin: 0;
+
+  font-size: 11px;
+
+  font-style: italic;
+}
+
+.notes-footer-line {
+  flex: 1;
+
+  height: 1px;
+
+  background:
+    rgba(38, 111, 143, 0.12);
+}
+
+.notes-footer strong {
+  color: #4b7890;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   1000px
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .travel-notes {
+    padding: 38px 4% 30px;
+  }
+
+  .notes-header {
+    margin-bottom: 25px;
+  }
+
+  .notes-header h2 {
+    font-size: 52px;
+  }
+
+  .notes-intro {
+    max-width: 280px;
+  }
+
+  .notes-intro p {
+    font-size: 15px;
+  }
+
+  .notes-grid {
+    gap: 13px;
+  }
+
+  .note-image {
+    height: 160px;
+  }
+
+  .note-paper {
+    padding: 14px;
+  }
+
+  .note-paper h3 {
+    font-size: 18px;
+  }
+
+  .note-paper p {
+    font-size: 15px;
+  }
+}
+
+
+/* =========================================================
+   850px — TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+  .notes-header {
+    gap: 20px;
+  }
+
+  .notes-header h2 {
+    font-size: 45px;
+
+    letter-spacing: -2px;
+  }
+
+  .notes-intro {
+    max-width: 245px;
+  }
+
+  .notes-intro p {
+    font-size: 15px;
+  }
+
+  .notes-wall {
+    grid-template-columns: 28px minmax(0, 1fr);
+
+    gap: 13px;
+  }
+
+  .notes-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+  }
+
+  .note-3 {
+    grid-column: span 2;
+
+    width: calc(50% - 6px);
+
+    justify-self: center;
+
+    transform: rotate(-0.3deg);
+  }
+
+  .note-3:hover {
+    transform:
+      translateY(-5px)
+      rotate(0deg);
+  }
+
+  .note-image {
+    height: 155px;
+  }
+
+  .note-paper h3 {
+    font-size: 18px;
+  }
+
+  .note-paper p {
+    font-size: 15px;
+  }
+}
+
+
+/* =========================================================
+   700px
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .notes-header {
+    align-items: flex-end;
+  }
+
+  .notes-header h2 {
+    font-size: 41px;
+  }
+
+  .notes-intro {
+    max-width: 220px;
+  }
+
+  .notes-intro p {
+    font-size: 15px;
+  }
+
+  .notes-wall {
+    grid-template-columns: 1fr;
+  }
+
+  .notes-side-label {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .travel-notes {
+    padding: 30px 14px 25px;
+  }
+
+  .notes-header {
+    display: block;
+
+    margin-bottom: 20px;
+  }
+
+  .notes-eyebrow {
+    margin-bottom: 8px;
+
+    font-size: 11px;
+
+    letter-spacing: 1.7px;
+  }
+
+  .notes-eyebrow span {
+    width: 19px;
+  }
+
+  .notes-header h2 {
+    width: 100%;
+
+    font-size: 39px;
+
+    line-height: 1.05;
+
+    letter-spacing: -1.7px;
+
+    white-space: normal;
+  }
+
+  .notes-intro {
+    max-width: 100%;
+
+    margin-top: 13px;
+  }
+
+  .notes-intro p {
+    max-width: 340px;
+
+    margin-bottom: 10px;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+  }
+
+  .notes-view-btn {
+    padding: 8px 12px;
+
+    font-size: 12px;
+  }
+
+
+  /* WALL */
+
+  .notes-wall {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+
+  /* GRID */
+
+  .notes-grid {
+    grid-template-columns: 1fr;
+
+    gap: 13px;
+  }
+
+
+  /* CARDS */
+
+  .travel-note,
+  .note-1,
+  .note-2,
+  .note-3 {
+    width: 100%;
+
+    max-width: none;
+
+    grid-column: auto;
+
+    transform: none;
+  }
+
+  .travel-note:hover,
+  .note-1:hover,
+  .note-2:hover,
+  .note-3:hover {
+    transform: translateY(-4px);
+  }
+
+
+  /* IMAGE */
+
+  .note-image {
+    height: 175px;
+  }
+
+
+  /* PAPER */
+
+  .note-paper {
+    padding: 14px 15px 13px;
+  }
+
+
+  /* TOP */
+
+  .note-top {
+    margin-bottom: 8px;
+
+    font-size: 15px;
+  }
+
+
+  /* TITLE */
+
+  .note-paper h3 {
+    font-size: 19px;
+
+    margin-bottom: 7px;
+  }
+
+
+  /* TEXT */
+
+  .note-paper p {
+    font-size: 16px;
+
+    line-height: 1.6;
+  }
+
+
+  /* BOTTOM */
+
+  .note-bottom {
+    margin-top: 11px;
+
+    padding-top: 13px;
+  }
+
+
+  /* FOOTER */
+
+  .notes-footer {
+    margin-top: 13px;
+
+    padding-left: 0;
+  }
+
+  .notes-footer p {
+    font-size: 15px;
+  }
+}
+
+
+/* =========================================================
+   480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .travel-notes {
+    padding: 28px 12px 23px;
+  }
+
+  .notes-header {
+    margin-bottom: 18px;
+  }
+
+  .notes-header h2 {
+    font-size: 35px;
+
+    letter-spacing: -1.5px;
+  }
+
+  .notes-intro {
+    margin-top: 11px;
+  }
+
+  .notes-intro p {
+    font-size: 15px;
+
+    line-height: 1.6;
+  }
+
+  .note-image {
+    height: 160px;
+  }
+
+  .note-paper {
+    padding: 13px 14px;
+  }
+
+  .note-paper h3 {
+    font-size: 18px;
+  }
+
+  .note-paper p {
+    font-size: 17px;
+
+    line-height: 1.6;
+  }
+
+  .note-place {
+    font-size: 14px;
+  }
+
+  .author-circle {
+    width: 25px;
+    height: 25px;
+
+    font-size: 12px;
+  }
+
+  .note-author strong {
+    font-size: 15px;
+  }
+
+  .note-author span {
+    font-size: 15px;
+  }
+
+  .note-time {
+    font-size: 15px;
+  }
+
+  .notes-footer-line {
+    display: none;
+  }
+
+  .notes-footer strong {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   380px
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .travel-notes {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .notes-header h2 {
+    font-size: 32px;
+
+    letter-spacing: -1.3px;
+  }
+
+  .notes-eyebrow {
+    font-size: 10px;
+
+    letter-spacing: 1.4px;
+  }
+
+  .notes-intro p {
+    font-size: 15px;
+  }
+
+  .note-image {
+    height: 150px;
+  }
+
+  .note-paper h3 {
+    font-size: 17px;
+  }
+
+  .note-paper p {
+    font-size: 15px;
+  }
+}
+
+
+/* =========================================================
+   340px
+========================================================= */
+
+@media (max-width: 340px) {
+
+  .travel-notes {
+    padding: 25px 9px 20px;
+  }
+
+  .notes-header h2 {
+    font-size: 29px;
+  }
+
+  .notes-intro p {
+    font-size: 15px;
+  }
+
+  .note-image {
+    height: 140px;
+  }
+
+  .note-paper {
+    padding: 11px;
+  }
+
+  .note-paper h3 {
+    font-size: 16px;
+  }
+
+  .note-paper p {
+    font-size: 15px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .travel-note,
+  .note-image img,
+  .notes-view-btn,
+  .note-top svg {
+    transition: none;
+  }
+}
+

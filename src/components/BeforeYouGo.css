@@ -1,0 +1,576 @@
+/* =========================================================
+   BEFORE YOU GO - BLUE COMPACT DESIGN
+========================================================= */
+
+.before-go {
+  width: 100%;
+  padding: 35px 5%;
+  background: #eef5fa;
+  color: #102a43;
+  font-family: "Inter", sans-serif;
+  overflow: hidden;
+}
+
+.before-go-container {
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.before-go-header {
+  max-width: 700px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.before-go-small-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin-bottom: 10px;
+
+  color: #2875a8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+}
+
+.before-go-small-title span {
+  width: 25px;
+  height: 1px;
+  background: #6da4ca;
+}
+
+.before-go-header h2 {
+  margin: 0;
+
+  color: #102a43;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(38px, 4.5vw, 60px);
+  line-height: 1.02;
+  font-weight: 500;
+  letter-spacing: -1.5px;
+}
+
+.before-go-header h2 em {
+  color: #2875a8;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.before-go-header p {
+  max-width: 530px;
+  margin: 15px auto 0;
+
+  color: #60788d;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.before-go-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 13px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.before-card {
+  position: relative;
+
+  min-height: 365px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border: 1px solid #d6e5ef;
+  border-radius: 8px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.before-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 125px;
+  height: 125px;
+
+  right: -65px;
+  bottom: -65px;
+
+  border-radius: 50%;
+
+  background: #e4f1f9;
+
+  transition: 0.4s ease;
+}
+
+.before-card:hover {
+  transform: translateY(-6px);
+
+  border-color: #8dbbd7;
+
+  box-shadow: 0 18px 35px rgba(27, 91, 132, 0.12);
+}
+
+.before-card:hover::before {
+  width: 210px;
+  height: 210px;
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.before-card-top {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.before-number {
+  color: #8aa6ba;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.before-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e6f2fa;
+  color: #2875a8;
+
+  font-size: 18px;
+
+  transition: 0.3s ease;
+}
+
+.before-card:hover .before-icon {
+  background: #2875a8;
+  color: #ffffff;
+  transform: rotate(-7deg);
+}
+
+.before-arrow {
+  position: absolute;
+
+  top: 12px;
+  right: 0;
+
+  color: #5d91b4;
+
+  font-size: 16px;
+
+  opacity: 0;
+  transform: translate(-5px, 5px);
+
+  transition: 0.3s ease;
+}
+
+.before-card:hover .before-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.before-card-content {
+  position: relative;
+  z-index: 2;
+
+  margin-top: auto;
+}
+
+.before-tag {
+  display: inline-block;
+
+  margin-bottom: 9px;
+
+  color: #4385ae;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+
+.before-card h3 {
+  margin: 0 0 9px;
+
+  color: #173b56;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  line-height: 1.1;
+  font-weight: 500;
+}
+
+.before-card p {
+  margin: 0;
+
+  max-width: 300px;
+
+  color: #71879a;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   POINTS
+========================================================= */
+
+.before-points {
+  margin-top: 17px;
+  padding-top: 13px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  border-top: 1px solid #e2edf4;
+}
+
+.before-point {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #597287;
+
+  font-size: 14px;
+}
+
+.before-point span {
+  width: 17px;
+  height: 17px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e8f3fa;
+  color: #2875a8;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   BEFORE YOU GO - RESPONSIVE
+========================================================= */
+
+/* LARGE DESKTOP */
+@media (min-width: 1400px) {
+  .before-go {
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+
+  .before-go-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    padding: 0 15px;
+  }
+
+  .before-card {
+    min-height: 390px;
+    padding: 24px;
+  }
+
+  .before-card h3 {
+    font-size: 28px;
+  }
+
+  .before-card p {
+    font-size: 16px;
+  }
+
+  .before-point {
+    font-size: 16px;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .before-go {
+    padding: 45px 5%;
+  }
+
+  .before-go-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: 0 12px;
+  }
+
+  .before-card {
+    min-height: 380px;
+    padding: 23px;
+  }
+
+  .before-card h3 {
+    font-size: 27px;
+  }
+
+  .before-card p {
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .before-point {
+    font-size: 16px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .before-go {
+    padding: 42px 4%;
+  }
+
+  .before-go-header {
+    margin-bottom: 35px;
+  }
+
+  .before-go-header h2 {
+    font-size: clamp(38px, 6vw, 52px);
+  }
+
+  .before-go-header p {
+    font-size: 16px;
+  }
+
+  .before-go-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    padding: 0 10px;
+  }
+
+  .before-card {
+    min-height: 370px;
+    padding: 22px;
+  }
+
+  .before-card h3 {
+    font-size: 26px;
+  }
+
+  .before-card p {
+    font-size: 16px;
+  }
+
+  .before-point {
+    font-size: 16px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .before-go {
+    padding: 38px 16px;
+  }
+
+  .before-go-container {
+    width: 100%;
+  }
+
+  .before-go-header {
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .before-go-small-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .before-go-small-title span {
+    width: 20px;
+  }
+
+  .before-go-header h2 {
+    font-size: 40px;
+    line-height: 1.05;
+  }
+
+  .before-go-header p {
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* ONE COLUMN + LEFT RIGHT GAP */
+  .before-go-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+
+    /* cards ko edge se door rakhega */
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .before-card {
+    width: 100%;
+    min-height: 360px;
+    padding: 23px;
+  }
+
+  .before-card h3 {
+    font-size: 28px;
+    line-height: 1.12;
+  }
+
+  .before-card p {
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .before-point {
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .before-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 19px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .before-go {
+    padding: 32px 12px;
+  }
+
+  .before-go-grid {
+    gap: 16px;
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+
+  .before-card {
+    min-height: 350px;
+    padding: 21px;
+  }
+
+  .before-go-header h2 {
+    font-size: 36px;
+  }
+
+  .before-go-header p {
+    font-size: 16px;
+  }
+
+  .before-card h3 {
+    font-size: 26px;
+  }
+
+  .before-card p,
+  .before-point {
+    font-size: 16px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 350px) {
+
+  .before-go {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .before-go-grid {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .before-card {
+    padding: 19px;
+  }
+
+  .before-go-header h2 {
+    font-size: 33px;
+  }
+
+  .before-card h3 {
+    font-size: 24px;
+  }
+
+  .before-card p,
+  .before-point {
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,2242 @@
+/* =========================================================
+   TRIP PLAN PAGE
+========================================================= */
+
+.trip-plan-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #f5f3ed;
+  color: #252a24;
+  font-family: "Inter", sans-serif;
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+.trip-plan-hero {
+  width: 100%;
+  min-height: 340px;
+  padding: 72px 5% 25px; 
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(290px, 0.62fr);
+  align-items: center;
+
+  gap: 18px;
+
+  background: #f5f3ed;
+  overflow: visible;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.trip-plan-hero-content {
+  width: 100%;
+  max-width: 620px;
+}
+
+.trip-plan-eyebrow {
+  display: inline-block;
+
+  margin-bottom: 11px;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2.4px;
+
+  color: #987640;
+}
+
+.trip-plan-hero h1 {
+  margin: 0;
+
+  font-size: clamp(42px, 5vw, 66px);
+  line-height: 0.98;
+
+  letter-spacing: -3px;
+
+  font-weight: 700;
+
+  color: #242923;
+}
+
+.trip-plan-hero h1 span {
+  color: #987640;
+}
+
+.trip-plan-hero p {
+  max-width: 510px;
+
+  margin: 15px 0 0;
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  color: #737971;
+}
+
+
+/* =========================================================
+   HERO FEATURES
+========================================================= */
+
+.trip-plan-features {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  margin-top: 18px;
+}
+
+.trip-plan-features div {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 7px 11px;
+
+  border: 1px solid #deddd5;
+  border-radius: 50px;
+
+  background: rgba(255, 255, 255, 0.55);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #555c53;
+}
+
+.trip-plan-features svg {
+  width: 13px;
+  height: 13px;
+
+  color: #9b7840;
+}
+
+
+/* =========================================================
+   HERO VISUAL
+========================================================= */
+
+.trip-plan-visual {
+  width: 100%;
+  height: 270px;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateX(-15px);
+}
+
+.trip-plan-visual::before {
+  content: "";
+
+  position: absolute;
+
+  width: 245px;
+  height: 245px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(154, 120, 64, 0.18);
+}
+
+
+/* =========================================================
+   VISUAL CARD
+========================================================= */
+
+.trip-plan-visual-card {
+  width: 260px;
+  min-height: 205px;
+
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  border-radius: 20px;
+
+  background: #293329;
+  color: white;
+
+  position: relative;
+  z-index: 2;
+
+  box-shadow:
+    0 20px 48px rgba(25, 30, 25, 0.18);
+}
+
+.visual-icon {
+  width: 54px;
+  height: 54px;
+
+  margin-bottom: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.visual-icon svg {
+  width: 22px;
+  height: 22px;
+
+  color: #d4b477;
+}
+
+.trip-plan-visual-card strong {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.trip-plan-visual-card span {
+  margin-top: 6px;
+
+  font-size: 12px;
+
+  color: rgba(255, 255, 255, 0.62);
+}
+
+
+/* =========================================================
+   FLOATING CARD
+========================================================= */
+
+.trip-plan-floating-card {
+  position: absolute;
+
+  right: 70px;
+  bottom: 2px;
+  padding: 10px 13px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border-radius: 12px;
+
+  background: #fff;
+
+  box-shadow:
+    0 10px 28px rgba(30, 35, 30, 0.12);
+
+  z-index: 5;
+}
+
+.trip-plan-floating-card > svg {
+  width: 16px;
+  height: 16px;
+
+  color: #a17d43;
+}
+
+.trip-plan-floating-card div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.trip-plan-floating-card strong {
+  font-size: 12px;
+}
+
+.trip-plan-floating-card span {
+  font-size: 12px;
+
+  color: #8b9089;
+}
+
+
+/* =========================================================
+   PLANNER SECTION
+========================================================= */
+
+.trip-planner-section {
+  width: 100%;
+
+  padding: 30px 4% 60px;
+
+  background: #eeece5;
+}
+
+
+/* =========================================================
+   VIDEO + FORM LAYOUT
+========================================================= */
+
+.trip-planner-layout {
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    400px
+    550px;
+
+  gap: 20px;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   LEFT VIDEO
+========================================================= */
+
+.trip-media {
+  width: 100%;
+  height: 560px;
+
+  position: sticky;
+  top: 75px;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background: #202820;
+
+  box-shadow:
+    0 18px 45px rgba(30, 35, 30, 0.12);
+}
+
+.trip-media-video {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+
+/* =========================================================
+   VIDEO DARK OVERLAY
+========================================================= */
+
+.trip-media::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(10, 16, 10, 0.84),
+      rgba(10, 16, 10, 0.02) 68%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   VIDEO TEXT
+========================================================= */
+
+.trip-media-overlay {
+  position: absolute;
+
+  left: 25px;
+  right: 25px;
+  bottom: 25px;
+
+  z-index: 2;
+
+  color: white;
+}
+
+.trip-media-overlay > span {
+  display: block;
+
+  margin-bottom: 9px;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  color: #d3b474;
+}
+
+.trip-media-overlay h2 {
+  margin: 0;
+
+  font-size: 34px;
+
+  line-height: 1;
+
+  letter-spacing: -1.5px;
+
+  font-weight: 700;
+}
+
+.trip-media-overlay p {
+  max-width: 300px;
+
+  margin: 11px 0 0;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+
+  color: rgba(255, 255, 255, 0.70);
+}
+
+
+/* =========================================================
+   RIGHT FORM
+   ONLY FORM WILL SCROLL
+========================================================= */
+
+.trip-planner-card {
+  width: 100%;
+
+  height: 560px;
+
+  min-width: 0;
+  min-height: 0;
+
+  padding: 22px 24px;
+
+  box-sizing: border-box;
+
+  background: #fff;
+
+  border: 1px solid #e0dfd8;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 18px 45px rgba(30, 35, 30, 0.07);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: none;
+
+  -ms-overflow-style: none;
+}
+
+.trip-planner-card::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* =========================================================
+   FORM SCROLLBAR
+========================================================= */
+
+.trip-planner-card::-webkit-scrollbar {
+  width: 5px;
+}
+
+.trip-planner-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.trip-planner-card::-webkit-scrollbar-thumb {
+  background: #b79a68;
+
+  border-radius: 20px;
+}
+
+.trip-planner-card::-webkit-scrollbar-thumb:hover {
+  background: #96783f;
+}
+
+
+/* =========================================================
+   PLANNER HEADING
+========================================================= */
+
+.planner-heading {
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 16px;
+}
+
+.planner-heading > div {
+  min-width: 0;
+}
+
+.planner-heading > div > span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+
+  color: #9b7840;
+}
+
+.planner-heading h2 {
+  margin: 0;
+
+  font-size: 21px;
+
+  line-height: 1.15;
+
+  letter-spacing: -0.5px;
+
+  color: #272d26;
+}
+
+.planner-heading > p {
+  width: 135px;
+
+  flex-shrink: 0;
+
+  margin: 0;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+
+  color: #969b94;
+}
+
+
+/* =========================================================
+   BASIC FORM GRID
+========================================================= */
+
+.planner-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.planner-field {
+  display: block;
+
+  min-width: 0;
+}
+
+.planner-field.field-large {
+  grid-column: span 2;
+}
+
+.planner-field > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  color: #5b6259;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-wrap {
+  width: 100%;
+  height: 41px;
+
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #deded7;
+
+  border-radius: 9px;
+
+  background: #fafaf7;
+
+  transition: 0.2s ease;
+}
+
+.input-wrap:focus-within {
+  border-color: #a17d43;
+
+  background: #fff;
+
+  box-shadow:
+    0 0 0 2px rgba(161, 125, 67, 0.07);
+}
+
+.input-wrap svg {
+  width: 13px;
+  height: 13px;
+
+  flex-shrink: 0;
+
+  color: #a17d43;
+}
+
+.input-wrap input,
+.input-wrap select {
+  width: 100%;
+  height: 39px;
+
+  min-width: 0;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  color: #333a31;
+}
+
+.input-wrap input::placeholder {
+  color: #a4a8a1;
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.planner-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 14px 0;
+
+  background: #e7e6df;
+}
+
+
+/* =========================================================
+   SECTION BLOCK
+========================================================= */
+
+.planner-section-block {
+  margin-bottom: 13px;
+}
+
+.section-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 8px;
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+
+  color: #747a72;
+}
+
+.section-description {
+  margin: -3px 0 7px;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+
+  color: #969b94;
+}
+
+
+/* =========================================================
+   TRAVEL TYPE
+========================================================= */
+
+.travel-type-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 6px;
+}
+
+.travel-type {
+  width: 100%;
+
+  min-height: 68px;
+
+  padding: 7px 5px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  border: 1px solid #e1e0d9;
+
+  border-radius: 9px;
+
+  background: #fafaf7;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition: 0.2s ease;
+}
+
+.travel-type:hover {
+  border-color: #bda477;
+
+  transform: translateY(-1px);
+}
+
+.travel-type.active {
+  background: #f4eee2;
+
+  border-color: #a17d43;
+}
+
+.travel-type svg {
+  width: 13px;
+  height: 13px;
+
+  margin-bottom: 5px;
+
+  color: #a17d43;
+}
+
+.travel-type strong {
+  font-size: 9px;
+
+  font-weight: 700;
+
+  color: #343a32;
+}
+
+.travel-type span {
+  margin-top: 2px;
+
+  font-size: 7px;
+
+  color: #92978f;
+}
+
+
+/* =========================================================
+   OPTION PILLS
+========================================================= */
+
+.option-row {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+}
+
+.option-pill {
+  padding: 7px 9px;
+
+  border: 1px solid #deded7;
+
+  border-radius: 30px;
+
+  background: #fafaf7;
+
+  color: #60665e;
+
+  font-family: inherit;
+
+  font-size: 8px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.option-pill:hover {
+  border-color: #bda477;
+}
+
+.option-pill.active {
+  background: #293329;
+
+  border-color: #293329;
+
+  color: #fff;
+}
+
+
+/* =========================================================
+   STAY + TRANSPORT
+========================================================= */
+
+.planner-two-column {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.mini-options {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+}
+
+.mini-options button {
+  padding: 6px 9px;
+
+  border: 1px solid #deded7;
+
+  border-radius: 7px;
+
+  background: #fafaf7;
+
+  color: #626860;
+
+  font-family: inherit;
+
+  font-size: 8px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.mini-options button:hover {
+  border-color: #bda477;
+}
+
+.mini-options button.selected {
+  background: #293329;
+
+  border-color: #293329;
+
+  color: #fff;
+}
+
+
+/* =========================================================
+   INTERESTS
+========================================================= */
+
+.interest-grid {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+}
+
+.interest-chip {
+  padding: 7px 10px;
+
+  border: 1px solid #deded7;
+
+  border-radius: 30px;
+
+  background: #fafaf7;
+
+  color: #626860;
+
+  font-family: inherit;
+
+  font-size: 8px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.interest-chip:hover {
+  border-color: #bda477;
+}
+
+.interest-chip.active {
+  background: #a17d43;
+
+  border-color: #a17d43;
+
+  color: #fff;
+}
+
+
+/* =========================================================
+   SELECTION SUMMARY
+========================================================= */
+
+.trip-selection-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 5px;
+
+  margin-top: 16px;
+
+  padding: 9px;
+
+  border-radius: 10px;
+
+  background: #f4f3ed;
+}
+
+.trip-selection-summary > div {
+  min-width: 0;
+
+  padding: 4px 6px;
+
+  border-right: 1px solid #deddd5;
+}
+
+.trip-selection-summary > div:last-child {
+  border-right: 0;
+}
+
+.trip-selection-summary small {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 6px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.7px;
+
+  color: #949991;
+}
+
+.trip-selection-summary strong {
+  display: block;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  font-size: 8px;
+
+  color: #30362f;
+}
+
+
+/* =========================================================
+   CREATE BUTTON
+========================================================= */
+
+.create-trip-button {
+  width: 100%;
+
+  height: 43px;
+
+  margin-top: 9px;
+
+  padding: 0 13px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  border: 0;
+
+  border-radius: 9px;
+
+  background: #293329;
+
+  color: #fff;
+
+  font-family: inherit;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.create-trip-button:hover {
+  background: #182018;
+
+  transform: translateY(-1px);
+}
+
+.create-trip-button svg {
+  width: 15px;
+  height: 15px;
+
+  flex-shrink: 0;
+
+  color: #d4b274;
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.planner-note {
+  margin: 7px 0 0;
+
+  text-align: center;
+
+  font-size: 7px;
+
+  line-height: 1.5;
+
+  color: #9a9e97;
+}
+
+
+
+/* =========================================================
+   TRIP PLAN — MOBILE RESPONSIVE
+   LARGE • CLEAN • NO CUTTING • FULL PAGE SCROLL
+========================================================= */
+
+@media (max-width: 768px) {
+
+  /* =======================================================
+     GLOBAL PAGE
+  ======================================================= */
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    height: auto !important;
+    min-height: 100% !important;
+
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  .app {
+    width: 100%;
+    height: auto !important;
+    min-height: 100vh !important;
+
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+  }
+
+  .trip-plan-page {
+    width: 100%;
+    min-height: 100vh;
+
+    height: auto !important;
+
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+
+    box-sizing: border-box;
+  }
+
+
+  /* =======================================================
+     HERO
+  ======================================================= */
+ .trip-plan-hero {
+    position: relative !important;
+
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+
+    /* HERO KO TOP SE AUR NICHE KARO */
+    padding-top: 110px !important;
+    padding-right: 20px !important;
+    padding-bottom: 50px !important;
+    padding-left: 20px !important;
+
+    margin-top: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    align-items: stretch !important;
+
+    gap: 30px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: visible !important;
+  }
+
+  /* =======================================================
+     HERO CONTENT
+  ======================================================= */
+
+  .trip-plan-hero-content {
+    width: 100% !important;
+    max-width: none !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+
+    padding: 8px 0 12px !important;
+
+    overflow: visible !important;
+
+    box-sizing: border-box;
+  }
+
+
+  /* =======================================================
+     EYEBROW
+  ======================================================= */
+
+  .trip-plan-eyebrow {
+    display: inline-block;
+
+    margin: 0 0 14px !important;
+
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+  }
+
+
+  /* =======================================================
+     HERO TITLE
+  ======================================================= */
+
+  .trip-plan-hero h1 {
+    width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 52px !important;
+    line-height: 1.04 !important;
+
+    letter-spacing: -2px !important;
+
+    word-break: normal;
+    overflow: visible !important;
+  }
+
+
+  /* =======================================================
+     HERO DESCRIPTION
+  ======================================================= */
+
+  .trip-plan-hero p {
+    width: 100% !important;
+    max-width: none !important;
+
+    margin: 18px 0 0 !important;
+    padding: 0 !important;
+
+    font-size: 17px !important;
+    line-height: 1.65 !important;
+
+    overflow: visible !important;
+  }
+
+
+  /* =======================================================
+     HERO FEATURES
+  ======================================================= */
+
+  .trip-plan-features {
+    width: 100% !important;
+
+    display: flex !important;
+    flex-wrap: wrap !important;
+
+    gap: 9px !important;
+
+    margin: 22px 0 0 !important;
+
+    overflow: visible !important;
+  }
+
+  .trip-plan-features div {
+    display: flex;
+    align-items: center;
+
+    padding: 10px 14px !important;
+
+    gap: 8px !important;
+
+    border-radius: 50px;
+
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+
+    white-space: normal;
+  }
+
+  .trip-plan-features svg {
+    width: 17px !important;
+    height: 17px !important;
+
+    flex-shrink: 0;
+  }
+
+
+  /* =======================================================
+     HERO VISUAL
+  ======================================================= */
+
+  .trip-plan-visual {
+    width: 100% !important;
+    height: 285px !important;
+
+    position: relative;
+
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    transform: none !important;
+
+    margin: 5px 0 0 !important;
+
+    overflow: visible !important;
+  }
+
+  .trip-plan-visual::before {
+    width: 245px !important;
+    height: 245px !important;
+  }
+
+
+  /* =======================================================
+     VISUAL CARD
+  ======================================================= */
+
+  .trip-plan-visual-card {
+    width: 275px !important;
+
+    min-height: 215px !important;
+
+    padding: 25px !important;
+
+    box-sizing: border-box;
+
+    border-radius: 22px !important;
+
+    overflow: visible !important;
+  }
+
+  .visual-icon {
+    width: 62px !important;
+    height: 62px !important;
+
+    margin-bottom: 14px !important;
+  }
+
+  .visual-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+  }
+
+  .trip-plan-visual-card strong {
+    font-size: 21px !important;
+    line-height: 1.25 !important;
+  }
+
+  .trip-plan-visual-card span {
+    margin-top: 8px !important;
+
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+
+  /* =======================================================
+     FLOATING CARD
+  ======================================================= */
+
+  .trip-plan-floating-card {
+    right: 0 !important;
+    bottom: 0 !important;
+
+    max-width: calc(100% - 5px) !important;
+
+    padding: 12px 15px !important;
+
+    gap: 9px !important;
+
+    border-radius: 13px !important;
+
+    box-sizing: border-box;
+  }
+
+  .trip-plan-floating-card > svg {
+    width: 19px !important;
+    height: 19px !important;
+
+    flex-shrink: 0;
+  }
+
+  .trip-plan-floating-card strong {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+  }
+
+  .trip-plan-floating-card span {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+  }
+
+
+  /* =======================================================
+     PLANNER SECTION
+  ======================================================= */
+
+  .trip-planner-section {
+    width: 100% !important;
+
+    padding: 35px 15px 65px !important;
+
+    box-sizing: border-box;
+
+    height: auto !important;
+
+    overflow: visible !important;
+  }
+
+
+  /* =======================================================
+     PLANNER LAYOUT
+  ======================================================= */
+
+  .trip-planner-layout {
+    width: 100% !important;
+    max-width: none !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    gap: 24px !important;
+
+    margin: 0 !important;
+
+    height: auto !important;
+
+    overflow: visible !important;
+  }
+
+
+  /* =======================================================
+     VIDEO
+  ======================================================= */
+
+  .trip-media {
+    width: 100% !important;
+
+    height: 440px !important;
+
+    position: relative !important;
+    top: auto !important;
+
+    flex-shrink: 0;
+
+    border-radius: 20px !important;
+
+    overflow: hidden !important;
+  }
+
+  .trip-media-video {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: cover !important;
+  }
+
+
+  /* =======================================================
+     VIDEO OVERLAY
+  ======================================================= */
+
+  .trip-media-overlay {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 24px !important;
+  }
+
+  .trip-media-overlay > span {
+    margin-bottom: 10px !important;
+
+    font-size: 13px !important;
+
+    letter-spacing: 2px !important;
+  }
+
+  .trip-media-overlay h2 {
+    font-size: 36px !important;
+
+    line-height: 1.05 !important;
+
+    letter-spacing: -1px !important;
+  }
+
+  .trip-media-overlay p {
+    max-width: 100% !important;
+
+    margin-top: 12px !important;
+
+    font-size: 15px !important;
+
+    line-height: 1.6 !important;
+  }
+
+
+  /* =======================================================
+     PLANNER CARD
+     IMPORTANT — NO INTERNAL SCROLL
+  ======================================================= */
+
+  .trip-planner-card {
+    width: 100% !important;
+
+    height: auto !important;
+
+    min-height: 0 !important;
+    max-height: none !important;
+
+    padding: 28px 20px 35px !important;
+
+    box-sizing: border-box;
+
+    border-radius: 20px !important;
+
+    overflow: visible !important;
+
+    box-shadow:
+      0 14px 35px rgba(30, 35, 30, 0.07);
+  }
+
+  .trip-planner-card::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .trip-planner-card {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+
+  /* =======================================================
+     PLANNER HEADING
+  ======================================================= */
+
+  .planner-heading {
+    width: 100% !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    align-items: flex-start !important;
+
+    gap: 10px !important;
+
+    margin-bottom: 23px !important;
+  }
+
+  .planner-heading > div {
+    width: 100% !important;
+  }
+
+  .planner-heading > div > span {
+    margin-bottom: 8px !important;
+
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+
+    letter-spacing: 1.8px !important;
+  }
+
+  .planner-heading h2 {
+    font-size: 28px !important;
+
+    line-height: 1.2 !important;
+
+    letter-spacing: -0.8px !important;
+
+    margin: 0 !important;
+  }
+
+  .planner-heading > p {
+    width: 100% !important;
+
+    margin: 0 !important;
+
+    font-size: 15px !important;
+
+    line-height: 1.65 !important;
+  }
+
+
+  /* =======================================================
+     FORM GRID
+  ======================================================= */
+
+  .planner-grid {
+    width: 100% !important;
+
+    display: grid !important;
+
+    grid-template-columns: 1fr !important;
+
+    gap: 16px !important;
+  }
+
+  .planner-field {
+    width: 100% !important;
+
+    min-width: 0 !important;
+  }
+
+  .planner-field.field-large {
+    grid-column: span 1 !important;
+  }
+
+  .planner-field > span {
+    display: block;
+
+    margin-bottom: 8px !important;
+
+    font-size: 14px !important;
+
+    line-height: 1.4 !important;
+
+    font-weight: 700;
+  }
+
+
+  /* =======================================================
+     INPUT
+  ======================================================= */
+
+  .input-wrap {
+    width: 100% !important;
+
+    height: 52px !important;
+
+    padding: 0 14px !important;
+
+    gap: 10px !important;
+
+    box-sizing: border-box;
+
+    border-radius: 11px !important;
+  }
+
+  .input-wrap svg {
+    width: 18px !important;
+    height: 18px !important;
+
+    flex-shrink: 0;
+  }
+
+  .input-wrap input,
+  .input-wrap select {
+    width: 100% !important;
+
+    height: 50px !important;
+
+    font-size: 16px !important;
+
+    line-height: 1.4 !important;
+  }
+
+  .input-wrap input::placeholder {
+    font-size: 15px !important;
+  }
+
+
+  /* =======================================================
+     DIVIDER
+  ======================================================= */
+
+  .planner-divider {
+    width: 100% !important;
+
+    margin: 24px 0 !important;
+  }
+
+
+  /* =======================================================
+     SECTION
+  ======================================================= */
+
+  .planner-section-block {
+    width: 100% !important;
+
+    margin-bottom: 24px !important;
+
+    height: auto !important;
+
+    overflow: visible !important;
+  }
+
+  .section-label {
+    margin-bottom: 9px !important;
+
+    font-size: 16px !important;
+
+    line-height: 1.35 !important;
+
+    letter-spacing: 1.5px !important;
+  }
+
+  .section-description {
+    margin: -1px 0 12px !important;
+
+    font-size: 14px !important;
+
+    line-height: 1.6 !important;
+  }
+
+
+  /* =======================================================
+     TRAVEL TYPE
+  ======================================================= */
+
+  .travel-type-grid {
+    width: 100% !important;
+
+    display: grid !important;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 11px !important;
+  }
+
+  .travel-type {
+    width: 100% !important;
+
+    min-height: 100px !important;
+
+    padding: 13px 9px !important;
+
+    box-sizing: border-box;
+
+    border-radius: 12px !important;
+  }
+
+  .travel-type svg {
+    width: 21px !important;
+    height: 21px !important;
+
+    margin-bottom: 8px !important;
+  }
+
+  .travel-type strong {
+    font-size: 15px !important;
+
+    line-height: 1.3 !important;
+  }
+
+  .travel-type span {
+    margin-top: 5px !important;
+
+    font-size: 11px !important;
+
+    line-height: 1.4 !important;
+  }
+
+
+  /* =======================================================
+     OPTION PILLS
+  ======================================================= */
+
+  .option-row {
+    width: 100% !important;
+
+    display: flex !important;
+
+    flex-wrap: wrap !important;
+
+    gap: 9px !important;
+  }
+
+  .option-pill {
+    padding: 10px 14px !important;
+
+    font-size: 13px !important;
+
+    line-height: 1.35 !important;
+
+    border-radius: 30px !important;
+  }
+
+
+  /* =======================================================
+     STAY + TRANSPORT
+  ======================================================= */
+
+  .planner-two-column {
+    width: 100% !important;
+
+    display: grid !important;
+
+    grid-template-columns: 1fr !important;
+
+    gap: 21px !important;
+  }
+
+  .mini-options {
+    display: flex !important;
+
+    flex-wrap: wrap !important;
+
+    gap: 9px !important;
+  }
+
+  .mini-options button {
+    padding: 10px 13px !important;
+
+    font-size: 13px !important;
+
+    line-height: 1.35 !important;
+
+    border-radius: 9px !important;
+  }
+
+
+  /* =======================================================
+     INTERESTS
+  ======================================================= */
+
+  .interest-grid {
+    width: 100% !important;
+
+    display: flex !important;
+
+    flex-wrap: wrap !important;
+
+    gap: 9px !important;
+  }
+
+  .interest-chip {
+    padding: 10px 14px !important;
+
+    font-size: 13px !important;
+
+    line-height: 1.35 !important;
+
+    border-radius: 30px !important;
+  }
+
+
+  /* =======================================================
+     SUMMARY
+  ======================================================= */
+
+  .trip-selection-summary {
+    width: 100% !important;
+
+    display: grid !important;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 0 !important;
+
+    margin-top: 23px !important;
+
+    padding: 12px !important;
+
+    box-sizing: border-box;
+
+    border-radius: 13px !important;
+  }
+
+  .trip-selection-summary > div {
+    min-width: 0;
+
+    padding: 10px 9px !important;
+
+    border-right: 0;
+
+    border-bottom: 1px solid #deddd5;
+  }
+
+  .trip-selection-summary > div:nth-child(odd) {
+    border-right: 1px solid #deddd5;
+  }
+
+  .trip-selection-summary > div:nth-child(3),
+  .trip-selection-summary > div:nth-child(4) {
+    border-bottom: 0;
+  }
+
+  .trip-selection-summary small {
+    display: block;
+
+    margin-bottom: 5px !important;
+
+    font-size: 9px !important;
+
+    line-height: 1.35 !important;
+
+    letter-spacing: 0.8px !important;
+  }
+
+  .trip-selection-summary strong {
+    display: block;
+
+    font-size: 13px !important;
+
+    line-height: 1.4 !important;
+  }
+
+
+  /* =======================================================
+     CREATE BUTTON
+  ======================================================= */
+
+  .create-trip-button {
+    width: 100% !important;
+
+    height: 55px !important;
+
+    margin-top: 16px !important;
+
+    padding: 0 18px !important;
+
+    border-radius: 12px !important;
+
+    font-size: 16px !important;
+
+    line-height: 1.35 !important;
+  }
+
+  .create-trip-button svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+
+
+  /* =======================================================
+     NOTE
+  ======================================================= */
+
+  .planner-note {
+    margin: 12px 0 0 !important;
+
+    padding-bottom: 5px;
+
+    font-size: 11px !important;
+
+    line-height: 1.6 !important;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE — 360 / 375 / 390
+   IMPORTANT: DO NOT MAKE TEXT TOO SMALL
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .trip-plan-hero {
+    position: relative !important;
+
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+
+    /* HERO KO TOP SE AUR NICHE KARO */
+    padding-top: 110px !important;
+    padding-right: 20px !important;
+    padding-bottom: 50px !important;
+    padding-left: 20px !important;
+
+    margin-top: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    align-items: stretch !important;
+
+    gap: 30px !important;
+
+    box-sizing: border-box !important;
+
+    overflow: visible !important;
+  }
+
+  .trip-plan-hero-content {
+    padding-top: 8px !important;
+  }
+
+  .trip-plan-eyebrow {
+    font-size: 11px !important;
+
+    margin-bottom: 13px !important;
+  }
+
+  .trip-plan-hero h1 {
+    font-size: 47px !important;
+
+    line-height: 1.04 !important;
+
+    letter-spacing: -1.8px !important;
+  }
+
+  .trip-plan-hero p {
+    font-size: 15px !important;
+
+    line-height: 1.65 !important;
+
+    margin-top: 17px !important;
+  }
+
+  .trip-plan-features {
+    gap: 7px !important;
+
+    margin-top: 20px !important;
+  }
+
+  .trip-plan-features div {
+    padding: 9px 12px !important;
+
+    font-size: 13px !important;
+  }
+
+  .trip-plan-features svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+
+  /* -------------------------------
+     HERO VISUAL
+  -------------------------------- */
+
+  .trip-plan-visual {
+    height: 270px !important;
+
+    margin-top: 0 !important;
+  }
+
+  .trip-plan-visual::before {
+    width: 225px !important;
+    height: 225px !important;
+  }
+
+  .trip-plan-visual-card {
+    width: 255px !important;
+
+    min-height: 205px !important;
+
+    padding: 22px !important;
+
+    border-radius: 20px !important;
+  }
+
+  .visual-icon {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .trip-plan-visual-card strong {
+    font-size: 19px !important;
+  }
+
+  .trip-plan-visual-card span {
+    font-size: 13px !important;
+  }
+
+  .trip-plan-floating-card {
+    right: 0 !important;
+
+    bottom: 0 !important;
+
+    padding: 10px 12px !important;
+  }
+
+  .trip-plan-floating-card strong {
+    font-size: 13px !important;
+  }
+
+  .trip-plan-floating-card span {
+    font-size: 11px !important;
+  }
+
+
+  /* -------------------------------
+     PLANNER
+  -------------------------------- */
+
+  .trip-planner-section {
+    padding: 30px 10px 55px !important;
+  }
+
+  .trip-planner-layout {
+    gap: 20px !important;
+  }
+
+
+  /* -------------------------------
+     VIDEO
+  -------------------------------- */
+
+  .trip-media {
+    height: 400px !important;
+
+    border-radius: 18px !important;
+  }
+
+  .trip-media-overlay {
+    left: 17px !important;
+    right: 17px !important;
+    bottom: 20px !important;
+  }
+
+  .trip-media-overlay > span {
+    font-size: 11px !important;
+  }
+
+  .trip-media-overlay h2 {
+    font-size: 31px !important;
+  }
+
+  .trip-media-overlay p {
+    font-size: 13px !important;
+  }
+
+
+  /* -------------------------------
+     FORM CARD
+  -------------------------------- */
+
+  .trip-planner-card {
+    padding: 25px 15px 32px !important;
+
+    border-radius: 18px !important;
+  }
+
+  .planner-heading {
+    margin-bottom: 21px !important;
+  }
+
+  .planner-heading > div > span {
+    font-size: 11px !important;
+  }
+
+  .planner-heading h2 {
+    font-size: 26px !important;
+  }
+
+  .planner-heading > p {
+    font-size: 14px !important;
+  }
+
+
+  /* -------------------------------
+     FIELDS
+  -------------------------------- */
+
+  .planner-grid {
+    gap: 15px !important;
+  }
+
+  .planner-field > span {
+    font-size: 14px !important;
+  }
+
+  .input-wrap {
+    height: 51px !important;
+
+    padding: 0 13px !important;
+  }
+
+  .input-wrap input,
+  .input-wrap select {
+    height: 49px !important;
+
+    font-size: 15px !important;
+  }
+
+  .input-wrap input::placeholder {
+    font-size: 14px !important;
+  }
+
+
+  /* -------------------------------
+     SECTION
+  -------------------------------- */
+
+  .section-label {
+    font-size: 15px !important;
+  }
+
+  .section-description {
+    font-size: 13px !important;
+  }
+
+
+  /* -------------------------------
+     TRAVEL TYPE
+  -------------------------------- */
+
+  .travel-type-grid {
+    gap: 9px !important;
+  }
+
+  .travel-type {
+    min-height: 94px !important;
+
+    padding: 12px 7px !important;
+  }
+
+  .travel-type strong {
+    font-size: 14px !important;
+  }
+
+  .travel-type span {
+    font-size: 10px !important;
+  }
+
+
+  /* -------------------------------
+     OPTIONS
+  -------------------------------- */
+
+  .option-pill,
+  .mini-options button,
+  .interest-chip {
+    font-size: 12px !important;
+  }
+
+
+  /* -------------------------------
+     SUMMARY
+  -------------------------------- */
+
+  .trip-selection-summary {
+    padding: 10px !important;
+  }
+
+  .trip-selection-summary small {
+    font-size: 8px !important;
+  }
+
+  .trip-selection-summary strong {
+    font-size: 12px !important;
+  }
+
+
+  /* -------------------------------
+     BUTTON
+  -------------------------------- */
+
+  .create-trip-button {
+    height: 53px !important;
+
+    font-size: 15px !important;
+  }
+
+  .planner-note {
+    font-size: 10px !important;
+
+    line-height: 1.6 !important;
+  }
+}
+
+
+/* =========================================================
+   EXTRA SAFETY — NEVER CUT CONTENT
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .trip-plan-page,
+  .trip-plan-hero,
+  .trip-plan-hero-content,
+  .trip-plan-visual,
+  .trip-planner-section,
+  .trip-planner-layout,
+  .trip-planner-card,
+  .planner-section-block,
+  .planner-grid,
+  .planner-two-column {
+    height: auto !important;
+    max-height: none !important;
+
+    overflow: visible !important;
+  }
+
+  .trip-media {
+    overflow: hidden !important;
+  }
+
+  .trip-plan-hero-content,
+  .trip-plan-hero h1,
+  .trip-plan-hero p,
+  .trip-plan-features {
+    position: relative;
+    z-index: 5;
+  }
+}

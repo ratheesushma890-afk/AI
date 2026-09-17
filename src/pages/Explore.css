@@ -1,0 +1,2242 @@
+/* =========================================================
+   EXPLORE PAGE — PREMIUM BLUE
+========================================================= */
+
+.explore-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #f4f8fc;
+  color: #172d42;
+
+  font-family: "Inter", sans-serif;
+
+  overflow-x: hidden;
+}
+
+.explore-page *,
+.explore-page *::before,
+.explore-page *::after {
+  box-sizing: border-box;
+}
+
+.explore-page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.explore-page button,
+.explore-page input {
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.explore-hero {
+  position: relative;
+
+  width: 100%;
+  height: 525px;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+
+  background: #082f50;
+}
+
+.explore-hero-image {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+.explore-hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(4, 35, 59, 0.94) 0%,
+      rgba(6, 49, 79, 0.74) 42%,
+      rgba(6, 49, 79, 0.12) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(3, 28, 48, 0.45),
+      transparent 65%
+    );
+}
+
+.explore-hero-content {
+  position: relative;
+  z-index: 2;
+
+  width: min(1120px, calc(100% - 60px));
+
+  margin: 0 auto;
+
+  padding-top: 8px;
+}
+
+
+/* =========================================================
+   HERO EYEBROW
+========================================================= */
+
+.explore-eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 11px;
+
+  color: #b9d9ee;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+
+  text-transform: uppercase;
+}
+
+.explore-eyebrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.explore-hero h1 {
+  max-width: 650px;
+
+  margin: 0;
+
+  color: #ffffff;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(48px, 5.2vw, 68px);
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: -2.5px;
+}
+
+.explore-hero h1 em {
+  color: #b9dff6;
+
+  font-style: italic;
+}
+
+
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
+
+.explore-hero-content > p {
+  max-width: 455px;
+
+  margin: 15px 0 18px;
+
+  color: rgba(255, 255, 255, 0.76);
+
+  font-size: 15px;
+
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.explore-search {
+  width: min(570px, 100%);
+
+  min-height: 52px;
+
+  padding: 4px 4px 4px 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.25);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(15px);
+
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.explore-search .search-icon {
+  flex: 0 0 auto;
+
+  width: 17px;
+
+  color: #b9ddf7;
+}
+
+.explore-search input {
+  min-width: 0;
+
+  flex: 1;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 14px;
+}
+
+.explore-search input::placeholder {
+  color:
+    rgba(255, 255, 255, 0.62);
+}
+
+.explore-search button {
+  height: 42px;
+
+  padding: 0 18px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: #d9edf9;
+
+  color: #073653;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.explore-search button:hover {
+  background: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+.explore-search button svg {
+  width: 14px;
+}
+
+
+/* =========================================================
+   HERO INFO
+========================================================= */
+
+.hero-mini-info {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 8px 18px;
+
+  margin-top: 11px;
+}
+
+.hero-mini-info span {
+  color:
+    rgba(255, 255, 255, 0.68);
+
+  font-size: 12px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   COMMON SECTION HEADING
+========================================================= */
+
+.section-heading {
+  width: min(1120px, calc(100% - 60px));
+
+  margin: 0 auto 14px;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.small-label {
+  display: inline-block;
+
+  margin-bottom: 6px;
+
+  color: #3679a8;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.6px;
+}
+
+.heading-link {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #276990;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TRENDING SECTION
+========================================================= */
+
+.trending-section {
+  padding: 44px 0 50px;
+
+  background: #f4f8fc;
+}
+
+.destination-slider {
+  width: 100%;
+
+  padding-left:
+    max(30px, calc((100vw - 1120px) / 2));
+
+  padding-right:
+    max(30px, calc((100vw - 1120px) / 2));
+
+  display: flex;
+
+  gap: 12px;
+
+  overflow-x: auto;
+
+  scroll-snap-type: x mandatory;
+
+  scrollbar-width: none;
+}
+
+.destination-slider::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* =========================================================
+   TREND CARD
+========================================================= */
+
+.trend-card {
+  position: relative;
+
+  flex: 0 0 200px;
+
+  height: 300px;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  background: #154b70;
+
+  scroll-snap-align: start;
+
+  isolation: isolate;
+}
+
+.trend-card img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.55s ease;
+}
+
+.trend-card:hover img {
+  transform: scale(1.045);
+}
+
+.trend-gradient {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 30%,
+      rgba(4, 30, 51, 0.92) 100%
+    );
+}
+
+.trend-content {
+  position: absolute;
+
+  left: 14px;
+  right: 14px;
+  bottom: 18px;
+
+  color: #ffffff;
+}
+
+.trend-content h3 {
+  margin: 0 0 4px;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 23px;
+
+  font-weight: 400;
+}
+
+.trend-location {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color:
+    rgba(255, 255, 255, 0.76);
+
+  font-size: 12px;
+}
+
+.trend-location svg {
+  width: 12px;
+}
+
+.trend-bottom {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 10px;
+
+  padding-top: 9px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.18);
+
+  font-size: 11px;
+}
+
+.trend-bottom > span:first-child {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.trend-bottom > span:first-child svg {
+  width: 11px;
+}
+
+.trend-arrow {
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.3);
+
+  border-radius: 50%;
+
+  transition: 0.2s ease;
+}
+
+.trend-card:hover .trend-arrow {
+  transform: translateX(3px);
+}
+
+
+
+/* =========================================================
+   DISCOVER SECTION
+========================================================= */
+
+.discover-section {
+  padding: 28px 0 54px;
+
+  background: #f4f8fc;
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+.filter-row {
+  width: min(1120px, calc(100% - 60px));
+
+  margin: 0 auto 19px;
+
+  display: flex;
+
+  gap: 6px;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.filter-row::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-row button {
+  flex: 0 0 auto;
+
+  height: 34px;
+
+  padding: 0 14px;
+
+  border:
+    1px solid #cbdbe6;
+
+  border-radius: 50px;
+
+  background: transparent;
+
+  color: #60788a;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.filter-row button:hover {
+  border-color: #397ba5;
+
+  color: #28698f;
+}
+
+.filter-row button.active {
+  border-color: #28698f;
+
+  background: #28698f;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   DESTINATION GRID
+========================================================= */
+
+.discover-grid {
+  width: min(1120px, calc(100% - 60px));
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   DESTINATION CARD
+========================================================= */
+
+.destination-card {
+  position: relative;
+
+  height: 250px;
+
+  overflow: hidden;
+
+  border:
+    1px solid #dce7ee;
+
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 3px 13px rgba(25, 67, 94, 0.045);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 24px rgba(25, 67, 94, 0.09);
+}
+
+
+/* =========================================================
+   DESTINATION IMAGE
+========================================================= */
+
+.destination-image-link {
+  display: block;
+}
+
+.destination-image {
+  position: relative;
+
+  width: 100% !important;
+
+  height: 280px !important;
+
+  min-height: 280px !important;
+
+  max-height: 280px !important;
+
+  overflow: hidden !important;
+}
+
+.destination-image img {
+  width: 100% !important;
+
+  height: 100% !important;
+
+  min-height: 100% !important;
+
+  max-height: none !important;
+
+  display: block !important;
+
+  object-fit: cover !important;
+}
+
+.destination-card:hover
+.destination-image img {
+  transform: scale(1.035);
+}
+
+.destination-image::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 38, 65, 0.1),
+      transparent 45%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   IMAGE TOP
+========================================================= */
+
+.destination-image-top {
+  position: absolute;
+
+  z-index: 2;
+
+  top: 11px;
+  left: 11px;
+  right: 11px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+}
+
+.destination-tag {
+  min-height: 25px;
+
+  padding: 0 9px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.25);
+
+  border-radius: 50px;
+
+  background:
+    rgba(7, 47, 76, 0.56);
+
+  backdrop-filter: blur(8px);
+
+  color: #ffffff;
+
+  font-size: 11px;
+
+  font-weight: 800;
+}
+
+.destination-location {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #ffffff;
+
+  font-size: 11px;
+}
+
+.destination-location svg {
+  width: 12px;
+}
+
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+.like-btn {
+  position: absolute;
+
+  z-index: 5;
+
+  top: 208px;
+  right: 11px;
+
+  width: 37px;
+  height: 37px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.65);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.95);
+
+  color: #34637f;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.1);
+
+  transition: all 0.2s ease;
+}
+
+.like-btn svg {
+  width: 17px;
+  height: 17px;
+
+  stroke-width: 1.7;
+}
+
+.like-btn:hover {
+  background: #28698f;
+
+  color: #ffffff;
+
+  transform: scale(1.05);
+}
+
+.like-btn.liked {
+  background: #fff0f1;
+
+  color: #d5222d;
+
+  border-color: #e36b72;
+}
+
+.like-btn.liked svg {
+  fill: #d5222d;
+
+  color: #d5222d;
+}
+
+
+/* =========================================================
+   DESTINATION INFO
+========================================================= */
+
+.destination-info {
+  padding: 13px 14px 13px;
+}
+
+.destination-title-row {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 7px;
+}
+
+.destination-title-row h3 {
+  margin: 0;
+
+  color: #19364e;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 24px;
+
+  font-weight: 400;
+
+  letter-spacing: -0.4px;
+}
+
+.destination-title-row a:hover h3 {
+  color: #28698f;
+}
+
+.rating {
+  display: flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  color: #50778f;
+
+  font-size: 11px;
+
+  font-weight: 800;
+}
+
+.rating svg {
+  width: 12px;
+  height: 12px;
+
+  fill: #4d8bb3;
+}
+
+.destination-info > p {
+  min-height: 30px;
+
+  margin: 6px 0 10px;
+
+  color: #788d9c;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+========================================================= */
+
+.destination-footer {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 7px;
+
+  padding-top: 9px;
+
+  border-top:
+    1px solid #e6edf2;
+}
+
+.price-box {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.price-box small {
+  color: #9aaab5;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.7px;
+}
+
+.price-box strong {
+  color: #244960;
+
+  font-size: 15px;
+
+  font-weight: 800;
+}
+
+.view-detail {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #28698f;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.view-detail svg {
+  width: 13px;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty-explore {
+  width: min(420px, calc(100% - 40px));
+
+  margin: 22px auto 0;
+
+  padding: 34px 20px;
+
+  text-align: center;
+
+  border:
+    1px dashed #c9d9e3;
+
+  border-radius: 13px;
+
+  background: #fbfdff;
+}
+
+.empty-icon {
+  width: 44px;
+  height: 44px;
+
+  margin: 0 auto 11px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e1edf5;
+
+  color: #28698f;
+}
+
+.empty-icon svg {
+  width: 17px;
+}
+
+.empty-explore h3 {
+  margin: 0 0 6px;
+
+  color: #19364e;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 22px;
+
+  font-weight: 400;
+}
+
+.empty-explore p {
+  margin: 0 0 14px;
+
+  color: #82939f;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+.empty-explore button {
+  height: 36px;
+
+  padding: 0 17px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: #28698f;
+
+  color: #ffffff;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   AI SECTION
+========================================================= */
+
+.ai-explore-section {
+  position: relative;
+
+  min-height: 320px;
+
+  padding:
+    44px
+    max(30px, calc((100vw - 1120px) / 2));
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 55px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 72% 50%,
+      rgba(63, 143, 194, 0.25),
+      transparent 33%
+    ),
+    #073354;
+
+  color: #ffffff;
+}
+
+.ai-content {
+  width: min(420px, 100%);
+}
+
+.ai-content .small-label {
+  color: #8ebbd8;
+}
+
+.ai-content h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(36px, 3.6vw, 48px);
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: -1.7px;
+}
+
+.ai-content p {
+  max-width: 375px;
+
+  margin: 12px 0 18px;
+
+  color:
+    rgba(255, 255, 255, 0.68);
+
+  font-size: 14px;
+
+  line-height: 1.65;
+}
+
+.ai-button {
+  min-height: 41px;
+
+  padding: 0 17px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  border: 0;
+
+  border-radius: 7px;
+
+  background: #d9edf9;
+
+  color: #073354;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.ai-button:hover {
+  background: #ffffff;
+
+  transform: translateY(-2px);
+}
+
+.ai-button svg {
+  width: 13px;
+}
+
+
+/* =========================================================
+   AI ORBIT
+========================================================= */
+
+.ai-orbit {
+  position: relative;
+
+  width: 220px;
+  height: 220px;
+
+  flex: 0 0 220px;
+}
+
+.orbit-ring {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  border:
+    1px solid rgba(169, 216, 243, 0.18);
+
+  border-radius: 50%;
+
+  transform:
+    translate(-50%, -50%);
+}
+
+.ring-one {
+  width: 88px;
+  height: 88px;
+}
+
+.ring-two {
+  width: 150px;
+  height: 150px;
+}
+
+.ring-three {
+  width: 210px;
+  height: 210px;
+}
+
+.ai-center {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 70px;
+  height: 70px;
+
+  transform:
+    translate(-50%, -50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.2);
+
+  border-radius: 50%;
+
+  background:
+    rgba(147, 205, 236, 0.1);
+
+  color: #bce2f5;
+}
+
+.ai-center span {
+  font-size: 12px;
+}
+
+.orbit-dot {
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #a9d9f3;
+
+  box-shadow:
+    0 0 12px rgba(141, 210, 243, 0.6);
+}
+
+.dot-one {
+  top: 15px;
+  left: 107px;
+}
+
+.dot-two {
+  right: 4px;
+  bottom: 47px;
+}
+
+.dot-three {
+  left: 22px;
+  bottom: 35px;
+}
+
+
+/* =========================================================
+   LARGE TABLET — 1000px
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .discover-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .mood-card {
+    flex: 0 0 31%;
+  }
+
+  .ai-explore-section {
+    gap: 35px;
+  }
+
+  .destination-info > p {
+    font-size: 14px;
+  }
+
+  .trend-location {
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   TABLET — 760px
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .explore-hero {
+    height: 510px;
+  }
+
+  .explore-hero-content {
+    width: calc(100% - 40px);
+  }
+
+  .explore-hero-content > p {
+    font-size: 15px;
+  }
+
+  .destination-slider {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .section-heading {
+    width: calc(100% - 40px);
+  }
+
+  .mood-grid {
+    width: calc(100% - 40px);
+  }
+
+  .filter-row {
+    width: calc(100% - 40px);
+  }
+
+  .discover-grid {
+    width: 100%;
+
+    display: flex;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    gap: 12px;
+
+    overflow-x: auto;
+
+    scroll-snap-type: x mandatory;
+
+    scrollbar-width: none;
+  }
+
+  .discover-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .destination-card {
+    flex: 0 0 330px;
+
+    scroll-snap-align: start;
+  }
+
+  .mood-card {
+    flex: 0 0 270px;
+  }
+
+  .ai-explore-section {
+    padding: 45px 30px;
+  }
+
+  .small-label {
+    font-size: 14px;
+  }
+
+  .heading-link {
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE — 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+  /* =====================================================
+     HERO
+  ===================================================== */
+
+  .explore-hero {
+    height: 540px;
+  }
+
+  .explore-hero-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(5, 42, 69, 0.35),
+        rgba(4, 34, 57, 0.94)
+      );
+  }
+
+  .explore-hero-content {
+    width: calc(100% - 30px);
+
+    padding-top: 35px;
+  }
+
+  .explore-eyebrow {
+    margin-bottom: 10px;
+
+    font-size: 11px;
+
+    letter-spacing: 1.4px;
+  }
+
+  .explore-eyebrow svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .explore-hero h1 {
+    max-width: 350px;
+
+    font-size: 41px;
+
+    line-height: 1.02;
+
+    letter-spacing: -1.7px;
+  }
+
+  .explore-hero-content > p {
+    max-width: 335px;
+
+    margin: 14px 0 17px;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+  }
+
+
+  /* =====================================================
+     SEARCH
+  ===================================================== */
+
+  .explore-search {
+    display: grid;
+
+    grid-template-columns: 20px 1fr;
+
+    gap: 4px;
+
+    padding: 5px;
+  }
+
+  .explore-search .search-icon {
+    margin-left: 4px;
+  }
+
+  .explore-search input {
+    height: 37px;
+
+    font-size: 13px;
+  }
+
+  .explore-search button {
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    height: 38px;
+
+    font-size: 13px;
+  }
+
+
+  /* =====================================================
+     HERO INFO
+  ===================================================== */
+
+  .hero-mini-info {
+    gap: 7px 12px;
+
+    margin-top: 11px;
+  }
+
+  .hero-mini-info span {
+    font-size: 13px;
+  }
+
+
+  /* =====================================================
+     SECTIONS
+  ===================================================== */
+
+  .trending-section,
+  .mood-section,
+  .discover-section {
+    padding: 39px 0 44px;
+  }
+
+
+  /* =====================================================
+     SECTION HEADING
+  ===================================================== */
+
+  .section-heading {
+    width: calc(100% - 30px);
+
+    margin-bottom: 16px;
+
+    display: block;
+  }
+
+  .small-label {
+    margin-bottom: 5px;
+
+    font-size: 14px;
+  }
+
+  .section-heading h2 {
+    font-size: 30px;
+
+    line-height: 1.05;
+
+    letter-spacing: -1.2px;
+  }
+
+  .heading-link {
+    margin-top: 10px;
+    display:none;
+    font-size: 12px;
+  }
+
+
+  /* =====================================================
+     TREND SLIDER
+  ===================================================== */
+
+  .destination-slider {
+    padding-left: 15px;
+    padding-right: 15px;
+
+    gap: 8px;
+  }
+
+  .trend-card {
+    flex: 0 0 215px;
+
+    height: 300px;
+  }
+
+  .trend-content h3 {
+    font-size: 23px;
+  }
+
+  .trend-location {
+    font-size: 12px;
+  }
+
+  .trend-bottom {
+    font-size: 11px;
+  }
+
+
+  /* =====================================================
+     FILTER
+  ===================================================== */
+
+  .filter-row {
+    width: calc(100% - 30px);
+
+    margin-bottom: 16px;
+
+    gap: 5px;
+  }
+
+  .filter-row button {
+    height: 32px;
+
+    padding: 0 13px;
+
+    font-size: 12px;
+  }
+
+
+  /* =====================================================
+     DESTINATION SLIDER
+  ===================================================== */
+
+  .discover-grid {
+    width: 100%;
+
+    display: flex;
+
+    padding-left: 15px;
+    padding-right: 15px;
+
+    gap: 10px;
+
+    overflow-x: auto;
+
+    scroll-snap-type: x mandatory;
+
+    scrollbar-width: none;
+  }
+
+  .discover-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .destination-card {
+    flex: 0 0 calc(100vw - 55px);
+
+    min-width: calc(100vw - 55px);
+
+    scroll-snap-align: start;
+
+    border-radius: 13px;
+  }
+
+
+  /* =====================================================
+     DESTINATION IMAGE
+  ===================================================== */
+
+  .destination-image {
+    height: 255px !important;
+
+    min-height: 255px !important;
+
+    max-height: 255px !important;
+  }
+
+  .destination-image img {
+    object-position: center;
+  }
+
+
+  /* =====================================================
+     DESTINATION TOP
+  ===================================================== */
+
+  .destination-tag {
+    font-size: 11px;
+  }
+
+  .destination-location {
+    font-size: 11px;
+  }
+
+
+  /* =====================================================
+     WISHLIST
+  ===================================================== */
+
+  .like-btn {
+    top: 218px;
+
+    right: 11px;
+
+    width: 37px;
+
+    height: 37px;
+  }
+
+
+  /* =====================================================
+     DESTINATION INFO
+  ===================================================== */
+
+  .destination-info {
+    padding: 13px 13px 12px;
+  }
+
+  .destination-title-row h3 {
+    font-size: 23px;
+  }
+
+  .rating {
+    font-size: 11px;
+  }
+
+  .destination-info > p {
+    font-size: 14px;
+
+    line-height: 1.55;
+  }
+
+  .price-box small {
+    font-size: 10px;
+  }
+
+  .price-box strong {
+    font-size: 15px;
+  }
+
+  .view-detail {
+    font-size: 11px;
+  }
+
+
+  /* =====================================================
+     AI
+  ===================================================== */
+
+  .ai-explore-section {
+    min-height: auto;
+
+    padding: 45px 20px 50px;
+
+    flex-direction: column;
+
+    gap: 22px;
+
+    text-align: center;
+  }
+
+  .ai-content {
+    width: 100%;
+  }
+
+  .ai-content .small-label {
+    font-size: 14px;
+  }
+
+  .ai-orbit {
+    width: 195px;
+
+    height: 195px;
+
+    flex-basis: 195px;
+  }
+
+  .ring-one {
+    width: 78px;
+    height: 78px;
+  }
+
+  .ring-two {
+    width: 135px;
+    height: 135px;
+  }
+
+  .ring-three {
+    width: 190px;
+    height: 190px;
+  }
+
+  .ai-center {
+    width: 60px;
+    height: 60px;
+  }
+
+  .ai-center span {
+    font-size: 11px;
+  }
+
+  .dot-one {
+    top: 12px;
+
+    left: 94px;
+  }
+
+  .dot-two {
+    right: 4px;
+
+    bottom: 42px;
+  }
+
+  .dot-three {
+    left: 17px;
+
+    bottom: 31px;
+  }
+
+  .ai-content h2 {
+    font-size: 36px;
+  }
+
+  .ai-content p {
+    max-width: 340px;
+
+    margin:
+      12px auto 18px;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+  }
+
+  .ai-button {
+    min-height: 40px;
+
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE — 480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .explore-hero {
+    height: 530px;
+  }
+
+  .explore-hero-content {
+    width: calc(100% - 24px);
+
+    padding-top: 29px;
+  }
+
+  .explore-eyebrow {
+    font-size: 12px;
+
+    letter-spacing: 1.2px;
+  }
+
+  .explore-hero h1 {
+    font-size: 38px;
+
+    letter-spacing: -1.5px;
+  }
+
+  .explore-hero-content > p {
+    max-width: 320px;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+  }
+
+  .hero-mini-info span {
+    font-size: 12px;
+  }
+
+
+  /* SECTION */
+
+  .section-heading {
+    width: calc(100% - 24px);
+  }
+
+  .section-heading h2 {
+    font-size: 30px;
+  }
+
+  .small-label {
+    font-size: 14px;
+  }
+
+
+  /* TREND */
+
+  .trend-card {
+    flex-basis: 210px;
+
+    height: 290px;
+  }
+
+  .trend-content h3 {
+    font-size: 22px;
+  }
+
+  .trend-location {
+    font-size: 11px;
+  }
+
+  .trend-bottom {
+    font-size: 10px;
+  }
+
+
+  /* MOOD */
+
+  .mood-card {
+    flex-basis: 220px;
+  }
+
+  .mood-content > span {
+    font-size: 10px;
+  }
+
+  .mood-content h3 {
+    font-size: 20px;
+  }
+
+
+  /* DESTINATION */
+
+  .destination-card {
+    flex-basis: calc(100vw - 42px);
+
+    min-width: calc(100vw - 42px);
+    
+  }
+
+  .destination-image {
+    height: 245px !important;
+  
+
+    min-height: 245px !important;
+
+    max-height: 245px !important;
+  }
+
+  .like-btn {
+    top: 198px;
+  }
+
+  .destination-title-row h3 {
+    font-size: 22px;
+  }
+
+  .destination-info > p {
+    font-size: 14px;
+  }
+
+  .view-detail {
+    font-size: 10px;
+  }
+
+
+  /* AI */
+
+  .ai-content h2 {
+    font-size: 34px;
+  }
+
+  .ai-content p {
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE — 380px
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .explore-hero {
+    height: 520px;
+  }
+
+  .explore-hero-content {
+    padding-top: 27px;
+  }
+
+  .explore-eyebrow {
+    font-size: 9px;
+
+    letter-spacing: 1px;
+  }
+
+  .explore-hero h1 {
+    font-size: 35px;
+
+    letter-spacing: -1.3px;
+  }
+
+  .explore-hero-content > p {
+    font-size: 14px;
+
+    line-height: 1.55;
+  }
+
+  .hero-mini-info span {
+    font-size: 9px;
+  }
+
+
+  /* SECTION */
+
+  .section-heading h2 {
+    font-size: 28px;
+  }
+
+  .small-label {
+    font-size: 12px;
+  }
+
+
+  /* TREND */
+
+  .trend-card {
+    flex-basis: 205px;
+
+    height: 290px;
+  }
+
+  .trend-content h3 {
+    font-size: 21px;
+  }
+
+  .trend-location {
+    font-size: 11px;
+  }
+
+
+  /* MOOD */
+
+  .mood-card {
+    flex-basis: 215px;
+  }
+
+
+  /* DESTINATION */
+
+  .destination-card {
+    flex-basis: calc(100vw - 38px);
+
+    min-width: calc(100vw - 38px);
+  }
+
+  .destination-image {
+    height: 235px !important;
+
+    min-height: 235px !important;
+
+    max-height: 235px !important;
+  }
+
+  .like-btn {
+    top: 188px;
+  }
+
+  .destination-title-row h3 {
+    font-size: 21px;
+  }
+
+  .destination-info > p {
+    font-size: 13px;
+
+    line-height: 1.5;
+  }
+
+  .price-box strong {
+    font-size: 14px;
+  }
+
+  .view-detail {
+    font-size: 10px;
+  }
+
+
+  /* AI */
+
+  .ai-content h2 {
+    font-size: 31px;
+  }
+
+  .ai-content p {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   EXTRA SMALL MOBILE — 340px
+========================================================= */
+
+@media (max-width: 340px) {
+
+  .explore-hero {
+    height: 515px;
+  }
+
+  .explore-hero-content {
+    width: calc(100% - 20px);
+
+    padding-top: 24px;
+  }
+
+  .explore-eyebrow {
+    font-size: 8px;
+  }
+
+  .explore-hero h1 {
+    font-size: 32px;
+
+    letter-spacing: -1.1px;
+  }
+
+  .explore-hero-content > p {
+    font-size: 13px;
+  }
+
+  .hero-mini-info span {
+    font-size: 8px;
+  }
+
+
+  /* SECTION */
+
+  .section-heading {
+    width: calc(100% - 20px);
+  }
+
+  .section-heading h2 {
+    font-size: 26px;
+  }
+
+  .small-label {
+    font-size: 11px;
+  }
+
+
+  /* TREND */
+
+  .trend-card {
+    flex-basis: 195px;
+
+    height: 280px;
+  }
+
+  .trend-content h3 {
+    font-size: 20px;
+  }
+
+  .trend-location {
+    font-size: 10px;
+  }
+
+
+  /* MOOD */
+
+  .mood-card {
+    flex-basis: 205px;
+
+    height: 200px;
+  }
+
+
+  /* DESTINATION */
+
+  .destination-card {
+    flex-basis: calc(100vw - 32px);
+
+    min-width: calc(100vw - 32px);
+  }
+
+  .destination-image {
+    height: 225px !important;
+
+    min-height: 225px !important;
+
+    max-height: 225px !important;
+  }
+
+  .like-btn {
+    top: 178px;
+
+    width: 35px;
+    height: 35px;
+  }
+
+  .destination-title-row h3 {
+    font-size: 20px;
+  }
+
+  .destination-info > p {
+    font-size: 13px;
+  }
+
+  .price-box small {
+    font-size: 9px;
+  }
+
+  .price-box strong {
+    font-size: 13px;
+  }
+
+
+  /* AI */
+
+  .ai-content h2 {
+    font-size: 28px;
+  }
+
+  .ai-content p {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+========================================================= */
+
+@media (hover: none) {
+
+  .destination-card:hover {
+    transform: none;
+  }
+
+  .trend-card:hover img,
+  .mood-card:hover img,
+  .destination-card:hover
+  .destination-image img {
+    transform: none;
+  }
+
+  .trend-card,
+  .mood-card,
+  .destination-card {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .explore-page *,
+  .explore-page *::before,
+  .explore-page *::after {
+    animation: none !important;
+
+    transition: none !important;
+  }
+}

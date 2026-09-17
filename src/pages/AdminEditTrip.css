@@ -1,0 +1,104 @@
+.admin-edit-trip-page {
+  min-height: 100vh;
+  padding: 40px;
+  background: #f6f8fb;
+}
+
+.admin-edit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.admin-edit-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #172033;
+}
+
+.admin-edit-header p {
+  margin-top: 8px;
+  color: #7a8496;
+}
+
+.admin-edit-form {
+  max-width: 750px;
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.edit-form-group {
+  margin-bottom: 20px;
+}
+
+.edit-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #273044;
+}
+
+.edit-form-group input,
+.edit-form-group select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 15px;
+  border: 1px solid #dfe4ec;
+  border-radius: 10px;
+  outline: none;
+  font-size: 15px;
+}
+
+.edit-form-group input:focus,
+.edit-form-group select:focus {
+  border-color: #667eea;
+}
+
+.update-trip-btn {
+  width: 100%;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  background: #172033;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.trip-not-found {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.trip-not-found button {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: #172033;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .admin-edit-trip-page {
+    padding: 20px;
+  }
+
+  .admin-edit-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .admin-edit-form {
+    padding: 20px;
+  }
+}

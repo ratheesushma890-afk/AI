@@ -1,0 +1,1296 @@
+
+/* =========================================================
+   LITTLE DETOURS
+========================================================= */
+
+.little-detours {
+  position: relative;
+  width: 100%;
+  min-height: 700px;
+  padding: 30px 6% 45px;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(91, 178, 205, 0.09),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 88% 75%,
+      rgba(215, 188, 139, 0.10),
+      transparent 24%
+    ),
+    #f5f8f6;
+
+  color: #173f50;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.detour-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(70px);
+}
+
+.detour-circle-one {
+  width: 300px;
+  height: 300px;
+  top: -150px;
+  right: 18%;
+  background: rgba(72, 165, 199, 0.07);
+}
+
+.detour-circle-two {
+  width: 350px;
+  height: 350px;
+  bottom: -180px;
+  left: 8%;
+  background: rgba(213, 180, 127, 0.07);
+}
+
+.detour-dots {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(
+      rgba(48, 105, 124, 0.10) 1px,
+      transparent 1px
+    );
+
+  background-size: 18px 18px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent,
+      black 20%,
+      black 80%,
+      transparent
+    );
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.detour-header {
+  position: relative;
+  z-index: 5;
+
+  max-width: 1180px;
+  margin: 0 auto 55px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.detour-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 17px;
+
+  color: #4b9fbe;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2.2px;
+}
+
+.detour-label i {
+  width: 6px;
+  height: 6px;
+
+  display: block;
+
+  border-radius: 50%;
+  background: #4b9fbe;
+
+  box-shadow:
+    0 0 0 5px rgba(75, 159, 190, 0.09);
+}
+
+.detour-heading h2 {
+  margin: 0;
+
+  color: #193f50;
+
+  font-size: clamp(48px, 5.6vw, 74px);
+  line-height: 0.92;
+  font-weight: 400;
+
+  letter-spacing: -6px;
+  white-space: nowrap;
+}
+
+.detour-heading h2 em {
+  color: #4b9fbe;
+
+  font-family: Georgia, serif;
+  font-weight: 400;
+
+  letter-spacing: -2px;
+}
+
+.detour-intro {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.detour-intro > span {
+  color: #4b9fbe;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.detour-intro p {
+  margin: 0;
+
+  color: #8499a3;
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   MAP
+========================================================= */
+
+.detour-map {
+  position: relative;
+  z-index: 3;
+
+  max-width: 1180px;
+  height: 430px;
+
+  margin: 0 auto;
+
+  border-top: 1px solid rgba(47, 101, 121, 0.10);
+  border-bottom: 1px solid rgba(47, 101, 121, 0.10);
+}
+
+
+/* =========================================================
+   ROUTE
+========================================================= */
+
+.detour-route {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+  overflow: visible;
+}
+
+.detour-route path {
+  fill: none;
+
+  stroke: rgba(25, 170, 223, 0.28);
+  stroke-width: 1.5;
+
+  stroke-dasharray: 7 8;
+
+  vector-effect: non-scaling-stroke;
+}
+
+
+/* =========================================================
+   ROAD LABELS
+========================================================= */
+
+.road-label {
+  position: absolute;
+  z-index: 2;
+
+  top: 18px;
+
+  color: #0cabef;
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+}
+
+.road-label-start {
+  left: 0;
+}
+
+.road-label-end {
+  right: 0;
+}
+
+
+/* =========================================================
+   ROUTE DOTS
+========================================================= */
+
+.route-dot {
+  position: absolute;
+  z-index: 2;
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #f5f8f6;
+  border: 2px solid #6aafc6;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 0 0 5px rgba(106, 175, 198, 0.07);
+}
+
+.route-dot-start {
+  left: -2px;
+  top: 211px;
+}
+
+.route-dot-one {
+  left: 32%;
+  top: 198px;
+}
+
+.route-dot-two {
+  left: 61%;
+  top: 204px;
+}
+
+.route-dot-three {
+  left: 78%;
+  top: 265px;
+}
+
+.route-dot-four {
+  right: 2%;
+  top: 139px;
+}
+
+
+/* =========================================================
+   DETOUR CARD
+   DESKTOP — BIGGER
+========================================================= */
+
+.detour-card {
+  position: absolute;
+  z-index: 5;
+
+  width: 245px;
+
+  padding: 0;
+
+  border: none;
+  background: transparent;
+
+  text-align: left;
+  cursor: pointer;
+
+  font-family: inherit;
+
+  transition:
+    transform 0.4s cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+.detour-card:hover {
+  transform: translateY(-8px);
+}
+
+.detour-card.selected {
+  transform: translateY(-10px);
+}
+
+
+/* =========================================================
+   CARD POSITIONS
+========================================================= */
+
+.detour-one {
+  left: 25px;
+  top: 70px;
+}
+
+.detour-two {
+  left: 29%;
+  top: 240px;
+}
+
+.detour-three {
+  left: 53%;
+  top: 55px;
+}
+
+.detour-four {
+  right: 1%;
+  top: 220px;
+}
+
+
+/* =========================================================
+   CARD IMAGE — BIGGER
+========================================================= */
+
+.detour-card-image {
+  position: relative;
+
+  width: 100%;
+  height: 140px;
+
+  overflow: hidden;
+
+  border-radius: 6px 6px 0 0;
+
+  background: #dbe7ea;
+}
+
+.detour-card-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.7s cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+.detour-card:hover .detour-card-image img {
+  transform: scale(1.08);
+}
+
+.detour-card-shade {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(8, 30, 40, 0.08),
+      transparent 55%
+    );
+}
+
+.detour-card-number {
+  position: absolute;
+
+  left: 11px;
+  top: 10px;
+
+  color: rgba(255, 255, 255, 0.9);
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.detour-card-icon {
+  position: absolute;
+
+  right: 10px;
+  top: 9px;
+
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  color: #327d99;
+
+  backdrop-filter: blur(10px);
+}
+
+.detour-card-icon svg {
+  width: 12px;
+}
+
+
+/* =========================================================
+   CARD CONTENT — BIGGER
+========================================================= */
+
+.detour-card-content {
+  position: relative;
+
+  min-height: 150px;
+
+  padding: 15px 15px 16px;
+
+  box-sizing: border-box;
+
+  background: #fff;
+
+  border: 1px solid rgba(43, 103, 123, 0.10);
+  border-top: none;
+
+  border-radius: 0 0 6px 6px;
+
+  box-shadow:
+    0 15px 35px rgba(35, 83, 100, 0.07);
+}
+
+.detour-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin-bottom: 9px;
+}
+
+.detour-card-top span {
+  color: #4c9dbb;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+}
+
+.detour-card-top small {
+  color: #9aabb2;
+
+  font-size: 10px;
+}
+
+.detour-card-content h3 {
+  margin: 0 0 7px;
+
+  color: #244d5e;
+
+  font-size: 17px;
+  line-height: 1.12;
+  font-weight: 500;
+
+  letter-spacing: -0.3px;
+}
+
+.detour-card-content p {
+  max-width: 190px;
+
+  margin: 0;
+
+  color: #8a9ca5;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.detour-card-arrow {
+  position: absolute;
+
+  right: 12px;
+  bottom: 13px;
+
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(61, 135, 164, 0.18);
+
+  color: #3986a3;
+  background: #f8fbfb;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.detour-card:hover .detour-card-arrow {
+  background: #3986a3;
+
+  color: #fff;
+
+  transform: translate(2px, -2px);
+}
+
+.detour-card-arrow svg {
+  width: 11px;
+}
+
+
+/* =========================================================
+   CENTER PIN
+========================================================= */
+
+.detour-center-pin {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  z-index: 4;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 8px;
+
+  pointer-events: none;
+}
+
+.pin-ring {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  border: 1px solid rgba(74, 158, 187, 0.25);
+
+  color: #4a9eba;
+
+  box-shadow:
+    0 10px 30px rgba(40, 100, 122, 0.10);
+}
+
+.pin-ring svg {
+  width: 17px;
+}
+
+.detour-center-pin > span {
+  color: #75909b;
+
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 800;
+  letter-spacing: 1.3px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   BOTTOM BAR
+========================================================= */
+
+.detour-bottom {
+  position: relative;
+  z-index: 5;
+
+  max-width: 1180px;
+
+  margin: 35px auto 0;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    1fr;
+
+  align-items: center;
+
+  gap: 25px;
+}
+
+.detour-current {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.current-small {
+  color: #0c98cf;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.current-info {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+.current-info strong {
+  color: #315d70;
+
+  font-size: 14px;
+  letter-spacing: 1.5px;
+}
+
+.current-info span {
+  color: #8fa2ab;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.detour-progress {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+}
+
+.progress-dot {
+  width: 5px;
+  height: 5px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #c5d1d5;
+
+  cursor: pointer;
+
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
+}
+
+.progress-dot.active {
+  width: 22px;
+
+  border-radius: 10px;
+
+  background: #4b9fbe;
+}
+
+
+/* =========================================================
+   ALL DETOURS
+========================================================= */
+
+.all-detours {
+  justify-self: end;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border: none;
+  background: transparent;
+
+  color: #3c7f98;
+
+  font-family: inherit;
+
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+
+  cursor: pointer;
+}
+
+.all-detours svg {
+  width: 13px;
+
+  transition:
+    transform 0.3s ease;
+}
+
+.all-detours:hover svg {
+  transform: translate(3px, -3px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .little-detours {
+    padding: 55px 5% 50px;
+  }
+
+  .detour-header {
+    margin-bottom: 40px;
+  }
+
+  .detour-heading h2 {
+    font-size: clamp(44px, 6vw, 62px);
+
+    letter-spacing: -4px;
+
+    white-space: nowrap;
+  }
+
+  .detour-intro {
+    display: none;
+  }
+
+  .detour-map {
+    height: 500px;
+  }
+
+  /* TABLET BIGGER CARDS */
+
+  .detour-card {
+    width: 205px;
+  }
+
+  .detour-card-image {
+    height: 125px;
+  }
+
+  .detour-card-content {
+    min-height: 145px;
+    padding: 14px;
+  }
+
+  .detour-card-content h3 {
+    font-size: 16px;
+  }
+
+  .detour-card-content p {
+    font-size: 12px;
+  }
+
+  .detour-one {
+    left: 3%;
+  }
+
+  .detour-two {
+    left: 31%;
+    top: 275px;
+  }
+
+  .detour-three {
+    left: 55%;
+  }
+
+  .detour-four {
+    right: 1%;
+    top: 285px;
+  }
+
+  .detour-center-pin {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .little-detours {
+    width: 100%;
+
+    min-height: auto;
+
+    padding: 35px 16px 35px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+  }
+
+
+  /* HEADER */
+
+  .detour-header {
+    width: 100%;
+
+    margin: 0 0 25px;
+
+    display: block;
+  }
+
+  .detour-label {
+    margin-bottom: 14px;
+
+    font-size: 10px;
+    letter-spacing: 1.8px;
+  }
+
+  .detour-heading {
+    width: 100%;
+
+    overflow: hidden;
+  }
+
+  .detour-heading h2 {
+    margin: 0;
+
+    width: 100%;
+
+    font-size: clamp(26px, 8.7vw, 38px);
+
+    line-height: 1;
+
+    letter-spacing: -2.5px;
+
+    white-space: nowrap;
+  }
+
+  .detour-heading h2 em {
+    letter-spacing: -1px;
+  }
+
+  .detour-intro {
+    display: none;
+  }
+
+
+  /* =====================================================
+     MAP
+  ===================================================== */
+
+  .detour-map {
+    width: 100%;
+
+    height: auto;
+    min-height: 0;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+  }
+
+  .detour-route,
+  .route-dot,
+  .road-label,
+  .detour-center-pin {
+    display: none;
+  }
+
+
+  /* =====================================================
+     MOBILE CARDS — BIGGER
+  ===================================================== */
+
+  .detour-card {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    top: auto;
+
+    width: 100%;
+
+    height: 165px;
+
+    margin: 0 0 18px;
+
+    display: grid;
+
+    grid-template-columns: 40% 60%;
+
+    border-radius: 8px;
+
+    background: #fff;
+
+    box-shadow:
+      0 12px 32px rgba(32, 83, 99, 0.09);
+
+    overflow: hidden;
+  }
+
+  .detour-card:hover,
+  .detour-card.selected {
+    transform: translateY(-3px);
+  }
+
+
+  /* =====================================================
+     MOBILE IMAGE — BIGGER
+  ===================================================== */
+
+  .detour-card-image {
+    width: 100%;
+
+    height: 165px;
+
+    border-radius: 0;
+
+    overflow: hidden;
+  }
+
+  .detour-card-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+
+  /* =====================================================
+     MOBILE CONTENT
+  ===================================================== */
+
+  .detour-card-content {
+    width: 100%;
+
+    height: 165px;
+    min-height: 165px;
+
+    padding: 15px;
+
+    box-sizing: border-box;
+
+    border: none;
+
+    border-left: 1px solid rgba(43, 103, 123, 0.08);
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    overflow: hidden;
+  }
+
+  .detour-card-top {
+    width: 100%;
+
+    margin-bottom: 9px;
+
+    gap: 6px;
+  }
+
+  .detour-card-top span {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .detour-card-top small {
+    font-size: 9px;
+  }
+
+  .detour-card-content h3 {
+    margin: 0 0 7px;
+
+    font-size: 17px;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.2px;
+  }
+
+  .detour-card-content p {
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.45;
+  }
+
+  .detour-card-arrow {
+    width: 27px;
+    height: 27px;
+
+    right: 11px;
+    bottom: 11px;
+  }
+
+  .detour-card-arrow svg {
+    width: 11px;
+  }
+
+
+  /* =====================================================
+     BOTTOM
+  ===================================================== */
+
+  .detour-bottom {
+    width: 100%;
+
+    margin: 24px 0 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+  }
+
+  .detour-progress {
+    display: none;
+  }
+
+  .detour-current {
+    min-width: 0;
+  }
+
+  .current-small {
+    font-size: 12px;
+    letter-spacing: 1.2px;
+  }
+
+  .current-info {
+    gap: 7px;
+  }
+
+  .current-info strong {
+    font-size: 13px;
+    letter-spacing: 0.8px;
+  }
+
+  .current-info span {
+    font-size: 12px;
+  }
+
+  .all-detours {
+    flex-shrink: 0;
+
+    font-size: 12px;
+
+    letter-spacing: 0.7px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .little-detours {
+    padding: 30px 13px 30px;
+  }
+
+  .detour-label {
+    font-size: 9px;
+
+    letter-spacing: 1.6px;
+
+    margin-bottom: 13px;
+  }
+
+  .detour-heading h2 {
+    font-size: 29px;
+
+    letter-spacing: -2px;
+
+    white-space: nowrap;
+  }
+
+  .detour-heading h2 em {
+    letter-spacing: -0.8px;
+  }
+
+
+  /* BIGGER SMALL-MOBILE CARD */
+
+  .detour-card {
+    height: 150px;
+
+    grid-template-columns: 39% 61%;
+
+    margin-bottom: 15px;
+
+    border-radius: 8px;
+  }
+
+  .detour-card-image {
+    height: 150px;
+  }
+
+  .detour-card-content {
+    height: 150px;
+
+    min-height: 150px;
+
+    padding: 12px;
+  }
+
+  .detour-card-top {
+    margin-bottom: 7px;
+  }
+
+  .detour-card-top span {
+    font-size: 9px;
+  }
+
+  .detour-card-top small {
+    font-size: 8px;
+  }
+
+  .detour-card-content h3 {
+    font-size: 15px;
+
+    line-height: 1.15;
+  }
+
+  .detour-card-content p {
+    font-size: 13px;
+
+    line-height: 1.4;
+  }
+
+  .detour-card-arrow {
+    width: 24px;
+    height: 24px;
+
+    right: 9px;
+    bottom: 9px;
+  }
+
+  .current-info {
+    gap: 6px;
+  }
+
+  .current-info strong {
+    font-size: 12px;
+  }
+
+  .current-info span {
+    font-size: 12px;
+  }
+
+  .all-detours {
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .little-detours {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+  .detour-heading h2 {
+    font-size: 26px;
+
+    letter-spacing: -1.8px;
+  }
+
+  .detour-card {
+    height: 145px;
+
+    grid-template-columns: 38% 62%;
+  }
+
+  .detour-card-image {
+    height: 145px;
+  }
+
+  .detour-card-content {
+    height: 145px;
+
+    min-height: 145px;
+
+    padding: 10px;
+  }
+
+  .detour-card-content h3 {
+    font-size: 13px;
+  }
+
+  .detour-card-content p {
+    font-size: 12px;
+
+    line-height: 1.4;
+  }
+
+  .detour-card-arrow {
+    width: 22px;
+    height: 22px;
+
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .current-info {
+    gap: 5px;
+  }
+
+  .current-info strong {
+    font-size: 11px;
+  }
+
+  .current-info span {
+    font-size: 11px;
+  }
+
+  .all-detours {
+    font-size: 10px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .detour-card,
+  .detour-card-image img,
+  .detour-card-arrow,
+  .progress-dot {
+    transition: none;
+  }
+}
+

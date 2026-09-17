@@ -1,0 +1,207 @@
+/* =====================================================
+   ADMIN LAYOUT
+===================================================== */
+
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  background: #f5f7fb;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.admin-sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #111827;
+  color: white;
+
+  padding: 24px 16px;
+  box-sizing: border-box;
+
+  z-index: 1000;
+}
+
+
+/* =====================================================
+   BRAND
+===================================================== */
+
+.admin-brand {
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 12px;
+  margin-bottom: 25px;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.admin-brand:first-letter {
+  font-size: 24px;
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+.admin-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+
+.admin-menu-btn {
+  width: 100%;
+
+  border: none;
+  background: transparent;
+
+  color: #cbd5e1;
+
+  text-align: left;
+
+  padding: 13px 15px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+
+.admin-menu-btn:hover {
+  background: #1f2937;
+  color: white;
+}
+
+
+.admin-menu-btn.active {
+  background: #ffffff;
+  color: #111827;
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.admin-logout {
+  margin-top: auto;
+
+  width: 100%;
+
+  border: none;
+
+  background: #dc2626;
+  color: white;
+
+  padding: 13px 15px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+
+.admin-logout:hover {
+  background: #b91c1c;
+}
+
+
+/* =====================================================
+   MAIN CONTENT
+===================================================== */
+
+.admin-content {
+  width: calc(100% - 250px);
+
+  min-height: 100vh;
+
+  margin-left: 250px;
+
+  box-sizing: border-box;
+
+  padding: 30px;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .admin-sidebar {
+    width: 220px;
+  }
+
+  .admin-content {
+    width: calc(100% - 220px);
+    margin-left: 220px;
+    padding: 25px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+  .admin-sidebar {
+    width: 210px;
+  }
+
+  .admin-content {
+    width: calc(100% - 210px);
+    margin-left: 210px;
+    padding: 18px;
+  }
+
+  .admin-brand {
+    font-size: 16px;
+  }
+
+  .admin-menu-btn {
+    font-size: 12px;
+    padding: 11px 10px;
+  }
+
+  .admin-logout {
+    font-size: 12px;
+    padding: 11px 10px;
+  }
+
+}

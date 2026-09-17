@@ -1,0 +1,264 @@
+
+/* =====================================================
+   ADMIN CUSTOMERS PAGE
+===================================================== */
+
+.admin-customers-page {
+  min-height: 100vh;
+  padding: 35px;
+  background: #f6f7fb;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.admin-customers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.admin-customers-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #172033;
+}
+
+.admin-customers-header p {
+  margin: 7px 0 0;
+  color: #7b8496;
+  font-size: 14px;
+}
+
+.customers-total {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #fff;
+  color: #172033;
+  font-size: 14px;
+  font-weight: 600;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+
+/* =====================================================
+   TOOLBAR
+===================================================== */
+
+.customers-toolbar {
+  background: #fff;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.customers-toolbar input {
+  width: 320px;
+  padding: 12px 15px;
+
+  border: 1px solid #e3e6ed;
+  border-radius: 9px;
+
+  outline: none;
+  font-size: 14px;
+}
+
+.customers-toolbar input:focus {
+  border-color: #172033;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.customers-table {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+
+  box-shadow: 0 5px 22px rgba(0, 0, 0, 0.05);
+}
+
+.customer-row {
+  display: grid;
+
+  grid-template-columns:
+    1.3fr
+    1.5fr
+    1.2fr
+    0.7fr
+    1fr
+    0.8fr
+    0.8fr;
+
+  align-items: center;
+  gap: 15px;
+
+  padding: 19px 22px;
+
+  border-bottom: 1px solid #edf0f4;
+
+  font-size: 13px;
+  color: #424b5d;
+}
+
+.customer-row:last-child {
+  border-bottom: none;
+}
+
+.customer-head {
+  background: #f8f9fc;
+  color: #747d8f;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.customer-row strong {
+  color: #172033;
+  font-size: 14px;
+}
+
+.customer-bookings {
+  font-weight: 700;
+  color: #172033;
+}
+
+.customer-spent {
+  font-weight: 700;
+  color: #172033;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.customer-active,
+.customer-inactive {
+  width: fit-content;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+}
+
+.customer-active {
+  background: #e9f8ef;
+  color: #18864b;
+}
+
+.customer-inactive {
+  background: #f0f1f4;
+  color: #777f8e;
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+.customer-delete {
+  width: fit-content;
+
+  border: none;
+  padding: 8px 12px;
+
+  border-radius: 7px;
+
+  background: #fff0f0;
+  color: #d33c3c;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.customer-delete:hover {
+  opacity: 0.75;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.no-customers {
+  padding: 60px 20px;
+  text-align: center;
+  color: #858d9d;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .admin-customers-page {
+    padding: 25px;
+  }
+
+  .customer-row {
+    grid-template-columns:
+      1.2fr
+      1.4fr
+      1.1fr
+      0.7fr
+      0.9fr
+      0.8fr
+      0.8fr;
+
+    gap: 10px;
+    padding: 16px;
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+  .admin-customers-page {
+    padding: 18px;
+  }
+
+  .admin-customers-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .admin-customers-header h1 {
+    font-size: 26px;
+  }
+
+  .customers-toolbar input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .customers-table {
+    overflow-x: auto;
+  }
+
+  .customer-row {
+    min-width: 1000px;
+  }
+}
+

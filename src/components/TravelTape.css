@@ -1,0 +1,1037 @@
+/* =========================================================
+   TRAVEL TAPE
+========================================================= */
+
+.travel-tape {
+  position: relative;
+  width: 100%;
+  padding:45px 6% 50px;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 10% 15%,
+      rgba(77, 170, 207, 0.10),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(215, 187, 139, 0.10),
+      transparent 25%
+    ),
+    #f7faf8;
+
+  color: #173f50;
+}
+
+
+/* =========================================================
+   BACKGROUND ORBS
+========================================================= */
+
+.tape-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(70px);
+}
+
+.tape-orb-one {
+  width: 280px;
+  height: 280px;
+  top: -130px;
+  left: 20%;
+  background: rgba(83, 178, 210, 0.08);
+}
+
+.tape-orb-two {
+  width: 320px;
+  height: 320px;
+  right: -150px;
+  bottom: -130px;
+  background: rgba(211, 181, 135, 0.09);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.tape-header {
+  position: relative;
+  z-index: 2;
+
+  max-width: 1180px;
+  margin: 0 auto 50px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+
+.tape-kicker {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 10px;
+
+  color: #4aa4c8;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 2.2px;
+}
+
+
+.tape-kicker span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #4aa4c8;
+
+  box-shadow:
+    0 0 0 5px rgba(74, 164, 200, 0.09);
+}
+
+
+.tape-header h2 {
+  margin: 0;
+
+  color: #173f50;
+
+  font-size: clamp(48px, 5.5vw, 72px);
+
+  line-height: 0.91;
+
+  font-weight: 400;
+  white-space: nowrap;
+  letter-spacing: -3.5px;
+}
+
+
+.tape-header h2 i {
+  color: #4aa7ca;
+
+  font-family: Georgia, serif;
+
+  font-weight: 400;
+ 
+  letter-spacing: -2px;
+}
+
+
+.tape-header-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  margin-bottom: 7px;
+}
+
+
+.tape-header-note svg {
+  width: 15px;
+  height: 15px;
+
+  color: #56a9c9;
+}
+
+
+.tape-header-note p {
+  margin: 0;
+
+  color: #8199a5;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   EXPERIENCE GRID
+========================================================= */
+
+.tape-experience {
+  position: relative;
+  z-index: 2;
+
+  max-width: 1180px;
+  min-height: 450px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns: 170px minmax(400px, 1fr) 260px;
+
+  gap: 20px;
+
+  align-items: stretch;
+}
+
+
+/* =========================================================
+   INDEX
+========================================================= */
+
+.tape-index {
+  padding-top: 10px;
+}
+
+
+.index-label {
+  display: block;
+
+  margin-bottom: 18px;
+
+  color: #3c3e3f;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+}
+
+
+.index-list {
+  display: flex;
+  flex-direction: column;
+
+  border-top: 1px solid
+    rgba(40, 99, 121, 0.10);
+}
+
+
+.index-item {
+  position: relative;
+
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: 27px 1fr 15px;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 10px 5px;
+
+  border: none;
+
+  border-bottom: 1px solid
+    rgba(40, 99, 121, 0.08);
+
+  background: transparent;
+
+  color: #464748;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    color 0.3s ease,
+    padding 0.3s ease;
+}
+
+
+.index-number {
+  font-size:10px;
+
+  letter-spacing: 1px;
+}
+
+
+.index-name {
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+
+.index-item svg {
+  width: 12px;
+
+  opacity: 0;
+
+  transform: translate(-4px, 4px);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.index-item:hover,
+.index-item.active {
+  color: #317d9b;
+
+  padding-left: 10px;
+}
+
+
+.index-item.active {
+  background:
+    rgba(76, 166, 201, 0.055);
+}
+
+
+.index-item.active svg,
+.index-item:hover svg {
+  opacity: 1;
+
+  transform: translate(0, 0);
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.tape-image-card {
+  position: relative;
+
+  min-height: 360px;
+
+  overflow: hidden;
+
+  border-radius: 4px;
+
+  background: #dce8ec;
+
+  box-shadow:
+    0 25px 60px
+    rgba(29, 75, 92, 0.12);
+}
+
+
+.tape-image-card img {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+
+  inset: 0;
+
+  object-fit: cover;
+
+  animation:
+    tapeImageIn 0.65s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+@keyframes tapeImageIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      scale(1.06)
+      translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1)
+      translateY(0);
+  }
+
+}
+
+
+.tape-image-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 31, 40, 0.12),
+      transparent 35%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(7, 29, 39, 0.62),
+      transparent 52%
+    );
+}
+
+
+.tape-location {
+  position: absolute;
+
+  top: 20px;
+  left: 21px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: rgba(255,255,255,0.88);
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.7px;
+}
+
+
+.tape-location svg {
+  width: 12px;
+}
+
+
+.tape-image-number {
+  position: absolute;
+
+  right: 22px;
+  top: 8px;
+
+  color: rgba(255,255,255,0.22);
+
+  font-size: 125px;
+
+  line-height: 1;
+
+  font-weight: 700;
+
+  letter-spacing: -10px;
+}
+
+
+.tape-stamp {
+  position: absolute;
+
+  left: 21px;
+  bottom: 20px;
+
+  padding: 7px 10px;
+
+  border: 1px solid
+    rgba(255,255,255,0.30);
+
+  background:
+    rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(10px);
+
+  color: rgba(255,255,255,0.86);
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.7px;
+}
+
+
+.tape-image-place {
+  position: absolute;
+
+  right: 21px;
+  bottom: 20px;
+
+  color: #fff;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   STORY
+========================================================= */
+
+.tape-story {
+  position: relative;
+
+  padding:
+    32px 0
+    20px 17px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+
+.story-small {
+  color: #5c5d5e;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+}
+
+
+.story-line {
+  width: 50px;
+
+  height: 1px;
+
+  margin: 17px 0 20px;
+
+  background: #54a9cb;
+}
+
+
+.tape-story h3 {
+  max-width: 240px;
+
+  margin: 0 0 17px;
+
+  color: #234c5f;
+
+  font-size: 31px;
+
+  line-height: 1.04;
+
+  font-weight: 400;
+
+  letter-spacing: -1.6px;
+}
+
+
+.tape-story p {
+  max-width: 220px;
+
+  margin: 0 0 25px;
+
+  color: #8197a2;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   DISCOVER BUTTON
+========================================================= */
+
+.discover-btn {
+  width: fit-content;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #286b87;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+
+  cursor: pointer;
+}
+
+
+.discover-btn div {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 1px solid
+    rgba(53, 135, 167, 0.22);
+
+  background: #fff;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.discover-btn svg {
+  width: 13px;
+}
+
+
+.discover-btn:hover div {
+  background: #317e9d;
+
+  color: #fff;
+
+  transform:
+    translate(3px, -3px);
+}
+
+
+/* =========================================================
+   STORY META
+========================================================= */
+
+.story-meta {
+  display: flex;
+
+  gap: 25px;
+
+  margin-top: 30px;
+
+  padding-top: 15px;
+
+  border-top: 1px solid
+    rgba(38, 94, 114, 0.10);
+}
+
+
+.story-meta div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+.story-meta span {
+  color: #5ac1ed;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+}
+
+
+.story-meta strong {
+  color: #5d7b89;
+
+  font-size: 12px;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   MOVING TAPE
+========================================================= */
+
+.moving-tape {
+  position: relative;
+
+  z-index: 2;
+
+  width: calc(100% + 12%);
+
+  margin-left: -6%;
+
+  margin-top: 40px;
+
+  padding: 13px 0;
+
+  overflow: hidden;
+
+  border-top: 1px solid
+    rgba(42, 103, 125, 0.10);
+
+  border-bottom: 1px solid
+    rgba(42, 103, 125, 0.10);
+
+  background:
+    rgba(255,255,255,0.45);
+}
+
+
+.moving-track {
+  width: max-content;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 19px;
+
+  animation:
+    tapeMove 28s linear infinite;
+}
+
+
+.moving-track span {
+  color: #7995a2;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+.moving-track b {
+  color: #4ba5c9;
+
+  font-size: 14px;
+
+  font-weight: 400;
+}
+
+
+@keyframes tapeMove {
+
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+
+}
+
+
+/* =========================================================
+   BOTTOM
+========================================================= */
+
+.tape-bottom {
+  position: relative;
+
+  z-index: 2;
+
+  max-width: 1180px;
+
+  margin: 23px auto 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  color: #9aabb3;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+}
+
+
+.bottom-line {
+  flex: 1;
+
+  height: 1px;
+
+  background:
+    rgba(45, 105, 126, 0.10);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+  .travel-tape {
+    padding: 70px 5% 55px;
+  }
+
+
+  .tape-experience {
+    grid-template-columns:
+      140px
+      minmax(350px, 1fr);
+
+    gap: 20px;
+  }
+
+
+  .tape-story {
+    grid-column: 1 / -1;
+
+    padding:
+      28px 0 0;
+
+    display: grid;
+
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 15px;
+  }
+
+
+  .story-line {
+    display: none;
+  }
+
+
+  .tape-story h3 {
+    max-width: 400px;
+  }
+
+
+  .tape-story p {
+    max-width: 320px;
+  }
+
+
+  .story-meta {
+    margin-top: 5px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .travel-tape {
+    padding:
+      40px 16px 40px;
+  }
+
+
+  .tape-header {
+    margin-bottom: 10px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+
+  .tape-header h2 {
+    font-size: 35px;
+
+    letter-spacing: -1.5px;
+  }
+
+
+  .tape-header-note {
+    margin: 0;
+    display: none;
+  }
+
+
+  .tape-experience {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    min-height: 0;
+  }
+
+
+  /* image first */
+
+  .tape-image-card {
+    order: 1;
+
+    width: 100%;
+
+    min-height: 320px;
+
+    height: 320px;
+  }
+
+
+  /* index second */
+
+  .tape-index {
+    order: 2;
+
+    padding: 0;
+  }
+
+
+  .index-label {
+    margin-bottom: 9px;
+  }
+
+
+  .index-list {
+    display: grid;
+
+    grid-template-columns:
+      repeat(4, 1fr);
+  }
+
+
+  .index-item {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 6px;
+
+    padding: 11px 7px;
+  }
+
+
+  .index-item:hover,
+  .index-item.active {
+    padding-left: 7px;
+  }
+
+
+  .index-item svg {
+    display: none;
+  }
+
+
+  .index-name {
+    font-size: 12px;
+
+    letter-spacing: 0.7px;
+  }
+
+
+  /* story */
+
+  .tape-story {
+    order: 3;
+
+    display: block;
+
+    padding:
+      10px 0 0;
+  }
+
+
+  .tape-story h3 {
+    max-width: 330px;
+
+    font-size: 29px;
+  }
+
+
+  .tape-story p {
+    max-width: 360px;
+
+    font-size: 16px;
+  }
+
+
+  .story-meta {
+    margin-top: 25px;
+    display: none;
+  }
+
+
+  .moving-tape {
+    margin-top: 40px;
+
+    width: calc(100% + 32px);
+
+    margin-left: -16px;
+  }
+
+
+  .tape-bottom {
+    margin-top: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .tape-header h2 {
+    font-size: 41px;
+  }
+
+
+  .tape-image-card {
+    min-height: 350px;
+
+    height: 350px;
+  }
+
+
+  .tape-image-number {
+    font-size: 90px;
+
+    letter-spacing: -7px;
+  }
+
+
+  .tape-story h3 {
+    font-size: 26px;
+  }
+
+
+  .index-name {
+    font-size: 6px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .tape-image-card img,
+  .moving-track {
+    animation: none;
+  }
+
+}

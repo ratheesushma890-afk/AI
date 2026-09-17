@@ -1,0 +1,1117 @@
+/* =========================================================
+   HERO
+========================================================= */
+
+.trip-hero {
+  position: relative;
+  width: 100%;
+  min-height: 90vh;
+  height: 95vh;
+  overflow: hidden;
+  background: #071a2d;
+  color: #fff;
+  isolation: isolate;
+  font-family: "Inter", sans-serif;
+}
+
+/* =========================================================
+   BACKGROUND VIDEO
+========================================================= */
+
+.trip-bg-video {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center center;
+
+  z-index: -5;
+
+  display: block;
+}
+
+/* =========================================================
+   BLUE OVERLAY
+   Keep it light so video remains visible
+========================================================= */
+
+.trip-blue-overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: -4;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 20, 38, 0.62) 0%,
+      rgba(4, 31, 55, 0.35) 42%,
+      rgba(5, 35, 58, 0.12) 75%,
+      rgba(3, 20, 38, 0.18) 100%
+    );
+}
+
+/* =========================================================
+   WHITE GLOW
+   Very soft — don't hide video
+========================================================= */
+
+.trip-white-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+
+  top: -220px;
+  right: -180px;
+
+  z-index: -3;
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.05) 35%,
+    transparent 72%
+  );
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.trip-topbar {
+  position: absolute;
+
+  top: 28px;
+  left: 40px;
+  right: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  z-index: 10;
+}
+
+/* BRAND */
+
+.trip-brand-pill {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 9px 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(12px);
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+
+  color: #fff;
+}
+
+.trip-brand-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #8ddcff;
+
+  box-shadow:
+    0 0 10px rgba(141, 220, 255, 0.9);
+}
+
+/* RIGHT */
+
+.trip-top-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.trip-page-number {
+  padding-left: 20px;
+
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+
+  color: #fff;
+}
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.trip-content {
+  position: relative;
+
+  z-index: 5;
+
+  width: min(760px, calc(100% - 80px));
+
+  margin-left: 8%;
+
+  padding-top: 23vh;
+}
+
+/* SMALL LABEL */
+
+.trip-small-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 20px;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.trip-small-label svg {
+  color: #8edfff;
+  font-size: 15px;
+}
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.trip-content h1 {
+  margin: 0;
+
+  max-width: 720px;
+
+  font-size: clamp(52px, 6.5vw, 96px);
+
+  line-height: 0.95;
+
+  font-weight: 800;
+
+  letter-spacing: -4px;
+
+  color: #fff;
+
+  text-shadow:
+    0 4px 25px rgba(0, 0, 0, 0.28);
+}
+
+.trip-content h1 span {
+  color: #9be5ff;
+
+  font-style: italic;
+
+  font-weight: 500;
+
+  text-shadow:
+    0 4px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.trip-content p {
+  margin: 25px 0 30px;
+
+  font-size: 18px;
+  
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.86);
+
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================================================
+   PLANNER BAR
+========================================================= */
+
+.trip-planner-bar {
+  width: min(570px, 100%);
+
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 8px 9px 8px 10px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.22);
+
+  backdrop-filter: blur(15px);
+}
+
+/* DESTINATION */
+
+.trip-destination {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+/* LOCATION ICON */
+
+.trip-location-icon {
+  width: 45px;
+  height: 45px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #e8f7ff;
+
+  color: #1479b8;
+
+  font-size: 19px;
+}
+
+.trip-destination > div:last-child {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  min-width: 0;
+}
+
+.trip-destination small {
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.4px;
+
+  color: #8b97a5;
+}
+
+.trip-destination span {
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #263442;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   EXPLORE BUTTON
+========================================================= */
+
+.trip-plan-button {
+  height: 54px;
+
+  padding: 0 21px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #087ec1;
+
+  color: #fff;
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.4px;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.trip-plan-button svg {
+  font-size: 17px;
+}
+
+.trip-plan-button:hover {
+  background: #056ca6;
+
+  transform: translateX(3px);
+
+  box-shadow:
+    0 10px 25px rgba(8, 126, 193, 0.35);
+}
+
+/* =========================================================
+   FLOATING PREVIEW
+========================================================= */
+
+
+.trip-preview {
+  position: absolute;
+  right: 5%;
+  bottom: 25px;
+
+  width: 320px;
+  padding: 8px;
+  
+  border-radius: 26px;
+
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+
+  overflow: hidden;
+
+  z-index: 20;
+}
+
+
+/* PREVIEW VIDEO */
+
+.trip-preview-video {
+  width: 100%;
+  height:300px;
+  
+  overflow: hidden;
+
+  border-radius: 18px;
+}
+
+.trip-preview-video video {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  transition: transform 0.6s ease;
+}
+
+.trip-preview:hover .trip-preview-video video {
+  transform: scale(1.04);
+}
+
+/* PREVIEW INFO */
+
+.trip-preview-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  padding: 13px 10px 8px;
+}
+
+.trip-preview-info span {
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  color: #a9e8ff;
+}
+
+.trip-preview-info strong {
+  font-size: 13px;
+
+  line-height: 1.35;
+
+  color: #fff;
+}
+
+/* PREVIEW ARROW */
+
+.trip-preview-arrow {
+  position: absolute;
+
+  right: 18px;
+  bottom: 17px;
+
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.16);
+
+  color: #fff;
+
+  font-size: 15px;
+}
+
+/* =========================================================
+   BOTTOM LINE
+========================================================= */
+
+.trip-bottom-line {
+  position: absolute;
+
+  left: 40px;
+  right: 40px;
+  bottom: 27px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  z-index: 10;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.7px;
+
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.trip-line {
+  flex: 1;
+
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.trip-line span {
+  display: block;
+
+  width: 20%;
+
+  height: 100%;
+
+  background: #9be5ff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL MOBILE HERO
+   Replace ALL old mobile media queries with this
+========================================================= */
+
+@media (max-width: 768px) {
+
+  /* =======================================================
+     HERO
+  ======================================================= */
+
+  .trip-hero {
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    padding: 0 0 16px;
+    overflow: hidden;
+  }
+
+  /* =======================================================
+     BACKGROUND VIDEO
+  ======================================================= */
+
+  .trip-bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .trip-blue-overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(3, 20, 38, 0.42) 0%,
+        rgba(4, 31, 55, 0.28) 45%,
+        rgba(3, 20, 38, 0.70) 100%
+      );
+  }
+
+  /* =======================================================
+     WHITE GLOW
+  ======================================================= */
+
+  .trip-white-glow {
+    width: 350px;
+    height: 350px;
+    top: -150px;
+    right: -130px;
+    opacity: 0.55;
+  }
+
+  /* =======================================================
+     TOP BAR
+  ======================================================= */
+
+  .trip-topbar {
+    position: absolute;
+    top: 15px;
+    left: 16px;
+    right: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* BRAND */
+
+  .trip-brand-pill {
+    padding: 7px 11px;
+
+    gap: 7px;
+
+    font-size: 9px;
+    letter-spacing: 1px;
+
+    border-radius: 50px;
+  }
+
+  .trip-brand-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  /* RIGHT SIDE */
+
+  .trip-top-right {
+    gap: 9px;
+
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+
+  .trip-page-number {
+    padding-left: 9px;
+  }
+
+
+  /* =======================================================
+     MAIN CONTENT
+  ======================================================= */
+
+  .trip-content {
+    position: relative;
+    z-index: 5;
+
+    width: calc(100% - 32px);
+
+    margin-left: 16px;
+
+    /*
+      Top spacing increased so content
+      never touches/cuts under top bar
+    */
+    padding-top: 112px;
+
+    padding-bottom: 8px;
+  }
+
+
+  /* =======================================================
+     SMALL LABEL
+  ======================================================= */
+
+  .trip-small-label {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 10px;
+
+    font-size: 8px;
+    letter-spacing: 1.4px;
+  }
+
+  .trip-small-label svg {
+    font-size: 11px;
+  }
+
+
+  /* =======================================================
+     HEADING
+  ======================================================= */
+
+  .trip-content h1 {
+    margin: 0;
+
+    width: 100%;
+    max-width: 100%;
+
+    font-size: clamp(40px, 11.5vw, 58px);
+
+    line-height: 0.95;
+
+    letter-spacing: -2.2px;
+
+    text-shadow:
+      0 3px 18px rgba(0, 0, 0, 0.30);
+  }
+
+  .trip-content h1 span {
+    font-weight: 500;
+  }
+
+
+  /* =======================================================
+     DESCRIPTION
+  ======================================================= */
+
+  .trip-content p {
+    margin: 13px 0 17px;
+
+    width: 100%;
+    max-width: 350px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+
+  /* =======================================================
+     PLANNER BAR
+  ======================================================= */
+
+  .trip-planner-bar {
+    width: 100%;
+
+    min-height: 58px;
+
+    padding: 5px 6px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-radius: 14px;
+
+    box-shadow:
+      0 12px 30px rgba(0, 0, 0, 0.22);
+  }
+
+
+  /* =======================================================
+     DESTINATION
+  ======================================================= */
+
+  .trip-destination {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+  }
+
+
+  /* LOCATION ICON */
+
+  .trip-location-icon {
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+  }
+
+
+  /* DESTINATION TEXT */
+
+  .trip-destination > div:last-child {
+    min-width: 0;
+
+    gap: 2px;
+  }
+
+  .trip-destination small {
+    font-size: 7px;
+
+    letter-spacing: 1px;
+  }
+
+  .trip-destination span {
+    display: block;
+
+    max-width: 125px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    font-size: 10px;
+  }
+
+
+  /* =======================================================
+     EXPLORE BUTTON
+  ======================================================= */
+
+  .trip-plan-button {
+    flex-shrink: 0;
+
+    height: 44px;
+
+    padding: 0 13px;
+
+    gap: 6px;
+
+    border-radius: 11px;
+
+    font-size: 9px;
+
+    letter-spacing: 0.2px;
+  }
+
+  .trip-plan-button svg {
+    font-size: 13px;
+  }
+
+
+  /* =======================================================
+     HIDE PREVIEW VIDEO ON MOBILE
+  ======================================================= */
+
+  .trip-preview {
+    display: none !important;
+  }
+
+
+  /* =======================================================
+     BOTTOM LINE
+  ======================================================= */
+
+  .trip-bottom-line {
+    position: relative;
+
+    left: auto;
+    right: auto;
+    bottom: auto;
+
+    width: calc(100% - 32px);
+
+    margin: 13px 16px 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    font-size: 6px;
+
+    letter-spacing: 1px;
+  }
+
+  .trip-line {
+    flex: 1;
+  }
+
+  .trip-line span {
+    width: 30%;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE — 480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+  /* HERO */
+
+  .trip-hero {
+    padding-bottom: 13px;
+  }
+
+
+  /* TOP BAR */
+
+  .trip-topbar {
+    top: 13px;
+    left: 12px;
+    right: 12px;
+  }
+
+  .trip-brand-pill {
+    padding: 7px 10px;
+
+    font-size: 8px;
+
+    letter-spacing: 0.9px;
+  }
+
+  .trip-top-right {
+    gap: 7px;
+
+    font-size: 6.5px;
+  }
+
+  .trip-page-number {
+    padding-left: 7px;
+  }
+
+
+  /* CONTENT */
+
+  .trip-content {
+    width: calc(100% - 24px);
+
+    margin-left: 12px;
+
+  
+    padding-top:95px;
+
+    padding-bottom: 7px;
+  }
+
+
+  /* LABEL */
+
+  .trip-small-label {
+    margin-bottom: 9px;
+
+    font-size: 7px;
+
+    letter-spacing: 1.2px;
+  }
+
+  .trip-small-label svg {
+    font-size: 10px;
+  }
+
+
+  /* HEADING */
+
+  .trip-content h1 {
+    font-size: clamp(37px, 12vw, 52px);
+
+    line-height: 0.95;
+
+    letter-spacing: -1.8px;
+  }
+
+
+  /* DESCRIPTION */
+
+  .trip-content p {
+    margin: 11px 0 14px;
+
+    max-width: 330px;
+
+    font-size: 11px;
+
+    line-height: 1.45;
+  }
+
+
+  /* PLANNER */
+
+  .trip-planner-bar {
+    min-height: 54px;
+
+    padding: 5px;
+    border-radius: 13px;
+  }
+
+
+  /* ICON */
+
+  .trip-location-icon {
+    width: 33px;
+    height: 33px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+  }
+
+
+  /* DESTINATION */
+
+  .trip-destination {
+    gap: 7px;
+  }
+
+  .trip-destination small {
+    font-size: 6px;
+  }
+
+  .trip-destination span {
+    max-width: 105px;
+
+    font-size: 9px;
+  }
+
+
+  /* BUTTON */
+
+  .trip-plan-button {
+    height: 40px;
+
+    padding: 0 10px;
+
+    gap: 5px;
+
+    border-radius: 10px;
+
+    font-size: 8px;
+  }
+
+  .trip-plan-button svg {
+    font-size: 12px;
+  }
+
+
+  /* BOTTOM LINE */
+
+  .trip-bottom-line {
+    width: calc(100% - 24px);
+
+    margin: 10px 12px 0;
+
+    gap: 7px;
+
+    font-size: 5.5px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE — 360px
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .trip-content {
+    padding-top: 98px;
+  }
+
+
+  .trip-content h1 {
+    font-size: 35px;
+
+    letter-spacing: -1.5px;
+  }
+
+
+  .trip-content p {
+    margin: 9px 0 12px;
+
+    font-size: 10px;
+
+    line-height: 1.4;
+  }
+
+
+  .trip-planner-bar {
+    min-height: 51px;
+
+    padding: 4px;
+  }
+
+
+  .trip-location-icon {
+    width: 31px;
+    height: 31px;
+
+    font-size: 13px;
+  }
+
+
+  .trip-destination {
+    gap: 6px;
+  }
+
+  .trip-destination small {
+    font-size: 5.5px;
+  }
+
+  .trip-destination span {
+    max-width: 85px;
+
+    font-size: 8px;
+  }
+
+
+  .trip-plan-button {
+    height: 38px;
+
+    padding: 0 8px;
+
+    font-size: 7px;
+  }
+
+
+  .trip-bottom-line {
+    margin-top: 8px;
+
+    font-size: 5px;
+  }
+}
+

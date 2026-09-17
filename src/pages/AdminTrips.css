@@ -1,0 +1,275 @@
+
+/* =====================================================
+   ADMIN TRIPS PAGE
+===================================================== */
+
+.admin-trips-page {
+  min-height: 100vh;
+  padding: 35px;
+  background: #f6f7fb;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.admin-trips-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.admin-trips-header h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #172033;
+}
+
+.admin-trips-header p {
+  margin: 7px 0 0;
+  color: #7b8496;
+  font-size: 14px;
+}
+
+.add-trip-btn {
+  border: none;
+  padding: 13px 20px;
+  border-radius: 10px;
+  background: #172033;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.add-trip-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+
+/* =====================================================
+   TOOLBAR
+===================================================== */
+
+.trips-toolbar {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.trips-toolbar input {
+  width: 300px;
+  padding: 12px 15px;
+
+  border: 1px solid #e3e6ed;
+  border-radius: 9px;
+
+  outline: none;
+  font-size: 14px;
+}
+
+.trips-toolbar input:focus {
+  border-color: #172033;
+}
+
+.trips-toolbar span {
+  font-size: 14px;
+  color: #6d7585;
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.trips-table {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+
+  box-shadow: 0 5px 22px rgba(0, 0, 0, 0.05);
+}
+
+.trip-row {
+  display: grid;
+  grid-template-columns:
+    1.5fr
+    1fr
+    1.2fr
+    0.8fr
+    0.8fr
+    1.2fr;
+
+  align-items: center;
+  gap: 20px;
+
+  padding: 19px 22px;
+
+  border-bottom: 1px solid #edf0f4;
+
+  font-size: 14px;
+  color: #424b5d;
+}
+
+.trip-row:last-child {
+  border-bottom: none;
+}
+
+.trip-head {
+  background: #f8f9fc;
+  color: #747d8f;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.trip-row strong {
+  color: #172033;
+  font-size: 15px;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.trip-active {
+  display: inline-flex;
+  width: fit-content;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  background: #e9f8ef;
+  color: #18864b;
+
+  font-size: 12px;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.trip-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.trip-actions button {
+  border: none;
+  padding: 7px 11px;
+  border-radius: 7px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: #eef3ff;
+  color: #315bc9;
+}
+
+.delete-btn {
+  background: #fff0f0;
+  color: #d33c3c;
+}
+
+.trip-actions button:hover {
+  opacity: 0.75;
+}
+
+
+/* =====================================================
+   NO TRIPS
+===================================================== */
+
+.no-trips {
+  padding: 60px 20px;
+  text-align: center;
+  color: #858d9d;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1000px) {
+  .admin-trips-page {
+    padding: 25px;
+  }
+
+  .trip-row {
+    grid-template-columns:
+      1.4fr
+      1fr
+      1fr
+      0.8fr
+      0.8fr
+      1fr;
+
+    gap: 10px;
+    padding: 16px;
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+  .admin-trips-page {
+    padding: 18px;
+  }
+
+  .admin-trips-header {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .admin-trips-header h1 {
+    font-size: 26px;
+  }
+
+  .add-trip-btn {
+    width: 100%;
+  }
+
+  .trips-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .trips-toolbar input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .trips-table {
+    overflow-x: auto;
+  }
+
+  .trip-row {
+    min-width: 850px;
+  }
+}
+
