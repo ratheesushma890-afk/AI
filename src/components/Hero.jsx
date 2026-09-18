@@ -17,9 +17,9 @@ const Hero = () => {
       <video
         className="trip-bg-video"
         src={trip2}
-        autoPlay
+        controls
         muted
-        loop
+        
         playsInline
       />
 
@@ -84,7 +84,7 @@ const Hero = () => {
             src={trip}
             autoPlay
             muted
-            loop
+            controls
             playsInline
           />
         </div>

@@ -643,7 +643,7 @@ const TripPlan = () => {
               src={trip1}
               autoPlay
               muted
-              loop
+              controls
               playsInline
               preload="auto"
             />
