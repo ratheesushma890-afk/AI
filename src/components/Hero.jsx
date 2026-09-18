@@ -2,8 +2,6 @@ import React from "react";
 import { FiArrowRight, FiMapPin, FiStar } from "react-icons/fi";
 import "./Hero.css";
 import { useNavigate } from "react-router-dom";
-import trip from "../assets/trip.mp4";
-import trip2 from "../assets/trip2.mp4";
 
 const Hero = () => {
   const navigate = useNavigate();

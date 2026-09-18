@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import trip1 from "../assets/trip1.mp4";
 
 import {
   FiMapPin,
@@ -638,7 +637,7 @@ const TripPlan = () => {
 
           <div className="trip-media">
 
-        <video
+  <video
   className="trip-media-video"
   src="/trip1.mp4"
   autoPlay
