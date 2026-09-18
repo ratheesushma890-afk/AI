@@ -638,15 +638,15 @@ const TripPlan = () => {
 
           <div className="trip-media">
 
-            <video
-              className="trip-media-video"
-              src={trip1}
-              autoPlay
-              muted
-              controls
-              playsInline
-              preload="auto"
-            />
+        <video
+  className="trip-media-video"
+  src="/videos/trip1.mp4"
+  autoPlay
+  muted
+  controls
+  playsInline
+  preload="auto"
+/>
 
             <div className="trip-media-overlay">
 

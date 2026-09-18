@@ -14,15 +14,14 @@ const Hero = () => {
     <section className="trip-hero">
 
       {/* BACKGROUND VIDEO */}
-      <video
-        className="trip-bg-video"
-        src={trip2}
-        controls
-        muted
-        
-        playsInline
-      />
-
+   <video
+  className="trip-bg-video"
+  src="/trip2.mp4"
+  autoPlay
+  muted
+  loop
+  playsInline
+/>
       {/* BLUE + WHITE OVERLAY */}
       <div className="trip-blue-overlay"></div>
       <div className="trip-white-glow"></div>
@@ -81,12 +80,12 @@ const Hero = () => {
 
         <div className="trip-preview-video">
           <video
-            src={trip}
-            autoPlay
-            muted
-            controls
-            playsInline
-          />
+  src="/trip.mp4"
+  autoPlay
+  muted
+  loop
+  playsInline
+/>
         </div>
 
         <div className="trip-preview-info">
