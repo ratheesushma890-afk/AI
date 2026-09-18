@@ -640,7 +640,7 @@ const TripPlan = () => {
 
         <video
   className="trip-media-video"
-  src="/videos/trip1.mp4"
+  src="/trip1.mp4"
   autoPlay
   muted
   controls
