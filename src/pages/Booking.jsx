@@ -4,224 +4,143 @@ import { useNavigate } from "react-router-dom";
 import {
   FiArrowLeft,
   FiCalendar,
+  FiCheck,
+  FiCheckCircle,
   FiClock,
+  FiCreditCard,
+  FiDownload,
   FiMapPin,
   FiNavigation,
+  FiStar,
   FiUsers,
-  FiCheckCircle,
-  FiTrash2,
+  FiShield,
 } from "react-icons/fi";
 
 import "./Booking.css";
 
-const FALLBACK_HOTEL_IMAGE =
-  "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=90";
-
-
-/* =========================================================
-   FORMAT DATE
-========================================================= */
-
-const formatDate = (value) => {
-  if (!value) {
-    return "Date not selected";
-  }
-
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
-  return date.toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
-};
-
-
-/* =========================================================
-   FORMAT CURRENCY
-========================================================= */
-
-const formatCurrency = (number) => {
-  return `₹${Number(number || 0).toLocaleString("en-IN")}`;
-};
-
-
-/* =========================================================
-   BOOKING PAGE
-========================================================= */
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85";
 
 const Booking = () => {
   const navigate = useNavigate();
 
   const [bookings, setBookings] = useState([]);
 
+  useEffect(() => {
+    const loadBookings = () => {
+      try {
+        const data = JSON.parse(
+          localStorage.getItem("tripBookings") || "[]"
+        );
 
-  /* =========================================================
-     LOAD BOOKINGS
-  ========================================================= */
-
-  const loadBookings = () => {
-    try {
-      const storedBookings = JSON.parse(
-        localStorage.getItem("tripBookings") || "[]"
-      );
-
-      if (Array.isArray(storedBookings)) {
-        setBookings(storedBookings);
-      } else {
+        setBookings(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Booking loading error:", error);
         setBookings([]);
       }
-    } catch (error) {
-      console.error("Invalid booking data:", error);
-      setBookings([]);
-    }
-  };
-
-
-  /* =========================================================
-     LOAD ON PAGE OPEN
-  ========================================================= */
-
-  useEffect(() => {
-    loadBookings();
-
-    const handleBookingUpdate = () => {
-      loadBookings();
     };
 
-    window.addEventListener(
-      "tripBookingsUpdated",
-      handleBookingUpdate
-    );
+    loadBookings();
 
-    window.addEventListener(
-      "storage",
-      handleBookingUpdate
-    );
+    window.addEventListener("tripBookingsUpdated", loadBookings);
+    window.addEventListener("storage", loadBookings);
 
     return () => {
-      window.removeEventListener(
-        "tripBookingsUpdated",
-        handleBookingUpdate
-      );
-
-      window.removeEventListener(
-        "storage",
-        handleBookingUpdate
-      );
+      window.removeEventListener("tripBookingsUpdated", loadBookings);
+      window.removeEventListener("storage", loadBookings);
     };
   }, []);
 
+  const formatDate = (value) => {
+    if (!value) return "Not selected";
 
-  /* =========================================================
-     DELETE BOOKING
-  ========================================================= */
+    const date = new Date(value);
 
-  const deleteBooking = (bookingId) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this booking?"
+    if (Number.isNaN(date.getTime())) {
+      return value;
+    }
+
+    return date.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
+  const formatPrice = (value) => {
+    const amount = Number(value);
+
+    if (Number.isNaN(amount)) {
+      return value || "₹0";
+    }
+
+    return `₹${amount.toLocaleString("en-IN")}`;
+  };
+
+  const getImage = (booking) => {
+    return (
+      booking?.hotel?.image ||
+      booking?.image ||
+      booking?.hotelImage ||
+      FALLBACK_IMAGE
     );
-
-    if (!confirmDelete) {
-      return;
-    }
-
-    try {
-      const updatedBookings = bookings.filter(
-        (booking) => booking.id !== bookingId
-      );
-
-      localStorage.setItem(
-        "tripBookings",
-        JSON.stringify(updatedBookings)
-      );
-
-      setBookings(updatedBookings);
-
-      window.dispatchEvent(
-        new Event("tripBookingsUpdated")
-      );
-    } catch (error) {
-      console.error(
-        "Booking delete error:",
-        error
-      );
-
-      alert("Booking delete nahi ho saki.");
-    }
   };
 
-
-  /* =========================================================
-     VIEW TRIP
-  ========================================================= */
-
-  const viewTrip = (booking) => {
-    /*
-      Current CreateTrip page localStorage se
-      tripperTrip read karti hai.
-
-      Isliye selected booking ko tripperTrip mein
-      save karke CreateTrip par bhej rahe hain.
-    */
-
-    try {
-      const tripToView = {
-        destination: booking.destination || "",
-        country: booking.country || "",
-        date: booking.date || "",
-        days: booking.days || 1,
-        travellers: booking.travellers || 1,
-        budget:
-          booking.budget ||
-          "₹25,000 – ₹50,000",
-        travelType:
-          booking.travelType || "Solo",
-        style:
-          booking.style || "Relaxed",
-        stay:
-          booking.stay || "Any",
-        transport:
-          booking.transport || "Any",
-        interests:
-          Array.isArray(booking.interests)
-            ? booking.interests
-            : [],
-      };
-
-      localStorage.setItem(
-        "tripperTrip",
-        JSON.stringify(tripToView)
-      );
-
-      navigate("/create-trip");
-    } catch (error) {
-      console.error(
-        "Could not open trip:",
-        error
-      );
-
-      navigate("/create-trip");
-    }
+  const getHotelName = (booking) => {
+    return (
+      booking?.hotel?.name ||
+      booking?.hotelName ||
+      "Selected Hotel"
+    );
   };
 
+  const getLocation = (booking) => {
+    return (
+      booking?.hotel?.location ||
+      booking?.destination ||
+      "Your Destination"
+    );
+  };
 
-  /* =========================================================
-     RETURN
-  ========================================================= */
+  const handlePrint = () => {
+    window.print();
+  };
+
+  if (bookings.length === 0) {
+    return (
+      <div className="booking-page">
+        <div className="booking-empty">
+          <div className="empty-icon">
+            <FiNavigation />
+          </div>
+
+          <span>TRIPPER</span>
+
+          <h1>No Bookings Yet</h1>
+
+          <p>
+            Your confirmed trips will appear here after you
+            complete your payment.
+          </p>
+
+          <button
+            type="button"
+            onClick={() => navigate("/create-trip")}
+          >
+            Plan Your Trip
+            <FiNavigation />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <main className="booking-page">
+    <div className="booking-page">
 
-      {/* =====================================================
-          HEADER / HERO
-      ===================================================== */}
+      {/* ================= HEADER ================= */}
 
-      <section className="booking-hero">
+      <header className="booking-page-header">
 
         <button
           type="button"
@@ -229,441 +148,613 @@ const Booking = () => {
           onClick={() => navigate(-1)}
         >
           <FiArrowLeft />
-          <span>Back</span>
+          Back
         </button>
 
-
-        <div className="booking-hero-content">
-
-          <span>
-            TRAVELER ACCOUNT
+        <div className="booking-header-content">
+          <span className="booking-brand">
+            TRIPPER
           </span>
 
-          <h1>
-            My Bookings
-          </h1>
+          <h1>My Booking</h1>
 
           <p>
-            All your confirmed trips are
-            safely saved here.
+            Your trip is confirmed. Here are all your
+            journey and payment details.
           </p>
-
         </div>
 
+        <button
+          type="button"
+          className="booking-print-btn"
+          onClick={handlePrint}
+        >
+          <FiDownload />
+          Print
+        </button>
 
-        {/* TOTAL BOOKINGS */}
+      </header>
 
-        <div className="booking-total-box">
+      {/* ================= ALL BOOKINGS ================= */}
 
-          <strong>
-            {bookings.length}
-          </strong>
+      <div className="booking-container">
 
-          <span>
-            {bookings.length === 1
-              ? "Confirmed Trip"
-              : "Confirmed Trips"}
-          </span>
+        {bookings.map((booking, index) => {
 
-        </div>
+          const hotelImage = getImage(booking);
 
-      </section>
+          const hotelName = getHotelName(booking);
 
+          const location = getLocation(booking);
 
-      {/* =====================================================
-          BOOKINGS CONTENT
-      ===================================================== */}
+          const total =
+            booking.total ||
+            booking.totalBudget ||
+            booking.budget ||
+            0;
 
-      <section className="booking-content">
+          const days = Number(booking.days) || 1;
 
-        {/* ===================================================
-            EMPTY
-        =================================================== */}
+          const travellers =
+            Number(booking.travellers) ||
+            Number(booking.adults) ||
+            1;
 
-        {bookings.length === 0 ? (
-
-          <div className="booking-empty">
-
-            <div className="booking-empty-icon">
-              <FiCalendar />
-            </div>
-
-            <span>
-              NO BOOKINGS
-            </span>
-
-            <h2>
-              No trips booked yet
-            </h2>
-
-            <p>
-              Create a trip and confirm your
-              booking. Your trip will appear here.
-            </p>
-
-            <button
-              type="button"
-              onClick={() =>
-                navigate("/trip-plan")
+          return (
+            <section
+              className="booking-wrapper"
+              key={
+                booking.id ||
+                booking.transactionId ||
+                index
               }
             >
-              Plan a Trip
-              <FiNavigation />
-            </button>
 
-          </div>
+              {/* ================= CONFIRMED TOP ================= */}
 
-        ) : (
+              <div className="booking-confirmed-header">
 
-          /* =================================================
-             BOOKING LIST
-          ================================================= */
+                <div className="confirmed-left">
 
-          <div className="booking-list-page">
+                  <div className="confirmed-icon">
+                    <FiCheck />
+                  </div>
 
-            {bookings.map(
-              (booking, index) => (
+                  <div>
+                    <span>BOOKING CONFIRMED</span>
 
-                <article
-                  className="booking-page-card"
-                  key={
-                    booking.id ||
-                    `${booking.destination}-${index}`
-                  }
-                >
+                    <h2>
+                      Your trip is successfully booked
+                    </h2>
+                  </div>
 
-                  {/* =========================================
-                      IMAGE
-                  ========================================= */}
+                </div>
 
-                  <div className="booking-page-image">
+                <div className="booking-id-box">
 
-                    <img
-                      src={
-                        booking.hotel?.image ||
-                        booking.image ||
-                        FALLBACK_HOTEL_IMAGE
-                      }
-                      alt={
-                        booking.destination ||
-                        "Travel destination"
-                      }
-                      onError={(e) => {
-                        e.currentTarget.src =
-                          FALLBACK_HOTEL_IMAGE;
-                      }}
-                    />
+                  <span>BOOKING ID</span>
 
+                  <strong>
+                    {booking.id || "TRP-BOOKING"}
+                  </strong>
 
-                    <div className="booking-image-overlay" />
+                </div>
 
+              </div>
 
-                    {/* STATUS */}
+              {/* ================= MAIN CARD ================= */}
 
-                    <span className="booking-status">
+              <div className="booking-main-card">
 
-                      <FiCheckCircle />
+                {/* IMAGE */}
 
-                      CONFIRMED
+                <div className="booking-image">
 
+                  <img
+                    src={hotelImage}
+                    alt={hotelName}
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        FALLBACK_IMAGE;
+                    }}
+                  />
+
+                  <div className="image-gradient" />
+
+                  <div className="image-top-badge">
+                    <FiCheckCircle />
+                    Confirmed
+                  </div>
+
+                  <div className="image-location">
+                    <FiMapPin />
+
+                    <span>
+                      {booking.destination ||
+                        "Your Destination"}
                     </span>
+                  </div>
 
+                </div>
 
-                    {/* DESTINATION */}
+                {/* DETAILS */}
 
-                    <div className="booking-destination">
+                <div className="booking-main-details">
 
-                      <span>
-                        {booking.country ||
-                          "Travel"}
+                  <div className="hotel-heading-row">
+
+                    <div>
+
+                      <span className="small-label">
+                        YOUR STAY
                       </span>
 
                       <h2>
-                        {booking.destination ||
-                          "Your Trip"}
+                        {hotelName}
                       </h2>
+
+                      <p className="hotel-location">
+                        <FiMapPin />
+                        {location}
+                      </p>
+
+                    </div>
+
+                    {booking.hotel?.rating && (
+                      <div className="rating-box">
+
+                        <FiStar />
+
+                        <strong>
+                          {booking.hotel.rating}
+                        </strong>
+
+                        {booking.hotel.reviews && (
+                          <span>
+                            ({booking.hotel.reviews})
+                          </span>
+                        )}
+
+                      </div>
+                    )}
+
+                  </div>
+
+                  {/* BASIC TRIP DETAILS */}
+
+                  <div className="main-info-grid">
+
+                    <div className="main-info-item">
+
+                      <div className="main-info-icon">
+                        <FiCalendar />
+                      </div>
+
+                      <div>
+                        <span>TRAVEL DATE</span>
+
+                        <strong>
+                          {formatDate(
+                            booking.date
+                          )}
+                        </strong>
+                      </div>
+
+                    </div>
+
+                    <div className="main-info-item">
+
+                      <div className="main-info-icon">
+                        <FiClock />
+                      </div>
+
+                      <div>
+                        <span>DURATION</span>
+
+                        <strong>
+                          {days}{" "}
+                          {days === 1
+                            ? "Day"
+                            : "Days"}
+                        </strong>
+                      </div>
+
+                    </div>
+
+                    <div className="main-info-item">
+
+                      <div className="main-info-icon">
+                        <FiUsers />
+                      </div>
+
+                      <div>
+                        <span>TRAVELLERS</span>
+
+                        <strong>
+                          {travellers}{" "}
+                          {travellers === 1
+                            ? "Traveller"
+                            : "Travellers"}
+                        </strong>
+                      </div>
 
                     </div>
 
                   </div>
 
+                  {/* TRIP SUMMARY */}
 
-                  {/* =========================================
-                      DETAILS
-                  ========================================= */}
+                  <div className="trip-summary">
 
-                  <div className="booking-page-details">
+                    <div className="trip-summary-heading">
+                      <div>
+                        <span>
+                          YOUR JOURNEY
+                        </span>
 
+                        <h3>
+                          Trip Details
+                        </h3>
+                      </div>
 
-                    {/* BOOKING NUMBER */}
+                      <FiNavigation />
+                    </div>
 
-                    <div className="booking-number">
+                    <div className="trip-detail-grid">
 
-                      BOOKING #
-                      {String(index + 1).padStart(
-                        2,
-                        "0"
+                      <div>
+                        <span>Travel Type</span>
+
+                        <strong>
+                          {booking.travelType ||
+                            "Solo"}
+                        </strong>
+                      </div>
+
+                      <div>
+                        <span>Travel Style</span>
+
+                        <strong>
+                          {booking.style ||
+                            "Relaxed"}
+                        </strong>
+                      </div>
+
+                      <div>
+                        <span>Stay</span>
+
+                        <strong>
+                          {booking.stay ||
+                            "Any"}
+                        </strong>
+                      </div>
+
+                      <div>
+                        <span>Transport</span>
+
+                        <strong>
+                          {booking.transport ||
+                            "Any"}
+                        </strong>
+                      </div>
+
+                    </div>
+
+                    {Array.isArray(
+                      booking.interests
+                    ) &&
+                      booking.interests.length > 0 && (
+                        <div className="interest-section">
+
+                          <span>
+                            INTERESTS
+                          </span>
+
+                          <div className="interest-list">
+
+                            {booking.interests.map(
+                              (
+                                interest,
+                                interestIndex
+                              ) => (
+                                <span
+                                  key={`${interest}-${interestIndex}`}
+                                >
+                                  {interest}
+                                </span>
+                              )
+                            )}
+
+                          </div>
+
+                        </div>
+                      )}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* ================= PAYMENT ================= */}
+
+              <div className="payment-section">
+
+                <div className="payment-heading">
+
+                  <div className="payment-title-icon">
+                    <FiCreditCard />
+                  </div>
+
+                  <div>
+                    <span>
+                      PAYMENT INFORMATION
+                    </span>
+
+                    <h3>
+                      Payment Confirmed
+                    </h3>
+                  </div>
+
+                </div>
+
+                <div className="payment-content">
+
+                  <div className="payment-item">
+
+                    <span>
+                      PAYMENT STATUS
+                    </span>
+
+                    <strong className="paid">
+                      <FiCheckCircle />
+                      {booking.paymentStatus ||
+                        "Paid"}
+                    </strong>
+
+                  </div>
+
+                  <div className="payment-item">
+
+                    <span>
+                      PAYMENT METHOD
+                    </span>
+
+                    <strong>
+                      {booking.paymentMethod ||
+                        "Online Payment"}
+                    </strong>
+
+                  </div>
+
+                  <div className="payment-item">
+
+                    <span>
+                      TRANSACTION ID
+                    </span>
+
+                    <strong>
+                      {booking.transactionId ||
+                        "N/A"}
+                    </strong>
+
+                  </div>
+
+                  <div className="payment-total">
+
+                    <span>
+                      TOTAL PAID
+                    </span>
+
+                    <strong>
+                      {formatPrice(total)}
+                    </strong>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* ================= TIMELINE ================= */}
+
+              <div className="journey-section">
+
+                <div className="journey-heading">
+
+                  <div>
+                    <span>
+                      BOOKING JOURNEY
+                    </span>
+
+                    <h3>
+                      Your Reservation Status
+                    </h3>
+                  </div>
+
+                  <FiShield />
+
+                </div>
+
+                <div className="journey-timeline">
+
+                  <div className="timeline-item active">
+
+                    <div className="timeline-circle">
+                      <FiCheck />
+                    </div>
+
+                    <div>
+                      <strong>
+                        Booking Confirmed
+                      </strong>
+
+                      <span>
+                        Your reservation has been
+                        confirmed.
+                      </span>
+                    </div>
+
+                  </div>
+
+                  <div className="timeline-line active-line" />
+
+                  <div className="timeline-item active">
+
+                    <div className="timeline-circle">
+                      <FiCheck />
+                    </div>
+
+                    <div>
+                      <strong>
+                        Payment Received
+                      </strong>
+
+                      <span>
+                        Your payment has been
+                        successfully received.
+                      </span>
+                    </div>
+
+                  </div>
+
+                  <div className="timeline-line" />
+
+                  <div className="timeline-item">
+
+                    <div className="timeline-circle upcoming">
+                      <FiCalendar />
+                    </div>
+
+                    <div>
+                      <strong>
+                        Trip Day
+                      </strong>
+
+                      <span>
+                        {formatDate(
+                          booking.date
+                        )}
+                      </span>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* ================= ITINERARY ================= */}
+
+              {Array.isArray(booking.itinerary) &&
+                booking.itinerary.length > 0 && (
+                  <div className="itinerary-section">
+
+                    <div className="itinerary-heading">
+
+                      <span>
+                        YOUR TRIP PLAN
+                      </span>
+
+                      <h3>
+                        Itinerary
+                      </h3>
+
+                    </div>
+
+                    <div className="itinerary-list">
+
+                      {booking.itinerary.map(
+                        (item, itineraryIndex) => {
+
+                          const title =
+                            item?.title ||
+                            item?.activity ||
+                            item?.name ||
+                            `Day ${
+                              itineraryIndex + 1
+                            }`;
+
+                          const description =
+                            item?.description ||
+                            item?.details ||
+                            item?.plan ||
+                            "";
+
+                          return (
+                            <div
+                              className="itinerary-item"
+                              key={
+                                item?.id ||
+                                itineraryIndex
+                              }
+                            >
+
+                              <div className="day-number">
+                                {String(
+                                  itineraryIndex + 1
+                                ).padStart(2, "0")}
+                              </div>
+
+                              <div>
+                                <span>
+                                  DAY{" "}
+                                  {itineraryIndex +
+                                    1}
+                                </span>
+
+                                <h4>
+                                  {title}
+                                </h4>
+
+                                {description && (
+                                  <p>
+                                    {description}
+                                  </p>
+                                )}
+                              </div>
+
+                            </div>
+                          );
+                        }
                       )}
 
                     </div>
 
-
-                    {/* =======================================
-                        INFO GRID
-                    ======================================= */}
-
-                    <div className="booking-info-grid">
-
-
-                      {/* DATE */}
-
-                      <div className="booking-info-item">
-
-                        <div className="booking-info-icon">
-                          <FiCalendar />
-                        </div>
-
-                        <div>
-
-                          <small>
-                            TRAVEL DATE
-                          </small>
-
-                          <strong>
-                            {formatDate(
-                              booking.date
-                            )}
-                          </strong>
-
-                        </div>
-
-                      </div>
-
-
-                      {/* DURATION */}
-
-                      <div className="booking-info-item">
-
-                        <div className="booking-info-icon">
-                          <FiClock />
-                        </div>
-
-                        <div>
-
-                          <small>
-                            DURATION
-                          </small>
-
-                          <strong>
-                            {booking.days || 1}{" "}
-                            {Number(
-                              booking.days || 1
-                            ) === 1
-                              ? "Day"
-                              : "Days"}
-                          </strong>
-
-                        </div>
-
-                      </div>
-
-
-                      {/* TRAVELLERS */}
-
-                      <div className="booking-info-item">
-
-                        <div className="booking-info-icon">
-                          <FiUsers />
-                        </div>
-
-                        <div>
-
-                          <small>
-                            TRAVELLERS
-                          </small>
-
-                          <strong>
-                            {booking.travellers ||
-                              1}
-                          </strong>
-
-                        </div>
-
-                      </div>
-
-
-                      {/* BUDGET */}
-
-                      <div className="booking-info-item">
-
-                        <div className="booking-info-icon">
-                          <FiNavigation />
-                        </div>
-
-                        <div>
-
-                          <small>
-                            TOTAL BUDGET
-                          </small>
-
-                          <strong>
-                            {formatCurrency(
-                              booking.totalBudget
-                            )}
-                          </strong>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-
-                    {/* =======================================
-                        HOTEL
-                    ======================================= */}
-
-                    {booking.hotel && (
-
-                      <div className="booking-hotel">
-
-                        <img
-                          src={
-                            booking.hotel.image ||
-                            FALLBACK_HOTEL_IMAGE
-                          }
-                          alt={
-                            booking.hotel.name ||
-                            "Hotel"
-                          }
-                          onError={(e) => {
-                            e.currentTarget.src =
-                              FALLBACK_HOTEL_IMAGE;
-                          }}
-                        />
-
-
-                        <div className="booking-hotel-info">
-
-                          <small>
-                            YOUR STAY
-                          </small>
-
-                          <h3>
-                            {booking.hotel.name ||
-                              "Recommended Stay"}
-                          </h3>
-
-                          <p>
-                            {booking.hotel.type ||
-                              "Hotel"}
-                          </p>
-
-                        </div>
-
-
-                        <div className="booking-hotel-price">
-
-                          <small>
-                            FROM
-                          </small>
-
-                          <strong>
-                            {booking.hotel.price ||
-                              "₹0"}
-                          </strong>
-
-                          <span>
-                            / night
-                          </span>
-
-                        </div>
-
-                      </div>
-
-                    )}
-
-
-                    {/* =======================================
-                        BOTTOM
-                    ======================================= */}
-
-                    <div className="booking-page-bottom">
-
-
-                      {/* CONFIRMED */}
-
-                      <div className="booking-confirmed-text">
-
-                        <FiCheckCircle />
-
-                        <div>
-
-                          <strong>
-                            Booking Confirmed
-                          </strong>
-
-                          <span>
-                            Your trip is ready to go.
-                          </span>
-
-                        </div>
-
-                      </div>
-
-
-                      {/* ACTIONS */}
-
-                      <div className="booking-actions">
-
-
-                        {/* VIEW */}
-
-                        <button
-                          type="button"
-                          className="booking-view-btn"
-                          onClick={() =>
-                            viewTrip(booking)
-                          }
-                        >
-                          View Trip
-                          <FiMapPin />
-                        </button>
-
-
-                        {/* DELETE */}
-
-                        <button
-                          type="button"
-                          className="booking-delete-btn"
-                          onClick={() =>
-                            deleteBooking(
-                              booking.id
-                            )
-                          }
-                        >
-                          Delete
-                          <FiTrash2 />
-                        </button>
-
-                      </div>
-
-                    </div>
-
                   </div>
+                )}
 
-                </article>
+              {/* ================= FOOTER ================= */}
 
-              )
-            )}
+              <div className="booking-footer">
 
-          </div>
+                <div>
+                  <FiCheckCircle />
 
-        )}
+                  <span>
+                    Your booking is securely
+                    stored with TRIPPER.
+                  </span>
+                </div>
 
-      </section>
+                <span>
+                  Booked on{" "}
+                  {booking.bookedAt
+                    ? formatDate(
+                        booking.bookedAt
+                      )
+                    : "Today"}
+                </span>
 
-    </main>
+              </div>
+
+            </section>
+          );
+        })}
+
+      </div>
+
+    </div>
   );
 };
 

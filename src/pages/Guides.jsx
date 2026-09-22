@@ -493,37 +493,7 @@ const Guides = () => {
       </section>
 
 
-      {/* =================================================
-          CTA
-      ================================================= */}
-
-      <section className="guides-cta">
-
-        <span>YOUR NEXT ADVENTURE</span>
-
-        <h2>
-          Read it.
-          <br />
-          Dream it.
-          <br />
-          <em>Live it.</em>
-        </h2>
-
-        <p>
-          Found somewhere you love? Turn your inspiration
-          into an actual journey.
-        </p>
-
-        <Link
-          to="/create-trip"
-          className="guides-cta-btn"
-        >
-          Start Planning
-          <FiArrowUpRight />
-        </Link>
-
-      </section>
-
+      
     </main>
   );
 };

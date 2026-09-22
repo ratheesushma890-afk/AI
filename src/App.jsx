@@ -39,6 +39,7 @@ import AdminLayout from "./pages/AdminLayout";
 import AdminAddDestination from "./pages/AdminDestinationForm";
 import AdminEditDestination from "./pages/AdminEditDestination";
 import BookingSummary from "./pages/BookingSummary";
+import BookingDetails from "./pages/BookingDetails";
 // =====================================================
 // SCROLL TO TOP ON NEW PAGE
 // =====================================================
@@ -247,6 +248,10 @@ const hideFooter =
 <Route
   path="/place/:destinationId/:placeId"
   element={<PlaceDetail />}
+/>
+<Route
+  path="/booking-details"
+  element={<BookingDetails />}
 />
       </Routes>
 

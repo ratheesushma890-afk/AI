@@ -409,33 +409,6 @@ const Contact = () => {
       </section>
 
 
-      {/* =================================================
-          FINAL CTA
-      ================================================= */}
-
-      <section className="contact-cta">
-
-        <div>
-
-          <span>YOUR NEXT ADVENTURE</span>
-
-          <h2>
-            Ready to
-            <br />
-            <em>go somewhere?</em>
-          </h2>
-
-          <Link
-            to="/create-trip"
-            className="contact-cta-btn"
-          >
-            Start Planning
-            <FiArrowUpRight />
-          </Link>
-
-        </div>
-
-      </section>
 
     </main>
   );

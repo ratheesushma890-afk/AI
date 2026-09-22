@@ -789,60 +789,7 @@ const PlaceDetail = () => {
 
         </div>
 
-        {/* SIDE CARD */}
-
-        <aside className="place-info-card">
-
-          <div className="place-card-icon">
-            <FiMapPin />
-          </div>
-
-          <span>
-            EXPLORE
-          </span>
-
-          <h3>
-            {place.name}
-          </h3>
-
-          <p>
-            Add this place to your{" "}
-            {place.destination} itinerary
-            and create your perfect
-            travel day.
-          </p>
-
-          <Link
-            to="/trip-plan"
-            className="place-plan-btn"
-          >
-            <span>
-              Plan this trip
-            </span>
-
-            <FiArrowUpRight />
-          </Link>
-
-          <div className="place-card-divider" />
-
-          <div className="place-card-row">
-            <FiUsers />
-
-            <span>
-              Couples · Friends · Family
-            </span>
-          </div>
-
-          <div className="place-card-row">
-            <FiCalendar />
-
-            <span>
-              Best time: {place.bestTime}
-            </span>
-          </div>
-
-        </aside>
-
+        
       </section>
 
      

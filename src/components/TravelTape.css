@@ -227,7 +227,7 @@
 
   gap: 9px;
 
-  padding: 10px 5px;
+  padding: 40px 5px;
 
   border: none;
 
@@ -249,14 +249,14 @@
 
 
 .index-number {
-  font-size:10px;
+  font-size:12px;
 
   letter-spacing: 1px;
 }
 
 
 .index-name {
-  font-size: 12px;
+  font-size: 15px;
 
   font-weight: 700;
 

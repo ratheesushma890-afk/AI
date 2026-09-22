@@ -5,17 +5,14 @@
 .login-page {
   width: 100%;
   min-height: 100vh;
-
   padding-top: 78px;
-
   box-sizing: border-box;
 
-  background: #f7f6f1;
-  color: #242822;
+  background: #f5f9fd;
+  color: #182b3d;
 
   font-family: "Inter", sans-serif;
 }
-
 
 /* =========================================================
    WRAPPER
@@ -30,7 +27,6 @@
   align-items: stretch;
 }
 
-
 /* =========================================================
    LEFT VISUAL
 ========================================================= */
@@ -43,13 +39,13 @@
 
   display: flex;
   align-items: flex-end;
+
   margin-top: 20px;
-  overflow: hidden;
   margin-left: 100px;
 
-  background-image: url(
-    "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=90"
-  );
+  overflow: hidden;
+
+  background-image: url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=90");
 
   background-size: cover;
   background-position: center 65%;
@@ -62,11 +58,10 @@
   background:
     linear-gradient(
       180deg,
-      rgba(24, 28, 23, 0.03) 20%,
-      rgba(24, 28, 23, 0.82) 100%
+      rgba(8, 35, 60, 0.03) 20%,
+      rgba(8, 35, 60, 0.84) 100%
     );
 }
-
 
 /* =========================================================
    VISUAL CONTENT
@@ -74,7 +69,6 @@
 
 .login-visual-content {
   position: relative;
-
   z-index: 2;
 
   width: 100%;
@@ -91,10 +85,9 @@
 
   margin-bottom: 12px;
 
-  color: #e1c68d;
+  color: #9ed0f3;
 
   font-size: 9px;
-
   font-weight: 700;
 
   letter-spacing: 2.3px;
@@ -115,8 +108,7 @@
 }
 
 .login-visual-content h1 em {
-  color: #d9b875;
-
+  color: #8ec5ed;
   font-style: italic;
 }
 
@@ -128,10 +120,8 @@
   color: rgba(255, 255, 255, 0.76);
 
   font-size: 12px;
-
   line-height: 1.55;
 }
-
 
 /* =========================================================
    QUOTE
@@ -139,7 +129,6 @@
 
 .login-quote {
   display: flex;
-
   align-items: flex-start;
 
   gap: 8px;
@@ -150,7 +139,7 @@
 .login-quote > span {
   font-family: Georgia, serif;
 
-  color: #d9b875;
+  color: #8ec5ed;
 
   font-size: 35px;
 
@@ -169,7 +158,6 @@
   line-height: 1.45;
 }
 
-
 /* =========================================================
    FORM SECTION
 ========================================================= */
@@ -184,15 +172,13 @@
 
   box-sizing: border-box;
 
-  background: #f7f6f1;
+  background: #f5f9fd;
 }
 
 .login-form-box {
   width: 100%;
-
   max-width: 390px;
 }
-
 
 /* =========================================================
    HEADING
@@ -203,10 +189,9 @@
 }
 
 .login-heading > span {
-  color: #9c7940;
+  color: #3979a9;
 
   font-size: 9px;
-
   font-weight: 700;
 
   letter-spacing: 2px;
@@ -224,10 +209,12 @@
   font-weight: 400;
 
   letter-spacing: -1.5px;
+
+  color: #183a58;
 }
 
 .login-heading h2 em {
-  color: #a47c3c;
+  color: #3578aa;
 
   font-style: italic;
 }
@@ -235,13 +222,12 @@
 .login-heading p {
   margin: 0;
 
-  color: #77786f;
+  color: #718396;
 
   font-size: 11px;
 
   line-height: 1.5;
 }
-
 
 /* =========================================================
    FORM
@@ -254,7 +240,6 @@
 
   gap: 10px;
 }
-
 
 /* =========================================================
    FIELD
@@ -269,7 +254,7 @@
 
   margin-bottom: 4px;
 
-  color: #77786f;
+  color: #6d7f91;
 
   font-size: 8px;
 
@@ -277,7 +262,6 @@
 
   letter-spacing: 1.5px;
 }
-
 
 /* =========================================================
    LABEL ROW
@@ -297,7 +281,7 @@
 }
 
 .forgot-password {
-  color: #8f6c35;
+  color: #3979a9;
 
   font-size: 9px;
 
@@ -305,9 +289,10 @@
 }
 
 .forgot-password:hover {
+  color: #245c87;
+
   text-decoration: underline;
 }
-
 
 /* =========================================================
    INPUT
@@ -328,9 +313,9 @@
 
   box-sizing: border-box;
 
-  background: #fff;
+  background: #ffffff;
 
-  border: 1px solid #dddcd4;
+  border: 1px solid #d7e3ed;
 
   border-radius: 7px;
 
@@ -340,16 +325,16 @@
 .login-input > svg {
   flex-shrink: 0;
 
-  color: #9a9a90;
+  color: #8da1b2;
 
   font-size: 15px;
 }
 
 .login-input:focus-within {
-  border-color: #b69458;
+  border-color: #6ea8d3;
 
   box-shadow:
-    0 0 0 3px rgba(182, 148, 88, 0.08);
+    0 0 0 3px rgba(76, 139, 186, 0.10);
 }
 
 .login-input input {
@@ -358,12 +343,11 @@
   min-width: 0;
 
   border: 0;
-
   outline: 0;
 
   background: transparent;
 
-  color: #242822;
+  color: #20384d;
 
   font-family: "Inter", sans-serif;
 
@@ -371,9 +355,8 @@
 }
 
 .login-input input::placeholder {
-  color: #aaa9a1;
+  color: #9aa9b6;
 }
-
 
 /* =========================================================
    PASSWORD TOGGLE
@@ -394,15 +377,14 @@
 
   background: transparent;
 
-  color: #96968d;
+  color: #899baa;
 
   cursor: pointer;
 }
 
 .login-password-toggle:hover {
-  color: #8d6b34;
+  color: #3478aa;
 }
-
 
 /* =========================================================
    REMEMBER
@@ -417,7 +399,7 @@
 
   margin-top: 0;
 
-  color: #77786f;
+  color: #718396;
 
   font-size: 12px;
 
@@ -430,11 +412,10 @@
 
   margin: 0;
 
-  accent-color: #a47c3c;
+  accent-color: #3478aa;
 
   cursor: pointer;
 }
-
 
 /* =========================================================
    LOGIN BUTTON
@@ -458,7 +439,7 @@
 
   border-radius: 7px;
 
-  background: #292d27;
+  background: #173f67;
 
   color: #fff;
 
@@ -470,7 +451,8 @@
 
   transition:
     transform 0.25s ease,
-    background 0.25s ease;
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .login-submit svg {
@@ -480,15 +462,17 @@
 }
 
 .login-submit:hover {
-  background: #9a7438;
+  background: #245f8e;
 
   transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(23, 63, 103, 0.18);
 }
 
 .login-submit:hover svg {
   transform: translateX(4px);
 }
-
 
 /* =========================================================
    DIVIDER
@@ -512,11 +496,11 @@
 
   height: 1px;
 
-  background: #deddd5;
+  background: #d9e3eb;
 }
 
 .login-divider span {
-  color: #a2a29a;
+  color: #8b9aaa;
 
   font-size: 10px;
 
@@ -524,7 +508,6 @@
 
   letter-spacing: 1px;
 }
-
 
 /* =========================================================
    GOOGLE BUTTON
@@ -542,13 +525,13 @@
 
   gap: 8px;
 
-  border: 1px solid #dddcd4;
+  border: 1px solid #d7e3ed;
 
   border-radius: 7px;
 
-  background: #fff;
+  background: #ffffff;
 
-  color: #363a34;
+  color: #31485d;
 
   font-size: 14px;
 
@@ -560,11 +543,14 @@
 }
 
 .login-google:hover {
-  border-color: #b9a57c;
+  border-color: #9fc1db;
 
-  background: #fbfaf6;
+  background: #f8fbfe;
 
   transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 15px rgba(35, 76, 110, 0.08);
 }
 
 .google-icon {
@@ -585,7 +571,6 @@
   color: #4285f4;
 }
 
-
 /* =========================================================
    SIGNUP
 ========================================================= */
@@ -600,7 +585,7 @@
 
   margin-top: 12px;
 
-  color: #85857c;
+  color: #7c8d9d;
 
   font-size: 12px;
 }
@@ -612,7 +597,7 @@
 
   gap: 3px;
 
-  color: #8f6c35;
+  color: #3478aa;
 
   font-weight: 600;
 
@@ -625,20 +610,23 @@
   transition: transform 0.2s ease;
 }
 
+.login-signup a:hover {
+  color: #245c87;
+}
+
 .login-signup a:hover svg {
   transform: translateX(3px);
 }
 
 /* =========================================================
-   RESPONSIVE ONLY
+   RESPONSIVE
 ========================================================= */
 
-/* =========================
+/* =========================================================
    TABLET
-========================= */
+========================================================= */
 
 @media (max-width: 1100px) {
-
   .login-visual {
     margin-left: 50px;
   }
@@ -660,21 +648,22 @@
   }
 }
 
-
-/* =========================
+/* =========================================================
    TABLET / SMALL LAPTOP
-========================= */
+========================================================= */
 
 @media (max-width: 900px) {
-
   .login-page {
     padding-top: 70px;
+
     overflow-x: hidden;
   }
 
   .login-wrapper {
     width: 100%;
+
     display: grid;
+
     grid-template-columns: 1fr;
   }
 
@@ -682,6 +671,7 @@
 
   .login-visual {
     width: 100%;
+
     height: 330px;
     min-height: 330px;
 
@@ -689,6 +679,7 @@
     margin-top: 0;
 
     background-size: cover;
+
     background-position: center 65%;
   }
 
@@ -702,6 +693,7 @@
 
   .login-visual-content > p {
     max-width: 430px;
+
     font-size: 12px;
   }
 
@@ -709,25 +701,27 @@
 
   .login-form-section {
     width: 100%;
+
     padding: 35px 6% 40px;
+
     box-sizing: border-box;
   }
 
   .login-form-box {
     width: 100%;
+
     max-width: 430px;
   }
 }
 
-
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media (max-width: 600px) {
-
   .login-page {
     width: 100%;
+
     min-height: 100vh;
 
     padding-top: 70px;
@@ -737,6 +731,7 @@
 
   .login-wrapper {
     width: 100%;
+
     display: block;
   }
 
@@ -751,38 +746,45 @@
     margin: 0;
 
     background-size: cover;
+
     background-position: center 65%;
   }
 
   .login-visual-content {
     width: 100%;
+
     padding: 22px 20px;
+
     box-sizing: border-box;
   }
 
   .login-kicker {
     font-size: 8px;
+
     letter-spacing: 2px;
+
     margin-bottom: 9px;
   }
 
   .login-visual-content h1 {
     font-size: 37px;
+
     letter-spacing: -1.5px;
   }
 
   .login-visual-content > p {
     max-width: 310px;
+
     margin-top: 13px;
 
     font-size: 11px;
+
     line-height: 1.5;
   }
 
   .login-quote {
     display: none;
   }
-
 
   /* FORM */
 
@@ -796,9 +798,9 @@
 
   .login-form-box {
     width: 100%;
+
     max-width: 100%;
   }
-
 
   /* HEADING */
 
@@ -808,6 +810,7 @@
 
   .login-heading > span {
     font-size: 12px;
+
     letter-spacing: 1.8px;
   }
 
@@ -815,27 +818,29 @@
     margin: 6px 0 7px;
 
     font-size: 33px;
+
     line-height: 1;
   }
 
   .login-heading p {
     font-size: 12px;
+
     line-height: 1.5;
   }
-
 
   /* FORM */
 
   .login-form-box form {
     width: 100%;
+
     gap: 8px;
   }
-
 
   /* INPUT */
 
   .login-input {
     width: 100%;
+
     height: 43px;
 
     padding: 0 11px;
@@ -847,22 +852,23 @@
 
   .login-input input {
     min-width: 0;
+
     font-size: 14px;
   }
-
 
   /* REMEMBER */
 
   .login-remember {
     gap: 6px;
+
     font-size: 15px;
   }
-
 
   /* LOGIN BUTTON */
 
   .login-submit {
     width: 100%;
+
     height: 44px;
 
     padding: 0 14px;
@@ -870,11 +876,11 @@
     font-size: 13px;
   }
 
-
   /* DIVIDER */
 
   .login-divider {
     gap: 8px;
+
     margin: 14px 0 11px;
   }
 
@@ -882,32 +888,30 @@
     font-size: 12px;
   }
 
-
   /* GOOGLE */
 
   .login-google {
     width: 100%;
+
     height: 43px;
 
     font-size: 12px;
   }
 
-
   /* SIGNUP */
 
   .login-signup {
     margin-top: 11px;
+
     font-size: 14px;
   }
 }
 
-
-/* =========================
+/* =========================================================
    SMALL MOBILE
-========================= */
+========================================================= */
 
 @media (max-width: 430px) {
-
   .login-page {
     padding-top: 65px;
   }
@@ -916,6 +920,7 @@
 
   .login-visual {
     height: 250px;
+
     min-height: 250px;
 
     background-position: center 65%;
@@ -927,19 +932,21 @@
 
   .login-kicker {
     font-size: 12px;
+
     margin-bottom: 8px;
   }
 
   .login-visual-content h1 {
     font-size: 35px;
+
     letter-spacing: -1.3px;
   }
 
   .login-visual-content > p {
     max-width: 290px;
+
     font-size: 12px;
   }
-
 
   /* FORM */
 
@@ -972,13 +979,11 @@
   }
 }
 
-
-/* =========================
+/* =========================================================
    VERY SMALL MOBILE
-========================= */
+========================================================= */
 
 @media (max-width: 380px) {
-
   .login-page {
     padding-top: 60px;
   }
@@ -987,6 +992,7 @@
 
   .login-visual {
     height: 230px;
+
     min-height: 230px;
 
     background-position: center 65%;
@@ -998,21 +1004,23 @@
 
   .login-kicker {
     font-size: 7px;
+
     margin-bottom: 8px;
   }
 
   .login-visual-content h1 {
     font-size: 32px;
+
     letter-spacing: -1px;
   }
 
   .login-visual-content > p {
     max-width: 270px;
+
     margin-top: 10px;
 
     font-size: 9px;
   }
-
 
   /* FORM */
 
@@ -1036,7 +1044,6 @@
     gap: 6px;
   }
 
-
   /* INPUT */
 
   .login-field label {
@@ -1045,6 +1052,7 @@
 
   .login-input {
     height: 40px;
+
     padding: 0 10px;
   }
 
@@ -1052,41 +1060,41 @@
     font-size: 11px;
   }
 
-
   /* BUTTON */
 
   .login-submit {
     height: 41px;
+
     font-size: 9px;
   }
 
   .login-google {
     height: 40px;
+
     font-size: 9px;
   }
-
 
   /* SIGNUP */
 
   .login-signup {
     margin-top: 8px;
+
     font-size: 9px;
   }
 }
 
-
-/* =========================
+/* =========================================================
    EXTRA SMALL
-========================= */
+========================================================= */
 
 @media (max-width: 320px) {
-
   .login-page {
     padding-top: 58px;
   }
 
   .login-visual {
     height: 210px;
+
     min-height: 210px;
   }
 
@@ -1100,6 +1108,7 @@
 
   .login-visual-content > p {
     max-width: 240px;
+
     font-size: 8px;
   }
 

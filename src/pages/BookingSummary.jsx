@@ -1,5 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
 import {
   FiArrowLeft,
   FiCalendar,
@@ -10,11 +15,17 @@ import {
   FiMapPin,
   FiShield,
   FiUsers,
+  FiStar,
 } from "react-icons/fi";
+
 import "./BookingSummary.css";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=90";
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
 
 const formatDate = (value) => {
   if (!value) return "Date not selected";
@@ -32,48 +43,26 @@ const formatDate = (value) => {
   });
 };
 
+/* =========================================================
+   CLEAN NUMBER
+========================================================= */
+
 const cleanNumber = (value) => {
   return String(value || "").replace(/[^\d]/g, "");
 };
 
+/* =========================================================
+   FORMAT PRICE
+========================================================= */
+
 const formatPrice = (value) => {
   const number = Number(value || 0);
 
-  if (!number) return "₹0";
+  if (!number) {
+    return "₹0";
+  }
 
   return `₹${number.toLocaleString("en-IN")}`;
-};
-
-/* =========================================================
-   CARD VALIDATION
-========================================================= */
-
-const luhnCheck = (number) => {
-  const digits = number.replace(/\D/g, "");
-
-  if (digits.length < 12) {
-    return false;
-  }
-
-  let sum = 0;
-  let shouldDouble = false;
-
-  for (let i = digits.length - 1; i >= 0; i--) {
-    let digit = Number(digits[i]);
-
-    if (shouldDouble) {
-      digit *= 2;
-
-      if (digit > 9) {
-        digit -= 9;
-      }
-    }
-
-    sum += digit;
-    shouldDouble = !shouldDouble;
-  }
-
-  return sum % 10 === 0;
 };
 
 /* =========================================================
@@ -117,136 +106,305 @@ const validateExpiry = (value) => {
 
 const BookingSummary = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [trip, setTrip] = useState(null);
 
-  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [paymentMethod, setPaymentMethod] =
+    useState("card");
 
-  const [paymentDetails, setPaymentDetails] = useState({
-    cardNumber: "",
-    cardName: "",
-    expiry: "",
-    cvv: "",
-    upi: "",
-    bank: "",
-  });
+  const [paymentDetails, setPaymentDetails] =
+    useState({
+      cardNumber: "",
+      cardName: "",
+      expiry: "",
+      cvv: "",
+      upi: "",
+      bank: "",
+    });
 
   const [errors, setErrors] = useState({});
 
-  const [processing, setProcessing] = useState(false);
+  const [processing, setProcessing] =
+    useState(false);
 
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] =
+    useState(false);
 
-  const [bookingId, setBookingId] = useState("");
+  const [bookingId, setBookingId] =
+    useState("");
 
-  const [transactionId, setTransactionId] = useState("");
-const getBudgetAmount = (budget) => {
-  switch (budget) {
-    case "Under ₹10,000":
-      return 8000;
+  const [transactionId, setTransactionId] =
+    useState("");
 
-    case "₹10,000 – ₹25,000":
-      return 18000;
+  /* =========================================================
+     BUDGET
+  ========================================================= */
 
-    case "₹25,000 – ₹50,000":
-      return 35000;
+  const getBudgetAmount = (budget) => {
+    switch (budget) {
+      case "Under ₹10,000":
+        return 8000;
 
-    case "₹50,000 – ₹1,00,000":
-      return 75000;
+      case "₹10,000 – ₹25,000":
+        return 18000;
 
-    case "₹1,00,000 – ₹2,00,000":
-      return 150000;
+      case "₹25,000 – ₹50,000":
+        return 35000;
 
-    case "₹2,00,000+":
-      return 250000;
+      case "₹50,000 – ₹1,00,000":
+        return 75000;
 
-    default:
-      return 0;
-  }
-};
+      case "₹1,00,000 – ₹2,00,000":
+        return 150000;
+
+      case "₹2,00,000+":
+        return 250000;
+
+      default:
+        return 0;
+    }
+  };
+
   /* =========================================================
      LOAD TRIP
+
+     IMPORTANT:
+     1. First priority = location.state
+     2. Second priority = localStorage
+
+     This makes selected hotel image continue
+     from CreateTrip -> BookingDetails -> BookingSummary.
   ========================================================= */
 
   useEffect(() => {
     try {
+      const stateData = location.state;
+
       const storedTrip = JSON.parse(
         localStorage.getItem("tripperTrip") || "null"
       );
 
-      setTrip(storedTrip);
+      /*
+        If BookingDetails sends final booking through
+        navigate("/booking-summary", { state: finalBooking })
+        then stateData will be used first.
+      */
+
+      if (stateData && typeof stateData === "object") {
+        setTrip(stateData);
+
+        /*
+          Also save latest booking data so refresh does
+          not remove selected hotel information.
+        */
+
+        localStorage.setItem(
+          "tripperTrip",
+          JSON.stringify(stateData)
+        );
+
+        return;
+      }
+
+      if (storedTrip) {
+        setTrip(storedTrip);
+        return;
+      }
+
+      setTrip(null);
     } catch (error) {
-      console.error("Trip data error:", error);
+      console.error(
+        "Trip data error:",
+        error
+      );
+
       setTrip(null);
     }
-  }, []);
+  }, [location.state]);
 
   /* =========================================================
-     PRICE
+     SELECTED HOTEL
+
+     HOTEL IMAGE HAS FIRST PRIORITY
   ========================================================= */
-const totalAmount = useMemo(() => {
-  if (!trip) return 0;
 
-  // CreateTrip ka saved totalBudget
-  const savedTotal = Number(trip.totalBudget || 0);
+  const selectedHotel = useMemo(() => {
+    if (!trip) return null;
 
-  if (savedTotal > 0) {
-    return savedTotal;
-  }
+    /*
+      Main expected structure:
 
-  return getBudgetAmount(trip.budget);
-}, [trip]);
+      trip.hotel.image
+    */
+
+    if (
+      trip.hotel &&
+      typeof trip.hotel === "object"
+    ) {
+      return trip.hotel;
+    }
+
+    /*
+      Backup structure in case BookingDetails
+      stored hotel inside bookingDetails.
+    */
+
+    if (
+      trip.bookingDetails &&
+      trip.bookingDetails.hotel
+    ) {
+      return trip.bookingDetails.hotel;
+    }
+
+    return null;
+  }, [trip]);
+
+  /* =========================================================
+     HOTEL IMAGE
+
+     SELECTED HOTEL IMAGE FIRST
+  ========================================================= */
+
+  const hotelImage =
+    selectedHotel?.image ||
+    trip?.hotelImage ||
+    trip?.image ||
+    FALLBACK_IMAGE;
+
+  /* =========================================================
+     TOTAL PRICE
+  ========================================================= */
+
+  const totalAmount = useMemo(() => {
+    if (!trip) {
+      return 0;
+    }
+
+    /*
+      BookingDetails ka final total first priority.
+    */
+
+    const tripTotal = Number(
+      trip.total || 0
+    );
+
+    if (tripTotal > 0) {
+      return tripTotal;
+    }
+
+    /*
+      Old totalBudget support.
+    */
+
+    const savedTotal = Number(
+      trip.totalBudget || 0
+    );
+
+    if (savedTotal > 0) {
+      return savedTotal;
+    }
+
+    /*
+      Last fallback.
+    */
+
+    return getBudgetAmount(
+      trip.budget
+    );
+  }, [trip]);
+
   /* =========================================================
      INPUT HANDLER
   ========================================================= */
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const {
+      name,
+      value,
+    } = event.target;
 
     let updatedValue = value;
 
-    /* CARD NUMBER */
+    /* =====================================================
+       CARD NUMBER
+    ===================================================== */
 
     if (name === "cardNumber") {
-      const digits = value.replace(/\D/g, "").slice(0, 16);
+      const digits = value
+        .replace(/\D/g, "")
+        .slice(0, 16);
 
-      updatedValue = digits.replace(/(.{4})/g, "$1 ").trim();
+      updatedValue = digits
+        .replace(
+          /(\d{4})(?=\d)/g,
+          "$1 "
+        )
+        .trim();
     }
 
-    /* EXPIRY */
+    /* =====================================================
+       CARD HOLDER NAME
+    ===================================================== */
+
+    if (name === "cardName") {
+      updatedValue = value.replace(
+        /[^a-zA-Z\s]/g,
+        ""
+      );
+    }
+
+    /* =====================================================
+       EXPIRY
+    ===================================================== */
 
     if (name === "expiry") {
-      const digits = value.replace(/\D/g, "").slice(0, 4);
+      const digits = value
+        .replace(/\D/g, "")
+        .slice(0, 4);
 
       if (digits.length >= 3) {
-        updatedValue = `${digits.slice(0, 2)}/${digits.slice(2)}`;
+        updatedValue =
+          `${digits.slice(0, 2)}/${digits.slice(2)}`;
       } else {
         updatedValue = digits;
       }
     }
 
-    /* CVV */
+    /* =====================================================
+       CVV
+    ===================================================== */
 
     if (name === "cvv") {
-      updatedValue = value.replace(/\D/g, "").slice(0, 4);
+      updatedValue = value
+        .replace(/\D/g, "")
+        .slice(0, 3);
     }
 
-    /* UPI */
+    /* =====================================================
+       UPI
+    ===================================================== */
 
     if (name === "upi") {
-      updatedValue = value.replace(/\s/g, "").toLowerCase();
+      updatedValue = value
+        .replace(/\s/g, "")
+        .toLowerCase();
     }
 
-    setPaymentDetails((previous) => ({
-      ...previous,
-      [name]: updatedValue,
-    }));
+    setPaymentDetails(
+      (previous) => ({
+        ...previous,
+        [name]: updatedValue,
+      })
+    );
 
-    setErrors((previous) => ({
-      ...previous,
-      [name]: "",
-      payment: "",
-    }));
+    setErrors(
+      (previous) => ({
+        ...previous,
+        [name]: "",
+        payment: "",
+      })
+    );
   };
 
   /* =========================================================
@@ -256,56 +414,115 @@ const totalAmount = useMemo(() => {
   const validatePayment = () => {
     const newErrors = {};
 
+    /* =====================================================
+       CARD
+    ===================================================== */
+
     if (paymentMethod === "card") {
-      const cardNumber = cleanNumber(paymentDetails.cardNumber);
+      const cardNumber =
+        cleanNumber(
+          paymentDetails.cardNumber
+        );
+
+      /*
+        ANY 16 DIGIT CARD NUMBER ACCEPTED.
+
+        No Luhn validation.
+      */
 
       if (!cardNumber) {
-  newErrors.cardNumber = "Card number is required";
-} else if (cardNumber !== "4242424242424242") {
-  newErrors.cardNumber = "Use demo card: 4242 4242 4242 4242";
-}
-      if (!paymentDetails.cardName.trim()) {
-        newErrors.cardName = "Cardholder name is required";
-      } else if (paymentDetails.cardName.trim().length < 3) {
-        newErrors.cardName = "Enter a valid cardholder name";
+        newErrors.cardNumber =
+          "Card number is required";
+      } else if (
+        cardNumber.length !== 16
+      ) {
+        newErrors.cardNumber =
+          "Card number must be 16 digits";
       }
 
+      /* CARD NAME */
+
+      if (
+        !paymentDetails.cardName.trim()
+      ) {
+        newErrors.cardName =
+          "Cardholder name is required";
+      } else if (
+        paymentDetails.cardName.trim()
+          .length < 3
+      ) {
+        newErrors.cardName =
+          "Enter a valid cardholder name";
+      }
+
+      /* EXPIRY */
+
       if (!paymentDetails.expiry) {
-        newErrors.expiry = "Expiry date is required";
+        newErrors.expiry =
+          "Expiry date is required";
       } else {
-        const expiryError = validateExpiry(paymentDetails.expiry);
+        const expiryError =
+          validateExpiry(
+            paymentDetails.expiry
+          );
 
         if (expiryError) {
-          newErrors.expiry = expiryError;
+          newErrors.expiry =
+            expiryError;
         }
       }
 
+      /* CVV */
+
       if (!paymentDetails.cvv) {
-        newErrors.cvv = "CVV is required";
-      } else if (!/^\d{3,4}$/.test(paymentDetails.cvv)) {
-        newErrors.cvv = "Enter a valid CVV";
+        newErrors.cvv =
+          "CVV is required";
+      } else if (
+        !/^\d{3}$/.test(
+          paymentDetails.cvv
+        )
+      ) {
+        newErrors.cvv =
+          "CVV must be exactly 3 digits";
       }
     }
+
+    /* =====================================================
+       UPI
+    ===================================================== */
 
     if (paymentMethod === "upi") {
       if (!paymentDetails.upi) {
-        newErrors.upi = "UPI ID is required";
+        newErrors.upi =
+          "UPI ID is required";
       } else if (
-        !/^[a-zA-Z0-9._-]{2,}@[a-zA-Z]{2,}$/.test(paymentDetails.upi)
+        !/^[a-zA-Z0-9._-]{2,}@[a-zA-Z]{2,}$/.test(
+          paymentDetails.upi
+        )
       ) {
-        newErrors.upi = "Enter a valid UPI ID";
+        newErrors.upi =
+          "Enter a valid UPI ID";
       }
     }
 
-    if (paymentMethod === "netbanking") {
+    /* =====================================================
+       NET BANKING
+    ===================================================== */
+
+    if (
+      paymentMethod === "netbanking"
+    ) {
       if (!paymentDetails.bank) {
-        newErrors.bank = "Please select your bank";
+        newErrors.bank =
+          "Please select your bank";
       }
     }
 
     setErrors(newErrors);
 
-    return Object.keys(newErrors).length === 0;
+    return (
+      Object.keys(newErrors).length === 0
+    );
   };
 
   /* =========================================================
@@ -313,9 +530,12 @@ const totalAmount = useMemo(() => {
   ========================================================= */
 
   const handlePayment = () => {
-    if (!trip) return;
+    if (!trip) {
+      return;
+    }
 
-    const isValid = validatePayment();
+    const isValid =
+      validatePayment();
 
     if (!isValid) {
       return;
@@ -323,62 +543,167 @@ const totalAmount = useMemo(() => {
 
     setProcessing(true);
 
-    
-
     setTimeout(() => {
-      const newBookingId = `BK-${Date.now()}`;
+      const newBookingId =
+        `BK-${Date.now()}`;
 
-      const newTransactionId = `TXN-${Date.now()}`;
+      const newTransactionId =
+        `TXN-${Date.now()}`;
 
-      const existingBookings = JSON.parse(
-        localStorage.getItem("tripBookings") || "[]"
-      );
+      let existingBookings = [];
+
+      try {
+        existingBookings =
+          JSON.parse(
+            localStorage.getItem(
+              "tripBookings"
+            ) || "[]"
+          );
+
+        if (
+          !Array.isArray(
+            existingBookings
+          )
+        ) {
+          existingBookings = [];
+        }
+      } catch {
+        existingBookings = [];
+      }
+
+      /* =====================================================
+         NEW BOOKING
+
+         IMPORTANT:
+         Selected hotel + selected hotel image
+         is saved here.
+      ===================================================== */
 
       const newBooking = {
         id: newBookingId,
 
-        destination: trip.destination || "Your Trip",
+        destination:
+          trip.destination ||
+          "Your Trip",
 
-        country: trip.country || "India",
+        country:
+          trip.country ||
+          "India",
 
-        date: trip.date || "",
+        date:
+          trip.date ||
+          trip.tripDates?.start ||
+          "",
 
-        days: trip.days || 1,
+        days:
+          trip.days ||
+          trip.tripDates?.days ||
+          1,
 
-        travellers: trip.travellers || 1,
+        travellers:
+          trip.travellers ||
+          trip.adults ||
+          1,
 
-        budget: trip.budget || "",
+        budget:
+          trip.budget ||
+          "",
 
-        totalBudget: totalAmount,
+        totalBudget:
+          totalAmount,
 
-        travelType: trip.travelType || "Solo",
+        total:
+          totalAmount,
 
-        style: trip.style || "Relaxed",
+        travelType:
+          trip.travelType ||
+          trip.tripType ||
+          "Solo",
 
-        stay: trip.stay || "Any",
+        style:
+          trip.style ||
+          "Relaxed",
 
-        transport: trip.transport || "Any",
+        stay:
+          trip.stay ||
+          "Any",
 
-        interests: Array.isArray(trip.interests)
-          ? trip.interests
-          : [],
+        transport:
+          trip.transport ||
+          "Any",
 
-        image: trip.image || FALLBACK_IMAGE,
+        interests:
+          Array.isArray(
+            trip.interests
+          )
+            ? trip.interests
+            : [],
 
-        hotel: trip.hotel || null,
+        /*
+          IMPORTANT:
+          Hotel image first.
+        */
 
-        status: "Confirmed",
+        image:
+          selectedHotel?.image ||
+          trip.hotelImage ||
+          trip.image ||
+          FALLBACK_IMAGE,
 
-        paymentStatus: "Paid",
+        /*
+          Complete selected hotel.
+        */
+
+        hotel: selectedHotel
+          ? {
+              name:
+                selectedHotel.name ||
+                "Selected Hotel",
+
+              location:
+                selectedHotel.location ||
+                trip.destination ||
+                "",
+
+              image:
+                selectedHotel.image ||
+                FALLBACK_IMAGE,
+
+              rating:
+                selectedHotel.rating ||
+                "",
+
+              reviews:
+                selectedHotel.reviews ||
+                "",
+            }
+          : null,
+
+        status:
+          "Confirmed",
+
+        paymentStatus:
+          "Paid",
 
         paymentMethod,
 
-        transactionId: newTransactionId,
+        transactionId:
+          newTransactionId,
 
-        itinerary: trip.itinerary || [],
+        itinerary:
+          Array.isArray(
+            trip.itinerary
+          )
+            ? trip.itinerary
+            : [],
 
-        bookedAt: new Date().toISOString(),
+        bookedAt:
+          new Date().toISOString(),
       };
+
+      /* =====================================================
+         SAVE BOOKING
+      ===================================================== */
 
       localStorage.setItem(
         "tripBookings",
@@ -388,13 +713,56 @@ const totalAmount = useMemo(() => {
         ])
       );
 
-      window.dispatchEvent(
-        new Event("tripBookingsUpdated")
+      /* =====================================================
+         SAVE FINAL TRIP ALSO
+
+         This keeps selected hotel image after refresh.
+      ===================================================== */
+
+      const finalTrip = {
+        ...trip,
+
+        image:
+          selectedHotel?.image ||
+          trip.hotelImage ||
+          trip.image ||
+          FALLBACK_IMAGE,
+
+        hotel:
+          selectedHotel
+            ? {
+                ...selectedHotel,
+                image:
+                  selectedHotel.image ||
+                  FALLBACK_IMAGE,
+              }
+            : trip.hotel || null,
+
+        totalBudget:
+          totalAmount,
+
+        total:
+          totalAmount,
+      };
+
+      localStorage.setItem(
+        "tripperTrip",
+        JSON.stringify(finalTrip)
       );
 
-      setBookingId(newBookingId);
+      window.dispatchEvent(
+        new Event(
+          "tripBookingsUpdated"
+        )
+      );
 
-      setTransactionId(newTransactionId);
+      setBookingId(
+        newBookingId
+      );
+
+      setTransactionId(
+        newTransactionId
+      );
 
       setProcessing(false);
 
@@ -406,20 +774,27 @@ const totalAmount = useMemo(() => {
      NO TRIP
   ========================================================= */
 
-  if (!trip && !paymentSuccess) {
+  if (
+    !trip &&
+    !paymentSuccess
+  ) {
     return (
       <div className="booking-summary-page">
         <div className="booking-empty">
-          <h2>No trip found</h2>
+          <h2>
+            No trip found
+          </h2>
 
           <p>
-            Please create your trip before continuing
-            to payment.
+            Please create your trip
+            before continuing to payment.
           </p>
 
           <button
             type="button"
-            onClick={() => navigate("/trip-plan")}
+            onClick={() =>
+              navigate("/trip-plan")
+            }
           >
             Create Trip
           </button>
@@ -445,29 +820,48 @@ const totalAmount = useMemo(() => {
             PAYMENT SUCCESSFUL
           </span>
 
-          <h1>Booking Confirmed</h1>
+          <h1>
+            Booking Confirmed
+          </h1>
 
           <p className="success-description">
-            Your trip has been successfully booked.
-            Your booking details are now available
-            in My Bookings.
+            Your trip has been successfully
+            booked. Your booking details are
+            now available in My Bookings.
           </p>
 
           <div className="success-details">
 
             <div>
-              <span>Booking ID</span>
-              <strong>{bookingId}</strong>
+              <span>
+                Booking ID
+              </span>
+
+              <strong>
+                {bookingId}
+              </strong>
             </div>
 
             <div>
-              <span>Transaction ID</span>
-              <strong>{transactionId}</strong>
+              <span>
+                Transaction ID
+              </span>
+
+              <strong>
+                {transactionId}
+              </strong>
             </div>
 
             <div>
-              <span>Amount Paid</span>
-              <strong>{formatPrice(totalAmount)}</strong>
+              <span>
+                Amount Paid
+              </span>
+
+              <strong>
+                {formatPrice(
+                  totalAmount
+                )}
+              </strong>
             </div>
 
           </div>
@@ -475,7 +869,9 @@ const totalAmount = useMemo(() => {
           <button
             type="button"
             className="success-bookings-btn"
-            onClick={() => navigate("/booking")}
+            onClick={() =>
+              navigate("/booking")
+            }
           >
             View My Bookings
           </button>
@@ -492,32 +888,48 @@ const totalAmount = useMemo(() => {
   return (
     <div className="booking-summary-page">
 
-      {/* HEADER */}
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
 
       <header className="checkout-header">
 
         <button
           type="button"
           className="checkout-back"
-          onClick={() => navigate(-1)}
+          onClick={() =>
+            navigate(-1)
+          }
         >
           <FiArrowLeft />
           Back
         </button>
 
         <div className="checkout-title">
-          <span>TRIPPER CHECKOUT</span>
-          <h1>Complete your booking</h1>
+
+          <span>
+            TRIPPER CHECKOUT
+          </span>
+
+          <h1>
+            Complete your booking
+          </h1>
+
         </div>
 
         <div className="secure-label">
+
           <FiLock />
+
           Secure Checkout
+
         </div>
 
       </header>
 
-      {/* PROGRESS */}
+      {/* =====================================================
+          PROGRESS
+      ===================================================== */}
 
       <div className="checkout-progress">
 
@@ -542,40 +954,55 @@ const totalAmount = useMemo(() => {
 
       </div>
 
-      {/* CONTENT */}
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
 
       <main className="checkout-layout">
 
-        {/* =================================================
-            LEFT
-        ================================================= */}
+        {/* ===================================================
+            LEFT PAYMENT
+        =================================================== */}
 
         <section className="payment-section">
 
           <div className="section-heading">
 
             <div>
+
               <span className="section-eyebrow">
                 PAYMENT
               </span>
 
-              <h2>Choose payment method</h2>
+              <h2>
+                Choose payment method
+              </h2>
 
               <p>
                 Pay securely to confirm your trip.
               </p>
+
             </div>
 
             <div className="payment-security">
+
               <FiShield />
-              <span>Secure payment</span>
+
+              <span>
+                Secure payment
+              </span>
+
             </div>
 
           </div>
 
-          {/* METHODS */}
+          {/* =================================================
+              PAYMENT METHODS
+          ================================================= */}
 
           <div className="payment-methods">
+
+            {/* CARD */}
 
             <button
               type="button"
@@ -589,13 +1016,24 @@ const totalAmount = useMemo(() => {
                 setErrors({});
               }}
             >
+
               <FiCreditCard />
 
               <span>
-                <strong>Card</strong>
-                <small>Credit / Debit</small>
+
+                <strong>
+                  Card
+                </strong>
+
+                <small>
+                  Credit / Debit
+                </small>
+
               </span>
+
             </button>
+
+            {/* UPI */}
 
             <button
               type="button"
@@ -609,15 +1047,26 @@ const totalAmount = useMemo(() => {
                 setErrors({});
               }}
             >
+
               <span className="upi-symbol">
                 UPI
               </span>
 
               <span>
-                <strong>UPI</strong>
-                <small>Google Pay / PhonePe</small>
+
+                <strong>
+                  UPI
+                </strong>
+
+                <small>
+                  Google Pay / PhonePe
+                </small>
+
               </span>
+
             </button>
+
+            {/* NET BANKING */}
 
             <button
               type="button"
@@ -627,65 +1076,101 @@ const totalAmount = useMemo(() => {
                   : "payment-method"
               }
               onClick={() => {
-                setPaymentMethod("netbanking");
+                setPaymentMethod(
+                  "netbanking"
+                );
+
                 setErrors({});
               }}
             >
+
               <span className="bank-symbol">
                 ₹
               </span>
 
               <span>
-                <strong>Net Banking</strong>
-                <small>All major banks</small>
+
+                <strong>
+                  Net Banking
+                </strong>
+
+                <small>
+                  All major banks
+                </small>
+
               </span>
+
             </button>
 
           </div>
 
           {/* =================================================
-              CARD
+              CARD FORM
           ================================================= */}
 
           {paymentMethod === "card" && (
             <div className="payment-form">
 
+              {/* DEMO CARD */}
+
               <div className="demo-card">
 
                 <div className="demo-card-top">
-                  <span>TRIPPER</span>
-                  <span>VISA</span>
+
+                  <span>
+                    TRIPPER
+                  </span>
+
+                  <span>
+                    VISA
+                  </span>
+
                 </div>
 
                 <div className="demo-card-number">
+
                   {paymentDetails.cardNumber ||
                     "•••• •••• •••• ••••"}
+
                 </div>
 
                 <div className="demo-card-bottom">
 
                   <div>
-                    <small>CARDHOLDER</small>
+
+                    <small>
+                      CARDHOLDER
+                    </small>
 
                     <strong>
                       {paymentDetails.cardName ||
                         "YOUR NAME"}
                     </strong>
+
                   </div>
 
                   <div>
-                    <small>EXPIRES</small>
+
+                    <small>
+                      EXPIRES
+                    </small>
 
                     <strong>
-                      {paymentDetails.expiry || "MM/YY"}
+                      {paymentDetails.expiry ||
+                        "MM/YY"}
                     </strong>
+
                   </div>
 
                 </div>
 
               </div>
 
+              {/* FORM */}
+
               <div className="form-grid">
+
+                {/* CARD NUMBER */}
 
                 <div className="form-field full-field">
 
@@ -699,7 +1184,10 @@ const totalAmount = useMemo(() => {
                     inputMode="numeric"
                     autoComplete="cc-number"
                     placeholder="1234 5678 9012 3456"
-                    value={paymentDetails.cardNumber}
+                    maxLength={19}
+                    value={
+                      paymentDetails.cardNumber
+                    }
                     onChange={handleChange}
                   />
 
@@ -710,6 +1198,8 @@ const totalAmount = useMemo(() => {
                   )}
 
                 </div>
+
+                {/* CARD HOLDER */}
 
                 <div className="form-field full-field">
 
@@ -722,7 +1212,9 @@ const totalAmount = useMemo(() => {
                     name="cardName"
                     autoComplete="cc-name"
                     placeholder="Enter name as on card"
-                    value={paymentDetails.cardName}
+                    value={
+                      paymentDetails.cardName
+                    }
                     onChange={handleChange}
                   />
 
@@ -733,6 +1225,8 @@ const totalAmount = useMemo(() => {
                   )}
 
                 </div>
+
+                {/* EXPIRY */}
 
                 <div className="form-field">
 
@@ -746,7 +1240,10 @@ const totalAmount = useMemo(() => {
                     inputMode="numeric"
                     autoComplete="cc-exp"
                     placeholder="MM/YY"
-                    value={paymentDetails.expiry}
+                    maxLength={5}
+                    value={
+                      paymentDetails.expiry
+                    }
                     onChange={handleChange}
                   />
 
@@ -757,6 +1254,8 @@ const totalAmount = useMemo(() => {
                   )}
 
                 </div>
+
+                {/* CVV */}
 
                 <div className="form-field">
 
@@ -770,7 +1269,10 @@ const totalAmount = useMemo(() => {
                     inputMode="numeric"
                     autoComplete="cc-csc"
                     placeholder="•••"
-                    value={paymentDetails.cvv}
+                    maxLength={3}
+                    value={
+                      paymentDetails.cvv
+                    }
                     onChange={handleChange}
                   />
 
@@ -798,7 +1300,9 @@ const totalAmount = useMemo(() => {
                 UPI
               </div>
 
-              <h3>Pay using UPI</h3>
+              <h3>
+                Pay using UPI
+              </h3>
 
               <p>
                 Enter your UPI ID to continue.
@@ -806,13 +1310,17 @@ const totalAmount = useMemo(() => {
 
               <div className="form-field">
 
-                <label>UPI ID</label>
+                <label>
+                  UPI ID
+                </label>
 
                 <input
                   type="text"
                   name="upi"
                   placeholder="yourname@upi"
-                  value={paymentDetails.upi}
+                  value={
+                    paymentDetails.upi
+                  }
                   onChange={handleChange}
                 />
 
@@ -842,7 +1350,9 @@ const totalAmount = useMemo(() => {
                 ₹
               </div>
 
-              <h3>Net Banking</h3>
+              <h3>
+                Net Banking
+              </h3>
 
               <p>
                 Select your bank to continue.
@@ -850,13 +1360,18 @@ const totalAmount = useMemo(() => {
 
               <div className="form-field">
 
-                <label>Select Bank</label>
+                <label>
+                  Select Bank
+                </label>
 
                 <select
                   name="bank"
-                  value={paymentDetails.bank}
+                  value={
+                    paymentDetails.bank
+                  }
                   onChange={handleChange}
                 >
+
                   <option value="">
                     Select your bank
                   </option>
@@ -884,6 +1399,7 @@ const totalAmount = useMemo(() => {
                   <option value="other">
                     Other Bank
                   </option>
+
                 </select>
 
                 {errors.bank && (
@@ -897,7 +1413,9 @@ const totalAmount = useMemo(() => {
             </div>
           )}
 
-          {/* PAYMENT BUTTON */}
+          {/* =================================================
+              PAYMENT BUTTON
+          ================================================= */}
 
           <button
             type="button"
@@ -909,12 +1427,19 @@ const totalAmount = useMemo(() => {
             {processing ? (
               <>
                 <span className="payment-loader" />
+
                 Processing Payment...
               </>
             ) : (
               <>
                 <FiLock />
-                Pay {formatPrice(totalAmount)} Securely
+
+                Pay{" "}
+                {formatPrice(
+                  totalAmount
+                )}
+                {" "}
+                Securely
               </>
             )}
 
@@ -933,88 +1458,222 @@ const totalAmount = useMemo(() => {
 
         </section>
 
-        {/* =================================================
+        {/* ===================================================
             RIGHT SUMMARY
-        ================================================= */}
+        =================================================== */}
 
         <aside className="trip-summary">
 
           <div className="summary-heading">
-            <span>YOUR TRIP</span>
-            <h2>Booking Summary</h2>
+
+            <span>
+              YOUR TRIP
+            </span>
+
+            <h2>
+              Booking Summary
+            </h2>
+
           </div>
+
+          {/* =================================================
+              SELECTED HOTEL IMAGE
+          ================================================= */}
 
           <div className="summary-image">
 
             <img
-              src={trip.image || FALLBACK_IMAGE}
-              alt={trip.destination}
+              key={hotelImage}
+              src={hotelImage}
+              alt={
+                selectedHotel?.name ||
+                trip?.destination ||
+                "Selected Hotel"
+              }
+              onError={(event) => {
+                if (
+                  event.currentTarget.src !==
+                  FALLBACK_IMAGE
+                ) {
+                  event.currentTarget.src =
+                    FALLBACK_IMAGE;
+                }
+              }}
             />
 
             <div className="summary-image-overlay">
+
               <span>
+
                 <FiMapPin />
-                {trip.country || "India"}
+
+                {selectedHotel?.location ||
+                  trip?.country ||
+                  trip?.destination ||
+                  "India"}
+
               </span>
+
             </div>
 
           </div>
 
+          {/* =================================================
+              SELECTED HOTEL DETAILS
+          ================================================= */}
+
+          {selectedHotel && (
+            <div className="summary-hotel-details">
+
+              <span className="summary-hotel-label">
+                SELECTED HOTEL
+              </span>
+
+              <h3>
+                {selectedHotel.name ||
+                  "Selected Hotel"}
+              </h3>
+
+              <p>
+                <FiMapPin />
+
+                {selectedHotel.location ||
+                  trip?.destination ||
+                  "India"}
+              </p>
+
+              {selectedHotel.rating && (
+                <div className="summary-rating">
+
+                  <FiStar />
+
+                  <strong>
+                    {selectedHotel.rating}
+                  </strong>
+
+                  {selectedHotel.reviews && (
+                    <span>
+                      {selectedHotel.reviews}
+                    </span>
+                  )}
+
+                </div>
+              )}
+
+            </div>
+          )}
+
+          {/* =================================================
+              DESTINATION
+          ================================================= */}
+
           <div className="summary-destination">
 
             <h3>
-              {trip.destination || "Your Trip"}
+              {trip.destination ||
+                "Your Trip"}
             </h3>
 
             <p>
-              {trip.country || "India"}
+              {trip.country ||
+                "India"}
             </p>
 
           </div>
 
+          {/* =================================================
+              DETAILS
+          ================================================= */}
+
           <div className="summary-details">
+
+            {/* DATE */}
 
             <div className="summary-detail">
 
               <FiCalendar />
 
               <div>
-                <span>Travel Date</span>
+
+                <span>
+                  Travel Date
+                </span>
+
                 <strong>
-                  {formatDate(trip.date)}
+                  {formatDate(
+                    trip.date ||
+                    trip.tripDates?.start
+                  )}
                 </strong>
+
               </div>
 
             </div>
+
+            {/* DURATION */}
 
             <div className="summary-detail">
 
               <FiClock />
 
               <div>
-                <span>Duration</span>
+
+                <span>
+                  Duration
+                </span>
+
                 <strong>
-                  {trip.days || 1}{" "}
-                  {Number(trip.days) === 1
+
+                  {trip.days ||
+                    trip.tripDates?.days ||
+                    1}
+
+                  {" "}
+
+                  {Number(
+                    trip.days ||
+                    trip.tripDates?.days ||
+                    1
+                  ) === 1
                     ? "Day"
                     : "Days"}
+
                 </strong>
+
               </div>
 
             </div>
+
+            {/* TRAVELLERS */}
 
             <div className="summary-detail">
 
               <FiUsers />
 
               <div>
-                <span>Travellers</span>
+
+                <span>
+                  Travellers
+                </span>
+
                 <strong>
-                  {trip.travellers || 1}{" "}
-                  {Number(trip.travellers) === 1
+
+                  {trip.travellers ||
+                    trip.adults ||
+                    1}
+
+                  {" "}
+
+                  {Number(
+                    trip.travellers ||
+                    trip.adults ||
+                    1
+                  ) === 1
                     ? "Traveller"
                     : "Travellers"}
+
                 </strong>
+
               </div>
 
             </div>
@@ -1023,29 +1682,56 @@ const totalAmount = useMemo(() => {
 
           <div className="summary-divider" />
 
+          {/* =================================================
+              PRICE
+          ================================================= */}
+
           <div className="summary-price">
 
-            <span>Trip Total</span>
+            <span>
+              Trip Total
+            </span>
 
             <strong>
-              {formatPrice(totalAmount)}
+              {formatPrice(
+                totalAmount
+              )}
             </strong>
 
           </div>
 
+          {/* =================================================
+              INCLUDED
+          ================================================= */}
+
           <div className="summary-included">
+
             <FiCheck />
-            <span>Trip price included</span>
+
+            <span>
+              Trip price included
+            </span>
+
           </div>
 
           <div className="summary-included">
+
             <FiCheck />
-            <span>Secure payment</span>
+
+            <span>
+              Secure payment
+            </span>
+
           </div>
 
           <div className="summary-included">
+
             <FiCheck />
-            <span>Booking confirmation included</span>
+
+            <span>
+              Booking confirmation included
+            </span>
+
           </div>
 
         </aside>

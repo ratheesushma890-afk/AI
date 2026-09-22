@@ -793,95 +793,86 @@ const DestinationDetail = () => {
             BOOKING CARD
         ================================================= */}
 
-        <aside className="booking-card">
+<aside className="booking-card">
+
+  <div className="booking-card-top">
+    <span>PLAN YOUR JOURNEY</span>
+
+    <strong>
+      Explore {destination.name}
+    </strong>
+
+    <small>
+      Create your perfect travel experience
+    </small>
+  </div>
+
+  <div className="booking-divider" />
+
+  {/* TRAVEL STYLE */}
+
+  <div className="booking-row">
+
+    <div>
+      <small>TRAVEL STYLE</small>
+
+      <strong>
+        Couples · Friends · Family
+      </strong>
+    </div>
+
+    <FiUsers />
+
+  </div>
 
 
-          <div className="booking-card-top">
+  {/* DESTINATION */}
 
-            <span>
-              STARTING FROM
-            </span>
+  <div className="booking-row">
 
-            <strong>
-              {destination.price}
-            </strong>
+    <div>
+      <small>DESTINATION</small>
 
-            <small>
-              per person
-            </small>
+      <strong>
+        {destination.name}
+      </strong>
+    </div>
 
-          </div>
+    <FiMapPin />
 
-
-          <div className="booking-divider" />
+  </div>
 
 
-          {/* LENGTH */}
+  {/* BUTTON */}
+<Link
+  to="/trip-plan"
+  state={{
+    destination: destination.name,
+  }}
+  className="plan-trip-btn"
+>
+  <span>Plan this trip</span>
+  <FiArrowUpRight />
+</Link>
+  {/* SECOND BUTTON */}
 
-          <div className="booking-row">
+  <Link
+    to="/explore"
+    className="extra-trip-btn"
+  >
+    <span>
+      Explore More Destinations
+    </span>
 
-            <div>
-
-              <small>
-                TRIP LENGTH
-              </small>
-
-              <strong>
-                {destination.days}
-              </strong>
-
-            </div>
-
-            <FiClock />
-
-          </div>
-
-
-          {/* DESTINATION */}
-
-          <div className="booking-row">
-
-            <div>
-
-              <small>
-                DESTINATION
-              </small>
-
-              <strong>
-                {destination.name}
-              </strong>
-
-            </div>
-
-            <FiMapPin />
-
-          </div>
+    <FiArrowUpRight />
+  </Link>
 
 
-          {/* BUTTON */}
+  <p className="booking-note">
+    ✦ Build a personalised trip based on your interests and travel style.
+  </p>
 
-          <Link
-            to="/trip-plan"
-            className="plan-trip-btn"
-          >
-
-            <span>
-              Plan this trip
-            </span>
-
-            <FiArrowUpRight />
-
-          </Link>
-
-
-          <p className="booking-note">
-
-            ✦ Create a personalised itinerary
-            based on your budget and travel style.
-
-          </p>
-
-        </aside>
+</aside>
 
       </section>
 
