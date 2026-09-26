@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import {
   Routes,
   Route,
@@ -6,23 +7,23 @@ import {
   useLocation,
 } from "react-router-dom";
 
-// =====================================================
-// MAIN WEBSITE COMPONENTS
-// =====================================================
+/* =====================================================
+   MAIN WEBSITE COMPONENTS
+===================================================== */
 
 import Navbar from "./components/Navbar";
 import TravelFooter from "./components/TravelFooter";
 import WishlistDrawer from "./components/WishlistDrawer";
 
-// =====================================================
-// CONTEXT
-// =====================================================
+/* =====================================================
+   CONTEXT
+===================================================== */
 
 import { WishlistProvider } from "./context/WishlistContext";
 
-// =====================================================
-// MAIN WEBSITE PAGES
-// =====================================================
+/* =====================================================
+   MAIN WEBSITE PAGES
+===================================================== */
 
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
@@ -40,23 +41,21 @@ import Contact from "./pages/Contact";
 import FAQs from "./pages/FAQs";
 import Guides from "./pages/Guides";
 
-// =====================================================
-// BOOKING PAGES
-// =====================================================
+/* =====================================================
+   BOOKING PAGES
+===================================================== */
 
 import Booking from "./pages/Booking";
 import BookingSummary from "./pages/BookingSummary";
 import BookingDetails from "./pages/BookingDetails";
 
-// =====================================================
-// ADMIN PAGES
-// IMPORTANT:
-// All files are inside src/pages/
-// =====================================================
+/* =====================================================
+   ADMIN PAGES
+   All admin files are inside src/pages/
+===================================================== */
 
 import AdminLogin from "./pages/AdminLogin";
 import AdminLayout from "./pages/AdminLayout";
-
 import AdminDashboard from "./pages/AdminDashboard";
 
 import AdminTrips from "./pages/AdminTrips";
@@ -79,10 +78,10 @@ import AdminPayments from "./pages/AdminPayments";
 import AdminActivities from "./pages/AdminActivities";
 import AdminReports from "./pages/AdminReports";
 import AdminSettings from "./pages/AdminSettings";
-import SupportDashboard from "./pages/admin/SupportDashboard";
-// =====================================================
-// SCROLL TO TOP
-// =====================================================
+
+/* =====================================================
+   SCROLL TO TOP
+===================================================== */
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -98,9 +97,9 @@ const ScrollToTop = () => {
   return null;
 };
 
-// =====================================================
-// ADMIN PROTECTED ROUTE
-// =====================================================
+/* =====================================================
+   ADMIN PROTECTED ROUTE
+===================================================== */
 
 const AdminProtectedRoute = ({ children }) => {
   let adminUser = null;
@@ -112,11 +111,7 @@ const AdminProtectedRoute = ({ children }) => {
       adminUser = JSON.parse(storedAdmin);
     }
   } catch (error) {
-    console.error(
-      "Admin authentication error:",
-      error
-    );
-
+    console.error("Admin authentication error:", error);
     adminUser = null;
   }
 
@@ -132,20 +127,24 @@ const AdminProtectedRoute = ({ children }) => {
   return children;
 };
 
-// =====================================================
-// APP
-// =====================================================
+/* =====================================================
+   APP
+===================================================== */
 
 const App = () => {
   const location = useLocation();
 
-  // Check whether current page is admin
-  const isAdminPage =
-    location.pathname.startsWith(
-      "/admin-secret"
-    );
+  /* ===================================================
+     CHECK ADMIN PAGE
+  =================================================== */
 
-  // Hide footer on auth + admin pages
+  const isAdminPage =
+    location.pathname.startsWith("/admin-secret");
+
+  /* ===================================================
+     HIDE FOOTER
+  =================================================== */
+
   const hideFooter =
     location.pathname === "/signup" ||
     location.pathname === "/login" ||
@@ -287,7 +286,7 @@ const App = () => {
         >
 
           {/* ===============================================
-              ADMIN DASHBOARD HOME
+              DASHBOARD HOME
           =============================================== */}
 
           <Route
@@ -332,10 +331,6 @@ const App = () => {
             path="destinations/edit/:id"
             element={<AdminEditDestination />}
           />
-        <Route
-  path="staff"
-  element={<AdminStaff />}
-/>
 
           {/* ===============================================
               BOOKINGS
@@ -406,6 +401,15 @@ const App = () => {
           />
 
           {/* ===============================================
+              STAFF MANAGEMENT
+          =============================================== */}
+
+          <Route
+            path="staff"
+            element={<AdminStaff />}
+          />
+
+          {/* ===============================================
               SETTINGS
           =============================================== */}
 
@@ -415,10 +419,6 @@ const App = () => {
           />
 
         </Route>
-        <Route
-  path="/support-admin/dashboard"
-  element={<SupportDashboard />}
-/>
 
         {/* =================================================
             FALLBACK
