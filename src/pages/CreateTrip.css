@@ -1,341 +1,559 @@
-
 /* =========================================================
-   RESET
+   CREATE TRIP.CSS
+   PREMIUM BLUE TRAVEL UI
 ========================================================= */
 
-.create-trip-page,
-.create-trip-page * {
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+
+* {
   box-sizing: border-box;
 }
 
-
-/* =========================================================
-   MAIN PAGE
-========================================================= */
-
 .create-trip-page {
+  --primary: #2563eb;
+  --primary-light: #60a5fa;
+  --sky: #38bdf8;
+  --navy: #071b34;
+  --navy-2: #0b2c52;
+  --navy-3: #10406f;
+  --white: #ffffff;
+  --text: #102a47;
+  --muted: #637c98;
+  --border: rgba(37, 99, 235, 0.12);
+
   width: 100%;
   min-height: 100vh;
 
-  padding: 125px 5% 90px;
+  position: relative;
+  overflow: hidden;
+
+  padding:
+    175px
+    clamp(20px, 5vw, 78px)
+    90px;
+
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  color: var(--text);
 
   background:
+    radial-gradient(
+      circle at 5% 5%,
+      rgba(59, 130, 246, 0.24),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 94% 12%,
+      rgba(56, 189, 248, 0.22),
+      transparent 23%
+    ),
+    radial-gradient(
+      circle at 80% 62%,
+      rgba(37, 99, 235, 0.14),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 12% 85%,
+      rgba(14, 165, 233, 0.13),
+      transparent 25%
+    ),
     linear-gradient(
       135deg,
       #dceeff 0%,
-      #c9e4ff 45%,
-      #eaf5ff 100%
+      #edf8ff 35%,
+      #dcefff 68%,
+      #f5fbff 100%
     );
-
-  color: #172b46;
 }
 
+/* =========================================================
+   BACKGROUND AIRPLANE ROUTE
+========================================================= */
+
+.create-trip-page::before {
+  content: "✈";
+
+  position: absolute;
+  top: 170px;
+  right: -140px;
+
+  width: 520px;
+  height: 520px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding-top: 28px;
+
+  border: 2px dashed rgba(37, 99, 235, 0.15);
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(59, 130, 246, 0.08),
+      transparent 68%
+    );
+
+  color: rgba(37, 99, 235, 0.25);
+
+  font-size: 45px;
+
+  transform: rotate(-18deg);
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+.create-trip-page::after {
+  content: "✦";
+
+  position: absolute;
+  left: -130px;
+  top: 950px;
+
+  width: 340px;
+  height: 340px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px dashed rgba(14, 116, 214, 0.15);
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(56, 189, 248, 0.1),
+      transparent 68%
+    );
+
+  color: rgba(37, 99, 235, 0.16);
+
+  font-size: 55px;
+
+  pointer-events: none;
+}
 
 /* =========================================================
    TOP SECTION
 ========================================================= */
 
 .trip-top-section {
-  max-width: 1400px;
+  max-width: 1380px;
+  margin: 0 auto 38px;
 
-  margin: 0 auto 30px;
+  position: relative;
+  z-index: 2;
 
   display: flex;
-
-  align-items: flex-end;
   justify-content: space-between;
-
+  align-items: flex-end;
   gap: 30px;
 }
 
 .trip-top-left {
-  max-width: 800px;
+  max-width: 820px;
 }
 
 .trip-small-label {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  padding: 10px 16px;
 
-  color: #2369a8;
+  border: 1px solid rgba(37, 99, 235, 0.13);
+  border-radius: 100px;
 
-  font-size: 12px;
+  background: rgba(255, 255, 255, 0.6);
 
-  font-weight: 800;
+  backdrop-filter: blur(12px);
 
-  letter-spacing: 2.8px;
+  color: #1764bc;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.trip-small-label::before {
+  content: "";
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #2563eb;
+
+  box-shadow:
+    0 0 0 5px rgba(37, 99, 235, 0.1);
 }
 
 .trip-top-left h1 {
   margin: 0;
 
-  color: #142a46;
+  font-family: "Playfair Display", serif;
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+  font-size: clamp(60px, 7vw, 100px);
+  line-height: 0.95;
+  font-weight: 600;
+  letter-spacing: -4px;
 
-  font-size: clamp(46px, 5vw, 72px);
+  color: #071c36;
 
-  font-weight: 500;
-
-  line-height: 0.98;
-
-  letter-spacing: -1.5px;
-}
-
-.trip-top-left h1 span {
-  color: #1f70b7;
+  text-shadow:
+    0 15px 35px rgba(37, 99, 235, 0.08);
 }
 
 .trip-top-left p {
-  max-width: 650px;
+  max-width: 690px;
 
   margin: 20px 0 0;
 
-  color: #506b86;
+  color: #59748f;
 
-  font-size: 16px;
-
-  line-height: 1.75;
+  font-size: 17px;
+  line-height: 1.8;
 }
-
 
 /* =========================================================
    EDIT BUTTON
 ========================================================= */
 
 .edit-trip-btn {
-  display: flex;
+  min-height: 54px;
 
+  padding: 0 24px;
+
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  border-radius: 100px;
+
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
 
-  gap: 8px;
+  background: rgba(255, 255, 255, 0.75);
 
-  padding: 13px 20px;
+  backdrop-filter: blur(15px);
 
-  border: 1px solid #b9d3ec;
+  color: #123b69;
 
-  border-radius: 50px;
-
-  background: #ffffff;
-
-  color: #31516f;
-
-  font-size: 13px;
-
+  font-family: inherit;
+  font-size: 16px;
   font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.3s ease;
+  box-shadow:
+    0 12px 30px rgba(23, 81, 143, 0.1);
 
-  white-space: nowrap;
+  transition: 0.3s ease;
 }
 
 .edit-trip-btn svg {
-  font-size: 15px;
+  font-size: 19px;
 }
 
 .edit-trip-btn:hover {
-  border-color: #3178b9;
+  transform: translateY(-3px);
 
-  color: #1765a5;
+  background: #09294b;
+  color: white;
 
-  transform: translateY(-2px);
-
-  box-shadow: 0 8px 20px rgba(30, 91, 145, 0.12);
+  box-shadow:
+    0 17px 35px rgba(7, 43, 81, 0.2);
 }
-
 
 /* =========================================================
    TRIP INFO STRIP
 ========================================================= */
 
 .trip-info-strip {
-  max-width: 1400px;
+  max-width: 1380px;
+  margin: 0 auto 65px;
 
-  margin: 0 auto 42px;
+  position: relative;
+  z-index: 2;
 
-  padding: 19px 24px;
+  padding: 11px;
 
   display: grid;
+  grid-template-columns: repeat(4, 1fr);
 
-  grid-template-columns:
-    repeat(5, 1fr);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 27px;
 
-  gap: 12px;
+  background:
+    radial-gradient(
+      rgba(37, 99, 235, 0.07) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(225, 242, 255, 0.75)
+    );
 
-  background: #ffffff;
+  background-size:
+    23px 23px,
+    100% 100%;
 
-  border: 1px solid #c9dced;
-
-  border-radius: 20px;
+  backdrop-filter: blur(20px);
 
   box-shadow:
-    0 18px 45px rgba(32, 76, 118, 0.10);
+    0 22px 60px rgba(27, 91, 160, 0.11);
 }
 
 .trip-info-item {
+  min-height: 92px;
+
+  position: relative;
+
+  padding: 15px 22px;
+
   display: flex;
-
   align-items: center;
-
-  gap: 12px;
-
-  min-width: 0;
-
-  padding: 7px 12px;
-
-  border-right: 1px solid #dce8f3;
+  gap: 15px;
 }
 
-.trip-info-item:last-child {
-  border-right: none;
+.trip-info-item:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+
+  right: 0;
+  top: 23%;
+
+  width: 1px;
+  height: 54%;
+
+  background: rgba(37, 99, 235, 0.12);
 }
 
 .trip-info-icon {
-  width: 39px;
-  height: 39px;
+  width: 52px;
+  height: 52px;
 
   flex-shrink: 0;
 
-  display: flex;
+  border-radius: 16px;
 
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
 
-  border-radius: 50%;
+  background:
+    linear-gradient(
+      145deg,
+      #dcedff,
+      #cde7ff
+    );
 
-  background: #e4f1ff;
+  color: #2563eb;
 
-  color: #1f70b7;
+  font-size: 20px;
 
-  font-size: 17px;
+  box-shadow:
+    inset 0 0 0 1px rgba(37, 99, 235, 0.08);
+
+  transition: 0.3s ease;
 }
 
-.trip-info-item span {
-  display: block;
+.trip-info-item:hover .trip-info-icon {
+  transform: translateY(-4px) rotate(-5deg);
 
-  margin-bottom: 5px;
+  background: #2563eb;
+  color: white;
 
-  color: #8094a8;
+  box-shadow:
+    0 12px 25px rgba(37, 99, 235, 0.22);
+}
 
-  font-size: 9px;
+.trip-info-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
 
-  font-weight: 800;
+.trip-info-item > div > span {
+  color: #7c94ad;
 
-  letter-spacing: 1.3px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
 }
 
 .trip-info-item strong {
-  display: block;
+  color: #102e50;
 
-  overflow: hidden;
-
-  color: #263f59;
-
-  font-size: 13px;
-
+  font-size: 16px;
   font-weight: 700;
-
-  white-space: nowrap;
-
-  text-overflow: ellipsis;
 }
-
 
 /* =========================================================
    EXPERIENCE SECTION
 ========================================================= */
 
 .experience-section {
-  max-width: 1400px;
+  max-width: 1380px;
+  min-height: 680px;
 
-  margin: 0 auto;
+  margin: 0 auto 110px;
+
+  position: relative;
+  z-index: 2;
 
   display: grid;
 
   grid-template-columns:
-    minmax(0, 1.35fr)
-    minmax(390px, 0.65fr);
+    minmax(0, 1.12fr)
+    minmax(400px, 0.88fr);
 
-  gap: 27px;
+  overflow: hidden;
 
-  align-items: start;
+  border: 7px solid rgba(255, 255, 255, 0.82);
+  border-radius: 38px;
 
-  min-height: 0;
+  background: #071b34;
+
+  box-shadow:
+    0 40px 95px rgba(18, 76, 139, 0.22),
+    0 0 0 1px rgba(37, 99, 235, 0.08);
 }
 
+.experience-section::before {
+  content: "";
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  top: -170px;
+  left: 40%;
+
+  border-radius: 50%;
+
+  background: rgba(56, 189, 248, 0.2);
+
+  filter: blur(65px);
+
+  z-index: 4;
+  pointer-events: none;
+}
 
 /* =========================================================
    EXPERIENCE IMAGE
 ========================================================= */
 
 .experience-image {
+  min-height: 680px;
+
   position: relative;
-
-  width: 100%;
-  height: 540px;
-
   overflow: hidden;
 
-  border-radius: 30px;
-
-  background: #b8d4ed;
-
-  box-shadow:
-    0 25px 65px rgba(28, 67, 104, 0.18);
-
-  flex-shrink: 0;
+  background: #153c68;
 }
 
-.experience-slide {
-  position: absolute;
-
-  inset: 0;
-
+.experience-single-image {
   width: 100%;
   height: 100%;
 
+  position: absolute;
+  inset: 0;
+
   object-fit: cover;
 
-  opacity: 0;
-
-  transform: scale(1.03);
+  animation: tripImageReveal 0.75s ease;
 
   transition:
-    opacity 0.8s ease,
-    transform 5s ease;
+    transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.experience-slide.active {
-  opacity: 1;
-
-  transform: scale(1);
+.experience-image:hover .experience-single-image {
+  transform: scale(1.055);
 }
 
+@keyframes tripImageReveal {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
 
-/* =========================================================
-   IMAGE OVERLAY
-========================================================= */
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
 .experience-image-overlay {
   position: absolute;
-
   inset: 0;
-
-  z-index: 1;
 
   background:
     linear-gradient(
-      to top,
-      rgba(8, 27, 48, 0.76),
-      rgba(8, 27, 48, 0.06) 60%
+      180deg,
+      rgba(4, 25, 48, 0.1) 0%,
+      transparent 40%,
+      rgba(4, 23, 44, 0.75) 100%
     );
 }
 
+/* =========================================================
+   AUTO TOUR
+========================================================= */
+
+.experience-auto-label {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+
+  z-index: 5;
+
+  padding: 11px 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: 100px;
+
+  background: rgba(5, 34, 67, 0.45);
+
+  backdrop-filter: blur(15px);
+
+  color: white;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.auto-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #67d3ff;
+
+  box-shadow:
+    0 0 0 5px rgba(103, 211, 255, 0.15);
+
+  animation: bluePulse 1.7s infinite;
+}
+
+@keyframes bluePulse {
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(103, 211, 255, 0);
+  }
+}
 
 /* =========================================================
    EXPERIENCE LOCATION
@@ -344,367 +562,395 @@
 .experience-location {
   position: absolute;
 
-  left: 30px;
-  bottom: 27px;
+  left: 28px;
+  bottom: 29px;
 
-  z-index: 3;
+  z-index: 5;
 
   display: flex;
-
   align-items: center;
+  gap: 8px;
 
-  gap: 10px;
+  color: white;
 
-  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.experience-location > svg {
+.experience-location svg {
+  color: #82dcff;
   font-size: 19px;
-
-  color: #8ed0ff;
 }
 
-.experience-location strong {
-  display: block;
+/* =========================================================
+   PLACE COUNT
+========================================================= */
 
-  margin-bottom: 3px;
+.experience-place-count {
+  position: absolute;
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+  right: 29px;
+  bottom: 24px;
 
-  font-size: 23px;
+  z-index: 5;
 
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+
+  color: white;
+}
+
+.experience-place-count strong {
+  font-family: "Playfair Display", serif;
+
+  font-size: 43px;
   font-weight: 500;
 }
 
-.experience-location span {
-  display: block;
+.experience-place-count span {
+  color: rgba(255, 255, 255, 0.58);
 
-  color: rgba(255,255,255,0.76);
-
-  font-size: 13px;
+  font-size: 16px;
 }
-
 
 /* =========================================================
    EXPERIENCE ARROWS
 ========================================================= */
 
 .experience-arrow {
+  width: 52px;
+  height: 52px;
+
   position: absolute;
 
   top: 50%;
-
-  z-index: 5;
-
-  width: 50px;
-  height: 50px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid rgba(255,255,255,0.4);
-
-  border-radius: 50%;
-
-  background:
-    rgba(8, 30, 53, 0.35);
-
-  color: #fff;
-
-  backdrop-filter: blur(10px);
-
-  cursor: pointer;
+  z-index: 6;
 
   transform: translateY(-50%);
 
-  transition: 0.3s ease;
-}
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
 
-.experience-arrow svg {
+  display: grid;
+  place-items: center;
+
+  background: rgba(6, 38, 72, 0.4);
+
+  backdrop-filter: blur(13px);
+
+  color: white;
+
   font-size: 18px;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
 }
 
 .experience-arrow:hover {
-  background: #fff;
+  background: white;
+  color: #0b3765;
 
-  color: #1c4265;
-
-  transform:
-    translateY(-50%)
-    scale(1.06);
+  box-shadow:
+    0 10px 30px rgba(4, 25, 49, 0.2);
 }
 
 .experience-left {
-  left: 20px;
+  left: 23px;
 }
 
 .experience-right {
-  right: 20px;
+  right: 23px;
 }
-
 
 /* =========================================================
    EXPERIENCE DETAILS
 ========================================================= */
 
 .experience-details {
-  width: 100%;
+  position: relative;
 
-  height: 540px;
-  min-height: 540px;
-  max-height: 540px;
-
-  align-self: start;
-
-  padding: 25px 35px;
+  padding:
+    clamp(44px, 5vw, 72px)
+    clamp(35px, 4vw, 62px);
 
   display: flex;
-
   flex-direction: column;
 
-  overflow: hidden;
+  color: white;
 
-  background: #ffffff;
-
-  border: 1px solid #cbddec;
-
-  border-radius: 30px;
-
-  box-shadow:
-    0 22px 60px rgba(32, 72, 110, 0.10);
-
-  flex-shrink: 0;
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(48, 144, 235, 0.32),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(27, 104, 179, 0.2),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #06182f,
+      #09294e 55%,
+      #0d3765
+    );
 }
 
+.experience-details::before {
+  content: "";
+
+  position: absolute;
+
+  top: 28px;
+  right: 28px;
+
+  width: 95px;
+  height: 95px;
+
+  border: 1px solid rgba(94, 190, 255, 0.13);
+  border-radius: 50%;
+
+  pointer-events: none;
+}
 
 /* =========================================================
-   EXPERIENCE NUMBER
+   SELECTED PLACE
 ========================================================= */
 
 .experience-number {
+  margin-bottom: 38px;
+  padding-bottom: 19px;
+
   display: flex;
-
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
 
-  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .experience-number span {
-  color: #2674b4;
+  color: #8caac6;
 
-  font-size: 13px;
-
-  font-weight: 800;
-
+  font-size: 12px;
+  font-weight: 700;
   letter-spacing: 2px;
 }
 
 .experience-number strong {
-  color: #d9e9f7;
+  color: #72d0ff;
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+  font-family: "Playfair Display", serif;
 
-  font-size: 54px;
-
-  line-height: 1;
+  font-size: 29px;
+  font-weight: 500;
 }
 
-
-/* =========================================================
-   EXPERIENCE TITLE
-========================================================= */
-
 .experience-details h2 {
-  max-width: 480px;
+  max-width: 540px;
 
-  margin: 0;
+  margin: 0 0 13px;
 
-  color: #193451;
+  color: white;
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+  font-family: "Playfair Display", serif;
 
-  font-size: clamp(36px, 3vw, 50px);
-
-  line-height: 1.06;
-
+  font-size: clamp(48px, 4.6vw, 68px);
+  line-height: 1.03;
+  letter-spacing: -1.8px;
   font-weight: 500;
+}
 
-  letter-spacing: -0.8px;
+.experience-place-location {
+  margin-bottom: 24px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #a5c4df;
+
+  font-size: 16px;
+}
+
+.experience-place-location svg {
+  color: #6dcfff;
+  font-size: 18px;
 }
 
 .experience-description {
-  margin: 15px 0 0;
+  max-width: 560px;
 
-  color: #60778e;
+  margin: 0;
 
-  font-size: 15px;
+  color: rgba(226, 240, 255, 0.72);
 
+  font-size: 16px;
   line-height: 1.8;
 }
 
+.experience-detail-text {
+  margin: 16px 0 0;
+
+  padding: 14px 17px;
+
+  border-left: 2px solid #63caff;
+  border-radius: 0 12px 12px 0;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  color: rgba(225, 240, 255, 0.6);
+
+  font-size: 15px;
+  line-height: 1.8;
+}
 
 /* =========================================================
    HIGHLIGHTS
 ========================================================= */
 
 .experience-highlights {
-  margin-top: 16px;
+  margin-top: 31px;
 }
 
 .experience-label {
   display: block;
 
-  margin-bottom: 13px;
+  margin-bottom: 14px;
 
-  color: #2674b4;
+  color: #86a9c8;
 
-  font-size: 10px;
-
-  font-weight: 800;
-
-  letter-spacing: 1.8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
 }
 
 .highlight-list {
   display: flex;
-
   flex-wrap: wrap;
-
-  gap: 8px;
+  gap: 9px;
 }
 
 .highlight-item {
-  display: flex;
+  padding: 10px 14px;
 
+  display: inline-flex;
   align-items: center;
+  gap: 8px;
 
-  gap: 7px;
+  border: 1px solid rgba(100, 194, 255, 0.14);
+  border-radius: 100px;
 
-  padding: 9px 12px;
+  background: rgba(61, 143, 215, 0.09);
 
-  border: 1px solid #d7e5f1;
+  color: rgba(231, 244, 255, 0.85);
 
-  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
 
-  background: #f5faff;
-
-  color: #48627a;
-
-  font-size: 12px;
-
-  font-weight: 700;
+  transition: 0.25s ease;
 }
 
-.highlight-item > span {
-  width: 18px;
-  height: 18px;
+.highlight-item:hover {
+  transform: translateY(-3px);
 
-  display: flex;
+  background: rgba(72, 160, 238, 0.17);
 
-  align-items: center;
-  justify-content: center;
+  border-color: rgba(101, 202, 255, 0.25);
+}
+
+.highlight-item span {
+  width: 22px;
+  height: 22px;
+
+  display: grid;
+  place-items: center;
 
   border-radius: 50%;
 
-  background: #e0f0ff;
+  background: rgba(98, 202, 255, 0.14);
 
-  color: #2170b2;
+  color: #79d4ff;
 }
-
-.highlight-item svg {
-  font-size: 10px;
-}
-
 
 /* =========================================================
-   MINI ITINERARY
+   MORNING EVENING
 ========================================================= */
 
 .mini-itinerary {
+  margin-top: 29px;
+
   display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap: 12px;
-
-  margin-top: auto;
-
-  padding-top: 30px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 11px;
 }
 
 .mini-plan {
-  min-height: 100px;
+  min-height: 130px;
 
-  padding: 17px;
+  padding: 19px;
 
-  border-radius: 16px;
+  border: 1px solid rgba(105, 193, 255, 0.11);
+  border-radius: 18px;
 
-  background: #f5faff;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(55, 137, 211, 0.045)
+    );
 
-  border: 1px solid #dce8f3;
+  transition: 0.25s ease;
 }
 
-.mini-plan span {
+.mini-plan:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(101, 199, 255, 0.24);
+
+  background:
+    rgba(78, 162, 235, 0.09);
+}
+
+.mini-plan > span {
   display: block;
 
-  margin-bottom: 8px;
+  margin-bottom: 9px;
 
-  color: #2674b4;
+  color: #6ed0ff;
 
-  font-size: 9px;
-
-  font-weight: 800;
-
-  letter-spacing: 1.5px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
 }
 
 .mini-plan p {
   margin: 0;
 
-  color: #5d748b;
+  color: rgba(225, 240, 255, 0.61);
 
-  font-size: 12px;
-
-  line-height: 1.55;
+  font-size: 15px;
+  line-height: 1.7;
 }
 
-
 /* =========================================================
-   EXPERIENCE BOTTOM
+   DOTS
 ========================================================= */
 
 .experience-bottom {
-  display: flex;
+  margin-top: auto;
+  padding-top: 30px;
 
+  display: flex;
   align-items: center;
   justify-content: space-between;
-
-  margin-top: 24px;
-
-  padding-top: 20px;
-
-  border-top: 1px solid #dfeaf4;
 }
 
 .experience-dots {
   display: flex;
-
-  align-items: center;
-
-  gap: 7px;
+  gap: 8px;
 }
 
 .experience-dots button {
@@ -714,10 +960,9 @@
   padding: 0;
 
   border: none;
+  border-radius: 100px;
 
-  border-radius: 50%;
-
-  background: #b8cde0;
+  background: rgba(255, 255, 255, 0.23);
 
   cursor: pointer;
 
@@ -725,985 +970,873 @@
 }
 
 .experience-dots button.active {
-  width: 30px;
+  width: 36px;
 
-  border-radius: 10px;
+  background:
+    linear-gradient(
+      90deg,
+      #45baff,
+      #8addff
+    );
 
-  background: #2674b4;
+  box-shadow:
+    0 0 17px rgba(67, 187, 255, 0.35);
 }
 
 .experience-bottom > span {
-  color: #8095a8;
+  color: rgba(220, 238, 255, 0.5);
 
-  font-size: 11px;
-
-  font-weight: 700;
+  font-size: 14px;
 }
-
 
 /* =========================================================
    HOTEL SECTION
 ========================================================= */
 
 .hotel-stay-section {
-  max-width: 1400px;
+  max-width: 1380px;
+  margin: 0 auto;
 
-  margin: 60px auto 0;
+  position: relative;
+  z-index: 2;
+
+  padding:
+    clamp(35px, 5vw, 68px);
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 39px;
+
+  background:
+    radial-gradient(
+      rgba(37, 99, 235, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.85),
+      rgba(224, 242, 255, 0.78)
+    );
+
+  background-size:
+    24px 24px,
+    100% 100%;
+
+  backdrop-filter: blur(22px);
+
+  box-shadow:
+    0 32px 85px rgba(26, 88, 155, 0.13);
 }
-
 
 /* =========================================================
    HOTEL HEADER
 ========================================================= */
 
 .hotel-section-header {
+  margin-bottom: 42px;
+
   display: flex;
-
-  align-items: flex-end;
   justify-content: space-between;
-
+  align-items: flex-end;
   gap: 25px;
-
-  margin-bottom: 24px;
 }
 
 .hotel-section-label {
   display: block;
 
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 
-  color: #2674b4;
+  color: #2563eb;
 
-  font-size: 12px;
-
-  font-weight: 800;
-
-  letter-spacing: 2.5px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2.4px;
 }
 
 .hotel-section-header h2 {
+  max-width: 700px;
+
   margin: 0;
 
-  color: #193451;
+  color: #082543;
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+  font-family: "Playfair Display", serif;
 
-  font-size: clamp(40px, 4vw, 55px);
-
+  font-size: clamp(45px, 5vw, 68px);
   line-height: 1.05;
-
+  letter-spacing: -1.8px;
   font-weight: 500;
 }
 
-.hotel-section-header p {
-  max-width: 650px;
-
-  margin: 10px 0 0;
-
-  color: #60778e;
-
-  font-size: 15px;
-
-  line-height: 1.65;
-}
-
 .hotel-header-location {
+  padding: 11px 16px;
+
   display: flex;
-
   align-items: center;
-
   gap: 8px;
 
-  padding: 11px 17px;
+  border: 1px solid rgba(37, 99, 235, 0.1);
+  border-radius: 100px;
 
-  border: 1px solid #c8dceb;
+  background: #dcefff;
 
-  border-radius: 30px;
+  color: #1d62ad;
 
-  background: #fff;
-
-  color: #2674b4;
-
-  font-size: 13px;
-
+  font-size: 15px;
   font-weight: 700;
-
-  white-space: nowrap;
 }
-
-.hotel-header-location svg {
-  font-size: 16px;
-}
-
 
 /* =========================================================
-   HOTEL MAIN LAYOUT
+   HOTEL LAYOUT
 ========================================================= */
 
 .hotel-stay-layout {
   display: grid;
 
   grid-template-columns:
-    minmax(0, 1.02fr)
-    minmax(390px, 0.98fr);
+    minmax(0, 1.12fr)
+    minmax(370px, 0.88fr);
 
-  gap: 22px;
-
-  align-items: start;
+  gap: 25px;
 }
-
-
-/* =========================================================
-   LEFT HOTEL AREA
-========================================================= */
 
 .hotel-selection-area {
   min-width: 0;
 }
 
-
 /* =========================================================
-   MAIN HOTEL CARD
+   MAIN HOTEL
 ========================================================= */
 
 .main-hotel-card {
   position: relative;
 
-  height: 500px;
-
   overflow: hidden;
 
-  border-radius: 27px;
+  border: 1px solid rgba(37, 99, 235, 0.08);
+  border-radius: 28px;
 
-  background: #c5dced;
+  background: white;
 
   box-shadow:
-    0 20px 55px rgba(29, 70, 108, 0.16);
+    0 23px 60px rgba(22, 84, 151, 0.13);
 }
 
-.main-hotel-card img {
-  width: 100%;
-  height: 100%;
+.main-hotel-card::after {
+  content: "";
 
-  display: block;
-
-  object-fit: cover;
-
-  animation: hotelImageIn 0.45s ease;
-}
-
-@keyframes hotelImageIn {
-  from {
-    opacity: 0.4;
-
-    transform: scale(1.03);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: scale(1);
-  }
-}
-
-
-/* =========================================================
-   HOTEL OVERLAY
-========================================================= */
-
-.hotel-image-overlay {
   position: absolute;
-
   inset: 0;
 
-  background:
-    linear-gradient(
-      to top,
-      rgba(7, 27, 48, 0.82),
-      rgba(7, 27, 48, 0.06) 62%
-    );
+  border: 1px solid rgba(67, 153, 244, 0.11);
+  border-radius: inherit;
 
   pointer-events: none;
 }
 
+.main-hotel-image {
+  height: 370px;
 
-/* =========================================================
-   HOTEL ARROWS
-========================================================= */
+  position: relative;
+  overflow: hidden;
+}
 
-.hotel-arrow {
+.main-hotel-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 0.8s ease;
+}
+
+.main-hotel-card:hover .main-hotel-image img {
+  transform: scale(1.055);
+}
+
+.hotel-image-overlay {
   position: absolute;
-
-  top: 50%;
-
-  z-index: 5;
-
-  width: 48px;
-  height: 48px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid rgba(255,255,255,0.4);
-
-  border-radius: 50%;
+  inset: 0;
 
   background:
-    rgba(10, 35, 60, 0.35);
-
-  color: #fff;
-
-  backdrop-filter: blur(10px);
-
-  cursor: pointer;
-
-  transform: translateY(-50%);
-
-  transition: 0.3s ease;
+    linear-gradient(
+      180deg,
+      transparent 40%,
+      rgba(4, 27, 53, 0.7)
+    );
 }
 
-.hotel-arrow svg {
-  font-size: 17px;
-}
-
-.hotel-arrow:hover {
-  background: #fff;
-
-  color: #1b4265;
-
-  transform:
-    translateY(-50%)
-    scale(1.07);
-}
-
-.hotel-arrow-left {
-  left: 18px;
-}
-
-.hotel-arrow-right {
-  right: 18px;
-}
-
-
-/* =========================================================
-   MAIN HOTEL INFO
-========================================================= */
-
-.main-hotel-info {
+.hotel-card-location {
   position: absolute;
 
-  left: 28px;
-  right: 28px;
+  left: 21px;
+  bottom: 21px;
 
-  bottom: 25px;
+  padding: 10px 14px;
 
-  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 7px;
 
-  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: 100px;
+
+  background: rgba(6, 36, 70, 0.43);
+
+  backdrop-filter: blur(12px);
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.main-hotel-info {
+  padding: 27px 29px 31px;
 }
 
 .hotel-rating {
+  margin-bottom: 12px;
+
   display: flex;
-
   align-items: center;
+  gap: 8px;
 
-  gap: 6px;
-
-  margin-bottom: 8px;
-}
-
-.hotel-rating svg {
-  color: #8ed0ff;
-
-  fill: #8ed0ff;
+  color: #f2a62e;
 
   font-size: 15px;
 }
 
 .hotel-rating strong {
-  font-size: 14px;
+  color: #12385f;
 }
 
 .hotel-rating span {
-  color: rgba(255,255,255,0.72);
+  color: #8295aa;
 
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .main-hotel-info h3 {
-  margin: 0 0 7px;
+  margin: 0 0 10px;
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+  color: #092847;
 
-  font-size: 33px;
+  font-family: "Playfair Display", serif;
 
-  line-height: 1.1;
-
-  font-weight: 500;
+  font-size: 34px;
+  font-weight: 600;
 }
 
 .main-hotel-info p {
   margin: 0;
 
-  display: flex;
+  color: #6d8298;
 
-  align-items: center;
-
-  gap: 6px;
-
-  color: rgba(255,255,255,0.82);
-
-  font-size: 13px;
+  font-size: 16px;
+  line-height: 1.8;
 }
-
-.main-hotel-info p svg {
-  font-size: 14px;
-}
-
 
 /* =========================================================
    HOTEL THUMBNAILS
 ========================================================= */
 
 .hotel-thumbnail-row {
+  margin-top: 14px;
+
   display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
-  gap: 10px;
-
-  margin-top: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 11px;
 }
 
 .hotel-thumbnail {
-  position: relative;
+  height: 125px;
 
-  height: 88px;
+  position: relative;
+  overflow: hidden;
 
   padding: 0;
 
-  overflow: hidden;
-
   border: 2px solid transparent;
+  border-radius: 17px;
 
-  border-radius: 13px;
-
-  background: #c7dceb;
-
-  cursor: pointer;
-
-  text-align: left;
-
-  transition: 0.3s ease;
-}
-
-.hotel-thumbnail img {
-  width: 100%;
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-
-  transition: 0.4s ease;
-}
-
-.hotel-thumbnail:hover img {
-  transform: scale(1.06);
-}
-
-.hotel-thumbnail.active {
-  border-color: #2b78b9;
-
-  box-shadow:
-    0 7px 22px rgba(31, 103, 165, 0.20);
-}
-
-.thumbnail-overlay {
-  position: absolute;
-
-  inset: 0;
-
-  background:
-    linear-gradient(
-      to top,
-      rgba(8, 28, 47, 0.76),
-      transparent 75%
-    );
-}
-
-.thumbnail-number {
-  position: absolute;
-
-  top: 7px;
-  left: 9px;
-
-  color: rgba(255,255,255,0.88);
-
-  font-size: 10px;
-
-  font-weight: 800;
-
-  letter-spacing: 1px;
-}
-
-.thumbnail-name {
-  position: absolute;
-
-  left: 9px;
-  right: 8px;
-
-  bottom: 8px;
-
-  overflow: hidden;
-
-  color: #fff;
-
-  font-size: 11px;
-
-  font-weight: 700;
-
-  white-space: nowrap;
-
-  text-overflow: ellipsis;
-}
-
-
-/* =========================================================
-   RIGHT SCHEDULE CARD
-========================================================= */
-
-.hotel-schedule-card {
-  min-height: 0;
-
-  padding: 28px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  background: #ffffff;
-
-  border: 1px solid #cbddec;
-
-  border-radius: 27px;
-
-  box-shadow:
-    0 20px 55px rgba(29, 69, 108, 0.09);
-}
-
-
-/* =========================================================
-   SCHEDULE TOP
-========================================================= */
-
-.schedule-top {
-  display: flex;
-
-  align-items: flex-start;
-
-  justify-content: space-between;
-
-  gap: 18px;
-
-  padding-bottom: 16px;
-
-  border-bottom: 1px solid #dfeaf3;
-}
-
-.schedule-top span {
-  color: #2674b4;
-
-  font-size: 10px;
-
-  font-weight: 800;
-
-  letter-spacing: 2px;
-}
-
-.schedule-top h3 {
-  margin: 6px 0 0;
-
-  color: #1d3955;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 31px;
-
-  font-weight: 500;
-}
-
-.schedule-days-count {
-  padding: 9px 12px;
-
-  border-radius: 30px;
-
-  background: #e5f2ff;
-
-  color: #216da9;
-
-  font-size: 11px;
-
-  font-weight: 800;
-
-  letter-spacing: 1px;
-}
-
-
-/* =========================================================
-   DAY SELECTOR
-========================================================= */
-
-.day-selector {
-  display: flex;
-
-  gap: 6px;
-
-  margin: 16px 0;
-
-  overflow-x: auto;
-
-  padding-bottom: 3px;
-
-  scrollbar-width: none;
-}
-
-.day-selector::-webkit-scrollbar {
-  display: none;
-}
-
-.day-selector button {
-  flex-shrink: 0;
-
-  padding: 9px 15px;
-
-  border: 1px solid #d5e3ef;
-
-  border-radius: 30px;
-
-  background: #f6faff;
-
-  color: #61788e;
-
-  font-size: 12px;
-
-  font-weight: 700;
+  background: #d9ebfb;
 
   cursor: pointer;
 
   transition: 0.25s ease;
 }
 
-.day-selector button:hover {
-  border-color: #5c9bd0;
-
-  color: #1f6da9;
+.hotel-thumbnail:hover {
+  transform: translateY(-4px);
 }
 
-.day-selector button.active {
-  background: #2878b9;
+.hotel-thumbnail.active {
+  border-color: #2c85df;
 
-  border-color: #2878b9;
-
-  color: #fff;
+  box-shadow:
+    0 10px 25px rgba(37, 99, 235, 0.2);
 }
 
+.hotel-thumbnail img {
+  width: 100%;
+  height: 100%;
 
-/* =========================================================
-   ACTIVE DAY
-========================================================= */
-
-.active-day-content {
-  flex: 1;
+  object-fit: cover;
 }
 
-.active-day-heading {
-  display: flex;
+.thumbnail-overlay {
+  position: absolute;
+  inset: 0;
 
-  align-items: center;
-
-  gap: 12px;
-
-  margin-bottom: 17px;
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(4, 30, 58, 0.8)
+    );
 }
 
-.day-circle {
-  width: 42px;
-  height: 42px;
+.thumbnail-number {
+  position: absolute;
 
-  flex-shrink: 0;
+  top: 10px;
+  left: 11px;
 
-  display: flex;
+  color: white;
 
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background: #e5f2ff;
-
-  color: #2471ae;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 18px;
-}
-
-.active-day-heading span {
-  color: #8296aa;
-
-  font-size: 9px;
-
-  font-weight: 800;
-
-  letter-spacing: 1.5px;
-}
-
-.active-day-heading h4 {
-  margin: 3px 0 0;
-
-  color: #344d64;
-
-  font-size: 17px;
-
+  font-size: 12px;
   font-weight: 700;
 }
 
+.thumbnail-name {
+  position: absolute;
+
+  left: 11px;
+  right: 9px;
+  bottom: 10px;
+
+  color: white;
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 700;
+}
 
 /* =========================================================
-   SCHEDULE ROW
+   SCHEDULE CARD
 ========================================================= */
 
+.hotel-schedule-card {
+  min-width: 0;
+
+  padding: 30px;
+
+  overflow: hidden;
+
+  border-radius: 28px;
+
+  color: white;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(53, 155, 246, 0.3),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(20, 104, 185, 0.17),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #06182f,
+      #092b50 55%,
+      #0d3867
+    );
+
+  box-shadow:
+    0 22px 55px rgba(7, 45, 85, 0.2);
+}
+
+/* =========================================================
+   SCHEDULE TOP
+========================================================= */
+
+.schedule-top {
+  padding-bottom: 22px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.schedule-top > div:first-child > span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #87a8c5;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+.schedule-top h3 {
+  margin: 0;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 37px;
+  font-weight: 500;
+}
+
+.schedule-days-count {
+  width: 68px;
+  height: 68px;
+
+  border: 1px solid rgba(111, 201, 255, 0.16);
+  border-radius: 19px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(65, 151, 225, 0.08);
+}
+
+.schedule-days-count strong {
+  color: #69ccff;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 28px;
+  line-height: 1;
+}
+
+.schedule-days-count span {
+  margin-top: 4px;
+
+  color: #8daac4;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   DAY SELECTOR
+========================================================= */
+
+.day-selector {
+  margin: 23px 0 28px;
+
+  padding-bottom: 6px;
+
+  display: flex;
+  gap: 8px;
+
+  overflow-x: auto;
+
+  scrollbar-width: thin;
+}
+
+.day-selector button {
+  min-width: 66px;
+  height: 68px;
+
+  flex-shrink: 0;
+
+  border: 1px solid rgba(104, 190, 255, 0.11);
+  border-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  color: white;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+}
+
+.day-selector button span {
+  margin-bottom: 4px;
+
+  color: #829fba;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.day-selector button strong {
+  font-size: 16px;
+}
+
+.day-selector button:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(99, 199, 255, 0.25);
+}
+
+.day-selector button.active {
+  border-color: #68cbff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #44b9fb,
+      #78d5ff
+    );
+
+  color: #062542;
+
+  box-shadow:
+    0 9px 22px rgba(59, 180, 244, 0.22);
+}
+
+.day-selector button.active span {
+  color: rgba(5, 35, 66, 0.65);
+}
+
+/* =========================================================
+   DAILY TIMELINE
+========================================================= */
+
+.active-day-content {
+  position: relative;
+}
+
 .schedule-row {
+  min-height: 112px;
+
   position: relative;
 
   display: grid;
 
   grid-template-columns:
-    88px 1fr;
+    55px
+    38px
+    1fr;
 
-  gap: 14px;
-
-  padding-bottom: 14px;
-
-  margin-bottom: 14px;
-
-  border-bottom: 1px solid #e5edf4;
+  gap: 13px;
 }
 
-.schedule-row.last {
-  margin-bottom: 0;
+.schedule-row:not(:last-child)::after {
+  content: "";
 
-  padding-bottom: 0;
+  position: absolute;
 
-  border-bottom: none;
+  left: 73px;
+  top: 40px;
+  bottom: -3px;
+
+  width: 1px;
+
+  background:
+    linear-gradient(
+      #3d7fb6,
+      rgba(61, 127, 182, 0)
+    );
 }
 
 .schedule-time {
-  display: flex;
+  padding-top: 5px;
 
-  align-items: flex-start;
-
-  gap: 8px;
-
-  color: #2775b4;
-
-  font-size: 12px;
-
-  font-weight: 700;
+  text-align: right;
 }
 
 .schedule-time span {
-  width: 7px;
-  height: 7px;
+  display: block;
 
-  margin-top: 5px;
+  color: #dceeff;
 
-  flex-shrink: 0;
-
-  border-radius: 50%;
-
-  background: #4b9bd2;
+  font-size: 13px;
+  font-weight: 700;
 }
 
-.schedule-content h5 {
-  margin: 0 0 4px;
+.schedule-time small {
+  color: #718da7;
 
-  color: #304960;
+  font-size: 11px;
+}
+
+.day-circle {
+  width: 35px;
+  height: 35px;
+
+  position: relative;
+  z-index: 2;
+
+  border: 1px solid rgba(98, 199, 255, 0.28);
+  border-radius: 50%;
+
+  display: grid;
+  place-items: center;
+
+  background: #0d315a;
+
+  color: #6bcfff;
 
   font-size: 15px;
 
-  font-weight: 800;
+  box-shadow:
+    0 0 0 5px rgba(57, 148, 223, 0.05);
+}
+
+.schedule-content {
+  padding: 2px 0 24px;
+}
+
+.schedule-content > span {
+  color: #65caff;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.schedule-content h4 {
+  margin: 6px 0 7px;
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .schedule-content p {
+  max-width: 430px;
+
   margin: 0;
 
-  color: #6c8296;
+  color: rgba(217, 236, 253, 0.58);
 
-  font-size: 12px;
-
-  line-height: 1.55;
+  font-size: 14px;
+  line-height: 1.7;
 }
-
 
 /* =========================================================
    BOOKING AREA
 ========================================================= */
 
 .hotel-booking-area {
-  margin-top: 18px;
+  margin-top: 32px;
 
-  padding-top: 16px;
+  padding: 29px 31px;
+
+  position: relative;
+  overflow: hidden;
 
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
+  gap: 30px;
 
-  gap: 15px;
+  border: 1px solid rgba(37, 99, 235, 0.1);
+  border-radius: 25px;
 
-  border-top: 1px solid #dfeaf3;
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(56, 189, 248, 0.14),
+      transparent 25%
+    ),
+    linear-gradient(
+      115deg,
+      #dbeaff,
+      #f0f9ff 52%,
+      #d8f0ff
+    );
 }
 
-.hotel-booking-area > div span {
-  display: block;
+.hotel-booking-area::before {
+  content: "";
 
-  margin-bottom: 4px;
+  position: absolute;
 
-  color: #8195a8;
+  width: 230px;
+  height: 230px;
 
-  font-size: 9px;
+  right: 160px;
+  top: -145px;
 
-  font-weight: 800;
-
-  letter-spacing: 1.5px;
+  border: 1px dashed rgba(37, 99, 235, 0.12);
+  border-radius: 50%;
 }
 
-.hotel-booking-area > div strong {
+.hotel-booking-area::after {
+  content: "✈";
+
+  position: absolute;
+
+  right: 18%;
+  bottom: -45px;
+
+  color: rgba(32, 111, 199, 0.08);
+
+  font-size: 130px;
+
+  transform: rotate(-20deg);
+
+  pointer-events: none;
+}
+
+.hotel-booking-text {
+  position: relative;
+  z-index: 2;
+}
+
+.hotel-booking-text > span {
   display: block;
 
-  color: #29455f;
+  margin-bottom: 7px;
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+  color: #2563eb;
 
-  font-size: 19px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
 
+.hotel-booking-text h3 {
+  margin: 0 0 7px;
+
+  color: #0a2d51;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 29px;
   font-weight: 500;
 }
 
-.hotel-book-btn {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 8px;
-
-  padding: 13px 20px;
-
-  border: none;
-
-  border-radius: 50px;
-
-  background: #2878b9;
-
-  color: #fff;
-
-  font-size: 13px;
-
-  font-weight: 800;
-
-  cursor: pointer;
-
-  transition: 0.3s ease;
-
-  white-space: nowrap;
+.hotel-booking-text h3 strong {
+  color: #2563eb;
 }
 
-.hotel-book-btn:hover {
-  background: #1c6198;
+.hotel-booking-text p {
+  margin: 0;
 
-  transform: translateY(-2px);
+  color: #657e98;
 
-  box-shadow:
-    0 8px 22px rgba(28, 97, 152, 0.24);
-}
-
-.hotel-book-btn svg {
   font-size: 15px;
+  line-height: 1.7;
 }
-
 
 /* =========================================================
-   EMPTY PAGE
+   BOOK BUTTON
 ========================================================= */
 
-.create-trip-empty {
-  min-height: 100vh;
+.hotel-book-btn {
+  min-width: 220px;
+  height: 63px;
 
-  padding: 120px 20px;
+  position: relative;
+  z-index: 3;
+
+  padding: 0 15px 0 25px;
+
+  border: none;
+  border-radius: 100px;
 
   display: flex;
-
-  flex-direction: column;
-
   align-items: center;
-
-  justify-content: center;
+  justify-content: space-between;
+  gap: 16px;
 
   background:
     linear-gradient(
       135deg,
-      #dceeff,
-      #c9e4ff,
-      #edf7ff
+      #082b50,
+      #104f8d
     );
 
-  text-align: center;
-}
+  color: white;
 
-.empty-icon {
-  width: 75px;
-  height: 75px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  margin-bottom: 20px;
-
-  border-radius: 50%;
-
-  background: #e2f1ff;
-
-  color: #2472b0;
-
-  font-size: 30px;
-}
-
-.create-trip-empty h2 {
-  margin: 0;
-
-  color: #193451;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 42px;
-
-  font-weight: 500;
-}
-
-.create-trip-empty p {
-  margin: 10px 0 25px;
-
-  color: #60778e;
-
+  font-family: inherit;
   font-size: 15px;
-}
-
-.create-trip-empty button {
-  padding: 14px 27px;
-
-  border: none;
-
-  border-radius: 30px;
-
-  background: #2878b9;
-
-  color: #fff;
-
-  font-size: 13px;
-
   font-weight: 700;
 
   cursor: pointer;
+
+  box-shadow:
+    0 14px 32px rgba(9, 55, 103, 0.23);
+
+  transition: 0.3s ease;
 }
 
+.hotel-book-btn svg {
+  width: 34px;
+  height: 34px;
+
+  padding: 9px;
+
+  border-radius: 50%;
+
+  background: #6bd0ff;
+
+  color: #072a4b;
+
+  transition: 0.3s ease;
+}
+
+.hotel-book-btn:hover {
+  transform: translateY(-4px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #125b9e,
+      #178bd3
+    );
+
+  box-shadow:
+    0 18px 40px rgba(14, 93, 158, 0.28);
+}
+
+.hotel-book-btn:hover svg {
+  transform: translateX(4px);
+}
 
 /* =========================================================
    TABLET
 ========================================================= */
 
-@media (max-width: 1150px) {
-
+@media (max-width: 1100px) {
   .create-trip-page {
-    padding-left: 4%;
-    padding-right: 4%;
-  }
-
-  .trip-info-strip {
-    grid-template-columns:
-      repeat(3, 1fr);
-  }
-
-  .trip-info-item:nth-child(3) {
-    border-right: none;
+    padding-left: 28px;
+    padding-right: 28px;
   }
 
   .experience-section {
-    grid-template-columns: 1fr;
-  }
-
-  .experience-image {
-    height: 520px;
-  }
-
-  .experience-details {
-    min-height: 560px;
+    grid-template-columns:
+      1fr
+      0.95fr;
   }
 
   .hotel-stay-layout {
     grid-template-columns: 1fr;
-
-    gap: 22px;
   }
 
-  .main-hotel-card {
-    height: 500px;
+  .main-hotel-image {
+    height: 430px;
   }
-
-  .hotel-schedule-card {
-    min-height: 0;
-  }
-
 }
 
-
 /* =========================================================
-   TABLET SMALL
+   SMALL TABLET
 ========================================================= */
 
-@media (max-width: 800px) {
-
-  .trip-top-section {
-    align-items: flex-start;
-
-    flex-direction: column;
+@media (max-width: 900px) {
+  .create-trip-page {
+    padding-top: 105px;
   }
 
   .trip-info-strip {
@@ -1711,401 +1844,365 @@
       repeat(2, 1fr);
   }
 
-  .trip-info-item:nth-child(2) {
-    border-right: none;
+  .trip-info-item:nth-child(2)::after {
+    display: none;
   }
 
-  .trip-info-item:nth-child(3) {
-    border-right: 1px solid #dce8f3;
+  .experience-section {
+    grid-template-columns: 1fr;
+
+    border-radius: 30px;
   }
 
-  .trip-info-item:nth-child(4) {
-    border-right: none;
+  .experience-image {
+    min-height: 540px;
   }
 
-  .trip-info-item:nth-child(5) {
-    grid-column: span 2;
-
-    border-right: none;
+  .experience-details {
+    min-height: 610px;
   }
 
+  .hotel-section-header {
+    align-items: flex-start;
+  }
 }
-
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
 @media (max-width: 650px) {
-
   .create-trip-page {
-    padding: 105px 17px 60px;
+    padding:
+      90px
+      14px
+      50px;
+
+    font-size: 16px;
   }
 
+  .create-trip-page::before {
+    width: 300px;
+    height: 300px;
+
+    right: -170px;
+    top: 140px;
+
+    font-size: 30px;
+  }
+
+  .create-trip-page::after {
+    width: 230px;
+    height: 230px;
+
+    left: -150px;
+  }
+
+  /* TOP */
+
   .trip-top-section {
-    margin-bottom: 25px;
+    margin-bottom: 27px;
+
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .trip-small-label {
+    font-size: 11px;
   }
 
   .trip-top-left h1 {
-    font-size: 45px;
-
-    letter-spacing: -1px;
+    font-size: 53px;
+    letter-spacing: -2px;
   }
 
   .trip-top-left p {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .edit-trip-btn {
-    padding: 11px 16px;
+    min-height: 48px;
 
-    font-size: 12px;
+    font-size: 15px;
   }
-
 
   /* INFO */
 
   .trip-info-strip {
+    margin-bottom: 42px;
+
     grid-template-columns: 1fr;
-
-    padding: 13px;
-
-    border-radius: 17px;
-  }
-
-  .trip-info-item,
-  .trip-info-item:nth-child(3) {
-    padding: 9px;
-
-    border-right: none;
-
-    border-bottom: 1px solid #dce8f3;
-  }
-
-  .trip-info-item:last-child {
-    border-bottom: none;
-
-    grid-column: auto;
-  }
-
-
-  /* EXPERIENCE */
-
-  .experience-section {
-    gap: 16px;
-  }
-
-  .experience-image {
-    height: 420px;
 
     border-radius: 22px;
   }
 
+  .trip-info-item {
+    min-height: 75px;
+
+    padding: 12px 14px;
+  }
+
+  .trip-info-item:not(:last-child)::after {
+    top: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+
+    width: auto;
+    height: 1px;
+  }
+
+  .trip-info-item strong {
+    font-size: 16px;
+  }
+
+  /* EXPERIENCE */
+
+  .experience-section {
+    margin-bottom: 65px;
+
+    border-width: 4px;
+    border-radius: 25px;
+  }
+
+  .experience-image {
+    min-height: 420px;
+  }
+
+  .experience-auto-label {
+    top: 18px;
+    left: 18px;
+
+    font-size: 11px;
+  }
+
   .experience-location {
-    left: 20px;
-
+    left: 18px;
     bottom: 20px;
+
+    font-size: 14px;
   }
 
-  .experience-location strong {
-    font-size: 21px;
+  .experience-place-count {
+    right: 18px;
+    bottom: 16px;
   }
 
-  .experience-location span {
-    font-size: 12px;
+  .experience-place-count strong {
+    font-size: 36px;
+  }
+
+  .experience-place-count span {
+    font-size: 14px;
   }
 
   .experience-arrow {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
   }
 
   .experience-left {
-    left: 13px;
+    left: 14px;
   }
 
   .experience-right {
-    right: 13px;
+    right: 14px;
   }
 
   .experience-details {
     min-height: auto;
 
-    padding: 28px 22px;
-
-    border-radius: 22px;
+    padding:
+      36px
+      23px;
   }
 
   .experience-number {
-    margin-bottom: 25px;
+    margin-bottom: 28px;
   }
 
-  .experience-number strong {
-    font-size: 41px;
+  .experience-number span {
+    font-size: 11px;
   }
 
   .experience-details h2 {
-    font-size: 36px;
+    font-size: 42px;
+  }
+
+  .experience-place-location {
+    font-size: 15px;
   }
 
   .experience-description {
+    font-size: 16px;
+  }
+
+  .experience-detail-text {
+    font-size: 14px;
+  }
+
+  .highlight-item {
     font-size: 13px;
   }
 
   .mini-itinerary {
     grid-template-columns: 1fr;
-
-    margin-top: 25px;
-
-    padding-top: 20px;
   }
 
-  .mini-plan {
-    min-height: auto;
+  .mini-plan p {
+    font-size: 14px;
   }
 
+  .experience-bottom {
+    margin-top: 30px;
+  }
 
   /* HOTEL */
 
   .hotel-stay-section {
-    margin-top: 55px;
+    padding:
+      27px
+      16px;
+
+    border-radius: 26px;
   }
 
   .hotel-section-header {
-    align-items: flex-start;
+    margin-bottom: 30px;
 
     flex-direction: column;
-
-    margin-bottom: 20px;
+    align-items: flex-start;
   }
 
   .hotel-section-header h2 {
-    font-size: 38px;
-  }
-
-  .hotel-section-header p {
-    font-size: 14px;
+    font-size: 42px;
   }
 
   .hotel-header-location {
-    align-self: flex-start;
-
-    font-size: 12px;
+    font-size: 14px;
   }
 
-
-  /* MAIN HOTEL */
-
-  .main-hotel-card {
-    height: 390px;
-
-    border-radius: 22px;
+  .main-hotel-image {
+    height: 290px;
   }
 
   .main-hotel-info {
-    left: 20px;
-    right: 20px;
-
-    bottom: 20px;
+    padding: 22px;
   }
 
   .main-hotel-info h3 {
-    font-size: 28px;
+    font-size: 29px;
   }
 
   .main-hotel-info p {
-    font-size: 12px;
+    font-size: 15px;
   }
-
-  .hotel-arrow {
-    width: 42px;
-    height: 42px;
-  }
-
-  .hotel-arrow-left {
-    left: 12px;
-  }
-
-  .hotel-arrow-right {
-    right: 12px;
-  }
-
-
-  /* THUMBNAILS */
 
   .hotel-thumbnail-row {
-    gap: 8px;
-
-    margin-top: 9px;
+    gap: 7px;
   }
 
   .hotel-thumbnail {
-    height: 82px;
+    height: 92px;
 
-    border-radius: 11px;
-  }
-
-  .thumbnail-number {
-    top: 7px;
-    left: 8px;
+    border-radius: 13px;
   }
 
   .thumbnail-name {
-    left: 8px;
-    bottom: 7px;
-
-    font-size: 9px;
+    display: none;
   }
-
 
   /* SCHEDULE */
 
   .hotel-schedule-card {
-    padding: 21px 17px;
+    padding:
+      23px
+      16px;
 
-    border-radius: 22px;
+    border-radius: 23px;
   }
 
   .schedule-top h3 {
-    font-size: 27px;
+    font-size: 32px;
   }
 
   .schedule-days-count {
-    padding: 8px 9px;
-
-    font-size: 9px;
-  }
-
-  .day-selector {
-    margin: 16px 0;
-  }
-
-  .day-selector button {
-    padding: 9px 12px;
-
-    font-size: 11px;
-  }
-
-  .active-day-heading {
-    gap: 11px;
-
-    margin-bottom: 16px;
-  }
-
-  .active-day-heading h4 {
-    font-size: 17px;
+    width: 60px;
+    height: 60px;
   }
 
   .schedule-row {
     grid-template-columns:
-      75px 1fr;
+      45px
+      32px
+      1fr;
 
-    gap: 8px;
-
-    padding-bottom: 13px;
-
-    margin-bottom: 13px;
+    gap: 9px;
   }
 
-  .schedule-time {
-    font-size: 11px;
+  .schedule-row:not(:last-child)::after {
+    left: 60px;
   }
 
-  .schedule-content h5 {
-    font-size: 16px;
+  .schedule-content h4 {
+    font-size: 15px;
   }
 
   .schedule-content p {
-    font-size: 12px;
-
-    line-height: 1.55;
+    font-size: 13px;
   }
 
-
-  /* BOOK BUTTON */
+  /* BOOKING */
 
   .hotel-booking-area {
-    align-items: flex-start;
+    padding:
+      24px
+      20px;
 
     flex-direction: column;
-
-    margin-top: 16px;
-
-    padding-top: 15px;
+    align-items: flex-start;
   }
 
-  .hotel-booking-area > div strong {
-    font-size: 17px;
+  .hotel-booking-text h3 {
+    font-size: 25px;
+  }
+
+  .hotel-booking-text p {
+    font-size: 14px;
   }
 
   .hotel-book-btn {
     width: 100%;
-
-    padding: 14px 18px;
-
-    font-size: 13px;
   }
-
 }
-
 
 /* =========================================================
    VERY SMALL MOBILE
 ========================================================= */
 
-@media (max-width: 420px) {
-
+@media (max-width: 390px) {
   .trip-top-left h1 {
-    font-size: 40px;
-  }
-
-  .trip-top-left p {
-    font-size: 13px;
+    font-size: 45px;
   }
 
   .experience-image {
-    height: 370px;
+    min-height: 370px;
   }
 
   .experience-details h2 {
-    font-size: 32px;
+    font-size: 37px;
   }
 
   .hotel-section-header h2 {
-    font-size: 35px;
-  }
-
-  .main-hotel-card {
-    height: 350px;
+    font-size: 37px;
   }
 
   .hotel-thumbnail {
-    height: 74px;
+    height: 78px;
   }
 
-  .thumbnail-name {
-    font-size: 8px;
+  .day-selector button {
+    min-width: 60px;
+    height: 62px;
   }
-
-  .hotel-schedule-card {
-    padding: 18px 15px;
-  }
-
-  .schedule-top h3 {
-    font-size: 24px;
-  }
-
-  .active-day-heading h4 {
-    font-size: 16px;
-  }
-
-  .schedule-content h5 {
-    font-size: 16px;
-  }
-
-  .schedule-content p {
-    font-size: 11px;
-  }
-
 }
-

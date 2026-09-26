@@ -1,848 +1,161 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import {
-  FiMapPin,
-  FiCalendar,
-  FiUsers,
-  FiCompass,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
+import {
   FiArrowLeft,
   FiArrowRight,
-  FiStar,
+  FiCalendar,
   FiCheck,
   FiClock,
+  FiCompass,
   FiEdit3,
+  FiHome,
+  FiMapPin,
+  FiNavigation,
+  FiStar,
+  FiUsers,
 } from "react-icons/fi";
 
+import destinations from "../Data/destinations";
 import "./CreateTrip.css";
 
 /* =========================================================
-   DESTINATION DATA
+   FALLBACK IMAGE
 ========================================================= */
 
-const destinationData = {
-  jaipur: {
-    name: "Jaipur",
-    country: "Rajasthan, India",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "The Royal Pink City",
-        description:
-          "Step into Jaipur's royal world where grand palaces, colourful streets and centuries of Rajput heritage come together.",
-        highlights: ["Hawa Mahal", "City Palace", "Pink City Walk"],
-        morning:
-          "Explore Hawa Mahal and the historic old city.",
-        evening:
-          "Enjoy sunset views and the royal atmosphere of Jaipur.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "Palaces & Heritage",
-        description:
-          "Discover magnificent architecture, royal courtyards and stories from Jaipur's rich cultural past.",
-        highlights: ["Amber Fort", "City Palace", "Jantar Mantar"],
-        morning:
-          "Visit Amber Fort and explore its beautiful courtyards.",
-        evening:
-          "Walk through the heritage streets and local markets.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1592639296346-560c37a0f711?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "Colours of Rajasthan",
-        description:
-          "Experience Jaipur through local food, colourful bazaars and traditional Rajasthani culture.",
-        highlights: [
-          "Local Markets",
-          "Rajasthani Food",
-          "Cultural Experience",
-        ],
-        morning:
-          "Explore local bazaars and traditional handicrafts.",
-        evening:
-          "Enjoy authentic Rajasthani food and cultural moments.",
-      },
-    ],
-  },
-
-  goa: {
-    name: "Goa",
-    country: "India",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "Tropical Goa",
-        description:
-          "Relax by golden beaches, explore colourful coastal streets and enjoy Goa's laid-back tropical atmosphere.",
-        highlights: ["Beach Walk", "Sea Views", "Coastal Cafes"],
-        morning:
-          "Start your day with a peaceful beach walk.",
-        evening:
-          "Watch the sunset beside the Arabian Sea.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "Goa Heritage",
-        description:
-          "Discover Portuguese-inspired architecture, historic churches and the charming old side of Goa.",
-        highlights: ["Old Goa", "Heritage Streets", "Local Culture"],
-        morning:
-          "Explore Old Goa and its historic landmarks.",
-        evening:
-          "Enjoy a relaxed evening around Panjim.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "Beachside Evenings",
-        description:
-          "Slow down and enjoy Goa's famous beachside evenings with beautiful views and relaxed moments.",
-        highlights: ["Sunset", "Beach Cafes", "Nightlife"],
-        morning:
-          "Spend a relaxed morning near the coast.",
-        evening:
-          "Enjoy sunset, cafes and Goa's vibrant nightlife.",
-      },
-    ],
-  },
-
-  manali: {
-    name: "Manali",
-    country: "Himachal Pradesh, India",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "Into the Mountains",
-        description:
-          "Escape into the Himalayas with dramatic mountain views, peaceful valleys and fresh mountain air.",
-        highlights: ["Mountain Views", "Valley Walk", "Nature"],
-        morning:
-          "Start with a peaceful mountain walk.",
-        evening:
-          "Enjoy sunset views across the Himalayan valley.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "Adventure Manali",
-        description:
-          "Discover Manali's adventurous side through mountain roads, valleys and outdoor experiences.",
-        highlights: ["Adventure", "Mountain Roads", "Nature Trails"],
-        morning:
-          "Head towards the scenic mountain areas.",
-        evening:
-          "Return to town and enjoy a peaceful evening.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "Peaceful Valleys",
-        description:
-          "Slow down in beautiful valleys surrounded by pine forests, rivers and snow-covered mountains.",
-        highlights: ["Pine Forests", "River Views", "Relaxation"],
-        morning:
-          "Explore quiet forest paths and river views.",
-        evening:
-          "Relax and enjoy the peaceful mountain atmosphere.",
-      },
-    ],
-  },
-
-  kerala: {
-    name: "Kerala",
-    country: "India",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "God's Own Country",
-        description:
-          "Experience Kerala's lush landscapes, peaceful waters and timeless natural beauty.",
-        highlights: ["Backwaters", "Nature", "Local Culture"],
-        morning:
-          "Explore the peaceful backwaters and surrounding villages.",
-        evening:
-          "Enjoy a calm sunset beside the water.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "Backwater Escape",
-        description:
-          "Float through Kerala's beautiful waterways and discover a slower, more peaceful way to travel.",
-        highlights: ["Houseboat", "Backwaters", "Village Life"],
-        morning:
-          "Cruise through the peaceful Kerala backwaters.",
-        evening:
-          "Watch the changing colours of the sky over the water.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1596178060810-72f53ce9a65c?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "Tropical Nature",
-        description:
-          "Surround yourself with tropical greenery, peaceful landscapes and Kerala's unique natural charm.",
-        highlights: ["Green Landscapes", "Wildlife", "Relaxation"],
-        morning:
-          "Explore Kerala's green landscapes and nature.",
-        evening:
-          "Relax in a peaceful tropical setting.",
-      },
-    ],
-  },
-
-  rishikesh: {
-    name: "Rishikesh",
-    country: "Uttarakhand, India",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "By the Ganges",
-        description:
-          "Discover the spiritual energy of Rishikesh along the banks of the sacred Ganges.",
-        highlights: ["Ganga", "Ghats", "Spirituality"],
-        morning:
-          "Walk beside the Ganges and explore the ghats.",
-        evening:
-          "Experience the peaceful evening Ganga atmosphere.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "Adventure & Nature",
-        description:
-          "Combine peaceful surroundings with adventure and beautiful Himalayan landscapes.",
-        highlights: ["River Adventure", "Nature", "Mountains"],
-        morning:
-          "Explore outdoor activities around the river.",
-        evening:
-          "Relax while enjoying the mountain surroundings.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "Peace & Wellness",
-        description:
-          "Slow down with peaceful surroundings, yoga-inspired moments and riverside relaxation.",
-        highlights: ["Yoga", "Meditation", "Relaxation"],
-        morning:
-          "Start the day with a calm wellness experience.",
-        evening:
-          "Relax beside the Ganges during sunset.",
-      },
-    ],
-  },
-
-  dubai: {
-    name: "Dubai",
-    country: "United Arab Emirates",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "Modern Dubai",
-        description:
-          "Experience Dubai's futuristic skyline, iconic architecture and energetic city atmosphere.",
-        highlights: ["Burj Khalifa", "Downtown", "City Views"],
-        morning:
-          "Explore the heart of Downtown Dubai.",
-        evening:
-          "Enjoy spectacular city views after sunset.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "Desert Adventure",
-        description:
-          "Leave the city behind and discover Dubai's golden desert landscapes.",
-        highlights: ["Desert", "Sunset", "Adventure"],
-        morning:
-          "Explore the desert region and surrounding landscapes.",
-        evening:
-          "Watch the sunset across the golden dunes.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "Luxury by the Sea",
-        description:
-          "Enjoy Dubai's beautiful coastline, modern resorts and relaxed seaside atmosphere.",
-        highlights: ["Palm Jumeirah", "Sea Views", "Luxury"],
-        morning:
-          "Explore the Palm and waterfront areas.",
-        evening:
-          "Relax beside the sea and enjoy the skyline.",
-      },
-    ],
-  },
-
-  paris: {
-    name: "Paris",
-    country: "France",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "The City of Light",
-        description:
-          "Discover elegant streets, iconic architecture and the timeless romance of Paris.",
-        highlights: ["Eiffel Tower", "Seine River", "Paris Streets"],
-        morning:
-          "Explore iconic Paris landmarks.",
-        evening:
-          "Enjoy the city's beautiful evening atmosphere.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "Parisian Streets",
-        description:
-          "Walk through charming neighbourhoods filled with cafes, architecture and local character.",
-        highlights: ["Cafes", "Architecture", "Local Life"],
-        morning:
-          "Walk through historic Parisian neighbourhoods.",
-        evening:
-          "Enjoy a relaxed cafe experience.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "Romantic Paris",
-        description:
-          "Enjoy the softer side of Paris with riverside walks, beautiful views and unforgettable evenings.",
-        highlights: ["Seine", "Sunset", "Romance"],
-        morning:
-          "Explore the riverside and nearby attractions.",
-        evening:
-          "Enjoy a beautiful Paris sunset.",
-      },
-    ],
-  },
-
-  london: {
-    name: "London",
-    country: "United Kingdom",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "Classic London",
-        description:
-          "Explore London's historic landmarks, grand architecture and famous city streets.",
-        highlights: ["Big Ben", "Westminster", "River Thames"],
-        morning:
-          "Explore Westminster and central London.",
-        evening:
-          "Walk beside the River Thames.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "London Streets",
-        description:
-          "Discover charming streets, famous neighbourhoods and the everyday character of London.",
-        highlights: ["Markets", "Neighbourhoods", "Shopping"],
-        morning:
-          "Explore one of London's famous neighbourhoods.",
-        evening:
-          "Enjoy the city's lively streets and cafes.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1533929736458-ca588d08c8be?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "London After Dark",
-        description:
-          "See a different side of London as the city lights come alive in the evening.",
-        highlights: ["City Lights", "Thames", "Night Walk"],
-        morning:
-          "Continue exploring central London.",
-        evening:
-          "Enjoy London's illuminated skyline.",
-      },
-    ],
-  },
-
-  bali: {
-    name: "Bali",
-    country: "Indonesia",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "Island Escape",
-        description:
-          "Discover Bali's tropical landscapes, peaceful temples and beautiful coastal experiences.",
-        highlights: ["Beaches", "Temples", "Nature"],
-        morning:
-          "Explore Bali's tropical surroundings.",
-        evening:
-          "Relax by the coast during sunset.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "Tropical Bali",
-        description:
-          "Enjoy lush landscapes, peaceful surroundings and the natural beauty of the island.",
-        highlights: ["Rice Terraces", "Nature", "Local Culture"],
-        morning:
-          "Explore Bali's lush countryside.",
-        evening:
-          "Enjoy a peaceful tropical evening.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1539367628448-4bc5c9d171c8?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "Bali Sunset",
-        description:
-          "Slow down and enjoy one of Bali's beautiful sunsets beside the ocean.",
-        highlights: ["Ocean", "Sunset", "Relaxation"],
-        morning:
-          "Spend a relaxed morning near the coast.",
-        evening:
-          "Watch the sunset over the ocean.",
-      },
-    ],
-  },
-
-  tokyo: {
-    name: "Tokyo",
-    country: "Japan",
-    slides: [
-      {
-        image:
-          "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 01",
-        title: "Tokyo Energy",
-        description:
-          "Experience Tokyo's futuristic skyline, vibrant streets and unique city culture.",
-        highlights: ["Shibuya", "City Lights", "Modern Tokyo"],
-        morning:
-          "Explore Tokyo's famous city districts.",
-        evening:
-          "Experience the city's colourful night lights.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 02",
-        title: "Traditional Japan",
-        description:
-          "Discover the peaceful side of Tokyo through temples, gardens and traditional neighbourhoods.",
-        highlights: ["Temples", "Gardens", "Culture"],
-        morning:
-          "Visit a peaceful temple and traditional area.",
-        evening:
-          "Explore the surrounding local streets.",
-      },
-      {
-        image:
-          "https://images.unsplash.com/photo-1513407030348-c983a97b98d8?auto=format&fit=crop&w=1600&q=90",
-        tag: "EXPERIENCE 03",
-        title: "Tokyo After Dark",
-        description:
-          "See Tokyo transform after sunset with glowing streets, food spots and city energy.",
-        highlights: ["Nightlife", "Food", "City Lights"],
-        morning:
-          "Explore Tokyo's food and shopping districts.",
-        evening:
-          "Experience Tokyo's vibrant nightlife.",
-      },
-    ],
-  },
-};
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=85";
 
 /* =========================================================
    HOTEL DATA
 ========================================================= */
 
-const hotelData = {
-  jaipur: [
+const stayData = {
+  Hotel: [
     {
-      name: "Rambagh Palace",
-      rating: "4.9",
-      reviews: "1,248 reviews",
-      location: "Jaipur, Rajasthan",
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "The Oberoi Rajvilas",
+      name: "Grand Heritage Hotel",
+      type: "Hotel",
+      location: "City Centre",
       rating: "4.8",
-      reviews: "986 reviews",
-      location: "Jaipur, Rajasthan",
+      reviews: "1,240 reviews",
       image:
-        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=90",
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=85",
     },
     {
-      name: "Samode Haveli",
+      name: "Luxury City Hotel",
+      type: "Hotel",
+      location: "Central District",
       rating: "4.7",
-      reviews: "754 reviews",
-      location: "Jaipur, Rajasthan",
-      image:
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=90",
-    },
-  ],
-
-  goa: [
-    {
-      name: "Taj Exotica Resort",
-      rating: "4.8",
-      reviews: "1,120 reviews",
-      location: "South Goa",
-      image:
-        "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "W Goa",
-      rating: "4.7",
-      reviews: "892 reviews",
-      location: "North Goa",
-      image:
-        "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "Alila Diwa Goa",
-      rating: "4.8",
-      reviews: "1,035 reviews",
-      location: "Majorda, Goa",
-      image:
-        "https://images.unsplash.com/photo-1601918774946-25832a4be0d6?auto=format&fit=crop&w=1400&q=90",
-    },
-  ],
-
-  manali: [
-    {
-      name: "The Himalayan",
-      rating: "4.8",
-      reviews: "825 reviews",
-      location: "Manali, Himachal Pradesh",
-      image:
-        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "Span Resort",
-      rating: "4.7",
-      reviews: "712 reviews",
-      location: "Manali, Himachal Pradesh",
-      image:
-        "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "Johnson Lodge",
-      rating: "4.6",
-      reviews: "638 reviews",
-      location: "Old Manali",
-      image:
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=90",
-    },
-  ],
-
-  kerala: [
-    {
-      name: "Kumarakom Lake Resort",
-      rating: "4.9",
-      reviews: "1,340 reviews",
-      location: "Kumarakom, Kerala",
-      image:
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "Taj Green Cove",
-      rating: "4.8",
       reviews: "980 reviews",
-      location: "Kovalam, Kerala",
       image:
-        "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1400&q=90",
+        "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1200&q=85",
     },
     {
-      name: "Marari Beach Resort",
-      rating: "4.7",
-      reviews: "875 reviews",
-      location: "Marari, Kerala",
-      image:
-        "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1400&q=90",
-    },
-  ],
-
-  rishikesh: [
-    {
-      name: "Aloha on the Ganges",
-      rating: "4.8",
-      reviews: "925 reviews",
-      location: "Rishikesh, Uttarakhand",
-      image:
-        "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "Taj Rishikesh",
+      name: "Boutique Heritage Hotel",
+      type: "Hotel",
+      location: "Heritage Area",
       rating: "4.9",
-      reviews: "1,020 reviews",
-      location: "Rishikesh, Uttarakhand",
+      reviews: "720 reviews",
       image:
-        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "The Glasshouse",
-      rating: "4.7",
-      reviews: "685 reviews",
-      location: "Rishikesh",
-      image:
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=90",
+        "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=85",
     },
   ],
 
-  dubai: [
+  Resort: [
     {
-      name: "Atlantis The Palm",
-      rating: "4.8",
-      reviews: "2,540 reviews",
-      location: "Palm Jumeirah, Dubai",
-      image:
-        "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "Jumeirah Beach Hotel",
-      rating: "4.7",
-      reviews: "1,890 reviews",
-      location: "Dubai, UAE",
-      image:
-        "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "Address Downtown",
-      rating: "4.8",
-      reviews: "1,670 reviews",
-      location: "Downtown Dubai",
-      image:
-        "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1400&q=90",
-    },
-  ],
-
-  paris: [
-    {
-      name: "Le Bristol Paris",
+      name: "Luxury Resort",
+      type: "Resort",
+      location: "Scenic Location",
       rating: "4.9",
-      reviews: "1,210 reviews",
-      location: "Paris, France",
+      reviews: "1,430 reviews",
       image:
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=90",
+        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=85",
     },
     {
-      name: "Hotel Lutetia",
+      name: "Grand Palace Resort",
+      type: "Resort",
+      location: "Premium District",
       rating: "4.8",
-      reviews: "980 reviews",
-      location: "Paris, France",
+      reviews: "1,050 reviews",
       image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=90",
+        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1200&q=85",
     },
     {
-      name: "The Hoxton Paris",
+      name: "Nature View Resort",
+      type: "Resort",
+      location: "Nature Retreat",
       rating: "4.7",
-      reviews: "765 reviews",
-      location: "Paris, France",
+      reviews: "840 reviews",
       image:
-        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=90",
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85",
     },
   ],
 
-  london: [
+  Villa: [
     {
-      name: "The Savoy London",
-      rating: "4.8",
-      reviews: "1,450 reviews",
-      location: "Central London",
+      name: "Luxury Private Villa",
+      type: "Villa",
+      location: "Private Estate",
+      rating: "4.9",
+      reviews: "540 reviews",
       image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=90",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85",
     },
     {
-      name: "The Ritz London",
+      name: "Private Pool Villa",
+      type: "Villa",
+      location: "Peaceful Area",
+      rating: "4.8",
+      reviews: "430 reviews",
+      image:
+        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=85",
+    },
+    {
+      name: "Modern Holiday Villa",
+      type: "Villa",
+      location: "Holiday District",
+      rating: "4.7",
+      reviews: "390 reviews",
+      image:
+        "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=85",
+    },
+  ],
+
+  Hostel: [
+    {
+      name: "Premium Backpackers Hostel",
+      type: "Hostel",
+      location: "City Centre",
       rating: "4.7",
       reviews: "1,180 reviews",
-      location: "Piccadilly, London",
       image:
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=90",
+        "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1200&q=85",
     },
     {
-      name: "The Langham London",
-      rating: "4.7",
-      reviews: "965 reviews",
-      location: "Regent Street, London",
+      name: "Traveller Hostel",
+      type: "Hostel",
+      location: "Main Market",
+      rating: "4.6",
+      reviews: "920 reviews",
       image:
-        "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1400&q=90",
-    },
-  ],
-
-  bali: [
-    {
-      name: "The Kayon Resort",
-      rating: "4.9",
-      reviews: "1,080 reviews",
-      location: "Ubud, Bali",
-      image:
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=90",
+        "https://images.unsplash.com/photo-1520277739336-7bf67edfa768?auto=format&fit=crop&w=1200&q=85",
     },
     {
-      name: "Alila Seminyak",
+      name: "Social Stay Hostel",
+      type: "Hostel",
+      location: "Tourist Area",
       rating: "4.8",
-      reviews: "945 reviews",
-      location: "Seminyak, Bali",
+      reviews: "780 reviews",
       image:
-        "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "Potato Head Suites",
-      rating: "4.7",
-      reviews: "820 reviews",
-      location: "Seminyak, Bali",
-      image:
-        "https://images.unsplash.com/photo-1601918774946-25832a4be0d6?auto=format&fit=crop&w=1400&q=90",
-    },
-  ],
-
-  tokyo: [
-    {
-      name: "Park Hyatt Tokyo",
-      rating: "4.8",
-      reviews: "1,420 reviews",
-      location: "Tokyo, Japan",
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "The Prince Gallery",
-      rating: "4.7",
-      reviews: "1,020 reviews",
-      location: "Tokyo, Japan",
-      image:
-        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=90",
-    },
-    {
-      name: "Hotel Chinzanso Tokyo",
-      rating: "4.7",
-      reviews: "890 reviews",
-      location: "Tokyo, Japan",
-      image:
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=90",
-    },
-  ],
-};
-
-/* =========================================================
-   DEFAULT HOTELS
-========================================================= */
-
-const defaultHotels = [
-  {
-    name: "Grand Heritage Hotel",
-    rating: "4.8",
-    reviews: "850 reviews",
-    location: "Your Destination",
-    image:
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=90",
-  },
-  {
-    name: "Premium Resort",
-    rating: "4.7",
-    reviews: "720 reviews",
-    location: "Your Destination",
-    image:
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1400&q=90",
-  },
-  {
-    name: "Boutique Stay",
-    rating: "4.6",
-    reviews: "610 reviews",
-    location: "Your Destination",
-    image:
-      "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=90",
-  },
-];
-
-/* =========================================================
-   FALLBACK EXPERIENCE
-========================================================= */
-
-const fallbackExperience = {
-  name: "Your Destination",
-  country: "Your selected destination",
-  slides: [
-    {
-      image:
-        "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=90",
-      tag: "EXPERIENCE 01",
-      title: "Your Travel Experience",
-      description:
-        "Explore beautiful places, local experiences and memorable moments during your personalized trip.",
-      highlights: [
-        "Local Attractions",
-        "Food & Culture",
-        "Beautiful Views",
-      ],
-      morning:
-        "Start your day by exploring the destination.",
-      evening:
-        "Enjoy a relaxing evening and discover local surroundings.",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1600&q=90",
-      tag: "EXPERIENCE 02",
-      title: "Discover Something New",
-      description:
-        "Enjoy a day filled with sightseeing, local culture and experiences selected around your travel style.",
-      highlights: ["Sightseeing", "Culture", "Photography"],
-      morning:
-        "Explore one of the destination's popular areas.",
-      evening:
-        "Enjoy local food and the evening atmosphere.",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=90",
-      tag: "EXPERIENCE 03",
-      title: "Relax & Explore",
-      description:
-        "Balance exploration with peaceful moments and create memories at your own pace.",
-      highlights: ["Relaxation", "Nature", "Local Life"],
-      morning:
-        "Enjoy a relaxed morning experience.",
-      evening:
-        "Finish the day with beautiful views and local experiences.",
+        "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=85",
     },
   ],
 };
@@ -851,22 +164,27 @@ const fallbackExperience = {
    HELPERS
 ========================================================= */
 
-const normalizeDestination = (value = "") =>
-  value
+const normalizeText = (value = "") => {
+  return String(value)
     .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-");
+    .replace(/[’']/g, "")
+    .replace(/[,.]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+};
 
-const formatDate = (date) => {
-  if (!date) return "";
+const getDaysNumber = (value, fallback = 3) => {
+  const match = String(value ?? "").match(/\d+/);
 
-  const parts = date.split("-");
-
-  if (parts.length !== 3) {
-    return date;
+  if (!match) {
+    return fallback;
   }
 
-  return `${parts[2]}/${parts[1]}/${parts[0]}`;
+  const number = Number(match[0]);
+
+  return Number.isFinite(number)
+    ? number
+    : fallback;
 };
 
 /* =========================================================
@@ -881,365 +199,899 @@ const CreateTrip = () => {
      STATES
   ======================================================= */
 
-  const [trip, setTrip] = useState(null);
-  const [activeImage, setActiveImage] = useState(0);
-  const [activeHotel, setActiveHotel] = useState(0);
-  const [activeDay, setActiveDay] = useState(1);
+  const [trip, setTrip] = useState({});
+
+  const [activePlace, setActivePlace] =
+    useState(0);
+
+  const [activeHotel, setActiveHotel] =
+    useState(0);
+
+  const [activeDay, setActiveDay] =
+    useState(1);
 
   /* =======================================================
      LOAD TRIP
   ======================================================= */
 
   useEffect(() => {
+    let savedTrip = {};
+
     try {
-      const savedTrip =
+      const stored =
         localStorage.getItem("tripperTrip");
 
-      const localTrip = savedTrip
-        ? JSON.parse(savedTrip)
-        : null;
-
-      const stateTrip =
-        location.state?.trip;
-
-      setTrip(
-        stateTrip ||
-          localTrip ||
-          null
-      );
+      savedTrip = stored
+        ? JSON.parse(stored)
+        : {};
     } catch (error) {
       console.error(
-        "Unable to load trip:",
+        "Trip restore error:",
         error
       );
+    }
 
-      setTrip(
-        location.state?.trip ||
-          null
+    const stateData =
+      location.state || {};
+
+    const stateTrip =
+      stateData?.trip || {};
+
+    /*
+      TripPlan navigate("/create-trip", {
+        state: tripData
+      })
+
+      karta hai.
+
+      Isliye location.state ko bhi preserve
+      karna zaroori hai.
+    */
+
+    const finalTrip = {
+      ...savedTrip,
+      ...stateTrip,
+      ...stateData,
+    };
+
+    delete finalTrip.trip;
+
+    setTrip(finalTrip);
+
+    if (
+      Object.keys(finalTrip).length > 0
+    ) {
+      localStorage.setItem(
+        "tripperTrip",
+        JSON.stringify(finalTrip)
       );
     }
   }, [location.state]);
 
   /* =======================================================
-     DESTINATION
+     DESTINATION NAME
   ======================================================= */
 
-  const destinationKey =
-    normalizeDestination(
-      trip?.destination
-    );
+  const destinationName = useMemo(() => {
+    const value =
+      trip?.destination ||
+      location.state?.destination ||
+      "Goa";
 
-  const destination =
-    destinationData[
-      destinationKey
-    ] || fallbackExperience;
+    if (
+      typeof value === "object"
+    ) {
+      return (
+        value?.name ||
+        "Goa"
+      );
+    }
+
+    return String(value);
+  }, [
+    trip?.destination,
+    location.state,
+  ]);
 
   /* =======================================================
-     HOTELS
+     FIND DESTINATION FROM SAME destinations.js
+
+     TripPlan bhi isi destinations.js ko use karta hai.
   ======================================================= */
 
-  const hotels =
-    hotelData[destinationKey] ||
-    defaultHotels;
+  const destinationData = useMemo(() => {
+    const target =
+      normalizeText(
+        destinationName
+      );
 
-  const selectedHotel =
-    hotels[activeHotel] ||
-    hotels[0];
+    if (!target) {
+      return null;
+    }
+
+    if (
+      Array.isArray(destinations)
+    ) {
+      return (
+        destinations.find(
+          (item) => {
+            const id =
+              normalizeText(
+                item?.id || ""
+              );
+
+            const name =
+              normalizeText(
+                item?.name || ""
+              );
+
+            return (
+              id === target ||
+              name === target
+            );
+          }
+        ) || null
+      );
+    }
+
+    return (
+      destinations?.[target] ||
+      null
+    );
+  }, [destinationName]);
+
+  /* =======================================================
+     DESTINATION MAIN DATA
+  ======================================================= */
+
+  const destination = useMemo(() => {
+    const passedImage =
+      trip?.image ||
+      trip?.destinationImage ||
+      location.state?.image ||
+      location.state
+        ?.destinationImage;
+
+    return {
+      name:
+        destinationData?.name ||
+        destinationName ||
+        "Destination",
+
+      state:
+        trip?.state ||
+        trip?.destinationState ||
+        destinationData?.state ||
+        destinationData?.location ||
+        destinationData?.country ||
+        destinationName,
+
+      image:
+        passedImage ||
+        destinationData?.image ||
+        FALLBACK_IMAGE,
+
+      description:
+        trip?.description ||
+        destinationData
+          ?.description ||
+        "",
+
+      bestFor:
+        trip?.bestFor ||
+        destinationData
+          ?.bestFor ||
+        destinationData
+          ?.category ||
+        "Explore • Experience • Discover",
+
+      rating:
+        trip?.rating ||
+        destinationData?.rating ||
+        "4.8",
+    };
+  }, [
+    destinationData,
+    destinationName,
+    trip,
+    location.state,
+  ]);
+
+  /* =======================================================
+     AVAILABLE DESTINATION PLACES
+
+     IMPORTANT:
+     TripPlan me jo circles aa rahe hain,
+     woh bhi destinations.js ke places se aa rahe hain.
+
+     Isliye CreateTrip bhi SAME source use karega.
+  ======================================================= */
+
+  const availablePlaces = useMemo(() => {
+    if (
+      !destinationData ||
+      !Array.isArray(
+        destinationData?.places
+      )
+    ) {
+      return [];
+    }
+
+    return destinationData.places
+      .map((place) => {
+        if (
+          typeof place ===
+          "string"
+        ) {
+          return {
+            name: place,
+
+            image:
+              destination.image,
+
+            location:
+              destination.state,
+
+            description:
+              `Explore ${place}.`,
+
+            detail: "",
+
+            highlights: [
+              "Local Experience",
+              "Beautiful Views",
+              "Explore & Discover",
+            ],
+          };
+        }
+
+        return {
+          ...place,
+
+          name:
+            place?.name || "",
+
+          image:
+            place?.image ||
+            destination.image,
+
+          location:
+            place?.location ||
+            destination.state,
+
+          description:
+            place?.description ||
+            `Explore ${
+              place?.name ||
+              destination.name
+            }.`,
+
+          detail:
+            place?.detail || "",
+
+          highlights:
+            Array.isArray(
+              place?.highlights
+            ) &&
+            place.highlights.length
+              ? place.highlights
+              : [
+                  "Local Experience",
+                  "Beautiful Views",
+                  "Explore & Discover",
+                ],
+        };
+      })
+      .filter(
+        (place) =>
+          place.name
+      );
+  }, [
+    destinationData,
+    destination.image,
+    destination.state,
+    destination.name,
+  ]);
+
+  /* =======================================================
+     SELECTED PLACES
+
+     *** MAIN FIX ***
+
+     Agar TripPlan me:
+     Place 1
+     Place 2
+     Place 3
+
+     tino select hue hain, to tino preserve honge.
+
+     Koi unmatched place filter/remove nahi hoga.
+  ======================================================= */
+
+  const selectedPlaces = useMemo(() => {
+    let rawPlaces =
+      trip?.places ||
+      trip?.selectedPlaces ||
+      [];
+
+    if (
+      !Array.isArray(rawPlaces)
+    ) {
+      rawPlaces = String(
+        rawPlaces
+      )
+        .split(",")
+        .map((item) =>
+          item.trim()
+        )
+        .filter(Boolean);
+    }
+
+    /*
+      TripPlan maximum 3 places deta hai.
+    */
+
+    const firstThree =
+      rawPlaces
+        .filter(Boolean)
+        .slice(0, 3);
+
+    /*
+      Agar selected place available nahi
+      hai to destination ke first 3
+      fallback rahenge.
+    */
+
+    if (
+      firstThree.length === 0
+    ) {
+      return availablePlaces.slice(
+        0,
+        3
+      );
+    }
+
+    /*
+      HAR selected place ko map karo.
+      Filter karke remove MAT KARO.
+    */
+
+    return firstThree.map(
+      (selected, index) => {
+        const selectedName =
+          typeof selected ===
+          "string"
+            ? selected.trim()
+            : String(
+                selected?.name ||
+                ""
+              ).trim();
+
+        /*
+          Same destinations.js me place find karo.
+        */
+
+        const matched =
+          availablePlaces.find(
+            (place) =>
+              normalizeText(
+                place?.name
+              ) ===
+              normalizeText(
+                selectedName
+              )
+          );
+
+        /*
+          Match mil gaya:
+          destinations.js ki SAME
+          image/detail use hogi.
+        */
+
+        if (matched) {
+          return {
+            ...matched,
+
+            ...(typeof selected ===
+            "object"
+              ? selected
+              : {}),
+
+            name:
+              matched.name,
+
+            image:
+              (typeof selected ===
+                "object" &&
+                selected?.image) ||
+              matched.image ||
+              destination.image,
+
+            location:
+              (typeof selected ===
+                "object" &&
+                selected?.location) ||
+              matched.location ||
+              destination.state,
+
+            description:
+              (typeof selected ===
+                "object" &&
+                selected
+                  ?.description) ||
+              matched.description ||
+              `Explore ${matched.name}.`,
+
+            detail:
+              (typeof selected ===
+                "object" &&
+                selected?.detail) ||
+              matched.detail ||
+              "",
+
+            highlights:
+              typeof selected ===
+                "object" &&
+              Array.isArray(
+                selected?.highlights
+              ) &&
+              selected.highlights
+                .length
+                ? selected.highlights
+                : matched.highlights,
+          };
+        }
+
+        /*
+          Agar kisi reason se exact
+          matching nahi hui tab bhi
+          selected place REMOVE NAHI hoga.
+        */
+
+        if (
+          typeof selected ===
+          "object"
+        ) {
+          return {
+            ...selected,
+
+            name:
+              selected?.name ||
+              `Place ${
+                index + 1
+              }`,
+
+            image:
+              selected?.image ||
+              destination.image,
+
+            location:
+              selected?.location ||
+              destination.state,
+
+            description:
+              selected
+                ?.description ||
+              `Explore ${
+                selected?.name ||
+                destination.name
+              }.`,
+
+            detail:
+              selected?.detail ||
+              "",
+
+            highlights:
+              Array.isArray(
+                selected
+                  ?.highlights
+              ) &&
+              selected.highlights
+                .length
+                ? selected.highlights
+                : [
+                    "Local Experience",
+                    "Beautiful Views",
+                    "Explore & Discover",
+                  ],
+          };
+        }
+
+        /*
+          String selected place.
+          Isko bhi third item ke roop
+          me preserve karo.
+        */
+
+        return {
+          name:
+            selectedName ||
+            `Place ${index + 1}`,
+
+          image:
+            destination.image,
+
+          location:
+            destination.state,
+
+          description:
+            `Explore ${
+              selectedName ||
+              destination.name
+            }.`,
+
+          detail: "",
+
+          highlights: [
+            "Local Experience",
+            "Beautiful Views",
+            "Explore & Discover",
+          ],
+        };
+      }
+    );
+  }, [
+    trip?.places,
+    trip?.selectedPlaces,
+    availablePlaces,
+    destination.image,
+    destination.state,
+    destination.name,
+  ]);
+
+  /* =======================================================
+     CURRENT PLACE
+  ======================================================= */
+
+  const currentPlace =
+    selectedPlaces.length > 0
+      ? selectedPlaces[
+          activePlace %
+            selectedPlaces.length
+        ]
+      : {
+          name:
+            destination.name,
+
+          image:
+            destination.image,
+
+          location:
+            destination.state,
+
+          description:
+            destination.description ||
+            `Explore ${destination.name}.`,
+
+          detail: "",
+
+          highlights: [
+            "Local Experience",
+            "Beautiful Views",
+            "Explore & Discover",
+          ],
+        };
+
+  /* =======================================================
+     AUTO SLIDER
+  ======================================================= */
+
+  useEffect(() => {
+    if (
+      selectedPlaces.length <=
+      1
+    ) {
+      return undefined;
+    }
+
+    const interval =
+      setInterval(() => {
+        setActivePlace(
+          (previous) =>
+            (previous + 1) %
+            selectedPlaces.length
+        );
+      }, 5000);
+
+    return () =>
+      clearInterval(
+        interval
+      );
+  }, [
+    selectedPlaces.length,
+  ]);
+
+  /* =======================================================
+     RESET PLACE
+  ======================================================= */
+
+  useEffect(() => {
+    setActivePlace(0);
+  }, [
+    destinationName,
+    selectedPlaces.length,
+  ]);
+
+  /* =======================================================
+     PREVIOUS PLACE
+  ======================================================= */
+
+  const handlePreviousPlace =
+    () => {
+      if (
+        selectedPlaces.length <=
+        1
+      ) {
+        return;
+      }
+
+      setActivePlace(
+        (previous) =>
+          previous === 0
+            ? selectedPlaces.length -
+              1
+            : previous - 1
+      );
+    };
+
+  /* =======================================================
+     NEXT PLACE
+  ======================================================= */
+
+  const handleNextPlace =
+    () => {
+      if (
+        selectedPlaces.length <=
+        1
+      ) {
+        return;
+      }
+
+      setActivePlace(
+        (previous) =>
+          (previous + 1) %
+          selectedPlaces.length
+      );
+    };
 
   /* =======================================================
      TOTAL DAYS
   ======================================================= */
 
-  const totalDays = Math.max(
-    Number(trip?.days) || 1,
-    1
-  );
+  const totalDays =
+    Math.max(
+      1,
+      getDaysNumber(
+        trip?.totalDays ||
+          trip?.days ||
+          trip?.duration,
+        3
+      )
+    );
 
   /* =======================================================
-     SELECTED PLACES
+     STAY TYPE
   ======================================================= */
 
-  const selectedPlaces = useMemo(() => {
-    if (!Array.isArray(trip?.places)) {
-      return [];
-    }
+  const stayType =
+    trip?.stay ||
+    trip?.stayType ||
+    "Hotel";
 
-    return trip.places.filter(Boolean);
-  }, [trip]);
+  const normalizedStay =
+    [
+      "Hotel",
+      "Resort",
+      "Villa",
+      "Hostel",
+    ].find(
+      (item) =>
+        item.toLowerCase() ===
+        String(stayType)
+          .toLowerCase()
+          .trim()
+    ) || "Hotel";
+
+  const hotels =
+    stayData[
+      normalizedStay
+    ] || stayData.Hotel;
+
+  const selectedHotel =
+    hotels[
+      activeHotel %
+        hotels.length
+    ];
 
   /* =======================================================
-     RESET WHEN DESTINATION CHANGES
+     RESET HOTEL
   ======================================================= */
 
   useEffect(() => {
-    setActiveImage(0);
     setActiveHotel(0);
-    setActiveDay(1);
-  }, [destinationKey]);
+  }, [normalizedStay]);
 
   /* =======================================================
-     EXPERIENCE AUTO SLIDER
+     DAY
   ======================================================= */
 
   useEffect(() => {
     if (
-      !destination?.slides?.length ||
-      destination.slides.length <= 1
+      activeDay >
+      totalDays
     ) {
-      return;
+      setActiveDay(1);
     }
-
-    const experienceTimer =
-      setInterval(() => {
-        setActiveImage((prev) => {
-          return (
-            (prev + 1) %
-            destination.slides.length
-          );
-        });
-      }, 5000);
-
-    return () => {
-      clearInterval(
-        experienceTimer
-      );
-    };
   }, [
-    destinationKey,
-    destination?.slides?.length,
+    activeDay,
+    totalDays,
   ]);
 
   /* =======================================================
-     HOTEL AUTO SLIDER
+     MORNING TEXT
   ======================================================= */
 
-  useEffect(() => {
+  const getMorningText = () => {
     if (
-      !hotels ||
-      hotels.length <= 1
+      currentPlace?.morning
     ) {
-      return;
+      return currentPlace.morning;
     }
 
-    const hotelTimer =
-      setInterval(() => {
-        setActiveHotel((prev) => {
-          return (
-            (prev + 1) %
-            hotels.length
-          );
-        });
-      }, 4500);
-
-    return () => {
-      clearInterval(hotelTimer);
-    };
-  }, [
-    destinationKey,
-    hotels.length,
-  ]);
-
-  /* =======================================================
-     EXPERIENCE NEXT
-  ======================================================= */
-
-  const nextImage = () => {
-    setActiveImage((prev) => {
-      return (
-        (prev + 1) %
-        destination.slides.length
-      );
-    });
+    return `Start your morning exploring ${
+      currentPlace?.name ||
+      destination.name
+    } and enjoy the local atmosphere.`;
   };
 
   /* =======================================================
-     EXPERIENCE PREVIOUS
+     EVENING TEXT
   ======================================================= */
 
-  const previousImage = () => {
-    setActiveImage((prev) => {
-      return (
-        (prev -
-          1 +
-          destination.slides.length) %
-        destination.slides.length
-      );
-    });
-  };
-
-  /* =======================================================
-     HOTEL NEXT
-  ======================================================= */
-
-  const nextHotel = () => {
-    setActiveHotel((prev) => {
-      return (
-        (prev + 1) %
-        hotels.length
-      );
-    });
-  };
-
-  /* =======================================================
-     HOTEL PREVIOUS
-  ======================================================= */
-
-  const previousHotel = () => {
-    setActiveHotel((prev) => {
-      return (
-        (prev -
-          1 +
-          hotels.length) %
-        hotels.length
-      );
-    });
-  };
-
-  /* =======================================================
-     DAY PLACE
-  ======================================================= */
-
-  const getPlaceForDay = () => {
-    if (!selectedPlaces.length) {
-      return destination.name;
+  const getEveningText = () => {
+    if (
+      currentPlace?.evening
+    ) {
+      return currentPlace.evening;
     }
 
-    const index =
-      (activeDay - 1) %
-      selectedPlaces.length;
-
-    return selectedPlaces[index];
+    return `Enjoy a relaxed evening around ${
+      currentPlace?.name ||
+      destination.name
+    }.`;
   };
 
   /* =======================================================
-     DAY TITLE
-  ======================================================= */
-
-  const getDayTitle = () => {
-    if (activeDay === 1) {
-      return "Arrival & First Exploration";
-    }
-
-    if (activeDay === totalDays) {
-      return "Final Experience & Departure";
-    }
-
-    return "Explore & Discover";
-  };
-
-  /* =======================================================
-     MORNING TITLE
-  ======================================================= */
-
-  const getMorningTitle = () => {
-    if (activeDay === 1) {
-      return "Hotel Check-in & Fresh Start";
-    }
-
-    return `Explore ${getPlaceForDay()}`;
-  };
-
-  /* =======================================================
-     MORNING DESCRIPTION
-  ======================================================= */
-
-  const getMorningDescription = () => {
-    if (activeDay === 1) {
-      return `Arrive at ${selectedHotel.name}, settle in and get ready to begin your ${destination.name} journey.`;
-    }
-
-    return `Start your day by exploring ${getPlaceForDay()} and enjoy the local atmosphere.`;
-  };
-
-  /* =======================================================
-     AFTERNOON TITLE
-  ======================================================= */
-
-  const getAfternoonTitle = () => {
-    if (activeDay === totalDays) {
-      return "Last Day Highlights";
-    }
-
-    return "Local Experience";
-  };
-
-  /* =======================================================
-     AFTERNOON DESCRIPTION
-  ======================================================= */
-
-  const getAfternoonDescription = () => {
-    if (activeDay === totalDays) {
-      return `Enjoy your final moments in ${destination.name} and explore anything you may have missed.`;
-    }
-
-    return `Discover local attractions, food, culture and experiences according to your travel preferences.`;
-  };
-
-  /* =======================================================
-     EVENING TITLE
-  ======================================================= */
-
-  const getEveningTitle = () => {
-    if (activeDay === 1) {
-      return "Evening in the City";
-    }
-
-    return "Evening Experience";
-  };
-
-  /* =======================================================
-     EVENING DESCRIPTION
-  ======================================================= */
-
-  const getEveningDescription = () => {
-    return `Relax and enjoy the evening atmosphere of ${destination.name}. Take time for photos, local food and memorable moments.`;
-  };
-
-  /* =======================================================
-     NIGHT TITLE
+     NIGHT
   ======================================================= */
 
   const getNightTitle = () => {
-    if (activeDay === totalDays) {
-      return "Prepare for Departure";
+    if (
+      activeDay ===
+      totalDays
+    ) {
+      return "Trip Memories & Rest";
     }
 
-    return "Return to Hotel";
+    return `Return to ${
+      selectedHotel?.name ||
+      "your stay"
+    }`;
   };
 
+  const getNightDescription =
+    () => {
+      if (
+        activeDay ===
+        totalDays
+      ) {
+        return `Relax after your final day in ${destination.name} and enjoy the last evening of your journey.`;
+      }
+
+      return `Return to ${
+        selectedHotel?.name ||
+        "your stay"
+      }, relax and prepare for the next day of your ${destination.name} journey.`;
+    };
+
   /* =======================================================
-     NIGHT DESCRIPTION
+     EDIT TRIP
   ======================================================= */
 
-  const getNightDescription = () => {
-    if (activeDay === totalDays) {
-      return `Return to ${selectedHotel.name}, relax and prepare for the next day's departure.`;
-    }
+  const handleEditTrip = () => {
+    const updatedTrip = {
+      ...trip,
 
-    return `Return to ${selectedHotel.name} and enjoy a comfortable night before your next day of exploring.`;
+      destination:
+        destination.name,
+
+      image:
+        destination.image,
+
+      destinationImage:
+        destination.image,
+
+      places:
+        selectedPlaces,
+    };
+
+    localStorage.setItem(
+      "tripperTrip",
+      JSON.stringify(
+        updatedTrip
+      )
+    );
+
+    navigate(
+      "/trip-plan",
+      {
+        state: {
+          trip:
+            updatedTrip,
+
+          editMode: true,
+
+          destination:
+            destination.name,
+
+          image:
+            destination.image,
+
+          destinationImage:
+            destination.image,
+
+          places:
+            selectedPlaces,
+        },
+      }
+    );
   };
 
   /* =======================================================
-     ⭐ IMPORTANT - BOOK SELECTED HOTEL
+     BOOK HOTEL
   ======================================================= */
 
   const handleBookHotel = () => {
-    /*
-      Yahan hum selected hotel ko exact object ke saath
-      Booking Details page par bhej rahe hain.
-    */
+    const selectedBudget =
+      trip?.budget ||
+      trip?.budgetRange ||
+      trip?.budgetText ||
+      "";
 
-    const selectedHotelData = {
-      name: selectedHotel?.name || "",
-      location: selectedHotel?.location || "",
-      image: selectedHotel?.image || "",
-      rating: selectedHotel?.rating || "",
-      reviews: selectedHotel?.reviews || "",
-    };
+    const selectedHotelData =
+      {
+        name:
+          selectedHotel?.name ||
+          "",
+
+        type:
+          selectedHotel?.type ||
+          normalizedStay,
+
+        location:
+          selectedHotel
+            ?.location ||
+          "",
+
+        image:
+          selectedHotel?.image ||
+          "",
+
+        rating:
+          selectedHotel
+            ?.rating ||
+          "",
+
+        reviews:
+          selectedHotel
+            ?.reviews ||
+          "",
+      };
 
     /*
-      Purane trip data ko copy karke usme selected hotel
-      bhi store kar rahe hain.
+      IMPORTANT:
+      Yahan bhi tino places full objects
+      ke saath save ho rahe hain.
     */
 
     const updatedTrip = {
@@ -1248,93 +1100,200 @@ const CreateTrip = () => {
       destination:
         destination.name,
 
-      hotel: selectedHotelData,
+      destinationId:
+        trip?.destinationId ||
+        normalizeText(
+          destination.name
+        ),
+
+      state:
+        destination.state,
+
+      destinationState:
+        destination.state,
+
+      image:
+        destination.image,
+
+      destinationImage:
+        destination.image,
+
+      description:
+        destination.description,
+
+      bestFor:
+        destination.bestFor,
+
+      rating:
+        destination.rating,
 
       /*
-        Ye extra property future fallback ke liye useful hai.
+        ALL 3 SELECTED PLACES
       */
+
+      places:
+        selectedPlaces.map(
+          (place) => ({
+            ...place,
+          })
+        ),
+
+      selectedPlaces:
+        selectedPlaces.map(
+          (place) => ({
+            ...place,
+          })
+        ),
+
+      totalDays,
+
+      days:
+        trip?.days ||
+        totalDays,
+
+      stay:
+        selectedHotelData.type,
+
+      hotel:
+        selectedHotelData,
+
       hotelImage:
         selectedHotelData.image,
-    };
 
-    /*
-      LocalStorage me bhi immediately save.
-      Isse old Goa data replace ho jayega.
-    */
+      budget:
+        selectedBudget,
+    };
 
     localStorage.setItem(
       "tripperTrip",
-      JSON.stringify(updatedTrip)
+      JSON.stringify(
+        updatedTrip
+      )
     );
 
-    /*
-      Booking Details ko exact selected hotel bhejo.
-    */
+    const bookingData = {
+      trip:
+        updatedTrip,
+
+      destination:
+        destination.name,
+
+      image:
+        destination.image,
+
+      destinationImage:
+        destination.image,
+
+      places:
+        selectedPlaces.map(
+          (place) => ({
+            ...place,
+          })
+        ),
+
+      hotel:
+        selectedHotelData,
+
+      budget:
+        selectedBudget,
+
+      travellers:
+        trip?.travellers ||
+        trip?.travelers ||
+        trip?.guests ||
+        2,
+
+      totalDays,
+
+      stay:
+        selectedHotelData.type,
+    };
+
+    localStorage.setItem(
+      "bookingData",
+      JSON.stringify(
+        bookingData
+      )
+    );
+
+    setTrip(
+      updatedTrip
+    );
 
     navigate(
       "/booking-details",
       {
         state: {
-          trip: updatedTrip,
+          trip:
+            updatedTrip,
 
           destination:
             destination.name,
 
-          hotel: selectedHotelData,
+          state:
+            destination.state,
+
+          image:
+            destination.image,
+
+          destinationImage:
+            destination.image,
+
+          /*
+            ALL 3 AGAIN
+          */
+
+          places:
+            selectedPlaces.map(
+              (place) => ({
+                ...place,
+              })
+            ),
+
+          hotel:
+            selectedHotelData,
+
+          bookingData,
+
+          budget:
+            selectedBudget,
         },
       }
     );
   };
 
   /* =======================================================
-     EMPTY STATE
+     DEBUG
+     Console me check kar sakti ho:
+     3 selected hain to array length 3 aayegi.
   ======================================================= */
 
-  if (!trip) {
-    return (
-      <div className="create-trip-empty">
+  useEffect(() => {
+    if (
+      selectedPlaces.length
+    ) {
+      console.log(
+        "CREATE TRIP SELECTED PLACES:",
+        selectedPlaces
+      );
 
-        <div className="empty-icon">
-          <FiCompass />
-        </div>
-
-        <h2>
-          No Trip Found
-        </h2>
-
-        <p>
-          Please create your trip first.
-        </p>
-
-        <button
-          onClick={() => navigate(-1)}
-        >
-          Go Back
-        </button>
-
-      </div>
-    );
-  }
+      console.log(
+        "TOTAL SELECTED PLACES:",
+        selectedPlaces.length
+      );
+    }
+  }, [selectedPlaces]);
 
   /* =======================================================
-     CURRENT EXPERIENCE
-  ======================================================= */
-
-  const currentSlide =
-    destination.slides[
-      activeImage
-    ];
-
-  /* =======================================================
-     RETURN
+     UI
   ======================================================= */
 
   return (
     <main className="create-trip-page">
 
-      {/* =====================================================
-          TOP HEADER
-      ===================================================== */}
+      {/* ===================================================
+          TOP
+      =================================================== */}
 
       <section className="trip-top-section">
 
@@ -1345,43 +1304,43 @@ const CreateTrip = () => {
           </span>
 
           <h1>
-            Your trip to{" "}
-            <span>
-              {destination.name}
-            </span>
+            {destination.name}
           </h1>
 
           <p>
-            A thoughtfully planned travel
-            experience created around your
-            preferences.
+            {destination.bestFor}
           </p>
 
         </div>
 
         <button
+          type="button"
           className="edit-trip-btn"
-          onClick={() => navigate(-1)}
+          onClick={
+            handleEditTrip
+          }
         >
           <FiEdit3 />
+
           Edit Trip
         </button>
 
       </section>
 
-      {/* =====================================================
-          TRIP INFO
-      ===================================================== */}
+      {/* ===================================================
+          INFO
+      =================================================== */}
 
       <section className="trip-info-strip">
 
         <div className="trip-info-item">
 
-          <div className="trip-info-icon">
+          <span className="trip-info-icon">
             <FiMapPin />
-          </div>
+          </span>
 
           <div>
+
             <span>
               DESTINATION
             </span>
@@ -1389,186 +1348,234 @@ const CreateTrip = () => {
             <strong>
               {destination.name}
             </strong>
+
           </div>
 
         </div>
 
         <div className="trip-info-item">
 
-          <div className="trip-info-icon">
+          <span className="trip-info-icon">
             <FiCalendar />
-          </div>
+          </span>
 
           <div>
-            <span>
-              TRAVEL DATE
-            </span>
 
-            <strong>
-              {trip.dateFormatted ||
-                formatDate(
-                  trip.date
-                ) ||
-                "Not selected"}
-            </strong>
-          </div>
-
-        </div>
-
-        <div className="trip-info-item">
-
-          <div className="trip-info-icon">
-            <FiClock />
-          </div>
-
-          <div>
             <span>
               DURATION
             </span>
 
             <strong>
-              {totalDays}{" "}
-              {totalDays === 1
-                ? "Day"
-                : "Days"}
+              {totalDays} Days
             </strong>
+
           </div>
 
         </div>
 
         <div className="trip-info-item">
 
-          <div className="trip-info-icon">
+          <span className="trip-info-icon">
             <FiUsers />
-          </div>
+          </span>
 
           <div>
+
             <span>
               TRAVELLERS
             </span>
 
             <strong>
-              {trip.travellers || 1}{" "}
-              {Number(
-                trip.travellers
-              ) === 1
-                ? "Traveller"
-                : "Travellers"}
+              {trip?.travellers ||
+                trip?.travelers ||
+                trip?.guests ||
+                2}
             </strong>
+
           </div>
 
         </div>
 
         <div className="trip-info-item">
 
-          <div className="trip-info-icon">
+          <span className="trip-info-icon">
             <FiCompass />
-          </div>
+          </span>
 
           <div>
+
             <span>
-              TRAVEL STYLE
+              TRIP STYLE
             </span>
 
             <strong>
-              {trip.style ||
-                trip.travelType ||
-                "Explore"}
+              {trip?.travelType ||
+                trip?.tripType ||
+                trip?.travelStyle ||
+                "Explorer"}
             </strong>
+
           </div>
 
         </div>
 
       </section>
 
-      {/* =====================================================
+      {/* ===================================================
           EXPERIENCE
-      ===================================================== */}
+      =================================================== */}
 
       <section className="experience-section">
 
+        {/* LEFT IMAGE */}
+
         <div className="experience-image">
 
-          {destination.slides.map(
-            (slide, index) => (
-              <img
-                key={slide.image}
-                src={slide.image}
-                alt={slide.title}
-                className={`experience-slide ${
-                  activeImage === index
-                    ? "active"
-                    : ""
-                }`}
-                onError={(event) => {
-                  event.currentTarget.src =
-                    "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=90";
-                }}
-              />
-            )
-          )}
+          <img
+            key={`${currentPlace?.name}-${activePlace}`}
+            src={
+              currentPlace?.image ||
+              destination.image
+            }
+            alt={
+              currentPlace?.name ||
+              destination.name
+            }
+            className="experience-single-image"
+            onError={(event) => {
+              event.currentTarget.src =
+                destination.image ||
+                FALLBACK_IMAGE;
+            }}
+          />
 
-          <div className="experience-image-overlay"></div>
+          <div className="experience-image-overlay" />
+
+          <div className="experience-auto-label">
+
+            <span className="auto-dot" />
+
+            AUTO TOUR
+
+            {selectedPlaces.length >
+              1 &&
+              " • 5 SEC"}
+
+          </div>
 
           <div className="experience-location">
 
             <FiMapPin />
 
-            <div>
-
-              <strong>
-                {destination.name}
-              </strong>
-
-              <span>
-                {destination.country}
-              </span>
-
-            </div>
+            <span>
+              {currentPlace?.location ||
+                destination.state}
+            </span>
 
           </div>
 
-          <button
-            className="experience-arrow experience-left"
-            onClick={previousImage}
-            aria-label="Previous experience"
-          >
-            <FiArrowLeft />
-          </button>
+          {selectedPlaces.length >
+            1 && (
+            <>
+              <button
+                type="button"
+                className="experience-arrow experience-left"
+                onClick={
+                  handlePreviousPlace
+                }
+              >
+                <FiArrowLeft />
+              </button>
 
-          <button
-            className="experience-arrow experience-right"
-            onClick={nextImage}
-            aria-label="Next experience"
-          >
-            <FiArrowRight />
-          </button>
+              <button
+                type="button"
+                className="experience-arrow experience-right"
+                onClick={
+                  handleNextPlace
+                }
+              >
+                <FiArrowRight />
+              </button>
+            </>
+          )}
+
+          <div className="experience-place-count">
+
+            <strong>
+              {String(
+                activePlace + 1
+              ).padStart(
+                2,
+                "0"
+              )}
+            </strong>
+
+            <span>
+              /
+              {String(
+                Math.max(
+                  selectedPlaces.length,
+                  1
+                )
+              ).padStart(
+                2,
+                "0"
+              )}
+            </span>
+
+          </div>
 
         </div>
+
+        {/* RIGHT DETAILS */}
 
         <div className="experience-details">
 
           <div className="experience-number">
 
             <span>
-              {currentSlide.tag}
+              SELECTED PLACE
             </span>
 
             <strong>
               {String(
-                activeImage + 1
-              ).padStart(2, "0")}
+                activePlace + 1
+              ).padStart(
+                2,
+                "0"
+              )}
             </strong>
 
           </div>
 
           <h2>
-            {currentSlide.title}
+            {currentPlace?.name ||
+              destination.name}
           </h2>
 
+          <div className="experience-place-location">
+
+            <FiMapPin />
+
+            <span>
+              {currentPlace?.location ||
+                destination.state}
+            </span>
+
+          </div>
+
           <p className="experience-description">
-            {currentSlide.description}
+            {currentPlace?.description ||
+              `Explore ${currentPlace?.name || destination.name}.`}
           </p>
+
+          {currentPlace?.detail && (
+            <p className="experience-detail-text">
+              {currentPlace.detail}
+            </p>
+          )}
+
+          {/* HIGHLIGHTS */}
 
           <div className="experience-highlights">
 
@@ -1578,19 +1585,22 @@ const CreateTrip = () => {
 
             <div className="highlight-list">
 
-              {currentSlide.highlights.map(
-                (item, index) => (
+              {(currentPlace
+                ?.highlights ||
+                []).map(
+                (
+                  item,
+                  index
+                ) => (
                   <div
                     className="highlight-item"
-                    key={index}
+                    key={`${item}-${index}`}
                   >
-
                     <span>
                       <FiCheck />
                     </span>
 
                     {item}
-
                   </div>
                 )
               )}
@@ -1598,6 +1608,8 @@ const CreateTrip = () => {
             </div>
 
           </div>
+
+          {/* MORNING / EVENING */}
 
           <div className="mini-itinerary">
 
@@ -1608,7 +1620,7 @@ const CreateTrip = () => {
               </span>
 
               <p>
-                {currentSlide.morning}
+                {getMorningText()}
               </p>
 
             </div>
@@ -1620,34 +1632,42 @@ const CreateTrip = () => {
               </span>
 
               <p>
-                {currentSlide.evening}
+                {getEveningText()}
               </p>
 
             </div>
 
           </div>
 
+          {/* EXACT 3 DOTS WHEN 3 SELECTED */}
+
           <div className="experience-bottom">
 
             <div className="experience-dots">
 
-              {destination.slides.map(
-                (_, index) => (
+              {selectedPlaces.map(
+                (
+                  place,
+                  index
+                ) => (
                   <button
-                    key={index}
+                    type="button"
+                    key={`${place?.name}-${index}`}
+                    aria-label={`Show ${
+                      place?.name ||
+                      `place ${index + 1}`
+                    }`}
                     className={
-                      activeImage === index
+                      activePlace ===
+                      index
                         ? "active"
                         : ""
                     }
                     onClick={() =>
-                      setActiveImage(
+                      setActivePlace(
                         index
                       )
                     }
-                    aria-label={`Experience ${
-                      index + 1
-                    }`}
                   />
                 )
               )}
@@ -1655,8 +1675,10 @@ const CreateTrip = () => {
             </div>
 
             <span>
-              {activeImage + 1} /{" "}
-              {destination.slides.length}
+              {
+                selectedPlaces.length
+              }{" "}
+              selected places
             </span>
 
           </div>
@@ -1665,9 +1687,9 @@ const CreateTrip = () => {
 
       </section>
 
-      {/* =====================================================
-          HOTEL SECTION
-      ===================================================== */}
+      {/* ===================================================
+          HOTEL
+      =================================================== */}
 
       <section className="hotel-stay-section">
 
@@ -1680,14 +1702,8 @@ const CreateTrip = () => {
             </span>
 
             <h2>
-              Stay & Trip Schedule
+              Stay somewhere special.
             </h2>
-
-            <p>
-              Choose your stay and follow
-              your personalized day-by-day
-              travel plan.
-            </p>
 
           </div>
 
@@ -1696,7 +1712,7 @@ const CreateTrip = () => {
             <FiMapPin />
 
             <span>
-              {destination.name}
+              {destination.state}
             </span>
 
           </div>
@@ -1705,28 +1721,37 @@ const CreateTrip = () => {
 
         <div className="hotel-stay-layout">
 
-          {/* =================================================
-              HOTEL SIDE
-          ================================================= */}
+          {/* HOTEL LEFT */}
 
           <div className="hotel-selection-area">
 
             <div className="main-hotel-card">
 
-              <img
-                key={selectedHotel?.image}
-                src={selectedHotel?.image}
-                alt={
-                  selectedHotel?.name ||
-                  "Hotel"
-                }
-                onError={(event) => {
-                  event.currentTarget.src =
-                    "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=90";
-                }}
-              />
+              <div className="main-hotel-image">
 
-              <div className="hotel-image-overlay"></div>
+                <img
+                  src={
+                    selectedHotel?.image
+                  }
+                  alt={
+                    selectedHotel?.name
+                  }
+                />
+
+                <div className="hotel-image-overlay" />
+
+                <div className="hotel-card-location">
+
+                  <FiMapPin />
+
+                  <span>
+                    {selectedHotel?.location ||
+                      destination.state}
+                  </span>
+
+                </div>
+
+              </div>
 
               <div className="main-hotel-info">
 
@@ -1735,11 +1760,13 @@ const CreateTrip = () => {
                   <FiStar />
 
                   <strong>
-                    {selectedHotel?.rating}
+                    {selectedHotel?.rating ||
+                      "4.8"}
                   </strong>
 
                   <span>
-                    {selectedHotel?.reviews}
+                    {selectedHotel?.reviews ||
+                      "Excellent stay"}
                   </span>
 
                 </div>
@@ -1749,31 +1776,36 @@ const CreateTrip = () => {
                 </h3>
 
                 <p>
-
-                  <FiMapPin />
-
-                  {selectedHotel?.location}
-
+                  A carefully selected{" "}
+                  {selectedHotel?.type}{" "}
+                  for your{" "}
+                  {destination.name}{" "}
+                  journey. Comfortable
+                  rooms, beautiful
+                  surroundings and easy
+                  access to your selected
+                  places.
                 </p>
 
               </div>
 
             </div>
 
-            {/* =================================================
-                HOTEL THUMBNAILS
-            ================================================= */}
+            {/* HOTEL THUMBNAILS */}
 
             <div className="hotel-thumbnail-row">
 
               {hotels.map(
-                (hotel, index) => (
-
+                (
+                  hotel,
+                  index
+                ) => (
                   <button
-                    key={hotel.name}
                     type="button"
+                    key={`${hotel.name}-${index}`}
                     className={`hotel-thumbnail ${
-                      activeHotel === index
+                      activeHotel ===
+                      index
                         ? "active"
                         : ""
                     }`}
@@ -1785,28 +1817,30 @@ const CreateTrip = () => {
                   >
 
                     <img
-                      src={hotel.image}
-                      alt={hotel.name}
-                      onError={(event) => {
-                        event.currentTarget.src =
-                          "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=80";
-                      }}
+                      src={
+                        hotel.image
+                      }
+                      alt={
+                        hotel.name
+                      }
                     />
 
-                    <div className="thumbnail-overlay"></div>
+                    <div className="thumbnail-overlay" />
 
-                    <div className="thumbnail-number">
+                    <span className="thumbnail-number">
                       {String(
                         index + 1
-                      ).padStart(2, "0")}
-                    </div>
+                      ).padStart(
+                        2,
+                        "0"
+                      )}
+                    </span>
 
-                    <div className="thumbnail-name">
+                    <span className="thumbnail-name">
                       {hotel.name}
-                    </div>
+                    </span>
 
                   </button>
-
                 )
               )}
 
@@ -1815,7 +1849,7 @@ const CreateTrip = () => {
           </div>
 
           {/* =================================================
-              SCHEDULE SIDE
+              DAILY JOURNEY
           ================================================= */}
 
           <div className="hotel-schedule-card">
@@ -1825,83 +1859,80 @@ const CreateTrip = () => {
               <div>
 
                 <span>
-                  ITINERARY
+                  YOUR DAILY JOURNEY
                 </span>
 
                 <h3>
-                  Your Stay Schedule
+                  Day {activeDay}
                 </h3>
 
               </div>
 
               <div className="schedule-days-count">
 
-                {totalDays}{" "}
+                <strong>
+                  {totalDays}
+                </strong>
 
-                {totalDays === 1
-                  ? "DAY"
-                  : "DAYS"}
+                <span>
+                  days
+                </span>
 
               </div>
 
             </div>
+
+            {/* DAYS */}
 
             <div className="day-selector">
 
               {Array.from(
                 {
-                  length: totalDays,
+                  length:
+                    totalDays,
                 },
-                (_, index) => {
+                (_, index) =>
+                  index + 1
+              ).map(
+                (day) => (
+                  <button
+                    type="button"
+                    key={day}
+                    className={
+                      activeDay ===
+                      day
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setActiveDay(
+                        day
+                      )
+                    }
+                  >
 
-                  const day =
-                    index + 1;
+                    <span>
+                      DAY
+                    </span>
 
-                  return (
-                    <button
-                      key={day}
-                      type="button"
-                      className={
-                        activeDay === day
-                          ? "active"
-                          : ""
-                      }
-                      onClick={() =>
-                        setActiveDay(
-                          day
-                        )
-                      }
-                    >
-                      Day {day}
-                    </button>
-                  );
+                    <strong>
+                      {String(
+                        day
+                      ).padStart(
+                        2,
+                        "0"
+                      )}
+                    </strong>
 
-                }
+                  </button>
+                )
               )}
 
             </div>
 
+            {/* SCHEDULE */}
+
             <div className="active-day-content">
-
-              <div className="active-day-heading">
-
-                <div className="day-circle">
-                  {activeDay}
-                </div>
-
-                <div>
-
-                  <span>
-                    DAY {activeDay}
-                  </span>
-
-                  <h4>
-                    {getDayTitle()}
-                  </h4>
-
-                </div>
-
-              </div>
 
               {/* MORNING */}
 
@@ -1909,50 +1940,75 @@ const CreateTrip = () => {
 
                 <div className="schedule-time">
 
-                  <span></span>
+                  <span>
+                    08:00
+                  </span>
 
-                  <strong>
-                    Morning
-                  </strong>
+                  <small>
+                    AM
+                  </small>
 
+                </div>
+
+                <div className="day-circle">
+                  <FiHome />
                 </div>
 
                 <div className="schedule-content">
 
-                  <h5>
-                    {getMorningTitle()}
-                  </h5>
+                  <span>
+                    MORNING
+                  </span>
+
+                  <h4>
+                    Breakfast & Start
+                  </h4>
 
                   <p>
-                    {getMorningDescription()}
+                    Start your morning
+                    at{" "}
+                    {selectedHotel?.name}{" "}
+                    and prepare for your
+                    day in{" "}
+                    {destination.name}.
                   </p>
 
                 </div>
 
               </div>
 
-              {/* AFTERNOON */}
+              {/* EXPLORE */}
 
               <div className="schedule-row">
 
                 <div className="schedule-time">
 
-                  <span></span>
+                  <span>
+                    10:00
+                  </span>
 
-                  <strong>
-                    Afternoon
-                  </strong>
+                  <small>
+                    AM
+                  </small>
 
+                </div>
+
+                <div className="day-circle">
+                  <FiNavigation />
                 </div>
 
                 <div className="schedule-content">
 
-                  <h5>
-                    {getAfternoonTitle()}
-                  </h5>
+                  <span>
+                    EXPLORE
+                  </span>
+
+                  <h4>
+                    {currentPlace?.name}
+                  </h4>
 
                   <p>
-                    {getAfternoonDescription()}
+                    {currentPlace?.description}
                   </p>
 
                 </div>
@@ -1965,22 +2021,32 @@ const CreateTrip = () => {
 
                 <div className="schedule-time">
 
-                  <span></span>
+                  <span>
+                    06:00
+                  </span>
 
-                  <strong>
-                    Evening
-                  </strong>
+                  <small>
+                    PM
+                  </small>
 
+                </div>
+
+                <div className="day-circle">
+                  <FiMapPin />
                 </div>
 
                 <div className="schedule-content">
 
-                  <h5>
-                    {getEveningTitle()}
-                  </h5>
+                  <span>
+                    EVENING
+                  </span>
+
+                  <h4>
+                    Local Experience
+                  </h4>
 
                   <p>
-                    {getEveningDescription()}
+                    {getEveningText()}
                   </p>
 
                 </div>
@@ -1989,23 +2055,33 @@ const CreateTrip = () => {
 
               {/* NIGHT */}
 
-              <div className="schedule-row last">
+              <div className="schedule-row">
 
                 <div className="schedule-time">
 
-                  <span></span>
+                  <span>
+                    10:00
+                  </span>
 
-                  <strong>
-                    Night
-                  </strong>
+                  <small>
+                    PM
+                  </small>
 
+                </div>
+
+                <div className="day-circle">
+                  <FiClock />
                 </div>
 
                 <div className="schedule-content">
 
-                  <h5>
+                  <span>
+                    NIGHT
+                  </span>
+
+                  <h4>
                     {getNightTitle()}
-                  </h5>
+                  </h4>
 
                   <p>
                     {getNightDescription()}
@@ -2017,35 +2093,55 @@ const CreateTrip = () => {
 
             </div>
 
-            {/* =================================================
-                BOOK HOTEL
-            ================================================= */}
+          </div>
 
-            <div className="hotel-booking-area">
+        </div>
 
-              <div>
+        {/* =================================================
+            BOOK
+        ================================================= */}
 
-                <span>
-                  SELECTED STAY
-                </span>
+        <div className="hotel-booking-area">
 
-                <strong>
-                  {selectedHotel?.name}
-                </strong>
+          <div className="hotel-booking-text">
 
-              </div>
+            <span>
+              READY TO RESERVE?
+            </span>
 
-              <button
-                type="button"
-                className="hotel-book-btn"
-                onClick={handleBookHotel}
-              >
-                Book Now
-              </button>
+            <h3>
+              Complete your stay at{" "}
 
-            </div>
+              <strong>
+                {selectedHotel?.name}
+              </strong>
+            </h3>
+
+            <p>
+              Your destination, all{" "}
+              {selectedPlaces.length}{" "}
+              selected places, images,
+              budget and stay will
+              continue to booking.
+            </p>
 
           </div>
+
+          <button
+            type="button"
+            className="hotel-book-btn"
+            onClick={
+              handleBookHotel
+            }
+          >
+
+            <span>
+              Book This Stay
+            </span>
+
+            <FiArrowRight />
+
+          </button>
 
         </div>
 

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -5,607 +6,526 @@ import {
   FiArrowLeft,
   FiCalendar,
   FiCheck,
-  FiClock,
   FiCreditCard,
+  FiHome,
   FiLock,
   FiMapPin,
-  FiShield,
-  FiUsers,
-  FiStar,
-  FiHome,
-  FiCompass,
   FiNavigation,
+  FiShield,
+  FiSmartphone,
+  FiUsers,
+  FiX,
 } from "react-icons/fi";
 
+import { FaPlane } from "react-icons/fa";
+
 import "./BookingSummary.css";
-
-/* =========================================================
-   FALLBACK IMAGE
-========================================================= */
-
-const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80";
-
-/* =========================================================
-   DATE FORMAT
-========================================================= */
-
-const formatDate = (value) => {
-  if (!value) return "Not selected";
-
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) {
-    return String(value);
-  }
-
-  return date.toLocaleDateString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-};
-
-/* =========================================================
-   CLEAN NUMBER
-========================================================= */
-
-const cleanNumber = (value) => {
-  if (value === undefined || value === null || value === "") {
-    return 0;
-  }
-
-  const number = Number(
-    String(value)
-      .replace(/₹/g, "")
-      .replace(/,/g, "")
-      .replace(/\s/g, "")
-  );
-
-  return Number.isFinite(number) ? number : 0;
-};
-
-/* =========================================================
-   FORMAT PRICE
-========================================================= */
-
-const formatPrice = (value) => {
-  const number = cleanNumber(value);
-
-  if (!number) {
-    return "₹0";
-  }
-
-  return `₹${number.toLocaleString("en-IN")}`;
-};
-
-/* =========================================================
-   EXPIRY VALIDATION
-========================================================= */
-
-const validateExpiry = (value) => {
-  if (!/^\d{2}\/\d{2}$/.test(value)) {
-    return false;
-  }
-
-  const [month, year] = value.split("/").map(Number);
-
-  if (month < 1 || month > 12) {
-    return false;
-  }
-
-  const currentDate = new Date();
-
-  const currentYear = currentDate.getFullYear() % 100;
-  const currentMonth = currentDate.getMonth() + 1;
-
-  if (year < currentYear) {
-    return false;
-  }
-
-  if (year === currentYear && month < currentMonth) {
-    return false;
-  }
-
-  return true;
-};
-
-/* =========================================================
-   NORMALIZE BUDGET
-========================================================= */
-
-const normalizeBudget = (value = "") => {
-  return String(value)
-    .replace(/\s/g, "")
-    .replace(/,/g, "")
-    .replace(/₹/g, "")
-    .replace(/–/g, "-")
-    .replace(/—/g, "-")
-    .toLowerCase();
-};
-
-/* =========================================================
-   BUDGET PAYMENT AMOUNT
-
-   Plan Trip ka selected budget same rahega.
-   Ye sirf demo payment amount ke liye hai.
-========================================================= */
-
-const getBudgetPaymentAmount = (budget) => {
-  const value = normalizeBudget(budget);
-
-  if (!value) return 0;
-
-  if (value.includes("5000-10000")) {
-    return 7500;
-  }
-
-  if (value.includes("10000-25000")) {
-    return 17500;
-  }
-
-  if (value.includes("25000-50000")) {
-    return 37500;
-  }
-
-  if (value.includes("50000-100000")) {
-    return 75000;
-  }
-
-  if (value.includes("100000-200000")) {
-    return 150000;
-  }
-
-  if (value.includes("200000-300000")) {
-    return 250000;
-  }
-
-  if (value.includes("300000-500000")) {
-    return 400000;
-  }
-
-  return 0;
-};
-
-/* =========================================================
-   GET TOTAL
-========================================================= */
-
-const getActualTotal = (trip) => {
-  if (!trip) return 0;
-
-  const total = cleanNumber(trip.total);
-
-  if (total > 0) {
-    return total;
-  }
-
-  const totalBudget = cleanNumber(trip.totalBudget);
-
-  if (totalBudget > 0) {
-    return totalBudget;
-  }
-
-  const finalTotal = cleanNumber(trip.finalTotal);
-
-  if (finalTotal > 0) {
-    return finalTotal;
-  }
-
-  return getBudgetPaymentAmount(trip.budget);
-};
-
-/* =========================================================
-   COMPONENT
-========================================================= */
 
 const BookingSummary = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  /* =======================================================
+  /* =====================================================
      STATES
-  ======================================================= */
+  ===================================================== */
 
   const [trip, setTrip] = useState(null);
 
   const [paymentMethod, setPaymentMethod] = useState("card");
 
-  const [paymentDetails, setPaymentDetails] = useState({
-    cardName: "",
-    cardNumber: "",
-    expiry: "",
-    cvv: "",
-    upiId: "",
-    bank: "",
-  });
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvv, setCvv] = useState("");
 
-  const [errors, setErrors] = useState({});
+  const [upiId, setUpiId] = useState("");
+  const [bank, setBank] = useState("");
 
-  const [processing, setProcessing] = useState(false);
+  const [isPaying, setIsPaying] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
-
-  const [bookingId, setBookingId] = useState("");
-
-  const [transactionId, setTransactionId] = useState("");
-
-  /* =======================================================
+  /* =====================================================
      LOAD TRIP
-  ======================================================= */
+  ===================================================== */
 
   useEffect(() => {
     const stateTrip =
       location.state?.trip ||
-      location.state ||
+      location.state?.booking ||
       null;
 
-    const savedTrip =
-      localStorage.getItem("tripperTrip");
+    let savedTrip = null;
 
-    let localTrip = null;
+    try {
+      const stored = localStorage.getItem("tripperTrip");
 
-    if (savedTrip) {
-      try {
-        localTrip = JSON.parse(savedTrip);
-      } catch (error) {
-        console.error("Unable to read saved trip:", error);
+      if (stored) {
+        savedTrip = JSON.parse(stored);
       }
+    } catch (error) {
+      console.error("Trip load error:", error);
     }
 
-    const finalTrip =
-      stateTrip &&
-      typeof stateTrip === "object" &&
-      Object.keys(stateTrip).length > 0
-        ? stateTrip
-        : localTrip;
+    const finalTrip = stateTrip || savedTrip;
 
     if (finalTrip) {
       setTrip(finalTrip);
-
-      localStorage.setItem(
-        "tripperTrip",
-        JSON.stringify(finalTrip)
-      );
     }
   }, [location.state]);
 
-  /* =======================================================
-     TOTAL
-  ======================================================= */
+  /* =====================================================
+     HELPERS
+  ===================================================== */
 
-  const totalAmount = useMemo(() => {
-    return getActualTotal(trip);
-  }, [trip]);
-
-  /* =======================================================
-     EXACT BUDGET
-  ======================================================= */
-
-  const selectedBudget = useMemo(() => {
-    if (!trip?.budget) {
-      return "Budget not selected";
+  const getText = (value, fallback = "") => {
+    if (value === null || value === undefined) {
+      return fallback;
     }
 
-    return trip.budget;
-  }, [trip]);
+    if (
+      typeof value === "string" ||
+      typeof value === "number"
+    ) {
+      return String(value);
+    }
 
-  /* =======================================================
-     HOTEL
-  ======================================================= */
+    if (typeof value === "object") {
+      return (
+        value.name ||
+        value.title ||
+        value.label ||
+        value.location ||
+        fallback
+      );
+    }
 
-  const selectedHotel = useMemo(() => {
-    if (!trip) return null;
+    return fallback;
+  };
 
-    return (
-      trip.hotel ||
-      trip.bookingDetails?.hotel ||
-      null
+  const parsePrice = (value) => {
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return 0;
+    }
+
+    if (typeof value === "number") {
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    const text = String(value);
+
+    // Budget range ko price nahi banana
+    if (
+      text.includes("–") ||
+      text.includes("—")
+    ) {
+      return 0;
+    }
+
+    const cleaned = text
+      .replace(/₹/g, "")
+      .replace(/,/g, "")
+      .replace(/[^\d.]/g, "");
+
+    const amount = Number(cleaned);
+
+    return Number.isFinite(amount) ? amount : 0;
+  };
+
+  const formatMoney = (value) => {
+    return `₹${Math.round(
+      Number(value) || 0
+    ).toLocaleString("en-IN")}`;
+  };
+
+  /* =====================================================
+     DESTINATION
+  ===================================================== */
+
+  const destinationName = useMemo(() => {
+    return getText(
+      trip?.destinationData?.name ||
+        trip?.destination?.name ||
+        trip?.destination,
+      "Your Destination"
     );
   }, [trip]);
 
-  /* =======================================================
-     HOTEL IMAGE
-  ======================================================= */
+  const destinationLocation =
+    trip?.destinationData?.state ||
+    trip?.destinationData?.location ||
+    trip?.state ||
+    `${destinationName}, India`;
 
-  const hotelImage = useMemo(() => {
-    if (!trip) {
-      return FALLBACK_IMAGE;
+  /* =====================================================
+     DESTINATION IMAGES
+  ===================================================== */
+
+  const destinationImages = {
+    Goa:
+      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1400&q=90",
+
+    Manali:
+      "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1400&q=90",
+
+    Jaipur:
+      "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1400&q=90",
+
+    Kerala:
+      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1400&q=90",
+
+    Rishikesh:
+      "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1400&q=90",
+
+    Delhi:
+      "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1400&q=90",
+
+    Mumbai:
+      "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1400&q=90",
+
+    Agra:
+      "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1400&q=90",
+
+    Udaipur:
+      "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1400&q=90",
+
+    Kashmir:
+      "https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1400&q=90",
+  };
+
+  const destinationImage =
+    trip?.destinationData?.image ||
+    trip?.destinationData?.imageUrl ||
+    trip?.destinationData?.photo ||
+    trip?.destinationData?.img ||
+    trip?.image ||
+    destinationImages[destinationName] ||
+    destinationImages.Goa;
+
+  /* =====================================================
+     TRIP DETAILS
+  ===================================================== */
+
+  const days =
+    Number(
+      trip?.days ||
+        trip?.totalDays ||
+        trip?.duration ||
+        3
+    ) || 3;
+
+  const travellers =
+    Number(
+      trip?.travellers ||
+        trip?.travelers ||
+        trip?.guests ||
+        2
+    ) || 2;
+
+  const travelDate =
+    trip?.dateFormatted ||
+    trip?.date ||
+    "Not selected";
+
+  const stay = getText(
+    trip?.stay,
+    "Comfort Hotel"
+  );
+
+  const transport = getText(
+    trip?.transport,
+    "Private Cab"
+  );
+
+  const travelType = getText(
+    trip?.travelType,
+    "Couple"
+  );
+
+  const hotelName = getText(
+    trip?.hotel?.name ||
+      trip?.selectedHotel?.name ||
+      trip?.hotel,
+    ""
+  );
+
+  /* =====================================================
+     PLACES
+  ===================================================== */
+
+  const places = useMemo(() => {
+    const source =
+      trip?.places ||
+      trip?.selectedPlaces ||
+      [];
+
+    if (!Array.isArray(source)) {
+      return [];
     }
 
-    return (
-      selectedHotel?.image ||
-      trip.hotelImage ||
-      trip.image ||
-      trip.destinationData?.image ||
-      FALLBACK_IMAGE
-    );
-  }, [trip, selectedHotel]);
+    return source
+      .map((place) => {
+        if (typeof place === "string") {
+          return place;
+        }
 
-  /* =======================================================
-     HOTEL NAME
-  ======================================================= */
+        return (
+          place?.name ||
+          place?.title ||
+          place?.location ||
+          ""
+        );
+      })
+      .filter(Boolean);
+  }, [trip]);
 
-  const hotelName = useMemo(() => {
-    if (!trip) {
-      return "Selected Stay";
-    }
+  /* =====================================================
+     SAME FINAL BOOKING AMOUNT
 
-    return (
-      selectedHotel?.name ||
-      trip.hotelName ||
-      trip.bookingDetails?.hotelName ||
-      `${trip.stay || "Hotel"} in ${
-        trip.destination || "your destination"
-      }`
-    );
-  }, [trip, selectedHotel]);
+     IMPORTANT:
+     Budget se amount calculate nahi hoga.
+     Booking Details ka final amount hi use hoga.
+  ===================================================== */
 
-  /* =======================================================
-     HOTEL RATING
-  ======================================================= */
+  const bookingAmount = useMemo(() => {
+    const candidates = [
+      trip?.bookingAmount,
+      trip?.amountToPay,
+      trip?.payableAmount,
+      trip?.finalPrice,
+      trip?.totalPrice,
+      trip?.estimatedPrice,
+      trip?.packagePrice,
+      trip?.price,
+      trip?.basePrice,
+    ];
 
-  const hotelRating = useMemo(() => {
-    return (
-      selectedHotel?.rating ||
-      trip?.hotelRating ||
-      "4.5"
-    );
-  }, [trip, selectedHotel]);
+    for (const candidate of candidates) {
+      const amount = parsePrice(candidate);
 
-  /* =======================================================
-     PAYMENT INPUT
-  ======================================================= */
-
-  const handlePaymentChange = (field, value) => {
-    let nextValue = value;
-
-    /* CARD NUMBER */
-
-    if (field === "cardNumber") {
-      nextValue = value
-        .replace(/\D/g, "")
-        .slice(0, 16)
-        .replace(/(.{4})/g, "$1 ")
-        .trim();
-    }
-
-    /* EXPIRY */
-
-    if (field === "expiry") {
-      nextValue = value
-        .replace(/\D/g, "")
-        .slice(0, 4);
-
-      if (nextValue.length > 2) {
-        nextValue =
-          nextValue.slice(0, 2) +
-          "/" +
-          nextValue.slice(2);
+      if (amount > 0) {
+        return amount;
       }
     }
 
-    /* CVV - ONLY 3 DIGITS */
+    return 0;
+  }, [trip]);
 
-    if (field === "cvv") {
-      nextValue = value
-        .replace(/\D/g, "")
-        .slice(0, 3);
-    }
+  const formattedBookingAmount =
+    formatMoney(bookingAmount);
 
-    setPaymentDetails((prev) => ({
-      ...prev,
-      [field]: nextValue,
-    }));
+  /* =====================================================
+     CARD NUMBER
+  ===================================================== */
 
-    setErrors((prev) => ({
-      ...prev,
-      [field]: "",
-    }));
+  const handleCardNumber = (e) => {
+    let value = e.target.value
+      .replace(/\D/g, "")
+      .slice(0, 16);
+
+    value = value
+      .replace(/(.{4})/g, "$1 ")
+      .trim();
+
+    setCardNumber(value);
   };
 
-  /* =======================================================
-     VALIDATE PAYMENT
-  ======================================================= */
+  /* =====================================================
+     EXPIRY
+  ===================================================== */
+
+  const handleExpiry = (e) => {
+    let value = e.target.value
+      .replace(/\D/g, "")
+      .slice(0, 4);
+
+    if (value.length > 2) {
+      value =
+        value.slice(0, 2) +
+        "/" +
+        value.slice(2);
+    }
+
+    setExpiry(value);
+  };
+
+  /* =====================================================
+     VALIDATION
+  ===================================================== */
 
   const validatePayment = () => {
-    const newErrors = {};
+    if (bookingAmount <= 0) {
+      alert(
+        "Booking amount missing. Please go back to Booking Details."
+      );
 
-    /* CARD */
+      return false;
+    }
 
     if (paymentMethod === "card") {
-      const cardName =
-        paymentDetails.cardName.trim();
+      const number =
+        cardNumber.replace(/\s/g, "");
 
-      const cardNumber =
-        paymentDetails.cardNumber.replace(/\s/g, "");
+      if (number.length !== 16) {
+        alert(
+          "Please enter a valid 16 digit card number."
+        );
 
-      const expiry =
-        paymentDetails.expiry.trim();
-
-      const cvv =
-        paymentDetails.cvv.trim();
-
-      if (!cardName) {
-        newErrors.cardName =
-          "Enter card holder name";
+        return false;
       }
 
-      if (
-        !cardNumber ||
-        cardNumber.length !== 16
-      ) {
-        newErrors.cardNumber =
-          "Enter 16 digit card number";
+      if (!cardName.trim()) {
+        alert(
+          "Please enter card holder name."
+        );
+
+        return false;
       }
 
-      if (!validateExpiry(expiry)) {
-        newErrors.expiry =
-          "Enter valid MM/YY";
+      if (expiry.length !== 5) {
+        alert(
+          "Please enter expiry date."
+        );
+
+        return false;
       }
 
-      if (
-        !cvv ||
-        cvv.length !== 3
-      ) {
-        newErrors.cvv =
-          "Enter 3 digit CVV";
+      if (cvv.length !== 3) {
+        alert(
+          "Please enter valid CVV."
+        );
+
+        return false;
       }
     }
-
-    /* UPI */
 
     if (paymentMethod === "upi") {
-      if (!paymentDetails.upiId.trim()) {
-        newErrors.upiId =
-          "Enter UPI ID";
+      if (!upiId.trim()) {
+        alert(
+          "Please enter your UPI ID."
+        );
+
+        return false;
       }
     }
-
-    /* NET BANKING */
 
     if (paymentMethod === "netbanking") {
-      if (!paymentDetails.bank) {
-        newErrors.bank =
-          "Select your bank";
+      if (!bank) {
+        alert(
+          "Please select your bank."
+        );
+
+        return false;
       }
     }
 
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
+    return true;
   };
 
-  /* =======================================================
+  /* =====================================================
+     FINAL BOOKING
+  ===================================================== */
+
+  const createFinalBooking = () => {
+    return {
+      ...(trip || {}),
+
+      bookingAmount,
+      amountToPay: bookingAmount,
+      payableAmount: bookingAmount,
+
+      finalPrice: bookingAmount,
+      totalPrice: bookingAmount,
+
+      paidAmount: bookingAmount,
+
+      paymentMethod,
+      paymentStatus: "paid",
+
+      bookingStatus: "confirmed",
+      bookingConfirmed: true,
+
+      bookingDate:
+        new Date().toISOString(),
+    };
+  };
+
+  /* =====================================================
      PAYMENT
-  ======================================================= */
+  ===================================================== */
 
-  const handlePayment = async (e) => {
-    e.preventDefault();
-
-    if (!trip) return;
+  const handlePayment = () => {
+    if (isPaying) return;
 
     if (!validatePayment()) return;
 
-    const paymentAmount = totalAmount;
+    setIsPaying(true);
 
-    if (!paymentAmount) {
-      alert(
-        "Trip total is not available. Please go back and complete your trip plan."
-      );
-      return;
-    }
+    const updatedTrip =
+      createFinalBooking();
 
-    setProcessing(true);
+    localStorage.setItem(
+      "tripperTrip",
+      JSON.stringify(updatedTrip)
+    );
 
-    try {
-      /* DEMO PAYMENT */
+    setTrip(updatedTrip);
 
-      await new Promise((resolve) =>
-        setTimeout(resolve, 1500)
-      );
-
-      const newBookingId =
-        `TRIP-${Date.now()
-          .toString()
-          .slice(-8)}`;
-
-      const newTransactionId =
-        `TXN-${Date.now()
-          .toString()
-          .slice(-10)}`;
-
-      const finalTrip = {
-        ...trip,
-
-        /* SAME BUDGET */
-
-        budget: trip.budget,
-
-        /* TOTAL */
-
-        total: paymentAmount,
-
-        paymentStatus: "paid",
-
-        bookingId: newBookingId,
-
-        transactionId: newTransactionId,
-
-        hotel:
-          selectedHotel || trip.hotel,
-
-        hotelImage,
-
-        paidAt:
-          new Date().toISOString(),
-      };
-
-      /* SAVE BOOKINGS */
-
-      const existingBookings =
-        JSON.parse(
-          localStorage.getItem(
-            "tripBookings"
-          ) || "[]"
-        );
-
-      existingBookings.push(finalTrip);
-
-      localStorage.setItem(
-        "tripBookings",
-        JSON.stringify(existingBookings)
-      );
-
-      localStorage.setItem(
-        "tripperTrip",
-        JSON.stringify(finalTrip)
-      );
-
-      localStorage.setItem(
-        "tripPaymentDone",
-        "true"
-      );
-
-      window.dispatchEvent(
-        new Event("tripBookingsUpdated")
-      );
-
-      setBookingId(newBookingId);
-
-      setTransactionId(
-        newTransactionId
-      );
-
-      setPaymentSuccess(true);
-    } catch (error) {
-      console.error(
-        "Payment error:",
-        error
-      );
-
-      alert(
-        "Payment failed. Please try again."
-      );
-    } finally {
-      setProcessing(false);
-    }
+    setTimeout(() => {
+      setIsPaying(false);
+      setShowSuccess(true);
+    }, 900);
   };
 
-  /* =======================================================
-     NO TRIP
-  ======================================================= */
+  /* =====================================================
+     VIEW BOOKING
+  ===================================================== */
+
+  const openBookingPage = () => {
+    const updatedTrip =
+      createFinalBooking();
+
+    localStorage.setItem(
+      "tripperTrip",
+      JSON.stringify(updatedTrip)
+    );
+
+    localStorage.setItem(
+      "tripPaymentDone",
+      "true"
+    );
+
+    setShowSuccess(false);
+
+    navigate("/booking", {
+      state: {
+        trip: updatedTrip,
+        booking: updatedTrip,
+        paymentSuccess: true,
+      },
+    });
+  };
+
+  /* =====================================================
+     EMPTY
+  ===================================================== */
 
   if (!trip) {
     return (
       <main className="booking-summary-page">
         <div className="booking-empty">
-          <FiMapPin />
+          <div className="empty-icon">
+            <FiMapPin />
+          </div>
 
-          <h2>No trip found</h2>
+          <h2>No Booking Found</h2>
 
           <p>
-            Please create your trip first.
+            Please create your trip before
+            continuing to payment.
           </p>
 
           <button
@@ -614,440 +534,403 @@ const BookingSummary = () => {
               navigate("/trip-plan")
             }
           >
-            Plan Your Trip
+            Create Trip
           </button>
         </div>
       </main>
     );
   }
-
-  /* =======================================================
-     PAYMENT SUCCESS
-  ======================================================= */
-
-  if (paymentSuccess) {
-    return (
-      <main className="booking-summary-page">
-        <div className="payment-success-card">
-
-          <div className="success-icon">
-            <FiCheck />
-          </div>
-
-          <span className="success-label">
-            PAYMENT SUCCESSFUL
-          </span>
-
-          <h1>
-            Your trip is booked!
-          </h1>
-
-          <p className="success-description">
-            Your personalized trip to{" "}
-            <strong>
-              {trip.destination}
-            </strong>{" "}
-            has been confirmed.
-          </p>
-
-          <div className="success-details">
-
-            <div>
-              <span>Booking ID</span>
-              <strong>
-                {bookingId}
-              </strong>
-            </div>
-
-            <div>
-              <span>Transaction ID</span>
-              <strong>
-                {transactionId}
-              </strong>
-            </div>
-
-            <div>
-              <span>Trip Total</span>
-              <strong>
-                {formatPrice(totalAmount)}
-              </strong>
-            </div>
-
-            <div>
-              <span>Selected Budget</span>
-              <strong>
-                {selectedBudget}
-              </strong>
-            </div>
-
-          </div>
-
-          <button
-            type="button"
-            className="success-bookings-btn"
-            onClick={() =>
-              navigate("/booking", {
-                state: {
-                  trip: {
-                    ...trip,
-                    total: totalAmount,
-                    budget: selectedBudget,
-                    bookingId,
-                    transactionId,
-                  },
-                },
-              })
-            }
-          >
-            View My Booking
-          </button>
-
-        </div>
-      </main>
-    );
-  }
-
-  /* =======================================================
-     MAIN
-  ======================================================= */
 
   return (
     <main className="booking-summary-page">
 
-      {/* HEADER */}
+      {/* =================================================
+          BACKGROUND DECORATION
+      ================================================= */}
 
-      <header className="checkout-header">
+      <div className="travel-bg-decoration">
+
+        <div className="bg-sun" />
+
+        <div className="bg-cloud cloud-one">
+          <span />
+          <span />
+          <span />
+        </div>
+
+        <div className="bg-cloud cloud-two">
+          <span />
+          <span />
+          <span />
+        </div>
+
+        <div className="mountain mountain-one" />
+        <div className="mountain mountain-two" />
+        <div className="mountain mountain-three" />
+
+        <div className="flight-route">
+          <span className="route-line" />
+
+          <FaPlane className="route-plane" />
+        </div>
+
+        <div className="bg-circle circle-one" />
+        <div className="bg-circle circle-two" />
+        <div className="bg-circle circle-three" />
+
+      </div>
+
+      {/* =================================================
+          TOP BAR
+      ================================================= */}
+
+      <div className="booking-topbar">
 
         <button
           type="button"
-          className="checkout-back"
+          className="booking-back-button"
           onClick={() => navigate(-1)}
         >
           <FiArrowLeft />
-          <span>Back</span>
+          <span>Back to Trip Plan</span>
         </button>
 
-        <div className="checkout-title">
-          <span>TRIPPER</span>
-          <h1>Booking Summary</h1>
-        </div>
-
-        <div className="secure-label">
+        <div className="booking-secure">
           <FiLock />
-          <span>Secure Checkout</span>
-        </div>
-
-      </header>
-
-      {/* PROGRESS */}
-
-      <div className="checkout-progress">
-
-        <div className="progress-step done">
-          <span>1</span>
-          <small>Plan Trip</small>
-        </div>
-
-        <div className="progress-line done" />
-
-        <div className="progress-step done">
-          <span>2</span>
-          <small>Trip Details</small>
-        </div>
-
-        <div className="progress-line done" />
-
-        <div className="progress-step active">
-          <span>3</span>
-          <small>Payment</small>
+          <span>100% Secure Payment</span>
         </div>
 
       </div>
 
-      {/* CONTENT */}
+      {/* =================================================
+          HERO HEADER
+      ================================================= */}
 
-      <section className="checkout-layout">
+      <section className="booking-header">
+
+        <span className="booking-eyebrow">
+          COMPLETE YOUR BOOKING
+        </span>
+
+        <h1>
+          Secure Your Next
+          <span> Adventure</span>
+        </h1>
+
+        <p>
+          Almost there! Complete your payment
+          and get ready for an amazing journey.
+        </p>
+
+      </section>
+
+      {/* =================================================
+          MAIN LAYOUT
+      ================================================= */}
+
+      <section className="booking-layout">
 
         {/* =================================================
             LEFT PAYMENT
         ================================================= */}
 
-        <div className="payment-section">
+        <div className="booking-left">
 
-          <div className="section-heading">
+          <div className="booking-card">
 
-            <div>
+            {/* HEADING */}
 
-              <span className="section-eyebrow">
-                PAYMENT
-              </span>
+            <div className="card-heading">
 
-              <h2>
-                Complete your booking
-              </h2>
+              <div className="card-heading-left">
 
-              <p>
-                Pay securely to confirm
-                your personalized trip.
-              </p>
+                <span className="card-step">
+                  01
+                </span>
+
+                <div>
+                  <h2>Payment Details</h2>
+
+                  <p>
+                    Choose your preferred
+                    payment method to continue
+                  </p>
+                </div>
+
+              </div>
+
+              <div className="secure-small">
+                <FiShield />
+
+                <div>
+                  <strong>
+                    Secure & Encrypted
+                  </strong>
+
+                  <span>
+                    Your data is always safe
+                  </span>
+                </div>
+              </div>
 
             </div>
 
-            <div className="payment-security">
-              <FiShield />
-              <span>100% Secure</span>
+            {/* =================================================
+                TOTAL BOOKING AMOUNT
+            ================================================= */}
+
+            <div className="payment-amount-card">
+
+              <div className="amount-left">
+
+                <div className="amount-label">
+                  <FiLock />
+                  TOTAL BOOKING AMOUNT
+                </div>
+
+                <strong>
+                  {formattedBookingAmount}
+                </strong>
+
+                <p>
+                  Same final amount as your
+                  booking details
+                </p>
+
+              </div>
+
+              <div className="amount-travel-art">
+
+                <FaPlane className="amount-plane" />
+
+                <div className="amount-check">
+                  <FiCheck />
+                </div>
+
+              </div>
+
             </div>
 
-          </div>
+            {/* =================================================
+                PAYMENT TABS
+            ================================================= */}
 
-          {/* PAYMENT METHODS */}
+            <div className="payment-method-tabs">
 
-          <div className="payment-methods">
-
-            {/* CARD */}
-
-            <button
-              type="button"
-              className={`payment-method ${
-                paymentMethod === "card"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                setPaymentMethod("card")
-              }
-            >
-              <FiCreditCard />
-
-              <div>
-                <strong>Card</strong>
-
+              <button
+                type="button"
+                className={`payment-tab ${
+                  paymentMethod === "card"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  setPaymentMethod("card")
+                }
+              >
+                <FiCreditCard />
                 <span>
                   Credit / Debit Card
                 </span>
-              </div>
-            </button>
+              </button>
 
-            {/* UPI */}
+              <button
+                type="button"
+                className={`payment-tab ${
+                  paymentMethod === "upi"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  setPaymentMethod("upi")
+                }
+              >
+                <FiSmartphone />
+                <span>UPI Payment</span>
+              </button>
 
-            <button
-              type="button"
-              className={`payment-method ${
-                paymentMethod === "upi"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                setPaymentMethod("upi")
-              }
-            >
-              <span className="upi-symbol">
-                UPI
-              </span>
-
-              <div>
-                <strong>UPI</strong>
-
-                <span>
-                  Google Pay / PhonePe / Paytm
-                </span>
-              </div>
-            </button>
-
-            {/* NET BANKING */}
-
-            <button
-              type="button"
-              className={`payment-method ${
-                paymentMethod ===
-                "netbanking"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                setPaymentMethod(
+              <button
+                type="button"
+                className={`payment-tab ${
+                  paymentMethod ===
                   "netbanking"
-                )
-              }
-            >
-              <span className="bank-symbol">
-                ₹
-              </span>
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  setPaymentMethod(
+                    "netbanking"
+                  )
+                }
+              >
+                <FiHome />
+                <span>Net Banking</span>
+              </button>
 
-              <div>
-                <strong>
-                  Net Banking
-                </strong>
-
-                <span>
-                  Pay using your bank
-                </span>
-              </div>
-            </button>
-
-          </div>
-
-          {/* PAYMENT FORM */}
-
-          <form
-            className="payment-form"
-            onSubmit={handlePayment}
-          >
+            </div>
 
             {/* =================================================
-                CARD FORM
+                CARD PAYMENT
             ================================================= */}
 
             {paymentMethod === "card" && (
-              <>
 
-                <div className="demo-card">
+              <div className="payment-form">
 
-                  <div>
-                    <span>
-                      Demo Payment
-                    </span>
+                <div className="card-payment-grid">
 
-                    <strong>
-                      Enter any test card details
-                    </strong>
+                  {/* DEMO CARD */}
+
+                  <div className="demo-card-box">
+
+                    <div className="demo-card-top">
+
+                      <span>TRIPPER</span>
+
+                      <FiCreditCard />
+
+                    </div>
+
+                    <div className="card-chip">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+
+                    <div className="demo-card-number">
+                      {cardNumber ||
+                        "1234 5678 9012 3456"}
+                    </div>
+
+                    <div className="demo-card-bottom">
+
+                      <div>
+                        <small>
+                          CARD HOLDER
+                        </small>
+
+                        <strong>
+                          {cardName ||
+                            "YOUR NAME"}
+                        </strong>
+                      </div>
+
+                      <div>
+                        <small>
+                          VALID THRU
+                        </small>
+
+                        <strong>
+                          {expiry ||
+                            "MM/YY"}
+                        </strong>
+                      </div>
+
+                    </div>
+
+                    <FaPlane className="card-plane" />
+
                   </div>
 
-                  <FiCreditCard />
+                  {/* CARD INPUTS */}
+
+                  <div className="card-input-side">
+
+                    <div className="form-field">
+
+                      <label>
+                        Card Number
+                      </label>
+
+                      <div className="input-with-icon">
+
+                        <FiCreditCard />
+
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          placeholder="1234 5678 9012 3456"
+                          value={cardNumber}
+                          onChange={
+                            handleCardNumber
+                          }
+                        />
+
+                      </div>
+
+                    </div>
+
+                    <div className="form-field">
+
+                      <label>
+                        Card Holder Name
+                      </label>
+
+                      <input
+                        type="text"
+                        placeholder="Enter card holder name"
+                        value={cardName}
+                        onChange={(e) =>
+                          setCardName(
+                            e.target.value
+                          )
+                        }
+                      />
+
+                    </div>
+
+                    <div className="form-row">
+
+                      <div className="form-field">
+
+                        <label>
+                          Expiry Date
+                        </label>
+
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          placeholder="MM/YY"
+                          maxLength={5}
+                          value={expiry}
+                          onChange={
+                            handleExpiry
+                          }
+                        />
+
+                      </div>
+
+                      <div className="form-field">
+
+                        <label>CVV</label>
+
+                        <input
+                          type="password"
+                          inputMode="numeric"
+                          placeholder="•••"
+                          maxLength={3}
+                          value={cvv}
+                          onChange={(e) =>
+                            setCvv(
+                              e.target.value
+                                .replace(
+                                  /\D/g,
+                                  ""
+                                )
+                                .slice(0, 3)
+                            )
+                          }
+                        />
+
+                      </div>
+
+                    </div>
+
+                  </div>
 
                 </div>
 
-                <div className="form-grid">
-
-                  {/* CARD HOLDER */}
-
-                  <label className="form-field full-field">
-
-                    <span>
-                      Card Holder Name
-                    </span>
-
-                    <input
-                      type="text"
-                      placeholder="Enter name on card"
-                      value={
-                        paymentDetails.cardName
-                      }
-                      onChange={(e) =>
-                        handlePaymentChange(
-                          "cardName",
-                          e.target.value
-                        )
-                      }
-                    />
-
-                    {errors.cardName && (
-                      <small className="field-error">
-                        {errors.cardName}
-                      </small>
-                    )}
-
-                  </label>
-
-                  {/* CARD NUMBER */}
-
-                  <label className="form-field full-field">
-
-                    <span>
-                      Card Number
-                    </span>
-
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      maxLength={19}
-                      placeholder="1234 5678 9012 3456"
-                      value={
-                        paymentDetails.cardNumber
-                      }
-                      onChange={(e) =>
-                        handlePaymentChange(
-                          "cardNumber",
-                          e.target.value
-                        )
-                      }
-                    />
-
-                    {errors.cardNumber && (
-                      <small className="field-error">
-                        {errors.cardNumber}
-                      </small>
-                    )}
-
-                  </label>
-
-                  {/* EXPIRY */}
-
-                  <label className="form-field">
-
-                    <span>
-                      Expiry
-                    </span>
-
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      maxLength={5}
-                      placeholder="MM/YY"
-                      value={
-                        paymentDetails.expiry
-                      }
-                      onChange={(e) =>
-                        handlePaymentChange(
-                          "expiry",
-                          e.target.value
-                        )
-                      }
-                    />
-
-                    {errors.expiry && (
-                      <small className="field-error">
-                        {errors.expiry}
-                      </small>
-                    )}
-
-                  </label>
-
-                  {/* CVV */}
-
-                  <label className="form-field">
-
-                    <span>
-                      CVV
-                    </span>
-
-                    <input
-                      type="password"
-                      inputMode="numeric"
-                      maxLength={3}
-                      placeholder="•••"
-                      value={
-                        paymentDetails.cvv
-                      }
-                      onChange={(e) =>
-                        handlePaymentChange(
-                          "cvv",
-                          e.target.value
-                        )
-                      }
-                    />
-
-                    {errors.cvv && (
-                      <small className="field-error">
-                        {errors.cvv}
-                      </small>
-                    )}
-
-                  </label>
-
-                </div>
-
-              </>
+              </div>
             )}
 
             {/* =================================================
@@ -1055,53 +938,47 @@ const BookingSummary = () => {
             ================================================= */}
 
             {paymentMethod === "upi" && (
-              <div className="simple-payment">
 
-                <div className="payment-icon-large">
-                  UPI
+              <div className="payment-form">
+
+                <div className="alternative-payment">
+
+                  <div className="alternative-icon">
+                    <FiSmartphone />
+                  </div>
+
+                  <div>
+                    <span>
+                      QUICK PAYMENT
+                    </span>
+
+                    <h3>
+                      Pay using UPI
+                    </h3>
+
+                    <p>
+                      Use Google Pay, PhonePe,
+                      Paytm or any UPI app.
+                    </p>
+                  </div>
+
                 </div>
 
-                <h3>
-                  Pay with UPI
-                </h3>
+                <div className="form-field">
 
-                <p>
-                  Enter your UPI ID to
-                  continue.
-                </p>
-
-                <label className="form-field full-field">
-
-                  <span>
-                    UPI ID
-                  </span>
+                  <label>UPI ID</label>
 
                   <input
                     type="text"
-                    placeholder="example@upi"
-                    value={
-                      paymentDetails.upiId
-                    }
+                    placeholder="yourname@upi"
+                    value={upiId}
                     onChange={(e) =>
-                      handlePaymentChange(
-                        "upiId",
+                      setUpiId(
                         e.target.value
                       )
                     }
                   />
 
-                  {errors.upiId && (
-                    <small className="field-error">
-                      {errors.upiId}
-                    </small>
-                  )}
-
-                </label>
-
-                <div className="upi-hint">
-                  Google Pay, PhonePe,
-                  Paytm and other UPI apps
-                  are supported.
                 </div>
 
               </div>
@@ -1113,34 +990,42 @@ const BookingSummary = () => {
 
             {paymentMethod ===
               "netbanking" && (
-              <div className="simple-payment">
 
-                <div className="payment-icon-large">
-                  ₹
+              <div className="payment-form">
+
+                <div className="alternative-payment">
+
+                  <div className="alternative-icon">
+                    <FiHome />
+                  </div>
+
+                  <div>
+                    <span>
+                      ONLINE BANKING
+                    </span>
+
+                    <h3>
+                      Net Banking
+                    </h3>
+
+                    <p>
+                      Choose your bank and
+                      continue securely.
+                    </p>
+                  </div>
+
                 </div>
 
-                <h3>
-                  Net Banking
-                </h3>
+                <div className="form-field">
 
-                <p>
-                  Select your bank to
-                  continue.
-                </p>
-
-                <label className="form-field full-field">
-
-                  <span>
+                  <label>
                     Select Bank
-                  </span>
+                  </label>
 
                   <select
-                    value={
-                      paymentDetails.bank
-                    }
+                    value={bank}
                     onChange={(e) =>
-                      handlePaymentChange(
-                        "bank",
+                      setBank(
                         e.target.value
                       )
                     }
@@ -1149,334 +1034,355 @@ const BookingSummary = () => {
                       Select your bank
                     </option>
 
-                    <option value="HDFC Bank">
-                      HDFC Bank
-                    </option>
-
-                    <option value="ICICI Bank">
-                      ICICI Bank
-                    </option>
-
-                    <option value="SBI">
+                    <option value="sbi">
                       State Bank of India
                     </option>
 
-                    <option value="Axis Bank">
+                    <option value="hdfc">
+                      HDFC Bank
+                    </option>
+
+                    <option value="icici">
+                      ICICI Bank
+                    </option>
+
+                    <option value="axis">
                       Axis Bank
                     </option>
 
-                    <option value="Kotak Bank">
+                    <option value="kotak">
                       Kotak Mahindra Bank
                     </option>
-
                   </select>
 
-                  {errors.bank && (
-                    <small className="field-error">
-                      {errors.bank}
-                    </small>
-                  )}
-
-                </label>
+                </div>
 
               </div>
             )}
 
-            {/* PAY BUTTON */}
+            {/* =================================================
+                SECURITY
+            ================================================= */}
+
+            <div className="payment-security">
+
+              <span className="security-icon">
+                <FiShield />
+              </span>
+
+              <p>
+                Your payment information is
+                secure and encrypted. We do
+                not store your card details.
+              </p>
+
+            </div>
+
+            {/* =================================================
+                AMOUNT TO PAY
+            ================================================= */}
+
+            <div className="final-payment-box">
+
+              <div className="final-payment-icon">
+                <FiLock />
+              </div>
+
+              <div className="final-payment-text">
+                <small>Amount to Pay</small>
+
+                <strong>
+                  {formattedBookingAmount}
+                </strong>
+              </div>
+
+              <div className="final-secure">
+                <FiLock />
+                Secure Payment
+              </div>
+
+            </div>
+
+            {/* =================================================
+                PAY BUTTON
+            ================================================= */}
 
             <button
-              type="submit"
-              className="pay-button"
-              disabled={processing}
+              type="button"
+              className="pay-now-button"
+              onClick={handlePayment}
+              disabled={isPaying}
             >
 
-              {processing ? (
+              {isPaying ? (
                 <>
-                  <span className="payment-loader" />
+                  <span className="payment-spinner" />
                   Processing Payment...
                 </>
               ) : (
                 <>
-                  Pay {formatPrice(totalAmount)}
+                  <FiLock />
 
-                  <FiArrowLeft
-                    style={{
-                      transform:
-                        "rotate(180deg)",
-                    }}
-                  />
+                  <span>
+                    Pay{" "}
+                    {formattedBookingAmount}
+                  </span>
+
+                  <span className="pay-arrow">
+                    →
+                  </span>
                 </>
               )}
 
             </button>
 
-            <div className="payment-note">
-              <FiLock />
-
-              <span>
-                Demo payment only. Your
-                payment information is not
-                sent to a real payment gateway.
-              </span>
-            </div>
-
-          </form>
+          </div>
 
         </div>
 
         {/* =================================================
-            RIGHT SUMMARY
+            RIGHT SIDE
         ================================================= */}
 
-        <aside className="trip-summary">
+        <aside className="booking-right">
 
-          <div className="summary-heading">
+          <div className="order-summary-card">
 
-            <div>
-              <span>YOUR TRIP</span>
+            {/* IMAGE */}
 
-              <h2>
-                Booking Details
-              </h2>
-            </div>
+            <div className="summary-image">
 
-            <FiCheck />
+              <img
+                src={destinationImage}
+                alt={destinationName}
+              />
 
-          </div>
+              <div className="summary-image-overlay" />
 
-          {/* IMAGE */}
+              <div className="summary-confirmed-badge">
+                <FiCheck />
+                Confirmed
+              </div>
 
-          <div className="summary-image">
+              <div className="summary-image-content">
 
-            <img
-              src={hotelImage}
-              alt={
-                trip.destination ||
-                "Trip"
-              }
-              onError={(e) => {
-                e.currentTarget.src =
-                  FALLBACK_IMAGE;
-              }}
-            />
+                <h2>
+                  {destinationName}
+                </h2>
 
-            <div className="summary-image-overlay">
+                <p>
+                  <FiMapPin />
+                  {destinationLocation}
+                </p>
 
-              <span>
-                {trip.destination ||
-                  "Destination"}
-              </span>
-
-            </div>
-
-          </div>
-
-          {/* HOTEL */}
-
-          <div className="summary-hotel-details">
-
-            <div className="summary-hotel-top">
-
-              <span className="summary-hotel-label">
-                SELECTED STAY
-              </span>
-
-              <span className="summary-rating">
-                <FiStar />
-                {hotelRating}
-              </span>
-
-            </div>
-
-            <h3>
-              {hotelName}
-            </h3>
-
-            <div className="summary-destination">
-
-              <FiMapPin />
-
-              <span>
-                {trip.destination}
-              </span>
-
-            </div>
-
-          </div>
-
-          {/* DETAILS */}
-
-          <div className="summary-details">
-
-            <div className="summary-detail">
-
-              <FiCalendar />
-
-              <div>
-                <small>
-                  TRAVEL DATE
-                </small>
-
-                <strong>
-                  {formatDate(trip.date)}
-                </strong>
               </div>
 
             </div>
 
-            <div className="summary-detail">
+            {/* BODY */}
 
-              <FiClock />
+            <div className="order-summary-body">
 
-              <div>
-                <small>
-                  DURATION
-                </small>
+              <div className="summary-title-row">
+
+                <div className="summary-title-left">
+
+                  <span className="summary-title-icon">
+                    <FiCreditCard />
+                  </span>
+
+                  <h3>
+                    Booking Summary
+                  </h3>
+
+                </div>
+
+                <span className="trip-details-link">
+                  Trip Details
+                </span>
+
+              </div>
+
+              {/* DATE + TRAVELLERS */}
+
+              <div className="summary-trip-details">
+
+                <div className="summary-mini-card">
+
+                  <span className="summary-mini-icon">
+                    <FiCalendar />
+                  </span>
+
+                  <div>
+                    <small>
+                      Travel Date
+                    </small>
+
+                    <strong>
+                      {travelDate}
+                    </strong>
+                  </div>
+
+                </div>
+
+                <div className="summary-mini-card">
+
+                  <span className="summary-mini-icon">
+                    <FiUsers />
+                  </span>
+
+                  <div>
+                    <small>
+                      Travellers
+                    </small>
+
+                    <strong>
+                      {travellers}{" "}
+                      {travellers === 1
+                        ? "Person"
+                        : "People"}
+                    </strong>
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* DETAILS */}
+
+              <div className="summary-details-list">
+
+                {hotelName && (
+                  <div className="summary-info-row">
+                    <span>Hotel</span>
+                    <strong>
+                      {hotelName}
+                    </strong>
+                  </div>
+                )}
+
+                <div className="summary-info-row">
+                  <span>Duration</span>
+
+                  <strong>
+                    {days} Days
+                  </strong>
+                </div>
+
+                <div className="summary-info-row">
+                  <span>
+                    Accommodation
+                  </span>
+
+                  <strong>
+                    {stay}
+                  </strong>
+                </div>
+
+                <div className="summary-info-row">
+                  <span>Transport</span>
+
+                  <strong>
+                    {transport}
+                  </strong>
+                </div>
+
+                <div className="summary-info-row">
+                  <span>
+                    Travel Type
+                  </span>
+
+                  <strong>
+                    {travelType}
+                  </strong>
+                </div>
+
+              </div>
+
+              {/* PLACES */}
+
+              {places.length > 0 && (
+
+                <div className="summary-places">
+
+                  <span>
+                    Places to Visit
+                  </span>
+
+                  <div className="summary-place-chips">
+
+                    {places
+                      .slice(0, 4)
+                      .map(
+                        (place, index) => (
+
+                          <span
+                            key={`${place}-${index}`}
+                          >
+                            {place}
+                          </span>
+
+                        )
+                      )}
+
+                    {places.length > 4 && (
+                      <span>
+                        +{places.length - 4}
+                      </span>
+                    )}
+
+                  </div>
+
+                </div>
+
+              )}
+
+              {/* TOTAL */}
+
+              <div className="order-total">
+
+                <div className="order-total-icon">
+                  <FiCreditCard />
+                </div>
+
+                <div className="order-total-text">
+                  <span>
+                    Total Amount
+                  </span>
+
+                  <small>
+                    Final booking amount
+                  </small>
+                </div>
 
                 <strong>
-                  {trip.days || 3} Days
+                  {formattedBookingAmount}
                 </strong>
+
+              </div>
+
+              {/* SAFE */}
+
+              <div className="summary-safe-box">
+
+                <span>
+                  <FiShield />
+                </span>
+
+                <div>
+                  <strong>
+                    Safe & Secure Booking
+                  </strong>
+
+                  <p>
+                    Your booking is protected
+                    with our secure system.
+                  </p>
+                </div>
+
               </div>
 
             </div>
-
-            <div className="summary-detail">
-
-              <FiUsers />
-
-              <div>
-                <small>
-                  TRAVELLERS
-                </small>
-
-                <strong>
-                  {trip.travellers ||
-                    trip.travelers ||
-                    2}
-                </strong>
-              </div>
-
-            </div>
-
-            <div className="summary-detail">
-
-              <FiHome />
-
-              <div>
-                <small>
-                  STAY TYPE
-                </small>
-
-                <strong>
-                  {trip.stay || "Any"}
-                </strong>
-              </div>
-
-            </div>
-
-            <div className="summary-detail">
-
-              <FiCompass />
-
-              <div>
-                <small>
-                  TRAVEL TYPE
-                </small>
-
-                <strong>
-                  {trip.travelType ||
-                    "Couple"}
-                </strong>
-              </div>
-
-            </div>
-
-            <div className="summary-detail">
-
-              <FiNavigation />
-
-              <div>
-                <small>
-                  TRANSPORT
-                </small>
-
-                <strong>
-                  {trip.transport ||
-                    "Any"}
-                </strong>
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* SELECTED BUDGET */}
-
-          <div className="summary-divider" />
-
-          <div className="summary-budget">
-
-            <div>
-
-              <span>
-                SELECTED BUDGET
-              </span>
-
-              <strong>
-                {selectedBudget}
-              </strong>
-
-            </div>
-
-            <FiCheck />
-
-          </div>
-
-          {/* TRIP TOTAL */}
-
-          <div className="summary-divider" />
-
-          <div className="summary-price">
-
-            <span>
-              Trip Total
-            </span>
-
-            <strong>
-              {formatPrice(totalAmount)}
-            </strong>
-
-          </div>
-
-          {/* INCLUDED */}
-
-          <div className="summary-included">
-
-            <FiCheck />
-
-            <span>
-              Trip price included
-            </span>
-
-          </div>
-
-          <div className="summary-included">
-
-            <FiCheck />
-
-            <span>
-              Secure payment
-            </span>
-
-          </div>
-
-          <div className="summary-included">
-
-            <FiCheck />
-
-            <span>
-              Booking confirmation included
-            </span>
 
           </div>
 
@@ -1484,8 +1390,90 @@ const BookingSummary = () => {
 
       </section>
 
+      {/* =====================================================
+          SUCCESS POPUP
+      ===================================================== */}
+
+      {showSuccess && (
+
+        <div className="payment-success-overlay">
+
+          <div className="payment-success-popup">
+
+            <button
+              type="button"
+              className="success-close"
+              onClick={() =>
+                setShowSuccess(false)
+              }
+            >
+              <FiX />
+            </button>
+
+            <div className="success-check">
+              <FiCheck />
+            </div>
+
+            <span className="success-small">
+              PAYMENT SUCCESSFUL
+            </span>
+
+            <h2>
+              Your Adventure is Confirmed!
+            </h2>
+
+            <p>
+              Your payment of{" "}
+
+              <strong>
+                {formattedBookingAmount}
+              </strong>{" "}
+
+              has been completed
+              successfully.
+            </p>
+
+            <div className="success-trip-card">
+
+              <div>
+                <small>
+                  DESTINATION
+                </small>
+
+                <strong>
+                  {destinationName}
+                </strong>
+              </div>
+
+              <div>
+                <small>
+                  AMOUNT PAID
+                </small>
+
+                <strong>
+                  {formattedBookingAmount}
+                </strong>
+              </div>
+
+            </div>
+
+            <button
+              type="button"
+              className="success-booking-button"
+              onClick={openBookingPage}
+            >
+              View My Booking
+            </button>
+
+          </div>
+
+        </div>
+
+      )}
+
     </main>
   );
 };
 
 export default BookingSummary;
+

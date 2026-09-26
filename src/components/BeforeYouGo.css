@@ -1,20 +1,161 @@
 /* =========================================================
-   BEFORE YOU GO - BLUE COMPACT DESIGN
+   BEFORE YOU GO
+   PREMIUM BLUE TRAVEL DESIGN
 ========================================================= */
 
 .before-go {
   width: 100%;
-  padding: 35px 5%;
-  background: #eef5fa;
+  padding: 55px 5% 60px;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
   color: #102a43;
   font-family: "Inter", sans-serif;
-  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(49, 169, 232, 0.22),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 92% 20%,
+      rgba(29, 120, 220, 0.14),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 85% 92%,
+      rgba(68, 190, 239, 0.16),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #dff3ff 0%,
+      #f7fcff 30%,
+      #edf8ff 62%,
+      #d9f0ff 100%
+    );
 }
+
+
+/* =========================================================
+   BACKGROUND BIG CIRCLE - RIGHT
+========================================================= */
+
+.before-go::before {
+  content: "";
+
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  top: -330px;
+  right: -150px;
+
+  z-index: -2;
+
+  border-radius: 50%;
+
+  border:
+    1px dashed
+    rgba(25, 126, 200, 0.18);
+
+  box-shadow:
+    0 0 0 50px rgba(31, 145, 216, 0.025),
+    0 0 0 100px rgba(31, 145, 216, 0.017),
+    0 0 0 150px rgba(31, 145, 216, 0.01);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   BACKGROUND LEFT DECORATION
+========================================================= */
+
+.before-go::after {
+  content: "";
+
+  position: absolute;
+
+  width: 380px;
+  height: 380px;
+
+  left: -245px;
+  bottom: -175px;
+
+  z-index: -2;
+
+  border-radius: 50%;
+
+  border:
+    1px dashed
+    rgba(25, 126, 200, 0.15);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(46, 168, 225, 0.16) 0%,
+      rgba(46, 168, 225, 0.06) 42%,
+      transparent 72%
+    );
+
+  box-shadow:
+    0 0 0 45px
+    rgba(34, 149, 215, 0.018);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
 
 .before-go-container {
   width: 100%;
   max-width: 1350px;
+
   margin: 0 auto;
+
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   SUBTLE BACKGROUND PATTERN
+========================================================= */
+
+.before-go-container::before {
+  content: "";
+
+  position: absolute;
+
+  width: 310px;
+  height: 310px;
+
+  left: 41%;
+  top: 35%;
+
+  z-index: -1;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(32, 158, 220, 0.1) 0%,
+      rgba(32, 158, 220, 0.04) 42%,
+      transparent 70%
+    );
+
+  filter: blur(8px);
+
+  pointer-events: none;
 }
 
 
@@ -24,55 +165,112 @@
 
 .before-go-header {
   max-width: 700px;
-  margin: 0 auto 38px;
+
+  margin: 0 auto 42px;
+
+  position: relative;
+  z-index: 3;
+
   text-align: center;
 }
 
+
+/* =========================================================
+   SMALL TITLE
+========================================================= */
+
 .before-go-small-title {
   display: flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 10px;
 
-  margin-bottom: 10px;
+  margin-bottom: 11px;
 
-  color: #2875a8;
+  color: #167dca;
+
   font-size: 12px;
   font-weight: 800;
+
   letter-spacing: 2.5px;
+
+  text-transform: uppercase;
 }
 
+
 .before-go-small-title span {
-  width: 25px;
+  width: 28px;
   height: 1px;
-  background: #6da4ca;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #3c9bd5
+    );
 }
+
+
+.before-go-small-title span:last-child {
+  background:
+    linear-gradient(
+      90deg,
+      #3c9bd5,
+      transparent
+    );
+}
+
+
+/* =========================================================
+   MAIN HEADING
+========================================================= */
 
 .before-go-header h2 {
   margin: 0;
 
-  color: #102a43;
+  color: #103b5a;
 
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(38px, 4.5vw, 60px);
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(38px, 4.5vw, 60px);
+
   line-height: 1.02;
+
   font-weight: 500;
+
   letter-spacing: -1.5px;
 }
 
+
 .before-go-header h2 em {
-  color: #2875a8;
+  color: #1483d4;
+
   font-style: italic;
+
   font-weight: 400;
 }
 
+
+/* =========================================================
+   HEADER DESCRIPTION
+========================================================= */
+
 .before-go-header p {
   max-width: 530px;
+
   margin: 15px auto 0;
 
-  color: #60788d;
+  color: #607f94;
+
   font-size: 15px;
-  line-height: 1.6;
+
+  line-height: 1.7;
 }
 
 
@@ -82,8 +280,14 @@
 
 .before-go-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 13px;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 15px;
+
+  position: relative;
+  z-index: 3;
 }
 
 
@@ -95,53 +299,143 @@
   position: relative;
 
   min-height: 365px;
+
   padding: 20px;
 
   display: flex;
+
   flex-direction: column;
-
-  background: #ffffff;
-
-  border: 1px solid #d6e5ef;
-  border-radius: 8px;
 
   overflow: hidden;
 
+  border:
+    1px solid
+    rgba(39, 133, 194, 0.14);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.96),
+      rgba(246, 252, 255, 0.92)
+    );
+
+  box-shadow:
+    0 13px 32px
+    rgba(17, 79, 119, 0.07);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    border-color 0.3s ease;
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
+
+
+/* =========================================================
+   CARD BACKGROUND CIRCLE
+========================================================= */
 
 .before-card::before {
   content: "";
 
   position: absolute;
 
-  width: 125px;
-  height: 125px;
+  width: 145px;
+  height: 145px;
 
-  right: -65px;
-  bottom: -65px;
+  right: -75px;
+  bottom: -75px;
 
   border-radius: 50%;
 
-  background: #e4f1f9;
+  background:
+    radial-gradient(
+      circle,
+      rgba(55, 169, 227, 0.17),
+      rgba(55, 169, 227, 0.07) 50%,
+      transparent 72%
+    );
 
-  transition: 0.4s ease;
+  border:
+    1px solid
+    rgba(43, 150, 211, 0.08);
+
+  transition:
+    width 0.45s ease,
+    height 0.45s ease,
+    transform 0.45s ease;
 }
+
+
+/* =========================================================
+   CARD TOP DECORATIVE LINE
+========================================================= */
+
+.before-card::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 20px;
+
+  width: 65px;
+  height: 3px;
+
+  border-radius:
+    0 0 10px 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1485d3,
+      #59c0eb
+    );
+
+  opacity: 0;
+
+  transform:
+    scaleX(0.4);
+
+  transform-origin: left;
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.35s ease;
+}
+
 
 .before-card:hover {
-  transform: translateY(-6px);
+  transform:
+    translateY(-7px);
 
-  border-color: #8dbbd7;
+  border-color:
+    rgba(35, 143, 207, 0.32);
 
-  box-shadow: 0 18px 35px rgba(27, 91, 132, 0.12);
+  box-shadow:
+    0 22px 48px
+    rgba(14, 82, 126, 0.14);
 }
 
+
 .before-card:hover::before {
-  width: 210px;
-  height: 210px;
+  width: 235px;
+  height: 235px;
+
+  transform:
+    translate(-12px, -10px);
+}
+
+
+.before-card:hover::after {
+  opacity: 1;
+
+  transform:
+    scaleX(1);
 }
 
 
@@ -154,41 +448,96 @@
   z-index: 2;
 
   display: flex;
+
   align-items: center;
-  justify-content: space-between;
+
+  justify-content:
+    space-between;
 }
 
+
+/* =========================================================
+   NUMBER
+========================================================= */
+
 .before-number {
-  color: #8aa6ba;
+  color: #7b9db2;
 
   font-size: 12px;
+
   font-weight: 800;
+
   letter-spacing: 1.5px;
 }
 
+
+/* =========================================================
+   ICON
+========================================================= */
+
 .before-icon {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   border-radius: 50%;
 
-  background: #e6f2fa;
-  color: #2875a8;
+  border:
+    1px solid
+    rgba(29, 129, 194, 0.1);
+
+  background:
+    linear-gradient(
+      145deg,
+      #eef9ff,
+      #dceffc
+    );
+
+  color: #187fc3;
 
   font-size: 18px;
 
-  transition: 0.3s ease;
+  box-shadow:
+    0 7px 18px
+    rgba(18, 103, 156, 0.07);
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.before-card:hover .before-icon {
-  background: #2875a8;
+
+.before-card:hover
+.before-icon {
+  background:
+    linear-gradient(
+      135deg,
+      #147ad0,
+      #38abe5
+    );
+
   color: #ffffff;
-  transform: rotate(-7deg);
+
+  transform:
+    rotate(-7deg)
+    scale(1.05);
+
+  box-shadow:
+    0 9px 20px
+    rgba(20, 127, 202, 0.2);
 }
+
+
+/* =========================================================
+   ARROW
+========================================================= */
 
 .before-arrow {
   position: absolute;
@@ -196,19 +545,27 @@
   top: 12px;
   right: 0;
 
-  color: #5d91b4;
+  color: #318fc7;
 
   font-size: 16px;
 
   opacity: 0;
-  transform: translate(-5px, 5px);
 
-  transition: 0.3s ease;
+  transform:
+    translate(-5px, 5px);
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
-.before-card:hover .before-arrow {
+
+.before-card:hover
+.before-arrow {
   opacity: 1;
-  transform: translate(0, 0);
+
+  transform:
+    translate(0, 0);
 }
 
 
@@ -218,43 +575,81 @@
 
 .before-card-content {
   position: relative;
+
   z-index: 2;
 
   margin-top: auto;
 }
 
+
+/* =========================================================
+   TAG
+========================================================= */
+
 .before-tag {
-  display: inline-block;
+  display: inline-flex;
+
+  align-items: center;
 
   margin-bottom: 9px;
 
-  color: #4385ae;
+  padding:
+    5px 9px;
 
-  font-size: 12px;
+  border-radius: 100px;
+
+  background:
+    rgba(223, 243, 255, 0.75);
+
+  color: #147fc5;
+
+  font-size: 11px;
+
   font-weight: 800;
-  letter-spacing: 1.8px;
+
+  letter-spacing: 1.5px;
 }
+
+
+/* =========================================================
+   CARD HEADING
+========================================================= */
 
 .before-card h3 {
-  margin: 0 0 9px;
+  margin:
+    0 0 9px;
 
-  color: #173b56;
+  color: #153f5b;
 
-  font-family: Georgia, "Times New Roman", serif;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
   font-size: 25px;
+
   line-height: 1.1;
+
   font-weight: 500;
+
+  letter-spacing: -0.5px;
 }
+
+
+/* =========================================================
+   CARD DESCRIPTION
+========================================================= */
 
 .before-card p {
   margin: 0;
 
   max-width: 300px;
 
-  color: #71879a;
+  color: #6d899c;
 
   font-size: 13px;
-  line-height: 1.6;
+
+  line-height: 1.65;
 }
 
 
@@ -264,73 +659,159 @@
 
 .before-points {
   margin-top: 17px;
+
   padding-top: 13px;
 
   display: flex;
+
   flex-direction: column;
+
   gap: 7px;
 
-  border-top: 1px solid #e2edf4;
+  border-top:
+    1px solid
+    rgba(45, 128, 180, 0.12);
 }
+
 
 .before-point {
   display: flex;
+
   align-items: center;
+
   gap: 8px;
 
-  color: #597287;
+  color: #56768b;
 
   font-size: 14px;
 }
 
+
+/* =========================================================
+   POINT ICON
+========================================================= */
+
 .before-point span {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
 
   flex-shrink: 0;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   border-radius: 50%;
 
-  background: #e8f3fa;
-  color: #2875a8;
+  border:
+    1px solid
+    rgba(25, 128, 195, 0.1);
+
+  background:
+    linear-gradient(
+      145deg,
+      #eaf7ff,
+      #d9effc
+    );
+
+  color: #147fc5;
 
   font-size: 12px;
 }
 
 
 /* =========================================================
-   BEFORE YOU GO - RESPONSIVE
+   DIFFERENT CARD BACKGROUND DETAILS
 ========================================================= */
 
-/* LARGE DESKTOP */
+.before-card:nth-child(1) {
+  background:
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(59, 179, 232, 0.1),
+      transparent 38%
+    ),
+    rgba(255, 255, 255, 0.94);
+}
+
+
+.before-card:nth-child(2) {
+  background:
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(41, 142, 218, 0.09),
+      transparent 38%
+    ),
+    rgba(255, 255, 255, 0.94);
+}
+
+
+.before-card:nth-child(3) {
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(65, 191, 235, 0.09),
+      transparent 38%
+    ),
+    rgba(255, 255, 255, 0.94);
+}
+
+
+.before-card:nth-child(4) {
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(32, 124, 211, 0.09),
+      transparent 38%
+    ),
+    rgba(255, 255, 255, 0.94);
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
 @media (min-width: 1400px) {
+
   .before-go {
     padding-left: 7%;
     padding-right: 7%;
   }
 
+
   .before-go-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(
+        4,
+        minmax(0, 1fr)
+      );
+
     gap: 22px;
-    padding: 0 15px;
+
+    padding:
+      0 15px;
   }
+
 
   .before-card {
     min-height: 390px;
+
     padding: 24px;
   }
+
 
   .before-card h3 {
     font-size: 28px;
   }
 
+
   .before-card p {
     font-size: 16px;
   }
+
 
   .before-point {
     font-size: 16px;
@@ -345,29 +826,45 @@
 @media (max-width: 1200px) {
 
   .before-go {
-    padding: 45px 5%;
+    padding:
+      45px 5%;
   }
 
+
   .before-go-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
     gap: 20px;
-    padding: 0 12px;
+
+    padding:
+      0 12px;
   }
+
 
   .before-card {
     min-height: 380px;
+
     padding: 23px;
   }
+
 
   .before-card h3 {
     font-size: 27px;
   }
 
+
   .before-card p {
     max-width: 100%;
+
     font-size: 16px;
+
     line-height: 1.65;
   }
+
 
   .before-point {
     font-size: 16px;
@@ -382,39 +879,66 @@
 @media (max-width: 900px) {
 
   .before-go {
-    padding: 42px 4%;
+    padding:
+      42px 4%;
   }
+
+
+  .before-go::before {
+    width: 400px;
+    height: 400px;
+
+    top: -250px;
+    right: -150px;
+  }
+
 
   .before-go-header {
     margin-bottom: 35px;
   }
 
+
   .before-go-header h2 {
-    font-size: clamp(38px, 6vw, 52px);
+    font-size:
+      clamp(38px, 6vw, 52px);
   }
+
 
   .before-go-header p {
     font-size: 16px;
   }
 
+
   .before-go-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
     gap: 18px;
-    padding: 0 10px;
+
+    padding:
+      0 10px;
   }
+
 
   .before-card {
     min-height: 370px;
+
     padding: 22px;
   }
+
 
   .before-card h3 {
     font-size: 26px;
   }
 
+
   .before-card p {
     font-size: 16px;
   }
+
 
   .before-point {
     font-size: 16px;
@@ -429,74 +953,169 @@
 @media (max-width: 600px) {
 
   .before-go {
-    padding: 38px 16px;
+    padding:
+      42px 16px;
+
+    background:
+      radial-gradient(
+        circle at 90% 8%,
+        rgba(40, 158, 221, 0.18),
+        transparent 25%
+      ),
+      radial-gradient(
+        circle at 8% 88%,
+        rgba(24, 118, 211, 0.11),
+        transparent 25%
+      ),
+      linear-gradient(
+        145deg,
+        #ddf3ff 0%,
+        #f9fdff 48%,
+        #d9effd 100%
+      );
   }
+
+
+  /* =========================
+     MOBILE BACKGROUND RINGS
+  ========================= */
+
+  .before-go::before {
+    width: 280px;
+    height: 280px;
+
+    top: -175px;
+    right: -105px;
+
+    box-shadow:
+      0 0 0 28px
+        rgba(40, 158, 220, 0.025),
+
+      0 0 0 56px
+        rgba(40, 158, 220, 0.015);
+  }
+
+
+  .before-go::after {
+    width: 220px;
+    height: 220px;
+
+    left: -150px;
+    bottom: -75px;
+  }
+
 
   .before-go-container {
     width: 100%;
   }
 
+
+  /* =========================
+     HEADER
+  ========================= */
+
   .before-go-header {
     max-width: 100%;
+
     margin-bottom: 30px;
   }
 
+
   .before-go-small-title {
     font-size: 11px;
+
     letter-spacing: 2px;
   }
+
 
   .before-go-small-title span {
     width: 20px;
   }
 
+
   .before-go-header h2 {
     font-size: 40px;
+
     line-height: 1.05;
   }
 
+
   .before-go-header p {
     max-width: 100%;
+
     font-size: 16px;
+
     line-height: 1.65;
   }
 
-  /* ONE COLUMN + LEFT RIGHT GAP */
+
+  /* =========================
+     ONE COLUMN
+  ========================= */
+
   .before-go-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
+
     gap: 18px;
 
-    /* cards ko edge se door rakhega */
     padding-left: 8px;
     padding-right: 8px;
   }
 
+
+  /* =========================
+     MOBILE CARD
+  ========================= */
+
   .before-card {
     width: 100%;
+
     min-height: 360px;
+
     padding: 23px;
+
+    border-radius: 18px;
+
+    box-shadow:
+      0 13px 30px
+      rgba(18, 83, 124, 0.09);
   }
+
 
   .before-card h3 {
     font-size: 28px;
+
     line-height: 1.12;
   }
 
+
   .before-card p {
     max-width: 100%;
+
     font-size: 16px;
+
     line-height: 1.65;
   }
 
+
   .before-point {
     font-size: 16px;
+
     line-height: 1.45;
   }
+
 
   .before-icon {
     width: 44px;
     height: 44px;
+
     font-size: 19px;
+  }
+
+
+  .before-tag {
+    font-size: 11px;
   }
 }
 
@@ -508,31 +1127,58 @@
 @media (max-width: 400px) {
 
   .before-go {
-    padding: 32px 12px;
+    padding:
+      36px 12px;
   }
+
+
+  .before-go::before {
+    width: 230px;
+    height: 230px;
+
+    top: -145px;
+    right: -90px;
+  }
+
+
+  .before-go::after {
+    width: 180px;
+    height: 180px;
+
+    left: -125px;
+    bottom: -55px;
+  }
+
 
   .before-go-grid {
     gap: 16px;
+
     padding-left: 7px;
     padding-right: 7px;
   }
 
+
   .before-card {
     min-height: 350px;
+
     padding: 21px;
   }
+
 
   .before-go-header h2 {
     font-size: 36px;
   }
 
+
   .before-go-header p {
     font-size: 16px;
   }
 
+
   .before-card h3 {
     font-size: 26px;
   }
+
 
   .before-card p,
   .before-point {
@@ -552,25 +1198,46 @@
     padding-right: 9px;
   }
 
+
   .before-go-grid {
     padding-left: 6px;
     padding-right: 6px;
   }
 
+
   .before-card {
     padding: 19px;
   }
+
 
   .before-go-header h2 {
     font-size: 33px;
   }
 
+
   .before-card h3 {
     font-size: 24px;
   }
 
+
   .before-card p,
   .before-point {
     font-size: 15px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .before-card,
+  .before-card::before,
+  .before-card::after,
+  .before-icon,
+  .before-arrow {
+    transition: none;
   }
 }

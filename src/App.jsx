@@ -1,48 +1,89 @@
-import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+
+// =====================================================
+// MAIN WEBSITE COMPONENTS
+// =====================================================
 
 import Navbar from "./components/Navbar";
+import TravelFooter from "./components/TravelFooter";
+import WishlistDrawer from "./components/WishlistDrawer";
+
+// =====================================================
+// CONTEXT
+// =====================================================
+
+import { WishlistProvider } from "./context/WishlistContext";
+
+// =====================================================
+// MAIN WEBSITE PAGES
+// =====================================================
 
 import Home from "./pages/Home";
-import PlaceDetail from "./pages/PlaceDetail";
-
-import TravelFooter from "./components/TravelFooter";
 import Explore from "./pages/Explore";
 import TripPlan from "./pages/TripPlan";
 import CreateTrip from "./pages/CreateTrip";
-import DestinationDetail from "./pages/DestinationDetail";
-
-import WishlistDrawer from "./components/WishlistDrawer";
-import { WishlistProvider } from "./context/WishlistContext";
 
 import Destinations from "./pages/Destinations";
+import DestinationDetail from "./pages/DestinationDetail";
 
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import FAQs from "./pages/FAQs";
 import Guides from "./pages/Guides";
+
+// =====================================================
+// BOOKING PAGES
+// =====================================================
+
 import Booking from "./pages/Booking";
+import BookingSummary from "./pages/BookingSummary";
+import BookingDetails from "./pages/BookingDetails";
+
+// =====================================================
+// ADMIN PAGES
+// IMPORTANT:
+// All files are inside src/pages/
+// =====================================================
+
 import AdminLogin from "./pages/AdminLogin";
+import AdminLayout from "./pages/AdminLayout";
+
 import AdminDashboard from "./pages/AdminDashboard";
+
 import AdminTrips from "./pages/AdminTrips";
+import AdminAddTrip from "./pages/AdminAddTrip";
+import AdminEditTrip from "./pages/AdminEditTrip";
+
 import AdminDestinations from "./pages/AdminDestinations";
+import AdminDestinationForm from "./pages/AdminDestinationForm";
+import AdminEditDestination from "./pages/AdminEditDestination";
+
 import AdminBookings from "./pages/AdminBookings";
+import AdminBookingDetails from "./pages/AdminBookingDetails";
+
 import AdminCustomers from "./pages/AdminCustomers";
 import AdminReviews from "./pages/AdminReviews";
 import AdminMessages from "./pages/AdminMessages";
+import AdminStaff from "./pages/AdminStaff";
+
+import AdminPayments from "./pages/AdminPayments";
+import AdminActivities from "./pages/AdminActivities";
+import AdminReports from "./pages/AdminReports";
 import AdminSettings from "./pages/AdminSettings";
-import AdminEditTrip from "./pages/AdminEditTrip";
-import AdminAddTrip from "./pages/AdminAddTrip";
-import AdminLayout from "./pages/AdminLayout";
-import AdminAddDestination from "./pages/AdminDestinationForm";
-import AdminEditDestination from "./pages/AdminEditDestination";
-import BookingSummary from "./pages/BookingSummary";
-import BookingDetails from "./pages/BookingDetails";
+import SupportDashboard from "./pages/admin/SupportDashboard";
 // =====================================================
-// SCROLL TO TOP ON NEW PAGE
+// SCROLL TO TOP
 // =====================================================
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -57,213 +98,354 @@ const ScrollToTop = () => {
   return null;
 };
 
+// =====================================================
+// ADMIN PROTECTED ROUTE
+// =====================================================
+
+const AdminProtectedRoute = ({ children }) => {
+  let adminUser = null;
+
+  try {
+    const storedAdmin = localStorage.getItem("adminUser");
+
+    if (storedAdmin) {
+      adminUser = JSON.parse(storedAdmin);
+    }
+  } catch (error) {
+    console.error(
+      "Admin authentication error:",
+      error
+    );
+
+    adminUser = null;
+  }
+
+  if (!adminUser?.loggedIn) {
+    return (
+      <Navigate
+        to="/admin-secret"
+        replace
+      />
+    );
+  }
+
+  return children;
+};
 
 // =====================================================
 // APP
 // =====================================================
+
 const App = () => {
   const location = useLocation();
 
+  // Check whether current page is admin
   const isAdminPage =
-  location.pathname.startsWith("/admin-secret");
-  
+    location.pathname.startsWith(
+      "/admin-secret"
+    );
 
-const hideFooter =
-  location.pathname === "/signup" ||
-  location.pathname === "/login" ||
-  isAdminPage;
+  // Hide footer on auth + admin pages
+  const hideFooter =
+    location.pathname === "/signup" ||
+    location.pathname === "/login" ||
+    isAdminPage;
 
-
-  // =====================================================
-  // MAIN APP
-  // =====================================================
   return (
     <WishlistProvider>
 
+      {/* =============================================
+          GLOBAL SCROLL
+      ============================================= */}
+
       <ScrollToTop />
 
-       {!isAdminPage && <Navbar />}
+      {/* =============================================
+          MAIN WEBSITE NAVBAR
+          Hidden on admin pages
+      ============================================= */}
+
+      {!isAdminPage && <Navbar />}
+
+      {/* =============================================
+          ROUTES
+      ============================================= */}
 
       <Routes>
 
-        {/* HOME */}
+        {/* =================================================
+            MAIN WEBSITE
+        ================================================= */}
+
         <Route
           path="/"
           element={<Home />}
         />
 
-        {/* EXPLORE */}
         <Route
           path="/explore"
           element={<Explore />}
         />
 
-        {/* TRIP PLAN */}
         <Route
           path="/trip-plan"
           element={<TripPlan />}
         />
 
-        {/* CREATE TRIP */}
         <Route
           path="/create-trip"
           element={<CreateTrip />}
         />
 
-        {/* DESTINATION DETAIL */}
-        <Route
-          path="/destination/:id"
-          element={<DestinationDetail />}
-        />
-
-        {/* DESTINATIONS */}
         <Route
           path="/destinations"
           element={<Destinations />}
         />
 
-       
+        <Route
+          path="/destination/:id"
+          element={<DestinationDetail />}
+        />
 
-        {/* SIGNUP */}
+        {/* =================================================
+            AUTH
+        ================================================= */}
+
         <Route
           path="/signup"
           element={<Signup />}
         />
 
-        {/* LOGIN */}
         <Route
           path="/login"
           element={<Login />}
         />
 
-        {/* ABOUT */}
+        {/* =================================================
+            INFORMATION
+        ================================================= */}
+
         <Route
           path="/about-us"
           element={<AboutUs />}
         />
 
-        {/* CONTACT */}
         <Route
           path="/contact"
           element={<Contact />}
         />
 
-        {/* FAQS */}
         <Route
           path="/faqs"
           element={<FAQs />}
         />
 
-        {/* GUIDES */}
         <Route
           path="/guides"
           element={<Guides />}
         />
 
-        {/* BOOKING */}
+        {/* =================================================
+            BOOKING
+        ================================================= */}
+
         <Route
           path="/booking"
           element={<Booking />}
         />
-           {/* =================================================
-    ADMIN LOGIN
-================================================= */}
 
-<Route
-  path="/admin-secret"
-  element={<AdminLogin />}
+        <Route
+          path="/booking-summary"
+          element={<BookingSummary />}
+        />
+
+        <Route
+          path="/booking-details"
+          element={<BookingDetails />}
+        />
+
+        {/* =================================================
+            ADMIN LOGIN
+        ================================================= */}
+
+        <Route
+          path="/admin-secret"
+          element={<AdminLogin />}
+        />
+
+        {/* =================================================
+            ADMIN DASHBOARD
+        ================================================= */}
+
+        <Route
+          path="/admin-secret/dashboard"
+          element={
+            <AdminProtectedRoute>
+              <AdminLayout />
+            </AdminProtectedRoute>
+          }
+        >
+
+          {/* ===============================================
+              ADMIN DASHBOARD HOME
+          =============================================== */}
+
+          <Route
+            index
+            element={<AdminDashboard />}
+          />
+
+          {/* ===============================================
+              TRIPS
+          =============================================== */}
+
+          <Route
+            path="trips"
+            element={<AdminTrips />}
+          />
+
+          <Route
+            path="trips/new"
+            element={<AdminAddTrip />}
+          />
+
+          <Route
+            path="trips/edit/:id"
+            element={<AdminEditTrip />}
+          />
+
+          {/* ===============================================
+              DESTINATIONS
+          =============================================== */}
+
+          <Route
+            path="destinations"
+            element={<AdminDestinations />}
+          />
+
+          <Route
+            path="destinations/new"
+            element={<AdminDestinationForm />}
+          />
+
+          <Route
+            path="destinations/edit/:id"
+            element={<AdminEditDestination />}
+          />
+        <Route
+  path="staff"
+  element={<AdminStaff />}
 />
 
+          {/* ===============================================
+              BOOKINGS
+          =============================================== */}
 
-{/* =================================================
-    ADMIN PANEL
-================================================= */}
+          <Route
+            path="bookings"
+            element={<AdminBookings />}
+          />
 
-<Route
-  path="/admin-secret"
-  element={<AdminLayout />}
->
-  <Route
-    path="dashboard"
-    element={<AdminDashboard />}
-  />
+          <Route
+            path="booking-details"
+            element={<AdminBookingDetails />}
+          />
 
-  <Route
-    path="trips"
-    element={<AdminTrips />}
-  />
+          {/* ===============================================
+              CUSTOMERS
+          =============================================== */}
 
-  <Route
-    path="destinations"
-    element={<AdminDestinations />}
-  />
+          <Route
+            path="customers"
+            element={<AdminCustomers />}
+          />
 
-  <Route
-    path="bookings"
-    element={<AdminBookings />}
-  />
+          {/* ===============================================
+              REVIEWS
+          =============================================== */}
 
-  <Route
-    path="customers"
-    element={<AdminCustomers />}
-  />
+          <Route
+            path="reviews"
+            element={<AdminReviews />}
+          />
 
-  <Route
-    path="reviews"
-    element={<AdminReviews />}
-  />
+          {/* ===============================================
+              MESSAGES
+          =============================================== */}
 
-  <Route
-    path="messages"
-    element={<AdminMessages />}
-  />
+          <Route
+            path="messages"
+            element={<AdminMessages />}
+          />
 
-  <Route
-    path="settings"
-    element={<AdminSettings />}
-  />
+          {/* ===============================================
+              PAYMENTS
+          =============================================== */}
 
-  <Route
-    path="trips/edit/:id"
-    element={<AdminEditTrip />}
-  />
+          <Route
+            path="payments"
+            element={<AdminPayments />}
+          />
 
-  <Route
-    path="trips/new"
-    element={<AdminAddTrip />}
-  />
-</Route>
-<Route
-  path="/admin-secret/destinations/new"
-  element={<AdminAddDestination />}
+          {/* ===============================================
+              ACTIVITIES
+          =============================================== */}
+
+          <Route
+            path="activities"
+            element={<AdminActivities />}
+          />
+
+          {/* ===============================================
+              REPORTS
+          =============================================== */}
+
+          <Route
+            path="reports"
+            element={<AdminReports />}
+          />
+
+          {/* ===============================================
+              SETTINGS
+          =============================================== */}
+
+          <Route
+            path="settings"
+            element={<AdminSettings />}
+          />
+
+        </Route>
+        <Route
+  path="/support-admin/dashboard"
+  element={<SupportDashboard />}
 />
- <Route
-    path="/admin-secret/destinations/edit/:id"
-    element={<AdminEditDestination />}
-  />
-  <Route
-  path="/booking-summary"
-  element={<BookingSummary />}
-/>
-<Route
-  path="/place/:destinationId/:placeId"
-  element={<PlaceDetail />}
-/>
-<Route
-  path="/booking-details"
-  element={<BookingDetails />}
-/>
+
+        {/* =================================================
+            FALLBACK
+        ================================================= */}
+
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to="/"
+              replace
+            />
+          }
+        />
+
       </Routes>
 
-
-      {/* =================================================
+      {/* =============================================
           FOOTER
-          Signup + Login par hide rahega
-      ================================================= */}
+      ============================================= */}
+
       {!hideFooter && <TravelFooter />}
 
+      {/* =============================================
+          WISHLIST DRAWER
+      ============================================= */}
 
-      {/* WISHLIST */}
       <WishlistDrawer />
 
     </WishlistProvider>

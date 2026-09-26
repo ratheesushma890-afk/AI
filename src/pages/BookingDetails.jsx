@@ -1,951 +1,1166 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   FiArrowLeft,
+  FiArrowRight,
   FiCalendar,
   FiCheck,
-  FiChevronRight,
   FiClock,
-  FiCoffee,
-  FiHeart,
-  FiHome,
   FiMapPin,
-  FiMinus,
   FiNavigation,
-  FiPlus,
-  FiShoppingBag,
   FiStar,
-  FiTruck,
   FiUsers,
-  FiCompass,
-  FiCamera,
-  FiMusic,
-  FiX,
 } from "react-icons/fi";
 
 import "./BookingDetails.css";
 
-const BookingDetails = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+/* =========================================================
+   DESTINATION FALLBACK DATA
+========================================================= */
 
-  /* =========================================================
-     DATA COMING FROM CREATE TRIP
-  ========================================================= */
+const destinationData = {
+  Jaipur: {
+    image:
+      "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=90",
+    location: "Rajasthan, India",
+    description:
+      "Explore royal palaces, historic forts, colourful markets and traditional Rajasthani culture. Discover the beautiful Pink City with a comfortable and memorable travel experience.",
+  },
 
-  const trip = location.state || {};
+  Goa: {
+    image:
+      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=90",
+    location: "Goa, India",
+    description:
+      "Enjoy beautiful beaches, peaceful sunsets, local food and the vibrant coastal atmosphere of Goa.",
+  },
 
-  const destination =
-    trip.destination ||
-    trip.trip?.destination ||
-    "Jaipur, Rajasthan";
+  Manali: {
+    image:
+      "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=90",
+    location: "Himachal Pradesh, India",
+    description:
+      "Experience beautiful mountains, peaceful valleys, cafés and exciting adventure activities in Manali.",
+  },
 
-  const budget = Number(
-    trip.budget ||
-      trip.trip?.budget ||
-      50000
-  );
+  Kerala: {
+    image:
+      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=90",
+    location: "Kerala, India",
+    description:
+      "Explore peaceful backwaters, lush tea gardens, tropical beaches, beautiful hills and Kerala's rich culture.",
+  },
 
-  const rawTripDate =
-  trip.date ||
-  trip.trip?.date ||
-  "";
+  Rishikesh: {
+    image:
+      "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=90",
+    location: "Uttarakhand, India",
+    description:
+      "Enjoy the peaceful Ganga river, mountain surroundings, spiritual experiences and adventure activities.",
+  },
 
-const formatTripDate = (date) => {
-  if (!date) return "";
+  Delhi: {
+    image:
+      "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=90",
+    location: "Delhi, India",
+    description:
+      "Explore historical monuments, famous landmarks, markets and delicious food across Delhi.",
+  },
 
-  const parts = date.split("-");
+  Mumbai: {
+    image:
+      "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1200&q=90",
+    location: "Maharashtra, India",
+    description:
+      "Discover Mumbai's famous landmarks, beaches, food, entertainment and energetic city life.",
+  },
 
-  if (parts.length !== 3) {
-    return date;
-  }
+  Agra: {
+    image:
+      "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=90",
+    location: "Uttar Pradesh, India",
+    description:
+      "Visit the iconic Taj Mahal and explore the beautiful historical architecture of Agra.",
+  },
 
-  const [year, month, day] = parts;
-
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  return `${day} ${monthNames[Number(month) - 1]} ${year}`;
+  Udaipur: {
+    image:
+      "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=90",
+    location: "Rajasthan, India",
+    description:
+      "Experience beautiful lakes, royal palaces and the peaceful romantic charm of Udaipur.",
+  },
 };
 
-const tripDates =
-  trip.dateFormatted ||
-  trip.trip?.dateFormatted ||
-  formatTripDate(rawTripDate) ||
-  trip.dates ||
-  trip.trip?.dates ||
-  "Travel date not selected";
+/* =========================================================
+   DEFAULT HOTEL
+========================================================= */
 
-  const travelers =
-    trip.travelers ||
-    trip.guests ||
-    trip.trip?.travelers ||
-    2;
+const defaultHotel = {
+  name: "Royal Heritage Hotel",
+  type: "Hotel",
+  location: "City Centre",
+  rating: "4.8",
+  reviews:
+    "Comfortable premium stay with excellent service and a convenient location.",
+  image:
+    "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=90",
+};
 
-  const tripType =
-    trip.tripType ||
-    trip.travelType ||
-    trip.trip?.tripType ||
-    "Couple";
+/* =========================================================
+   BOOKING DETAILS
+========================================================= */
+
+const BookingDetails = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  /* =======================================================
+     GET LOCAL STORAGE TRIP
+  ======================================================= */
+
+  let storedTrip = {};
+
+  try {
+    const savedTrip =
+      localStorage.getItem("tripperTrip");
+
+    storedTrip = savedTrip
+      ? JSON.parse(savedTrip)
+      : {};
+  } catch (error) {
+    console.error(
+      "Trip data error:",
+      error
+    );
+
+    storedTrip = {};
+  }
+
+  /* =======================================================
+     MAIN TRIP
+  ======================================================= */
+
+  const trip =
+    location.state?.trip ||
+    storedTrip ||
+    {};
+
+  /* =======================================================
+     DESTINATION
+  ======================================================= */
+
+  const destinationName =
+    location.state?.destination ||
+    trip?.destination ||
+    "Jaipur";
+
+  const destination =
+    destinationData[destinationName] ||
+    destinationData.Jaipur;
+
+  /* =======================================================
+     SAME IMAGE FROM PREVIOUS PAGE
+  ======================================================= */
+
+  const destinationImage =
+    trip?.image ||
+    trip?.destinationImage ||
+    location.state?.image ||
+    location.state?.destinationImage ||
+    destination?.image;
+
+  /* =======================================================
+     LOCATION
+  ======================================================= */
+
+  const destinationLocation =
+    trip?.state ||
+    trip?.destinationState ||
+    location.state?.state ||
+    location.state?.destinationState ||
+    destination?.location;
+
+  /* =======================================================
+     DESCRIPTION
+  ======================================================= */
+
+  const destinationDescription =
+    trip?.description ||
+    location.state?.description ||
+    destination?.description;
+
+  /* =======================================================
+     DATE
+  ======================================================= */
+
+  const date =
+    trip?.dateFormatted ||
+    trip?.date ||
+    "Not selected";
+
+  /* =======================================================
+     DAYS
+  ======================================================= */
+
+  const days =
+    trip?.totalDays ||
+    trip?.days ||
+    trip?.duration ||
+    3;
+
+  /* =======================================================
+     TRAVELLERS
+  ======================================================= */
+
+  const travellers = Number(
+    trip?.travellers ||
+      trip?.travelers ||
+      trip?.guests ||
+      2
+  );
+
+  /* =======================================================
+     TRANSPORT
+  ======================================================= */
 
   const transport =
-    trip.transport ||
-    trip.transportation ||
-    trip.trip?.transport ||
-    "Private Cab";
+    trip?.transport ||
+    trip?.travelPreference ||
+    "Any";
 
-  const transportPrice = Number(
-    trip.transportPrice ||
-      trip.trip?.transportPrice ||
-      3500
-  );
+  /* =======================================================
+     TRIP TYPE
+  ======================================================= */
+
+  const travelType =
+    trip?.travelType ||
+    trip?.tripType ||
+    trip?.travelStyle ||
+    "Couple";
+
+  /* =======================================================
+     BUDGET
+  ======================================================= */
+
+  const budget =
+    trip?.budget ||
+    trip?.selectedBudget ||
+    trip?.budgetAmount ||
+    "₹5,000 – ₹10,000";
+
+  /* =======================================================
+     BUDGET CALCULATION
+  ======================================================= */
+
+  const budgetInfo = useMemo(() => {
+    const numbers =
+      String(budget)
+        .replace(/,/g, "")
+        .match(/\d+/g)
+        ?.map(Number) || [];
+
+    if (numbers.length >= 2) {
+      return {
+        min: Math.min(
+          numbers[0],
+          numbers[1]
+        ),
+
+        max: Math.max(
+          numbers[0],
+          numbers[1]
+        ),
+      };
+    }
+
+    if (numbers.length === 1) {
+      return {
+        min: numbers[0],
+        max: numbers[0],
+      };
+    }
+
+    return {
+      min: 5000,
+      max: 10000,
+    };
+  }, [budget]);
+
+  /* =======================================================
+     ESTIMATED PRICE
+  ======================================================= */
+
+  const estimatedPrice =
+    budgetInfo.min ===
+    budgetInfo.max
+      ? budgetInfo.min
+      : Math.round(
+          (budgetInfo.min +
+            budgetInfo.max) /
+            2
+        );
+
+  /* =======================================================
+     PER PERSON
+  ======================================================= */
+
+  const perPerson =
+    travellers > 0
+      ? Math.round(
+          estimatedPrice /
+            travellers
+        )
+      : estimatedPrice;
+
+  /* =======================================================
+     HOTEL
+  ======================================================= */
 
   const hotel =
-    trip.hotel || {
-      name: "The Grand Palace",
-      location: destination,
-      rating: "4.8",
-      reviews: "245 reviews",
-      image:
-        "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1400&q=85",
-    };
+    location.state?.hotel ||
+    trip?.hotel ||
+    defaultHotel;
 
-  const selectedActivities =
-    trip.activities ||
-    trip.selectedActivities ||
-    [
-      {
-        name: "City Sightseeing",
-        price: 1200,
-      },
-      {
-        name: "Local Cultural Experience",
-        price: 1000,
-      },
+  const stayType =
+    trip?.stay ||
+    hotel?.type ||
+    "Hotel";
+
+  /* =======================================================
+     PLACES
+  ======================================================= */
+
+  let places =
+    trip?.places ||
+    trip?.selectedPlaces ||
+    [];
+
+  if (!Array.isArray(places)) {
+    places = String(places)
+      .split(",")
+      .map((item) =>
+        item.trim()
+      )
+      .filter(Boolean);
+  }
+
+  if (!places.length) {
+    places = [
+      "City Sightseeing",
+      "Local Market",
+      "Famous Attractions",
     ];
+  }
 
-  const mealPlan =
-    trip.mealPlan ||
-    trip.meals ||
-    "Breakfast Included";
+  /* =======================================================
+     INTERESTS
+  ======================================================= */
 
-  const roomType =
-    trip.roomType ||
-    "Premium Room";
+  let interests =
+    trip?.interests ||
+    trip?.selectedInterests ||
+    [];
 
-  const rooms = Number(
-    trip.rooms || 1
-  );
+  if (!Array.isArray(interests)) {
+    interests = [interests];
+  }
 
-  const adults = Number(
-    trip.adults || travelers
-  );
+  if (!interests.length) {
+    interests = [
+      "Sightseeing",
+      "Local Experience",
+      "Relaxation",
+    ];
+  }
 
-  const children = Number(
-    trip.children || 0
-  );
+  /* =======================================================
+     CONFIRM BOOKING
+  ======================================================= */
 
-  /* =========================================================
-     STAY
-  ========================================================= */
+  const handleConfirm = () => {
+    const updatedTrip = {
+      ...trip,
 
-  const nights = Number(
-    trip.nights ||
-      trip.totalNights ||
-      4
-  );
+      destination:
+        destinationName,
 
-  /* =========================================================
-     HOTEL PRICE
-  ========================================================= */
+      image:
+        destinationImage,
 
-  const hotelPrice = Number(
-    trip.hotelPrice ||
-      trip.price ||
-      6000
-  );
+      destinationImage:
+        destinationImage,
 
-  const hotelTotal =
-    hotelPrice *
-    nights *
-    rooms;
+      state:
+        destinationLocation,
 
-  /* =========================================================
-     EXTRA ACTIVITIES
-  ========================================================= */
+      destinationState:
+        destinationLocation,
 
-  const additionalOptions = [
-   
-    {
-      id: "spa",
-      title: "Spa & Wellness",
       description:
-        "Relaxing spa and wellness experience.",
-      price: 1200,
-      icon: <FiHeart />,
-    },
-    {
-      id: "adventure",
-      title: "Adventure",
-      description:
-        "Add an exciting outdoor adventure.",
-      price: 1800,
-      icon: <FiCompass />,
-    },
-    {
-      id: "food",
-      title: "Food Experience",
-      description:
-        "Local food and premium dining experience.",
-      price: 1600,
-      icon: <FiCoffee />,
-    },
-    {
-      id: "sightseeing",
-      title: "Extra Sightseeing",
-      description:
-        "Discover more places around the destination.",
-      price: 1400,
-      icon: <FiCamera />,
-    },
-    {
-      id: "culture",
-      title: "Cultural Experience",
-      description:
-        "Music, culture and local experiences.",
-      price: 1100,
-      icon: <FiMusic />,
-    },
-  ];
+        destinationDescription,
 
-  const [addedExtras, setAddedExtras] =
-    useState([]);
+      date,
 
-  const toggleExtra = (id) => {
-    setAddedExtras((current) => {
-      if (current.includes(id)) {
-        return current.filter(
-          (item) => item !== id
-        );
-      }
+      days,
 
-      return [...current, id];
-    });
-  };
+      totalDays:
+        days,
 
-  /* =========================================================
-     ACTIVITY TOTAL
-  ========================================================= */
+      travellers,
 
-  const activitiesTotal = selectedActivities.reduce(
-    (total, activity) =>
-      total + Number(activity.price || 0),
-    0
-  );
-
-  /* =========================================================
-     EXTRA TOTAL
-  ========================================================= */
-
-  const extrasTotal = additionalOptions
-    .filter((item) =>
-      addedExtras.includes(item.id)
-    )
-    .reduce(
-      (total, item) =>
-        total + item.price,
-      0
-    );
-
-  /* =========================================================
-     FOOD
-  ========================================================= */
-
-  const mealPrice =
-    mealPlan === "Breakfast Included"
-      ? 1500
-      : mealPlan === "Breakfast + Dinner"
-      ? 3500
-      : mealPlan === "All Meals"
-      ? 5000
-      : 0;
-
-  /* =========================================================
-     TOTAL
-  ========================================================= */
-
-  const tripTotal = useMemo(() => {
-    return (
-      hotelTotal +
-      transportPrice +
-      activitiesTotal +
-      mealPrice +
-      extrasTotal
-    );
-  }, [
-    hotelTotal,
-    transportPrice,
-    activitiesTotal,
-    mealPrice,
-    extrasTotal,
-  ]);
-
-  const remainingBudget =
-    budget - tripTotal;
-
-  /* =========================================================
-     CONFIRM
-  ========================================================= */
-
-  const handleConfirmBooking = () => {
-    const finalBooking = {
-      destination,
-      budget,
-      tripDates,
-      travelers,
-      adults,
-      children,
-      tripType,
       transport,
-      transportPrice,
+
+      travelType,
+
+      budget,
+
+      stay:
+        stayType,
+
       hotel,
-      roomType,
-      rooms,
-      nights,
-      hotelTotal,
-      mealPlan,
-      mealPrice,
-      activities: selectedActivities,
-      activitiesTotal,
-      additionalServices:
-        additionalOptions.filter((item) =>
-          addedExtras.includes(item.id)
-        ),
-      extrasTotal,
-      total: tripTotal,
-      remainingBudget,
+
+      places,
+
+      selectedPlaces:
+        places,
+
+      interests,
+
+      selectedInterests:
+        interests,
+
+      estimatedPrice,
+
+      perPerson,
+
+      bookingStatus:
+        "confirmed",
+
+      paymentStatus:
+        "pending",
     };
+
+    /* SAVE */
+
+    localStorage.setItem(
+      "tripperTrip",
+      JSON.stringify(
+        updatedTrip
+      )
+    );
+
+    /* PAYMENT PAGE */
 
     navigate(
-      "/booking-confirmed",
+      "/booking-summary",
       {
-        state: finalBooking,
+        state: {
+          trip:
+            updatedTrip,
+
+          destination:
+            destinationName,
+
+          hotel,
+
+          image:
+            destinationImage,
+
+          destinationImage:
+            destinationImage,
+
+          description:
+            destinationDescription,
+
+          state:
+            destinationLocation,
+
+          places,
+
+          interests,
+        },
       }
     );
   };
+
+  /* =======================================================
+     UI
+  ======================================================= */
 
   return (
     <div className="booking-details-page">
 
-      {/* =====================================================
-          TOP
-      ===================================================== */}
+      <main className="booking-container">
 
-      <div className="booking-details-top">
+        {/* =================================================
+            BACK
+        ================================================= */}
 
         <button
-          className="booking-back"
-          onClick={() => navigate(-1)}
+          type="button"
+          className="back-link"
+          onClick={() =>
+            navigate(-1)
+          }
         >
           <FiArrowLeft />
-          Back to Trip
+
+          <span>
+            Back to trip
+          </span>
         </button>
 
-        <div className="booking-title-area">
+        {/* =================================================
+            PAGE HEADING
+        ================================================= */}
 
-          <span className="booking-eyebrow">
-            FINAL TRIP REVIEW
-          </span>
-
-          <h1>
-            Your Trip,
-            <span> All Set.</span>
-          </h1>
-
-          <p>
-            Review everything you have selected
-            before confirming your trip.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      {/* =====================================================
-          TRIP OVERVIEW
-      ===================================================== */}
-
-      <section className="trip-overview">
-
-        <div className="section-heading">
-
-          <span>01</span>
+        <section className="page-heading">
 
           <div>
-            <small>TRIP OVERVIEW</small>
-            <h2>Everything you planned</h2>
+
+            <span>
+              TRIP DETAILS
+            </span>
+
+            <h1>
+              {destinationName} Trip
+            </h1>
+
+            <p>
+              Everything you selected for your
+              trip, organised in one simple place.
+            </p>
+
           </div>
 
-        </div>
+          <div className="heading-budget">
 
+            <small>
+              SELECTED BUDGET
+            </small>
 
-        <div className="overview-grid">
+            <strong>
+              {budget}
+            </strong>
 
-          <div className="overview-card">
+          </div>
 
-            <div className="overview-icon">
+        </section>
+
+        {/* =================================================
+            DESTINATION
+        ================================================= */}
+
+        <section className="destination-card">
+
+          {/* IMAGE */}
+
+          <div className="destination-photo">
+
+            <img
+              src={destinationImage}
+              alt={destinationName}
+              onError={(event) => {
+                event.currentTarget.src =
+                  destination?.image;
+              }}
+            />
+
+            <div className="photo-label">
+
               <FiMapPin />
-            </div>
 
-            <div>
-              <span>DESTINATION</span>
-              <strong>{destination}</strong>
-            </div>
+              <span>
+                {destinationLocation}
+              </span>
 
-          </div>
-
-
-          <div className="overview-card">
-
-            <div className="overview-icon">
-              <FiCalendar />
-            </div>
-
-            <div>
-              <span>TRAVEL DATES</span>
-              <strong>{tripDates}</strong>
             </div>
 
           </div>
 
+          {/* DETAILS */}
 
-          <div className="overview-card">
+          <div className="destination-info">
 
-            <div className="overview-icon">
-              <FiUsers />
+            <div className="destination-top">
+
+              <div>
+
+                <span className="section-label">
+                  DESTINATION
+                </span>
+
+                <h2>
+                  {destinationName}
+                </h2>
+
+              </div>
+
+              <div className="destination-rating">
+
+                <FiStar />
+
+                <strong>
+                  {trip?.rating ||
+                    "4.8"}
+                </strong>
+
+              </div>
+
             </div>
 
-            <div>
-              <span>TRAVELERS</span>
+            <p className="destination-description">
+              {destinationDescription}
+            </p>
+
+            {/* QUICK DETAILS */}
+
+            <div className="quick-details">
+
+              {/* DATE */}
+
+              <div className="quick-detail">
+
+                <div className="quick-icon">
+                  <FiCalendar />
+                </div>
+
+                <div>
+
+                  <small>
+                    TRAVEL DATE
+                  </small>
+
+                  <strong>
+                    {date}
+                  </strong>
+
+                </div>
+
+              </div>
+
+              {/* DURATION */}
+
+              <div className="quick-detail">
+
+                <div className="quick-icon">
+                  <FiClock />
+                </div>
+
+                <div>
+
+                  <small>
+                    DURATION
+                  </small>
+
+                  <strong>
+                    {days} Days
+                  </strong>
+
+                </div>
+
+              </div>
+
+              {/* TRAVELLERS */}
+
+              <div className="quick-detail">
+
+                <div className="quick-icon">
+                  <FiUsers />
+                </div>
+
+                <div>
+
+                  <small>
+                    TRAVELLERS
+                  </small>
+
+                  <strong>
+                    {travellers}{" "}
+                    {travellers === 1
+                      ? "Person"
+                      : "People"}
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =================================================
+            HOTEL + PREFERENCES + PRICE
+        ================================================= */}
+
+        <section className="details-grid">
+
+          {/* =================================================
+              LEFT SIDE
+          ================================================= */}
+
+          <div className="details-left-column">
+
+            {/* ===============================================
+                HOTEL
+            =============================================== */}
+
+            <div className="hotel-box">
+
+              <div className="box-title">
+
+                <div>
+
+                  <span>
+                    YOUR STAY
+                  </span>
+
+                  <h2>
+                    {stayType}
+                  </h2>
+
+                </div>
+
+                <div className="hotel-stars">
+
+                  <FiStar />
+
+                  <span>
+                    {hotel?.rating ||
+                      "4.8"}
+                  </span>
+
+                </div>
+
+              </div>
+
+              {/* HOTEL CONTENT */}
+
+              <div className="hotel-main">
+
+                <img
+                  src={
+                    hotel?.image ||
+                    defaultHotel.image
+                  }
+                  alt={
+                    hotel?.name ||
+                    "Hotel"
+                  }
+                  onError={(event) => {
+                    event.currentTarget.src =
+                      defaultHotel.image;
+                  }}
+                />
+
+                <div className="hotel-details">
+
+                  <h3>
+                    {hotel?.name ||
+                      "Premium Stay"}
+                  </h3>
+
+                  <div className="hotel-place">
+
+                    <FiMapPin />
+
+                    <span>
+                      {hotel?.location ||
+                        destinationLocation}
+                    </span>
+
+                  </div>
+
+                  <p>
+                    {hotel?.reviews ||
+                      `Comfortable stay with excellent service and a convenient location for your ${destinationName} trip.`}
+                  </p>
+
+                  {/* HOTEL FEATURES */}
+
+                  <div className="hotel-features">
+
+                    <span>
+                      <FiCheck />
+                      Comfortable Rooms
+                    </span>
+
+                    <span>
+                      <FiCheck />
+                      Great Location
+                    </span>
+
+                    <span>
+                      <FiCheck />
+                      Highly Rated
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* ===============================================
+                PREFERENCES
+                HOTEL KE JUST NICHE
+            =============================================== */}
+
+            <div className="preferences-card">
+
+              {/* =============================================
+                  TRAVEL PREFERENCE
+              ============================================= */}
+
+              <div className="preference-block">
+
+                <div className="preference-heading">
+
+                  <div className="preference-icon">
+                    <FiNavigation />
+                  </div>
+
+                  <div>
+
+                    <span>
+                      TRAVEL PREFERENCE
+                    </span>
+
+                    <h3>
+                      {transport}
+                    </h3>
+
+                  </div>
+
+                </div>
+
+                <p>
+                  Your transportation will be
+                  planned according to your
+                  selected travel preference.
+                </p>
+
+              </div>
+
+              {/* DIVIDER */}
+
+              <div className="preference-divider" />
+
+              {/* =============================================
+                  TRIP TYPE
+              ============================================= */}
+
+              <div className="preference-block">
+
+                <div className="preference-heading">
+
+                  <div className="preference-icon">
+                    <FiUsers />
+                  </div>
+
+                  <div>
+
+                    <span>
+                      TRIP TYPE
+                    </span>
+
+                    <h3>
+                      {travelType}
+                    </h3>
+
+                  </div>
+
+                </div>
+
+                <p>
+                  Your {destinationName} trip is
+                  planned for {travellers}{" "}
+                  {travellers === 1
+                    ? "traveller"
+                    : "travellers"}.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* =================================================
+              RIGHT SIDE
+              PRICE
+          ================================================= */}
+
+          <div className="price-box">
+
+            <div className="price-heading">
+
+              <div>
+
+                <span>
+                  TRIP COST
+                </span>
+
+                <h2>
+                  Estimated Price
+                </h2>
+
+              </div>
+
+              <div className="rupee-icon">
+                ₹
+              </div>
+
+            </div>
+
+            {/* ===============================================
+                SELECTED BUDGET
+            =============================================== */}
+
+            <div className="selected-budget">
+
+              <small>
+                YOUR SELECTED BUDGET
+              </small>
 
               <strong>
-                {adults} Adults
-                {children > 0
-                  ? ` • ${children} Children`
-                  : ""}
+                {budget}
               </strong>
 
             </div>
 
-          </div>
-
-
-          <div className="overview-card">
-
-            <div className="overview-icon">
-              <FiHeart />
-            </div>
-
-            <div>
-              <span>TRIP STYLE</span>
-              <strong>{tripType}</strong>
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          MAIN CONTENT
-      ===================================================== */}
-
-      <div className="booking-content">
-
-        <main className="booking-left">
-
-
-          {/* =================================================
-              HOTEL
-          ================================================= */}
-
-          <section className="detail-card">
-
-            <div className="detail-heading">
-
-              <div className="detail-number">
-                02
-              </div>
-
-              <div>
-                <span>YOUR STAY</span>
-                <h2>Hotel Details</h2>
-              </div>
-
-            </div>
-
-
-            <div className="hotel-review">
-
-              <div className="hotel-review-image">
-
-                <img
-                  src={hotel.image}
-                  alt={hotel.name}
-                />
-
-              </div>
-
-
-              <div className="hotel-review-info">
-
-                <div className="hotel-rating">
-
-                  <FiStar />
-
-                  <strong>
-                    {hotel.rating}
-                  </strong>
-
-                  <span>
-                    {hotel.reviews}
-                  </span>
-
-                </div>
-
-
-                <h3>{hotel.name}</h3>
-
-
-                <p className="hotel-place">
-                  <FiMapPin />
-                  {hotel.location}
-                </p>
-
-
-                <div className="hotel-tags">
-
-                  <span>
-                    <FiHome />
-                    {roomType}
-                  </span>
-
-                  <span>
-                    <FiClock />
-                    {nights} Nights
-                  </span>
-
-                  <span>
-                    <FiUsers />
-                    {rooms} Room
-                  </span>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div className="stay-info-row">
-
-              <div>
-                <span>CHECK-IN / CHECK-OUT</span>
-                <strong>{tripDates}</strong>
-              </div>
-
-              <div>
-                <span>STAY</span>
-                <strong>
-                  {nights} Nights /{" "}
-                  {nights + 1} Days
-                </strong>
-              </div>
-
-              <div>
-                <span>MEAL PLAN</span>
-                <strong>{mealPlan}</strong>
-              </div>
-
-            </div>
-
-          </section>
-
-
-          {/* =================================================
-              TRANSPORT
-          ================================================= */}
-
-          <section className="detail-card">
-
-            <div className="detail-heading">
-
-              <div className="detail-number">
-                03
-              </div>
-
-              <div>
-                <span>TRAVEL</span>
-                <h2>Transportation</h2>
-              </div>
-
-            </div>
-
-
-            <div className="transport-review">
-
-              <div className="transport-big-icon">
-                <FiTruck />
-              </div>
-
-              <div className="transport-info">
-
-                <span>SELECTED TRANSPORT</span>
-
-                <h3>{transport}</h3>
-
-                <p>
-                  Your transportation has
-                  already been selected for
-                  this trip.
-                </p>
-
-              </div>
+            {/* ===============================================
+                ESTIMATED PRICE
+            =============================================== */}
+
+            <div className="estimated-price">
+
+              <span>
+                ESTIMATED TOTAL
+              </span>
 
               <strong>
                 ₹
-                {transportPrice.toLocaleString(
+                {estimatedPrice.toLocaleString(
                   "en-IN"
                 )}
               </strong>
 
+              <small>
+                Approx. ₹
+                {perPerson.toLocaleString(
+                  "en-IN"
+                )}{" "}
+                per traveller
+              </small>
+
             </div>
 
-          </section>
+            {/* ===============================================
+                PRICE DETAILS
+            =============================================== */}
 
+            <div className="price-row">
+
+              <span>
+                Stay
+              </span>
+
+              <strong>
+                {stayType}
+              </strong>
+
+            </div>
+
+            <div className="price-row">
+
+              <span>
+                Transport
+              </span>
+
+              <strong>
+                {transport}
+              </strong>
+
+            </div>
+
+            <div className="price-row">
+
+              <span>
+                Travellers
+              </span>
+
+              <strong>
+                {travellers}
+              </strong>
+
+            </div>
+
+            <div className="price-row">
+
+              <span>
+                Duration
+              </span>
+
+              <strong>
+                {days} Days
+              </strong>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* =================================================
+            PLACES + INTERESTS
+        ================================================= */}
+
+        <section className="selection-grid">
 
           {/* =================================================
-              ACTIVITIES
+              PLACES
           ================================================= */}
 
-          <section className="detail-card">
+          <div className="selection-card">
 
-            <div className="detail-heading">
+            <span>
+              SELECTED PLACES
+            </span>
 
-              <div className="detail-number">
-                04
-              </div>
+            <h3>
+              Places you want to explore
+            </h3>
 
-              <div>
-                <span>EXPERIENCES</span>
-                <h2>Selected Activities</h2>
-              </div>
+            <div className="tag-list">
 
-            </div>
+              {places.map(
+                (place, index) => {
+                  const placeName =
+                    typeof place ===
+                    "string"
+                      ? place
+                      : place?.name ||
+                        "Place";
 
-
-            <div className="selected-activity-list">
-
-              {selectedActivities.length > 0 ? (
-
-                selectedActivities.map(
-                  (activity, index) => (
-
+                  return (
                     <div
-                      className="selected-activity"
-                      key={index}
+                      className="travel-tag"
+                      key={`${placeName}-${index}`}
                     >
-
-                      <div className="activity-success">
-                        <FiCheck />
-                      </div>
-
-                      <div>
-                        <strong>
-                          {activity.name}
-                        </strong>
-
-                        {activity.description && (
-                          <p>
-                            {activity.description}
-                          </p>
-                        )}
-                      </div>
+                      <FiMapPin />
 
                       <span>
-                        ₹
-                        {Number(
-                          activity.price || 0
-                        ).toLocaleString(
-                          "en-IN"
-                        )}
+                        {placeName}
                       </span>
 
                     </div>
-
-                  )
-                )
-
-              ) : (
-
-                <div className="no-activity">
-                  No activities selected yet.
-                </div>
-
-              )}
-
-            </div>
-
-          </section>
-
-
-          {/* =================================================
-              ADD MORE
-          ================================================= */}
-
-          <section className="detail-card add-more-card">
-
-            <div className="add-more-heading">
-
-              <div>
-
-                <span>MAKE IT YOURS</span>
-
-                <h2>
-                  Add More to Your Trip
-                </h2>
-
-                <p>
-                  Want to make your trip more
-                  special? Add something extra.
-                </p>
-
-              </div>
-
-              <FiPlus />
-
-            </div>
-
-
-            <div className="extra-options-grid">
-
-              {additionalOptions.map(
-                (item) => {
-
-                  const active =
-                    addedExtras.includes(
-                      item.id
-                    );
-
-                  return (
-                    <button
-                      key={item.id}
-                      className={`extra-option ${
-                        active
-                          ? "active"
-                          : ""
-                      }`}
-                      onClick={() =>
-                        toggleExtra(
-                          item.id
-                        )
-                      }
-                    >
-
-                      <div className="extra-option-icon">
-                        {item.icon}
-                      </div>
-
-                      <div className="extra-option-content">
-
-                        <strong>
-                          {item.title}
-                        </strong>
-
-                        <p>
-                          {item.description}
-                        </p>
-
-                        <span>
-                          + ₹
-                          {item.price.toLocaleString(
-                            "en-IN"
-                          )}
-                        </span>
-
-                      </div>
-
-                      <div className="extra-add">
-
-                        {active ? (
-                          <FiCheck />
-                        ) : (
-                          <FiPlus />
-                        )}
-
-                      </div>
-
-                    </button>
                   );
                 }
               )}
 
             </div>
 
-          </section>
+          </div>
 
-        </main>
+          {/* =================================================
+              INTERESTS
+          ================================================= */}
 
+          <div className="selection-card">
 
-        {/* ===================================================
-            RIGHT SIDE SUMMARY
-        =================================================== */}
-
-        <aside className="booking-right">
-
-          <div className="final-summary">
-
-            <span className="summary-eyebrow">
-              YOUR BOOKING
+            <span>
+              YOUR INTERESTS
             </span>
 
-            <h2>
-              Final Summary
-            </h2>
+            <h3>
+              Things you want to enjoy
+            </h3>
 
+            <div className="tag-list">
 
-            <div className="summary-destination">
+              {interests.map(
+                (
+                  interest,
+                  index
+                ) => {
+                  const interestName =
+                    typeof interest ===
+                    "string"
+                      ? interest
+                      : interest?.name ||
+                        "Experience";
 
-              <img
-                src={hotel.image}
-                alt={hotel.name}
-              />
+                  return (
+                    <div
+                      className="travel-tag"
+                      key={`${interestName}-${index}`}
+                    >
+                      <FiCheck />
 
-              <div>
+                      <span>
+                        {interestName}
+                      </span>
 
-                <strong>
-                  {destination}
-                </strong>
-
-                <span>
-                  {hotel.name}
-                </span>
-
-              </div>
-
-            </div>
-
-
-            <div className="summary-items">
-
-              <div className="summary-item">
-                <span>Hotel</span>
-                <strong>
-                  ₹
-                  {hotelTotal.toLocaleString(
-                    "en-IN"
-                  )}
-                </strong>
-              </div>
-
-              <div className="summary-item">
-                <span>Transportation</span>
-                <strong>
-                  ₹
-                  {transportPrice.toLocaleString(
-                    "en-IN"
-                  )}
-                </strong>
-              </div>
-
-              <div className="summary-item">
-                <span>Activities</span>
-                <strong>
-                  ₹
-                  {activitiesTotal.toLocaleString(
-                    "en-IN"
-                  )}
-                </strong>
-              </div>
-
-              <div className="summary-item">
-                <span>Food / Meals</span>
-                <strong>
-                  ₹
-                  {mealPrice.toLocaleString(
-                    "en-IN"
-                  )}
-                </strong>
-              </div>
-
-              {extrasTotal > 0 && (
-                <div className="summary-item">
-                  <span>Added Extras</span>
-
-                  <strong>
-                    ₹
-                    {extrasTotal.toLocaleString(
-                      "en-IN"
-                    )}
-                  </strong>
-                </div>
+                    </div>
+                  );
+                }
               )}
 
             </div>
 
+          </div>
 
-            <div className="summary-divider" />
+        </section>
 
+        {/* =================================================
+            FINAL CTA
+        ================================================= */}
 
-            <div className="summary-total">
+        <section className="final-card">
 
-              <span>TOTAL TRIP COST</span>
+          <div>
 
-              <strong>
-                ₹
-                {tripTotal.toLocaleString(
-                  "en-IN"
-                )}
-              </strong>
+            <span>
+              YOUR TRIP IS READY
+            </span>
 
-            </div>
+            <h2>
+              Ready to continue?
+            </h2>
 
-
-
-
-           <button
-  className="confirm-trip-btn"
-  onClick={() => navigate("/booking-summary")}
->
-  Confirm & Book
-  <FiChevronRight />
-</button>
-
-            <p className="summary-note">
-              🔒 Your trip details are secure.
+            <p>
+              Check your trip details once and
+              continue to the secure booking and
+              payment summary.
             </p>
 
           </div>
 
-        </aside>
+          <button
+            type="button"
+            className="continue-button"
+            onClick={handleConfirm}
+          >
 
-      </div>
+            <span>
+              Proceed to Payment
+            </span>
+
+            <FiArrowRight />
+
+          </button>
+
+        </section>
+
+      </main>
 
     </div>
   );

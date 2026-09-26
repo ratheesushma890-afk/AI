@@ -10,19 +10,18 @@ import {
   FiHome,
   FiNavigation,
   FiArrowRight,
+  FiCheck,
 } from "react-icons/fi";
 
+import destinations from "../Data/destinations";
 import "./TripPlan.css";
 
 const TripPlan = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  /* =====================================================
-     DATE INPUT REF
-  ===================================================== */
-
   const dateInputRef = useRef(null);
+  const destinationInitializedRef = useRef("");
 
   /* =====================================================
      STATES
@@ -30,10 +29,8 @@ const TripPlan = () => {
 
   const [destination, setDestination] = useState("");
   const [date, setDate] = useState("");
-
   const [days, setDays] = useState("3");
   const [travellers, setTravellers] = useState("2");
-
   const [travelType, setTravelType] = useState("Couple");
 
   const [budget, setBudget] = useState(
@@ -41,12 +38,10 @@ const TripPlan = () => {
   );
 
   const [style, setStyle] = useState("Relaxed");
-
   const [stay, setStay] = useState("Any");
   const [transport, setTransport] = useState("Any");
 
   const [interests, setInterests] = useState([]);
-
   const [selectedPlaces, setSelectedPlaces] = useState([]);
 
   const [isLoaded, setIsLoaded] = useState(false);
@@ -56,7 +51,6 @@ const TripPlan = () => {
   ===================================================== */
 
   const validDestinations = [
-    /* INDIA */
     "goa",
     "manali",
     "jaipur",
@@ -107,7 +101,6 @@ const TripPlan = () => {
     "panipat",
     "kurukshetra",
 
-    /* WORLD */
     "london",
     "paris",
     "dubai",
@@ -185,163 +178,7 @@ const TripPlan = () => {
   ];
 
   /* =====================================================
-     PLACES BY DESTINATION
-  ===================================================== */
-
-  const destinationPlaces = {
-    goa: [
-      "Baga Beach",
-      "Old Goa",
-      "Vagator",
-    ],
-
-    manali: [
-      "Solang Valley",
-      "Rohtang Pass",
-      "Mall Road",
-    ],
-
-    jaipur: [
-      "Amber Fort",
-      "Hawa Mahal",
-      "City Palace",
-    ],
-
-    kerala: [
-      "Munnar",
-      "Alleppey",
-      "Varkala Beach",
-    ],
-
-    rishikesh: [
-      "Laxman Jhula",
-      "River Ganga",
-      "Beatles Ashram",
-    ],
-
-    mumbai: [
-      "Gateway of India",
-      "Marine Drive",
-      "Colaba",
-    ],
-
-    delhi: [
-      "India Gate",
-      "Red Fort",
-      "Qutub Minar",
-    ],
-
-    udaipur: [
-      "City Palace",
-      "Lake Pichola",
-      "Sajjangarh Palace",
-    ],
-
-    jodhpur: [
-      "Mehrangarh Fort",
-      "Blue City",
-      "Jaswant Thada",
-    ],
-
-    jaisalmer: [
-      "Jaisalmer Fort",
-      "Sam Sand Dunes",
-      "Patwon Ki Haveli",
-    ],
-
-    shimla: [
-      "Mall Road",
-      "Kufri",
-      "The Ridge",
-    ],
-
-    amritsar: [
-      "Golden Temple",
-      "Jallianwala Bagh",
-      "Wagah Border",
-    ],
-
-    agra: [
-      "Taj Mahal",
-      "Agra Fort",
-      "Mehtab Bagh",
-    ],
-
-    varanasi: [
-      "Dashashwamedh Ghat",
-      "Kashi Vishwanath",
-      "Assi Ghat",
-    ],
-
-    london: [
-      "Big Ben",
-      "London Eye",
-      "Tower Bridge",
-    ],
-
-    paris: [
-      "Eiffel Tower",
-      "Louvre Museum",
-      "Notre Dame",
-    ],
-
-    dubai: [
-      "Burj Khalifa",
-      "Dubai Marina",
-      "Palm Jumeirah",
-    ],
-
-    bali: [
-      "Ubud",
-      "Kuta Beach",
-      "Nusa Dua",
-    ],
-
-    singapore: [
-      "Marina Bay Sands",
-      "Sentosa",
-      "Gardens by the Bay",
-    ],
-
-    tokyo: [
-      "Shibuya",
-      "Tokyo Tower",
-      "Senso-ji Temple",
-    ],
-
-    maldives: [
-      "Male",
-      "Maafushi",
-      "Hulhumale",
-    ],
-
-    bangkok: [
-      "Grand Palace",
-      "Wat Arun",
-      "Chatuchak Market",
-    ],
-
-    phuket: [
-      "Patong Beach",
-      "Old Phuket Town",
-      "Phi Phi Islands",
-    ],
-
-    rome: [
-      "Colosseum",
-      "Trevi Fountain",
-      "Vatican City",
-    ],
-
-    barcelona: [
-      "Sagrada Familia",
-      "Park Guell",
-      "Gothic Quarter",
-    ],
-  };
-
-  /* =====================================================
-     INTEREST OPTIONS
+     OPTIONS
   ===================================================== */
 
   const interestOptions = [
@@ -357,12 +194,22 @@ const TripPlan = () => {
     "Relaxation",
   ];
 
+  const budgetOptions = [
+    "₹5,000 – ₹10,000",
+    "₹10,000 – ₹25,000",
+    "₹25,000 – ₹50,000",
+    "₹50,000 – ₹1,00,000",
+    "₹1,00,000 – ₹2,00,000",
+    "₹2,00,000 – ₹3,00,000",
+    "₹3,00,000 – ₹5,00,000",
+  ];
+
   /* =====================================================
-     NORMALIZE DESTINATION
+     NORMALIZE
   ===================================================== */
 
   const normalizeDestination = (value = "") => {
-    return value
+    return String(value)
       .toLowerCase()
       .replace(/[,.]/g, "")
       .replace(/\s+/g, " ")
@@ -370,82 +217,140 @@ const TripPlan = () => {
   };
 
   /* =====================================================
-     GET PLACES
+     DESTINATION DATA
   ===================================================== */
 
-  const getPlacesForDestination = (value) => {
+  const getDestinationData = (value = "") => {
     const normalized = normalizeDestination(value);
 
-    if (destinationPlaces[normalized]) {
-      return destinationPlaces[normalized];
+    if (!normalized) return null;
+
+    if (Array.isArray(destinations)) {
+      return (
+        destinations.find((item) => {
+          const itemId = normalizeDestination(item?.id || "");
+          const itemName = normalizeDestination(item?.name || "");
+
+          return (
+            itemId === normalized ||
+            itemName === normalized
+          );
+        }) || null
+      );
     }
 
-    if (!value.trim()) {
-      return [
-        "Popular City Center",
-        "Local Market",
-        "Top Sightseeing",
-      ];
-    }
-
-    return [
-      `${value.trim()} Main City`,
-      `${value.trim()} Local Market`,
-      `${value.trim()} Sightseeing`,
-    ];
+    return destinations?.[normalized] || null;
   };
 
-  /* =====================================================
-     VALID DESTINATION
-  ===================================================== */
-
-  const isValidDestination = (value) => {
-    const normalized = normalizeDestination(value);
-
-    if (!normalized) {
-      return false;
-    }
-
-    return validDestinations.includes(normalized);
-  };
+  const selectedDestination =
+    getDestinationData(destination);
 
   /* =====================================================
-     TRAVELLER OPTIONS
-     
-     SOLO     → 1
-     COUPLE   → 2,4,6,8,10
-     FAMILY   → 1 TO 10
-     FRIENDS  → 1 TO 10
+     PLACES
   ===================================================== */
 
-  const getTravellerOptions = () => {
-    if (travelType === "Solo") {
-      return [1];
-    }
+  const getPlacesForDestination = (value = "") => {
+    const destinationData =
+      getDestinationData(value);
 
     if (
-      travelType === "Family" ||
-      travelType === "Friends"
+      !destinationData ||
+      !Array.isArray(destinationData.places)
     ) {
-      return [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-      ];
+      return [];
     }
 
-    return [2, 4, 6, 8, 10];
+    return destinationData.places
+      .map((place) => {
+        if (typeof place === "string") {
+          return {
+            name: place,
+            image: "",
+            description: `Explore ${place}.`,
+          };
+        }
+
+        return {
+          name: place?.name || "",
+          image: place?.image || "",
+          description:
+            place?.description ||
+            `Explore ${place?.name || "this place"}.`,
+        };
+      })
+      .filter((place) => place.name)
+      .slice(0, 3);
   };
 
   /* =====================================================
-     TODAY DATE
+     DAYS
+  ===================================================== */
+
+  const getDaysNumber = (value) => {
+    if (value === undefined || value === null) {
+      return "3";
+    }
+
+    const match = String(value).match(/\d+/);
+
+    return match ? match[0] : "3";
+  };
+
+  /* =====================================================
+     PRICE -> BUDGET
+
+     ₹8,999  -> ₹5,000 – ₹10,000
+     ₹10,499 -> ₹10,000 – ₹25,000
+
+     NOTE:
+     Ye sirf starting budget select karega.
+     Budget LOCK nahi hoga.
+  ===================================================== */
+
+  const getBudgetFromPrice = (value) => {
+    if (!value) return "";
+
+    const match = String(value).match(/[\d,]+/);
+
+    if (!match) return "";
+
+    const cleanPrice = Number(
+      match[0].replace(/,/g, "")
+    );
+
+    if (!Number.isFinite(cleanPrice)) {
+      return "";
+    }
+
+    if (cleanPrice <= 10000) {
+      return "₹5,000 – ₹10,000";
+    }
+
+    if (cleanPrice <= 25000) {
+      return "₹10,000 – ₹25,000";
+    }
+
+    if (cleanPrice <= 50000) {
+      return "₹25,000 – ₹50,000";
+    }
+
+    if (cleanPrice <= 100000) {
+      return "₹50,000 – ₹1,00,000";
+    }
+
+    if (cleanPrice <= 200000) {
+      return "₹1,00,000 – ₹2,00,000";
+    }
+
+    if (cleanPrice <= 300000) {
+      return "₹2,00,000 – ₹3,00,000";
+    }
+
+    return "₹3,00,000 – ₹5,00,000";
+  };
+
+  /* =====================================================
+     TODAY
   ===================================================== */
 
   const getTodayDate = () => {
@@ -473,7 +378,7 @@ const TripPlan = () => {
       return "DD/MM/YYYY";
     }
 
-    const parts = value.split("-");
+    const parts = String(value).split("-");
 
     if (parts.length !== 3) {
       return "DD/MM/YYYY";
@@ -485,129 +390,329 @@ const TripPlan = () => {
   };
 
   /* =====================================================
-     DATE CHANGE
+     TRAVELLERS
   ===================================================== */
 
-  const handleDateChange = (e) => {
-    const selectedDate = e.target.value;
-
-    if (!selectedDate) {
-      setDate("");
-      return;
+  const getTravellerOptions = () => {
+    if (travelType === "Solo") {
+      return [1];
     }
 
-    setDate(selectedDate);
+    if (
+      travelType === "Family" ||
+      travelType === "Friends"
+    ) {
+      return [
+        1, 2, 3, 4, 5,
+        6, 7, 8, 9, 10,
+      ];
+    }
+
+    return [2, 4, 6, 8, 10];
   };
 
   /* =====================================================
-     OPEN DATE PICKER
+     DATE
   ===================================================== */
+
+  const handleDateChange = (e) => {
+    setDate(e.target.value);
+  };
 
   const openDatePicker = () => {
     const input = dateInputRef.current;
 
-    if (!input) {
-      return;
-    }
+    if (!input) return;
 
     try {
-      if (
-        typeof input.showPicker === "function"
-      ) {
+      if (typeof input.showPicker === "function") {
         input.showPicker();
       } else {
         input.click();
       }
-    } catch (error) {
+    } catch {
       input.click();
     }
   };
 
   /* =====================================================
-     RESTORE SAVED TRIP
+     PAYMENT RESET
   ===================================================== */
 
   useEffect(() => {
-    const savedTrip =
-      localStorage.getItem("tripperTrip");
+    const paymentDone =
+      localStorage.getItem("tripPaymentDone");
+
+    if (paymentDone !== "true") {
+      return;
+    }
+
+    setDestination("");
+    setDate("");
+    setDays("3");
+    setTravellers("2");
+    setTravelType("Couple");
+
+    setBudget("₹25,000 – ₹50,000");
+
+    setStyle("Relaxed");
+    setStay("Any");
+    setTransport("Any");
+
+    setInterests([]);
+    setSelectedPlaces([]);
+
+    destinationInitializedRef.current = "";
+
+    localStorage.removeItem("tripPaymentDone");
+    localStorage.removeItem("tripperTrip");
+
+    setIsLoaded(true);
+  }, []);
+
+  /* =====================================================
+     RESTORE DATA
+  ===================================================== */
+
+  useEffect(() => {
+    const paymentDone =
+      localStorage.getItem("tripPaymentDone");
+
+    if (paymentDone === "true") {
+      return;
+    }
 
     let savedData = null;
+
+    const savedTrip =
+      localStorage.getItem("tripperTrip");
 
     if (savedTrip) {
       try {
         savedData = JSON.parse(savedTrip);
       } catch (error) {
         console.error(
-          "Error restoring saved trip:",
+          "Error restoring trip:",
           error
         );
       }
     }
 
-    const stateDestination =
-      location.state?.destination;
+    const stateData = location.state || {};
+    const stateTrip = stateData.trip || {};
+
+    /* =================================================
+       DESTINATION
+    ================================================= */
 
     const finalDestination =
-      stateDestination ||
+      stateData.destination ||
+      stateTrip.destination ||
       savedData?.destination ||
       "";
 
-    const savedTravelType =
-      savedData?.travelType || "Couple";
-
-    const savedTravellers =
-      Number(savedData?.travellers);
-
     setDestination(finalDestination);
 
-    setDate(savedData?.date || "");
+    destinationInitializedRef.current =
+      normalizeDestination(finalDestination);
 
-    setDays(
-      savedData?.days !== undefined
-        ? String(savedData.days)
-        : "3"
-    );
+    const destinationData =
+      getDestinationData(finalDestination);
 
-    setTravelType(savedTravelType);
+    /* =================================================
+       DAYS
+    ================================================= */
 
-    setBudget(
-      savedData?.budget ||
-        "₹25,000 – ₹50,000"
-    );
+    const finalDays =
+      stateData.days ??
+      stateTrip.days ??
+      destinationData?.days ??
+      savedData?.days ??
+      "3";
+
+    setDays(getDaysNumber(finalDays));
+
+    /* =================================================
+       DATE
+    ================================================= */
+
+    const finalDate =
+      stateData.date ||
+      stateTrip.date ||
+      savedData?.date ||
+      "";
+
+    setDate(finalDate);
+
+    /* =================================================
+       TRAVEL TYPE
+    ================================================= */
+
+    const finalTravelType =
+      stateData.travelType ||
+      stateTrip.travelType ||
+      savedData?.travelType ||
+      "Couple";
+
+    setTravelType(finalTravelType);
+
+    /* =================================================
+       BUDGET
+
+       Detail se price mila:
+       price ke according starting budget.
+
+       BUT USER CAN CHANGE IT.
+    ================================================= */
+
+    const detailPrice =
+      stateData.price ??
+      stateData.basePrice ??
+      stateTrip.price ??
+      stateTrip.basePrice ??
+      "";
+
+    if (detailPrice) {
+      const priceBudget =
+        getBudgetFromPrice(detailPrice);
+
+      setBudget(
+        priceBudget ||
+          "₹25,000 – ₹50,000"
+      );
+    } else {
+      /*
+       * Normal Plan Trip
+       */
+
+      const normalBudget =
+        stateData.budget ||
+        stateTrip.budget ||
+        savedData?.budget ||
+        "₹25,000 – ₹50,000";
+
+      setBudget(normalBudget);
+    }
+
+    /* =================================================
+       STYLE
+    ================================================= */
 
     setStyle(
-      savedData?.style || "Relaxed"
-    );
-
-    setStay(
-      savedData?.stay || "Any"
-    );
-
-    setTransport(
-      savedData?.transport || "Any"
-    );
-
-    setInterests(
-      Array.isArray(savedData?.interests)
-        ? savedData.interests
-        : []
-    );
-
-    setSelectedPlaces(
-      Array.isArray(savedData?.places)
-        ? savedData.places.slice(0, 3)
-        : []
+      stateData.style ||
+        stateTrip.style ||
+        savedData?.style ||
+        "Relaxed"
     );
 
     /* =================================================
-       RESTORE TRAVELLERS CORRECTLY
+       STAY
     ================================================= */
 
-    if (savedTravelType === "Solo") {
+    setStay(
+      stateData.stay ||
+        stateTrip.stay ||
+        savedData?.stay ||
+        "Any"
+    );
+
+    /* =================================================
+       TRANSPORT
+    ================================================= */
+
+    setTransport(
+      stateData.transport ||
+        stateTrip.transport ||
+        savedData?.transport ||
+        "Any"
+    );
+
+    /* =================================================
+       INTERESTS
+    ================================================= */
+
+    let restoredInterests = [];
+
+    if (Array.isArray(stateData.interests)) {
+      restoredInterests =
+        stateData.interests;
+    } else if (
+      Array.isArray(stateTrip.interests)
+    ) {
+      restoredInterests =
+        stateTrip.interests;
+    } else if (
+      Array.isArray(savedData?.interests)
+    ) {
+      restoredInterests =
+        savedData.interests;
+    }
+
+    setInterests(restoredInterests);
+
+    /* =================================================
+       PLACES
+    ================================================= */
+
+    let restoredPlaces = [];
+
+    if (Array.isArray(stateData.places)) {
+      restoredPlaces = stateData.places;
+    } else if (
+      Array.isArray(stateTrip.places)
+    ) {
+      restoredPlaces = stateTrip.places;
+    } else if (
+      Array.isArray(savedData?.places)
+    ) {
+      restoredPlaces = savedData.places;
+    }
+
+    const availablePlaces =
+      getPlacesForDestination(finalDestination);
+
+    const availableNames =
+      availablePlaces.map(
+        (item) => item.name
+      );
+
+    const validPlaces =
+      restoredPlaces
+        .map((place) => {
+          if (typeof place === "string") {
+            return place;
+          }
+
+          return place?.name;
+        })
+        .filter(Boolean)
+        .filter((name) =>
+          availableNames.includes(name)
+        )
+        .slice(0, 3);
+
+    setSelectedPlaces(validPlaces);
+
+    /* =================================================
+       TRAVELLERS
+    ================================================= */
+
+    const savedTravellers =
+      Number(
+        stateData.travellers ??
+          stateData.travelers ??
+          stateTrip.travellers ??
+          stateTrip.travelers ??
+          savedData?.travellers ??
+          savedData?.travelers ??
+          0
+      );
+
+    if (finalTravelType === "Solo") {
       setTravellers("1");
     } else if (
-      savedTravelType === "Family" ||
-      savedTravelType === "Friends"
+      finalTravelType === "Family" ||
+      finalTravelType === "Friends"
     ) {
       if (
         Number.isInteger(savedTravellers) &&
@@ -638,26 +743,57 @@ const TripPlan = () => {
   }, [location.state]);
 
   /* =====================================================
+     DESTINATION CHANGE
+  ===================================================== */
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const currentDestination =
+      normalizeDestination(destination);
+
+    if (!currentDestination) return;
+
+    if (!destinationInitializedRef.current) {
+      destinationInitializedRef.current =
+        currentDestination;
+
+      return;
+    }
+
+    if (
+      destinationInitializedRef.current !==
+      currentDestination
+    ) {
+      setSelectedPlaces([]);
+
+      destinationInitializedRef.current =
+        currentDestination;
+    }
+  }, [destination, isLoaded]);
+
+  /* =====================================================
      AUTO SAVE
   ===================================================== */
 
   useEffect(() => {
-    if (!isLoaded) {
-      return;
-    }
+    if (!isLoaded) return;
+
+    if (!destination.trim()) return;
 
     const tripData = {
-      destination,
+      destination: destination.trim(),
       date,
-      days,
-      travellers,
+      days: Number(days) || 3,
+      travellers:
+        Number(travellers) || 2,
       travelType,
       budget,
       style,
       stay,
       transport,
-      interests,
-      places: selectedPlaces,
+      interests: [...interests],
+      places: [...selectedPlaces],
     };
 
     localStorage.setItem(
@@ -686,13 +822,14 @@ const TripPlan = () => {
   useEffect(() => {
     const current = Number(travellers);
 
-    /* SOLO */
     if (travelType === "Solo") {
-      setTravellers("1");
+      if (travellers !== "1") {
+        setTravellers("1");
+      }
+
       return;
     }
 
-    /* FAMILY / FRIENDS */
     if (
       travelType === "Family" ||
       travelType === "Friends"
@@ -708,7 +845,6 @@ const TripPlan = () => {
       return;
     }
 
-    /* COUPLE */
     if (
       ![2, 4, 6, 8, 10].includes(current)
     ) {
@@ -717,26 +853,15 @@ const TripPlan = () => {
   }, [travelType]);
 
   /* =====================================================
-     DESTINATION CHANGE
-  ===================================================== */
-
-  useEffect(() => {
-    if (!isLoaded) {
-      return;
-    }
-
-    setSelectedPlaces([]);
-  }, [destination]);
-
-  /* =====================================================
-     TOGGLE INTEREST
+     INTEREST
   ===================================================== */
 
   const toggleInterest = (item) => {
     setInterests((prev) => {
       if (prev.includes(item)) {
         return prev.filter(
-          (interest) => interest !== item
+          (interest) =>
+            interest !== item
         );
       }
 
@@ -745,40 +870,26 @@ const TripPlan = () => {
   };
 
   /* =====================================================
-     SELECT / REMOVE PLACE
+     PLACE
   ===================================================== */
 
-  const handlePlaceSelect = (place) => {
-    if (!place) {
-      return;
-    }
+  const handlePlaceSelect = (placeName) => {
+    if (!placeName) return;
 
-    if (selectedPlaces.includes(place)) {
-      setSelectedPlaces((prev) =>
-        prev.filter(
-          (item) => item !== place
-        )
-      );
+    setSelectedPlaces((prev) => {
+      if (prev.includes(placeName)) {
+        return prev.filter(
+          (item) =>
+            item !== placeName
+        );
+      }
 
-      return;
-    }
+      if (prev.length >= 3) {
+        return prev;
+      }
 
-    if (selectedPlaces.length >= 3) {
-      return;
-    }
-
-    setSelectedPlaces((prev) => [
-      ...prev,
-      place,
-    ]);
-  };
-
-  const removePlace = (place) => {
-    setSelectedPlaces((prev) =>
-      prev.filter(
-        (item) => item !== place
-      )
-    );
+      return [...prev, placeName];
+    });
   };
 
   /* =====================================================
@@ -791,38 +902,49 @@ const TripPlan = () => {
     const cleanDestination =
       destination.trim();
 
-    /* DESTINATION */
-
     if (!cleanDestination) {
       alert(
         "Please enter your destination."
       );
+
       return;
     }
 
-    if (
-      !isValidDestination(
+    const normalized =
+      normalizeDestination(
         cleanDestination
+      );
+
+    if (
+      !validDestinations.includes(
+        normalized
       )
     ) {
       alert(
-        "Please enter a valid destination.\n\nExample: Goa, London, Paris, Manali, Dubai, Tokyo."
+        "Please enter a valid destination."
       );
+
       return;
     }
-
-    /* DATE */
 
     if (!date) {
       alert(
         "Please select your travel date."
       );
+
       return;
     }
 
-    /* DAYS */
+    if (date < getTodayDate()) {
+      alert(
+        "Please select today or a future travel date."
+      );
 
-    const selectedDays = Number(days);
+      return;
+    }
+
+    const selectedDays =
+      Number(days);
 
     if (
       !Number.isFinite(selectedDays) ||
@@ -831,12 +953,9 @@ const TripPlan = () => {
       alert(
         "Please select trip duration."
       );
+
       return;
     }
-
-    /* =================================================
-       TRAVELLERS VALIDATION
-    ================================================= */
 
     const selectedTravellers =
       Number(travellers);
@@ -850,24 +969,12 @@ const TripPlan = () => {
       travelType === "Friends"
     ) {
       validTravellerNumbers = [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
+        1, 2, 3, 4, 5,
+        6, 7, 8, 9, 10,
       ];
     } else {
       validTravellerNumbers = [
-        2,
-        4,
-        6,
-        8,
-        10,
+        2, 4, 6, 8, 10,
       ];
     }
 
@@ -879,34 +986,46 @@ const TripPlan = () => {
       alert(
         "Please select valid travellers."
       );
+
       return;
     }
 
-    /* INTERESTS */
+    if (!budget) {
+      alert(
+        "Please select your budget."
+      );
+
+      return;
+    }
 
     if (interests.length === 0) {
       alert(
         "Please select at least one interest."
       );
+
       return;
     }
 
-    /* PLACES */
+    const finalSelectedPlaces =
+      selectedPlaces.filter(Boolean);
 
-    if (selectedPlaces.length === 0) {
+    if (
+      finalSelectedPlaces.length === 0
+    ) {
       alert(
         "Please select at least one place to visit."
       );
+
       return;
     }
 
-    /* =================================================
-       FINAL DATA
-    ================================================= */
-
     const tripData = {
-      destination:
-        cleanDestination,
+      destination: cleanDestination,
+
+      destinationId:
+        normalizeDestination(
+          cleanDestination
+        ),
 
       date,
 
@@ -928,37 +1047,36 @@ const TripPlan = () => {
 
       transport,
 
-      interests: [
-        ...interests,
-      ],
+      interests: [...interests],
 
       places: [
-        ...selectedPlaces,
+        ...finalSelectedPlaces,
       ],
-    };
 
-    /* SAVE */
+      destinationData:
+        selectedDestination || null,
+
+      paymentStatus: "pending",
+    };
 
     localStorage.setItem(
       "tripperTrip",
       JSON.stringify(tripData)
     );
 
-    /* NAVIGATE */
-
-    navigate("/create-trip");
+    navigate("/create-trip", {
+      state: tripData,
+    });
   };
 
   /* =====================================================
-     RENDER
+     JSX
   ===================================================== */
 
   return (
     <main className="trip-plan-page">
 
-      {/* =================================================
-          HERO
-      ================================================= */}
+      {/* HERO */}
 
       <section className="trip-plan-hero">
 
@@ -979,34 +1097,26 @@ const TripPlan = () => {
 
           <p>
             Enter your destination,
-            budget, people and
-            interests. Your
-            personalized itinerary
-            will be created around
-            your travel style.
+            budget, people and interests.
+            Your personalized itinerary
+            will be created around your
+            travel style.
           </p>
 
           <div className="trip-plan-features">
 
             <div>
               <FiCompass />
-
-              <span>
-                Smart itinerary
-              </span>
+              <span>Smart itinerary</span>
             </div>
 
             <div>
               <FiHome />
-
-              <span>
-                Stay suggestions
-              </span>
+              <span>Stay suggestions</span>
             </div>
 
             <div>
               <FiNavigation />
-
               <span>
                 Transport planning
               </span>
@@ -1015,8 +1125,6 @@ const TripPlan = () => {
           </div>
 
         </div>
-
-        {/* HERO VISUAL */}
 
         <div className="trip-plan-visual">
 
@@ -1041,7 +1149,6 @@ const TripPlan = () => {
             <FiHeart />
 
             <div>
-
               <strong>
                 Made for you
               </strong>
@@ -1049,7 +1156,6 @@ const TripPlan = () => {
               <span>
                 Couple • Family • Friends • Solo
               </span>
-
             </div>
 
           </div>
@@ -1058,9 +1164,7 @@ const TripPlan = () => {
 
       </section>
 
-      {/* =================================================
-          VIDEO + FORM
-      ================================================= */}
+      {/* PLANNER */}
 
       <section className="trip-planner-section">
 
@@ -1071,11 +1175,18 @@ const TripPlan = () => {
           <div className="trip-media">
 
             <video
+              key={
+                selectedDestination?.video ||
+                "default-trip-video"
+              }
               className="trip-media-video"
-              src="/trip1.mp4"
+              src={
+                selectedDestination?.video ||
+                "/trip1.mp4"
+              }
               autoPlay
               muted
-              controls
+              loop
               playsInline
               preload="auto"
             />
@@ -1087,15 +1198,14 @@ const TripPlan = () => {
               </span>
 
               <h2>
-                Your journey,
-                <br />
-                your way.
+                {selectedDestination
+                  ? `Discover ${selectedDestination.name}`
+                  : "Your journey, your way."}
               </h2>
 
               <p>
-                Tell us what you love
-                and we'll create a trip
-                around you.
+                {selectedDestination?.description ||
+                  "Tell us what you love and we'll create a trip around you."}
               </p>
 
             </div>
@@ -1109,14 +1219,9 @@ const TripPlan = () => {
             onSubmit={handleSubmit}
           >
 
-            {/* =================================================
-                01 — YOUR TRIP
-            ================================================= */}
-
             <div className="planner-heading">
 
               <div>
-
                 <span>
                   01 — YOUR TRIP
                 </span>
@@ -1124,7 +1229,6 @@ const TripPlan = () => {
                 <h2>
                   Where do you want to go?
                 </h2>
-
               </div>
 
               <p>
@@ -1134,7 +1238,7 @@ const TripPlan = () => {
 
             </div>
 
-            {/* BASIC DETAILS */}
+            {/* BASIC */}
 
             <div className="planner-grid">
 
@@ -1162,11 +1266,15 @@ const TripPlan = () => {
                     autoComplete="off"
                   />
 
+                  {destination && (
+                    <FiCheck className="input-success-icon" />
+                  )}
+
                 </div>
 
               </label>
 
-              {/* PLACES TO VISIT */}
+              {/* PLACES */}
 
               <div className="planner-field places-field">
 
@@ -1175,27 +1283,29 @@ const TripPlan = () => {
                 </span>
 
                 <p className="places-select-description">
-                  Choose up to 3 places you
-                  want to explore.
+                  Choose up to 3 places
+                  you want to explore.
                 </p>
 
                 <div className="places-circle-grid">
 
                   {getPlacesForDestination(
                     destination
-                  )
-                    .slice(0, 3)
-                    .map((place) => {
+                  ).map(
+                    (place, index) => {
+
+                      const placeName =
+                        place.name;
 
                       const isSelected =
                         selectedPlaces.includes(
-                          place
+                          placeName
                         );
 
                       return (
                         <button
+                          key={`${placeName}-${index}`}
                           type="button"
-                          key={place}
                           className={`place-circle-option ${
                             isSelected
                               ? "selected"
@@ -1203,36 +1313,35 @@ const TripPlan = () => {
                           }`}
                           onClick={() =>
                             handlePlaceSelect(
-                              place
+                              placeName
                             )
                           }
                         >
 
                           <span className="place-check-circle">
-                            {isSelected && "✓"}
+                            {isSelected
+                              ? "✓"
+                              : ""}
                           </span>
 
                           <span className="place-option-name">
-                            {place}
+                            {placeName}
                           </span>
 
                         </button>
                       );
-
-                    })}
+                    }
+                  )}
 
                 </div>
 
                 <small className="places-help-text">
-
-                  {selectedPlaces.length}/3
-                  places selected
-
+                  {selectedPlaces.length}/3 places selected
                 </small>
 
               </div>
 
-              {/* TRAVEL DATE */}
+              {/* DATE */}
 
               <label className="planner-field">
 
@@ -1258,15 +1367,17 @@ const TripPlan = () => {
                     type="date"
                     value={date}
                     min={getTodayDate()}
-                    onChange={handleDateChange}
-                    aria-label="Select travel date"
+                    onChange={
+                      handleDateChange
+                    }
                   />
 
                   <button
                     type="button"
                     className="date-calendar-button"
-                    onClick={openDatePicker}
-                    aria-label="Open calendar"
+                    onClick={
+                      openDatePicker
+                    }
                   >
                     <FiCalendar />
                   </button>
@@ -1275,7 +1386,7 @@ const TripPlan = () => {
 
               </label>
 
-              {/* DURATION */}
+              {/* DAYS */}
 
               <label className="planner-field">
 
@@ -1294,61 +1405,18 @@ const TripPlan = () => {
                     }
                   >
 
-                    <option value="2">
-                      2 Days
-                    </option>
-
-                    <option value="3">
-                      3 Days
-                    </option>
-
-                    <option value="4">
-                      4 Days
-                    </option>
-
-                    <option value="5">
-                      5 Days
-                    </option>
-
-                    <option value="6">
-                      6 Days
-                    </option>
-
-                    <option value="7">
-                      7 Days
-                    </option>
-
-                    <option value="8">
-                      8 Days
-                    </option>
-
-                    <option value="9">
-                      9 Days
-                    </option>
-
-                    <option value="10">
-                      10 Days
-                    </option>
-
-                    <option value="12">
-                      12 Days
-                    </option>
-
-                    <option value="15">
-                      15 Days
-                    </option>
-
-                    <option value="20">
-                      20 Days
-                    </option>
-
-                    <option value="25">
-                      25 Days
-                    </option>
-
-                    <option value="30">
-                      30 Days
-                    </option>
+                    {[
+                      2, 3, 4, 5, 6,
+                      7, 8, 9, 10,
+                      12, 15, 20, 25, 30,
+                    ].map((day) => (
+                      <option
+                        key={day}
+                        value={day}
+                      >
+                        {day} Days
+                      </option>
+                    ))}
 
                   </select>
 
@@ -1379,20 +1447,15 @@ const TripPlan = () => {
 
                     {getTravellerOptions().map(
                       (number) => (
-
                         <option
                           key={number}
                           value={number}
                         >
-
                           {number}{" "}
-
                           {number === 1
                             ? "Traveller"
                             : "Travellers"}
-
                         </option>
-
                       )
                     )}
 
@@ -1406,9 +1469,7 @@ const TripPlan = () => {
 
             <div className="planner-divider" />
 
-            {/* =================================================
-                02 — WHO IS TRAVELLING?
-            ================================================= */}
+            {/* TRAVEL TYPE */}
 
             <div className="planner-section-block">
 
@@ -1432,36 +1493,31 @@ const TripPlan = () => {
                     "Friends",
                     "Fun together",
                   ],
-                ].map(
-                  ([type, text]) => (
+                ].map(([type, text]) => (
+                  <button
+                    type="button"
+                    key={type}
+                    className={`travel-type ${
+                      travelType === type
+                        ? "active"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      setTravelType(type)
+                    }
+                  >
+                    <FiHeart />
 
-                    <button
-                      type="button"
-                      key={type}
-                      className={`travel-type ${
-                        travelType === type
-                          ? "active"
-                          : ""
-                      }`}
-                      onClick={() =>
-                        setTravelType(type)
-                      }
-                    >
+                    <strong>
+                      {type}
+                    </strong>
 
-                      <FiHeart />
+                    <span>
+                      {text}
+                    </span>
 
-                      <strong>
-                        {type}
-                      </strong>
-
-                      <span>
-                        {text}
-                      </span>
-
-                    </button>
-
-                  )
-                )}
+                  </button>
+                ))}
 
               </div>
 
@@ -1470,7 +1526,11 @@ const TripPlan = () => {
             <div className="planner-divider" />
 
             {/* =================================================
-                03 — YOUR BUDGET
+                BUDGET
+
+                NO LOCK
+                NO ERROR
+                USER CAN CHANGE
             ================================================= */}
 
             <div className="planner-section-block">
@@ -1479,75 +1539,37 @@ const TripPlan = () => {
                 03 — YOUR BUDGET
               </span>
 
+              <p className="section-description">
+                Select your approximate
+                budget for the complete trip.
+              </p>
+
               <div className="option-row">
 
-                {[
-                  "₹10,000 – ₹25,000",
-                  "₹25,000 – ₹50,000",
-                  "₹50,000 – ₹1,00,000",
-                  "₹1,00,000 – ₹2,00,000",
-                  "₹2,00,000+",
-                ].map((item) => (
+                {budgetOptions.map(
+                  (item) => (
+                    <button
+                      type="button"
+                      key={item}
+                      className={`option-pill ${
+                        budget === item
+                          ? "active"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setBudget(item)
+                      }
+                    >
 
-                  <button
-                    type="button"
-                    key={item}
-                    className={`option-pill ${
-                      budget === item
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      setBudget(item)
-                    }
-                  >
+                      {budget === item && (
+                        <FiCheck />
+                      )}
 
-                    {item}
+                      {item}
 
-                  </button>
-
-                ))}
-
-              </div>
-
-            </div>
-
-            <div className="planner-divider" />
-
-            {/* TRAVEL STYLE */}
-
-            <div className="planner-section-block">
-
-              <span className="section-label">
-                TRAVEL STYLE
-              </span>
-
-              <div className="mini-options">
-
-                {[
-                  "Relaxed",
-                  "Balanced",
-                  "Fast-paced",
-                ].map((item) => (
-
-                  <button
-                    type="button"
-                    key={item}
-                    className={
-                      style === item
-                        ? "selected"
-                        : ""
-                    }
-                    onClick={() =>
-                      setStyle(item)
-                    }
-                  >
-
-                    {item}
-
-                  </button>
-
-                ))}
+                    </button>
+                  )
+                )}
 
               </div>
 
@@ -1558,8 +1580,6 @@ const TripPlan = () => {
             {/* STAY + TRANSPORT */}
 
             <div className="planner-two-column">
-
-              {/* STAY */}
 
               <div className="planner-section-block">
 
@@ -1576,7 +1596,6 @@ const TripPlan = () => {
                     "Hostel",
                     "Villa",
                   ].map((item) => (
-
                     <button
                       type="button"
                       key={item}
@@ -1589,18 +1608,13 @@ const TripPlan = () => {
                         setStay(item)
                       }
                     >
-
                       {item}
-
                     </button>
-
                   ))}
 
                 </div>
 
               </div>
-
-              {/* TRANSPORT */}
 
               <div className="planner-section-block">
 
@@ -1618,7 +1632,6 @@ const TripPlan = () => {
                     "Car",
                     "Bike",
                   ].map((item) => (
-
                     <button
                       type="button"
                       key={item}
@@ -1631,11 +1644,8 @@ const TripPlan = () => {
                         setTransport(item)
                       }
                     >
-
                       {item}
-
                     </button>
-
                   ))}
 
                 </div>
@@ -1646,9 +1656,7 @@ const TripPlan = () => {
 
             <div className="planner-divider" />
 
-            {/* =================================================
-                04 — INTERESTS
-            ================================================= */}
+            {/* INTEREST */}
 
             <div className="planner-section-block">
 
@@ -1657,47 +1665,49 @@ const TripPlan = () => {
               </span>
 
               <p className="section-description">
-                Select everything you want
-                in your trip.
+                Select everything you
+                want in your trip.
               </p>
 
               <div className="interest-grid">
 
                 {interestOptions.map(
-                  (item) => (
+                  (item) => {
+                    const active =
+                      interests.includes(item);
 
-                    <button
-                      type="button"
-                      key={item}
-                      className={`interest-chip ${
-                        interests.includes(item)
-                          ? "active"
-                          : ""
-                      }`}
-                      onClick={() =>
-                        toggleInterest(item)
-                      }
-                    >
+                    return (
+                      <button
+                        type="button"
+                        key={item}
+                        className={`interest-chip ${
+                          active
+                            ? "active"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          toggleInterest(item)
+                        }
+                      >
+                        {active && (
+                          <FiCheck />
+                        )}
 
-                      {item}
-
-                    </button>
-
-                  )
+                        {item}
+                      </button>
+                    );
+                  }
                 )}
 
               </div>
 
             </div>
 
-            {/* =================================================
-                SUMMARY
-            ================================================= */}
+            {/* SUMMARY */}
 
             <div className="trip-selection-summary">
 
               <div>
-
                 <small>
                   Destination
                 </small>
@@ -1706,35 +1716,25 @@ const TripPlan = () => {
                   {destination ||
                     "Not selected"}
                 </strong>
-
               </div>
 
               <div>
-
-                <small>
-                  Date
-                </small>
+                <small>Date</small>
 
                 <strong>
                   {formatDate(date)}
                 </strong>
-
               </div>
 
               <div>
-
-                <small>
-                  Duration
-                </small>
+                <small>Duration</small>
 
                 <strong>
                   {days} Days
                 </strong>
-
               </div>
 
               <div>
-
                 <small>
                   Travellers
                 </small>
@@ -1742,23 +1742,43 @@ const TripPlan = () => {
                 <strong>
                   {travellers}
                 </strong>
-
               </div>
 
               <div>
+                <small>Budget</small>
 
+                <strong>
+                  {budget}
+                </strong>
+              </div>
+
+              <div>
+                <small>Stay</small>
+
+                <strong>
+                  {stay}
+                </strong>
+              </div>
+
+              <div>
                 <small>
-                  Places
+                  Transport
                 </small>
 
                 <strong>
-                  {selectedPlaces.length}
+                  {transport}
                 </strong>
-
               </div>
 
               <div>
+                <small>Places</small>
 
+                <strong>
+                  {selectedPlaces.length}/3
+                </strong>
+              </div>
+
+              <div>
                 <small>
                   Interests
                 </small>
@@ -1766,35 +1786,28 @@ const TripPlan = () => {
                 <strong>
                   {interests.length}
                 </strong>
-
               </div>
 
             </div>
 
-            {/* =================================================
-                CREATE BUTTON
-            ================================================= */}
+            {/* BUTTON */}
 
             <button
               type="submit"
               className="create-trip-button"
             >
-
               <span>
                 Create My Personalized Trip
               </span>
 
               <FiArrowRight />
-
             </button>
 
             <p className="planner-note">
-
               Your plan will automatically
-              adjust according to your budget,
-              travel type, selected places and
-              interests.
-
+              adjust according to your
+              budget, travel type, selected
+              places and interests.
             </p>
 
           </form>

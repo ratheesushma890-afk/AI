@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+
 import {
   FiArrowUpRight,
   FiHeart,
@@ -13,6 +14,10 @@ import {
 import { useWishlist } from "../context/WishlistContext";
 
 import "./Explore.css";
+
+/* =========================================================
+   DESTINATION DATA
+========================================================= */
 
 const destinations = [
   {
@@ -84,9 +89,12 @@ const destinations = [
     description:
       "River adventures, mountain trails and soulful evenings.",
   },
-
 ];
 
+
+/* =========================================================
+   FILTER DATA
+========================================================= */
 
 const filters = [
   "All",
@@ -98,23 +106,36 @@ const filters = [
   "Romantic",
 ];
 
+
+/* =========================================================
+   EXPLORE COMPONENT
+========================================================= */
+
 const Explore = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [search, setSearch] = useState("");
 
   const discoverRef = useRef(null);
 
-  // ================= WISHLIST =================
+  /* =======================================================
+     WISHLIST
+  ======================================================= */
+
   const { toggleWishlist, isWishlisted } = useWishlist();
 
-  // ================= FILTER =================
+
+  /* =======================================================
+     FILTER DESTINATIONS
+  ======================================================= */
+
   const filteredDestinations = useMemo(() => {
     const query = search.trim().toLowerCase();
 
     return destinations.filter((item) => {
       const filterMatch =
         activeFilter === "All" ||
-        item.category.toLowerCase() === activeFilter.toLowerCase();
+        item.category.toLowerCase() ===
+          activeFilter.toLowerCase();
 
       const searchMatch =
         !query ||
@@ -126,7 +147,11 @@ const Explore = () => {
     });
   }, [activeFilter, search]);
 
-  // ================= EXPLORE BUTTON =================
+
+  /* =======================================================
+     EXPLORE BUTTON
+  ======================================================= */
+
   const handleExplore = () => {
     discoverRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -134,46 +159,71 @@ const Explore = () => {
     });
   };
 
-  return (
-    <main className="explore-page">
 
-      {/* =====================================================
+  /* =======================================================
+     JSX
+  ======================================================= */
+
+  return (
+    <main className="tripExplore-page">
+
+      {/* ===================================================
           HERO
-      ===================================================== */}
-      <section className="explore-hero">
+      =================================================== */}
+
+      <section className="tripExplore-hero">
+
+        {/* HERO IMAGE */}
 
         <img
-          className="explore-hero-image"
+          className="tripExplore-heroImage"
           src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2200&q=95"
           alt="Beautiful mountain travel destination"
         />
 
-        <div className="explore-hero-overlay" />
 
-        <div className="explore-hero-content">
+        {/* HERO OVERLAY */}
 
-          <span className="explore-eyebrow">
+        <div className="tripExplore-heroOverlay" />
+
+
+        {/* HERO CONTENT */}
+
+        <div className="tripExplore-heroContent">
+
+          <span className="tripExplore-eyebrow">
+
             <FiCompass />
+
             DISCOVER YOUR NEXT ESCAPE
+
           </span>
 
-          <h1>
+
+          <h1 className="tripExplore-heroTitle">
             Go somewhere
             <br />
             <em>worth remembering.</em>
           </h1>
 
-          <p>
+
+          <p className="tripExplore-heroDescription">
             Beautiful places, unforgettable experiences and journeys
             designed around the way you want to travel.
           </p>
 
-          {/* SEARCH */}
-          <div className="explore-search">
 
-            <FiSearch className="search-icon" />
+          {/* =================================================
+              SEARCH
+          ================================================= */}
+
+          <div className="tripExplore-searchBox">
+
+            <FiSearch className="tripExplore-searchIcon" />
+
 
             <input
+              className="tripExplore-searchInput"
               type="text"
               placeholder="Search a destination, place or experience..."
               value={search}
@@ -185,95 +235,151 @@ const Explore = () => {
               }}
             />
 
-            <button type="button" onClick={handleExplore}>
+
+            <button
+              type="button"
+              className="tripExplore-searchButton"
+              onClick={handleExplore}
+            >
               Explore
+
               <FiArrowUpRight />
             </button>
 
           </div>
 
-          <div className="hero-mini-info">
-            <span>✦ Curated destinations</span>
-            <span>✦ Local experiences</span>
-            <span>✦ Smart trip planning</span>
+
+          {/* =================================================
+              HERO MINI INFO
+          ================================================= */}
+
+          <div className="tripExplore-miniInfo">
+
+            <span>
+              ✦ Curated destinations
+            </span>
+
+            <span>
+              ✦ Local experiences
+            </span>
+
+            <span>
+              ✦ Smart trip planning
+            </span>
+
           </div>
 
         </div>
+
       </section>
 
 
-      {/* =====================================================
-          TRENDING
-      ===================================================== */}
-      <section className="trending-section">
+      {/* ===================================================
+          TRENDING SECTION
+      =================================================== */}
 
-        <div className="section-heading">
+      <section className="tripExplore-trendingSection">
 
-          <div>
-            <span className="small-label">
+        {/* SECTION HEADING */}
+
+        <div className="tripExplore-sectionHeading">
+
+          <div className="tripExplore-headingLeft">
+
+            <span className="tripExplore-smallLabel">
               TRENDING NOW
             </span>
 
-            <h2>
+
+            <h2 className="tripExplore-sectionTitle">
               Places people are
-              
+              <br />
               dreaming about.
             </h2>
+
           </div>
+
 
           <Link
             to="/explore"
-            className="heading-link"
+            className="tripExplore-headingLink"
           >
             View all destinations
 
-            <span className="heading-circle">
+            <span className="tripExplore-headingCircle">
               <FiArrowUpRight />
             </span>
+
           </Link>
 
         </div>
 
 
-        <div className="destination-slider">
+        {/* =================================================
+            TRENDING CARDS
+        ================================================= */}
+
+        <div className="tripExplore-trendingSlider">
 
           {destinations.slice(0, 5).map((item) => (
 
             <Link
-              to={`/destination/${item.id}`}
-              className="trend-card"
               key={item.id}
+              to={`/destination/${item.id}`}
+              className="tripExplore-trendingCard"
             >
 
+              {/* IMAGE */}
+
               <img
+                className="tripExplore-trendingImage"
                 src={item.image}
                 alt={item.name}
               />
 
-              <div className="trend-gradient" />
 
-              <div className="trend-content">
+              {/* GRADIENT */}
 
-                <div>
+              <div className="tripExplore-trendingGradient" />
 
-                  <h3>{item.name}</h3>
 
-                  <span className="trend-location">
+              {/* CONTENT */}
+
+              <div className="tripExplore-trendingContent">
+
+                <div className="tripExplore-trendingInfo">
+
+                  <h3>
+                    {item.name}
+                  </h3>
+
+
+                  <span className="tripExplore-trendingLocation">
+
                     <FiMapPin />
+
                     {item.state}
+
                   </span>
 
                 </div>
 
-                <div className="trend-bottom">
 
-                  <span>
+                <div className="tripExplore-trendingBottom">
+
+                  <span className="tripExplore-trendingRating">
+
                     <FiStar />
+
                     {item.rating}
+
                   </span>
 
-                  <span className="trend-arrow">
+
+                  <span className="tripExplore-trendingArrow">
+
                     <FiChevronRight />
+
                   </span>
 
                 </div>
@@ -289,25 +395,31 @@ const Explore = () => {
       </section>
 
 
-      {/* =====================================================
-          DISCOVER
-      ===================================================== */}
+      {/* ===================================================
+          DISCOVER SECTION
+      =================================================== */}
+
       <section
-        className="discover-section"
+        className="tripExplore-discoverSection"
         ref={discoverRef}
       >
 
-        <div className="section-heading">
+        {/* =================================================
+            DISCOVER HEADING
+        ================================================= */}
 
-          <div>
+        <div className="tripExplore-sectionHeading">
 
-            <span className="small-label">
+          <div className="tripExplore-headingLeft">
+
+            <span className="tripExplore-smallLabel">
               CURATED FOR YOU
             </span>
 
-            <h2>
+
+            <h2 className="tripExplore-sectionTitle">
               Find your next
-              
+              <br />
               favourite place.
             </h2>
 
@@ -316,20 +428,25 @@ const Explore = () => {
         </div>
 
 
-        {/* ================= FILTERS ================= */}
-        <div className="filter-row">
+        {/* =================================================
+            FILTER BUTTONS
+        ================================================= */}
+
+        <div className="tripExplore-filterRow">
 
           {filters.map((filter) => (
 
             <button
               type="button"
               key={filter}
-              className={
+              className={`tripExplore-filterButton ${
                 activeFilter === filter
-                  ? "active"
+                  ? "tripExplore-filterButtonActive"
                   : ""
+              }`}
+              onClick={() =>
+                setActiveFilter(filter)
               }
-              onClick={() => setActiveFilter(filter)}
             >
               {filter}
             </button>
@@ -340,41 +457,57 @@ const Explore = () => {
 
 
         {/* =================================================
-            DESTINATION GRID
+            DESTINATION RESULTS
         ================================================= */}
+
         {filteredDestinations.length > 0 ? (
 
-          <div className="discover-grid">
+          /* =================================================
+             DESTINATION GRID
+          ================================================= */
+
+          <div className="tripExplore-destinationGrid">
 
             {filteredDestinations.map((item) => (
 
               <article
-                className="destination-card"
+                className="tripExplore-destinationCard"
                 key={item.id}
               >
 
-                {/* IMAGE */}
+                {/* =========================================
+                    DESTINATION IMAGE
+                ========================================= */}
+
                 <Link
                   to={`/destination/${item.id}`}
-                  className="destination-image-link"
+                  className="tripExplore-imageLink"
                 >
 
-                  <div className="destination-image">
+                  <div className="tripExplore-cardImageBox">
 
                     <img
+                      className="tripExplore-cardImage"
                       src={item.image}
                       alt={item.name}
                     />
 
-                    <div className="destination-image-top">
 
-                      <span className="destination-tag">
+                    {/* IMAGE TOP */}
+
+                    <div className="tripExplore-imageTop">
+
+                      <span className="tripExplore-destinationTag">
                         {item.tag}
                       </span>
 
-                      <span className="destination-location">
+
+                      <span className="tripExplore-cardLocation">
+
                         <FiMapPin />
+
                         {item.state}
+
                       </span>
 
                     </div>
@@ -385,16 +518,19 @@ const Explore = () => {
 
 
                 {/* =================================================
-                    WISHLIST HEART
+                    WISHLIST BUTTON
                 ================================================= */}
+
                 <button
                   type="button"
-                  className={`like-btn ${
+                  className={`tripExplore-wishlistButton ${
                     isWishlisted(item.id)
-                      ? "liked"
+                      ? "tripExplore-wishlistButtonActive"
                       : ""
                   }`}
-                  onClick={() => toggleWishlist(item)}
+                  onClick={() =>
+                    toggleWishlist(item)
+                  }
                   aria-label={
                     isWishlisted(item.id)
                       ? `Remove ${item.name} from wishlist`
@@ -405,34 +541,53 @@ const Explore = () => {
                 </button>
 
 
-                {/* INFO */}
-                <div className="destination-info">
+                {/* =================================================
+                    DESTINATION CONTENT
+                ================================================= */}
 
-                  <div className="destination-title-row">
+                <div className="tripExplore-cardContent">
+
+                  {/* TITLE ROW */}
+
+                  <div className="tripExplore-cardTitleRow">
 
                     <Link
                       to={`/destination/${item.id}`}
+                      className="tripExplore-cardTitleLink"
                     >
-                      <h3>{item.name}</h3>
+                      <h3>
+                        {item.name}
+                      </h3>
                     </Link>
 
-                    <span className="rating">
+
+                    <span className="tripExplore-cardRating">
+
                       <FiStar />
+
                       {item.rating}
+
                     </span>
 
                   </div>
 
 
-                  <p>
+                  {/* DESCRIPTION */}
+
+                  <p className="tripExplore-cardDescription">
                     {item.description}
                   </p>
 
 
-                  {/* FOOTER */}
-                  <div className="destination-footer">
+                  {/* =================================================
+                      CARD FOOTER
+                  ================================================= */}
 
-                    <div className="price-box">
+                  <div className="tripExplore-cardFooter">
+
+                    {/* PRICE */}
+
+                    <div className="tripExplore-priceBox">
 
                       <small>
                         STARTING FROM
@@ -445,11 +600,14 @@ const Explore = () => {
                     </div>
 
 
+                    {/* VIEW DETAILS */}
+
                     <Link
                       to={`/destination/${item.id}`}
-                      className="view-detail"
+                      className="tripExplore-viewButton"
                     >
                       View details
+
                       <FiArrowUpRight />
                     </Link>
 
@@ -466,24 +624,29 @@ const Explore = () => {
         ) : (
 
           /* =================================================
-              EMPTY STATE
+             EMPTY STATE
           ================================================= */
-          <div className="empty-explore">
 
-            <div className="empty-icon">
+          <div className="tripExplore-emptyState">
+
+            <div className="tripExplore-emptyIcon">
               <FiSearch />
             </div>
 
-            <h3>
+
+            <h3 className="tripExplore-emptyTitle">
               No destinations found
             </h3>
 
-            <p>
+
+            <p className="tripExplore-emptyText">
               Try another destination or category.
             </p>
 
+
             <button
               type="button"
+              className="tripExplore-resetButton"
               onClick={() => {
                 setSearch("");
                 setActiveFilter("All");
@@ -497,7 +660,6 @@ const Explore = () => {
         )}
 
       </section>
-
 
     </main>
   );

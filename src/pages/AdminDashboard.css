@@ -1,304 +1,1314 @@
-* {
+/* =========================================================
+   TRIPPER ADMIN DASHBOARD
+   AdminDashboard.css
+========================================================= */
+
+.admin-dashboard-page {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  margin: 0;
+  padding: 30px 34px 28px;
+  background: #f4f7fb;
+  color: #172033;
   box-sizing: border-box;
 }
 
-.admin-dashboard {
-  min-height: 100vh;
-  display: flex;
-  background: #f5f7fa;
-  color: #172235;
-}
-
-/* SIDEBAR */
-
-.admin-sidebar {
-  width: 250px;
-  min-height: 100vh;
-  padding: 25px 15px;
-
-  display: flex;
-  flex-direction: column;
-
-  background: #0d1b2a;
-  color: white;
-}
-
-.admin-brand {
-  padding: 10px 15px 30px;
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.admin-brand span {
-  margin-left: 7px;
-}
-
-.admin-sidebar nav {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.admin-sidebar nav button,
-.admin-logout {
-  width: 100%;
-  padding: 13px 15px;
-
-  border: 0;
-  border-radius: 9px;
-
-  text-align: left;
-
-  background: transparent;
-  color: #b9c5d2;
-
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.admin-sidebar nav button:hover,
-.admin-sidebar nav button.active {
-  background: #d4a84f;
-  color: white;
-}
-
-.admin-logout {
-  margin-top: auto;
-  color: #ffb3b3;
-}
-
-/* MAIN */
-
-.admin-main {
-  flex: 1;
-  padding: 35px;
-  overflow-x: hidden;
-}
+/* =========================================================
+   HEADER
+========================================================= */
 
 .admin-header {
+  width: 100%;
+  min-height: 82px;
+  margin: 0 0 26px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 30px;
+  gap: 25px;
+}
+
+.admin-header-left {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.admin-header-text {
+  min-width: 0;
+}
+
+.admin-header-label {
+  display: inline-block;
+  margin-bottom: 6px;
+  color: #1769ff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
 }
 
 .admin-header h1 {
   margin: 0;
-  font-size: 32px;
+  color: #172033;
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.7px;
 }
 
 .admin-header p {
-  margin: 5px 0 0;
-  color: #7a8491;
+  margin: 7px 0 0;
+  color: #8792a5;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-.admin-profile {
-  padding: 10px 16px;
-  background: white;
-  border-radius: 30px;
-}
-
-/* STATS */
-
-.admin-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-}
-
-.stat-card {
-  padding: 22px;
-
+.admin-header-actions {
   display: flex;
   align-items: center;
-  gap: 15px;
-
-  background: white;
-  border-radius: 16px;
-
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  gap: 16px;
+  flex-shrink: 0;
 }
 
-.stat-card > span {
-  width: 48px;
-  height: 48px;
-
+.admin-icon-button {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e4e9f1;
+  border-radius: 13px;
+  background: #fff;
+  color: #536078;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 12px;
-  background: #f5e8c7;
-
-  font-size: 23px;
+  cursor: pointer;
+  font-size: 19px;
+  transition: all 0.2s ease;
 }
 
-.stat-card p {
-  margin: 0 0 5px;
-  color: #7b8490;
-  font-size: 13px;
+.admin-icon-button:hover {
+  color: #1769ff;
+  border-color: #cddcff;
+  box-shadow: 0 7px 20px rgba(23, 105, 255, 0.1);
+  transform: translateY(-1px);
 }
 
-.stat-card h2 {
-  margin: 0;
-  font-size: 25px;
+.notification-dot {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff5267;
+  border: 2px solid #fff;
 }
 
-/* SECTION */
-
-.admin-section,
-.quick-actions {
-  margin-top: 25px;
-  padding: 25px;
-
-  background: white;
-  border-radius: 18px;
-}
-
-.section-heading {
+.admin-header-user {
+  min-width: 155px;
+  padding: 8px 12px 8px 8px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  gap: 10px;
+  border: 1px solid #e5eaf2;
+  border-radius: 14px;
+  background: #fff;
 }
 
-.section-heading h2,
-.quick-actions h2 {
-  margin: 0;
-}
-
-.section-heading p {
-  margin: 5px 0 0;
-  color: #7b8490;
-}
-
-.section-heading button {
-  padding: 9px 16px;
-
-  border: 1px solid #ddd;
-  border-radius: 8px;
-
-  background: white;
-  cursor: pointer;
-}
-
-/* TABLE */
-
-.booking-table {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.table-row {
-  min-width: 700px;
-  display: grid;
-  grid-template-columns: 1.2fr 1.3fr 1fr 1fr 1fr;
-  gap: 15px;
-
-  padding: 16px 10px;
-  border-bottom: 1px solid #eee;
-
+.admin-header-avatar {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    #1769ff,
+    #09b9f5
+  );
+  color: #fff;
   font-size: 14px;
+  font-weight: 800;
 }
 
-.table-head {
-  font-weight: 700;
-  color: #6d7784;
+.admin-header-user-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.confirmed {
-  color: #21884c;
+.admin-header-user-info strong {
+  color: #172033;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
-.pending {
-  color: #c58912;
-}
-
-/* QUICK */
-
-.quick-grid {
-  margin-top: 18px;
-
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-}
-
-.quick-grid button {
-  padding: 20px;
-
-  border: 1px solid #eee;
-  border-radius: 13px;
-
-  background: #fafafa;
-
-  cursor: pointer;
-  text-align: left;
-}
-
-.quick-grid button:hover {
-  border-color: #d4a84f;
-}
-
-.quick-grid strong {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 25px;
-}
-
-.quick-grid span {
+.admin-header-user-info span {
+  color: #8a95a8;
+  font-size: 9px;
   font-weight: 600;
 }
 
-/* RESPONSIVE */
+/* =========================================================
+   STATS
+========================================================= */
 
-@media (max-width: 1000px) {
-  .admin-sidebar {
-    width: 210px;
+.admin-stats-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.admin-stat-card {
+  position: relative;
+  min-width: 0;
+  min-height: 164px;
+  padding: 21px 21px 17px;
+  overflow: hidden;
+  border: 1px solid #e5eaf2;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 7px 25px rgba(24, 42, 72, 0.045);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.admin-stat-card::before {
+  content: "";
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  top: -35px;
+  right: -35px;
+  border-radius: 50%;
+  background: rgba(23, 105, 255, 0.05);
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 32px rgba(24, 42, 72, 0.09);
+}
+
+.admin-stat-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-stat-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1769ff;
+  background: rgba(23, 105, 255, 0.09);
+  font-size: 19px;
+}
+
+.admin-stat-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 8px;
+  border-radius: 20px;
+  background: rgba(25, 180, 115, 0.09);
+  color: #159566;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.admin-stat-change svg {
+  width: 12px;
+  height: 12px;
+}
+
+.admin-stat-content {
+  position: relative;
+  z-index: 1;
+  margin-top: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.admin-stat-content span {
+  color: #8a95a8;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.admin-stat-content strong {
+  color: #172033;
+  font-size: 27px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+}
+
+.admin-stat-line {
+  position: absolute;
+  left: 21px;
+  right: 21px;
+  bottom: 0;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+  background: #eef2f7;
+}
+
+.admin-stat-line span {
+  display: block;
+  width: 62%;
+  height: 100%;
+  border-radius: inherit;
+  background: #1769ff;
+}
+
+/* Individual stat colors */
+
+.admin-stat-card.users .admin-stat-icon {
+  color: #1769ff;
+  background: rgba(23, 105, 255, 0.09);
+}
+
+.admin-stat-card.users .admin-stat-line span {
+  background: #1769ff;
+}
+
+.admin-stat-card.trips .admin-stat-icon {
+  color: #08a87c;
+  background: rgba(8, 168, 124, 0.1);
+}
+
+.admin-stat-card.trips .admin-stat-line span {
+  background: #08a87c;
+}
+
+.admin-stat-card.bookings .admin-stat-icon {
+  color: #9a5cff;
+  background: rgba(154, 92, 255, 0.1);
+}
+
+.admin-stat-card.bookings .admin-stat-line span {
+  background: #9a5cff;
+}
+
+.admin-stat-card.revenue .admin-stat-icon {
+  color: #c19725;
+  background: rgba(212, 175, 55, 0.13);
+}
+
+.admin-stat-card.revenue .admin-stat-line span {
+  background: #d4af37;
+}
+
+/* =========================================================
+   COMMON PANEL
+========================================================= */
+
+.admin-panel {
+  min-width: 0;
+  border: 1px solid #e4e9f1;
+  border-radius: 19px;
+  background: #fff;
+  box-shadow: 0 7px 25px rgba(24, 42, 72, 0.045);
+}
+
+.admin-panel-header {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.admin-panel-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #1769ff;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.admin-panel-header h2 {
+  margin: 0;
+  color: #172033;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.panel-heading-icon {
+  color: #a4afc0;
+  font-size: 20px;
+}
+
+/* =========================================================
+   MIDDLE GRID
+========================================================= */
+
+.admin-middle-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(300px, 0.85fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* =========================================================
+   REVENUE
+========================================================= */
+
+.revenue-panel {
+  min-height: 430px;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.admin-select {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid #e2e7ef;
+  border-radius: 10px;
+  outline: none;
+  background: #fff;
+  color: #667085;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-select:focus {
+  border-color: #a9c2ff;
+}
+
+.revenue-summary {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.revenue-summary > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.revenue-summary > div:first-child strong {
+  color: #172033;
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: -0.7px;
+}
+
+.revenue-summary > div:first-child span {
+  color: #8b95a6;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.revenue-growth {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #1ba574;
+}
+
+.revenue-growth svg {
+  font-size: 15px;
+}
+
+.revenue-growth strong {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.revenue-growth span {
+  color: #8993a5;
+  font-size: 9px;
+}
+
+.revenue-chart {
+  width: 100%;
+  height: 260px;
+  margin-top: 19px;
+  display: flex;
+  gap: 11px;
+}
+
+.chart-y-labels {
+  width: 30px;
+  height: 215px;
+  padding: 0 0 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.chart-y-labels span {
+  color: #a1a9b7;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.chart-area {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 260px;
+  padding-bottom: 30px;
+}
+
+.chart-grid-lines {
+  position: absolute;
+  inset: 0 0 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.chart-grid-lines span {
+  width: 100%;
+  height: 1px;
+  background: #edf1f5;
+}
+
+.revenue-svg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 215px;
+  overflow: visible;
+}
+
+.chart-x-labels {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chart-x-labels span {
+  color: #a0a9b8;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   QUICK STATS
+========================================================= */
+
+.quick-panel {
+  min-height: 430px;
+  padding: 24px;
+}
+
+.quick-stat-list {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.quick-stat-item {
+  min-height: 67px;
+  padding: 9px 0;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.quick-stat-item:last-child {
+  border-bottom: 0;
+}
+
+.quick-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.users-icon {
+  color: #1769ff;
+  background: rgba(23, 105, 255, 0.09);
+}
+
+.booking-icon {
+  color: #9a5cff;
+  background: rgba(154, 92, 255, 0.1);
+}
+
+.payment-icon {
+  color: #c19725;
+  background: rgba(212, 175, 55, 0.13);
+}
+
+.destination-icon {
+  color: #08a87c;
+  background: rgba(8, 168, 124, 0.1);
+}
+
+.quick-stat-item > div:nth-child(2) {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.quick-stat-item strong {
+  color: #202a3b;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.quick-stat-item span {
+  color: #919bac;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.quick-stat-item small {
+  color: #159566;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.quick-view-button {
+  width: 100%;
+  height: 42px;
+  margin-top: 18px;
+  border: 1px solid #dbe4f5;
+  border-radius: 11px;
+  background: #f7faff;
+  color: #1769ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-view-button:hover {
+  color: #fff;
+  border-color: #1769ff;
+  background: #1769ff;
+}
+
+/* =========================================================
+   BOTTOM GRID
+========================================================= */
+
+.admin-bottom-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(300px, 0.9fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.bookings-panel {
+  min-width: 0;
+  padding: 24px;
+  overflow: hidden;
+}
+
+.destinations-panel {
+  min-width: 0;
+  padding: 24px;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.view-all-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: transparent;
+  color: #1769ff;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.view-all-button svg {
+  font-size: 13px;
+}
+
+.view-all-button:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.admin-table-wrapper {
+  width: 100%;
+  margin-top: 21px;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  padding: 11px 9px;
+  border-bottom: 1px solid #e9edf3;
+  color: #9aa3b2;
+  font-size: 8px;
+  font-weight: 800;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 14px 9px;
+  border-bottom: 1px solid #f0f2f6;
+  color: #667085;
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.admin-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+  background: #fafcff;
+}
+
+.booking-id {
+  color: #1769ff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.customer-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.customer-avatar {
+  width: 29px;
+  height: 29px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef4ff;
+  color: #1769ff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.customer-cell span {
+  color: #273247;
+  font-weight: 700;
+}
+
+.destination-cell {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.destination-cell svg {
+  color: #1769ff;
+  font-size: 12px;
+}
+
+.booking-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 65px;
+  padding: 5px 8px;
+  border-radius: 20px;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.booking-status.confirmed {
+  color: #13895d;
+  background: rgba(20, 180, 115, 0.1);
+}
+
+.booking-status.pending {
+  color: #b47b13;
+  background: rgba(212, 175, 55, 0.13);
+}
+
+.booking-status.completed {
+  color: #1769ff;
+  background: rgba(23, 105, 255, 0.09);
+}
+
+/* =========================================================
+   POPULAR DESTINATIONS
+========================================================= */
+
+.popular-destination-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.popular-destination {
+  min-width: 0;
+  padding: 11px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #eef1f5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.popular-destination:last-child {
+  border-bottom: 0;
+}
+
+.popular-destination:hover {
+  transform: translateX(3px);
+}
+
+.popular-destination img {
+  width: 53px;
+  height: 53px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 11px;
+  background: #edf1f6;
+}
+
+.popular-destination-info {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.popular-destination-info > strong {
+  color: #273247;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.popular-destination-info > span {
+  color: #939cac;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.destination-meta {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 2px;
+}
+
+.destination-meta small {
+  color: #7f899b;
+  font-size: 7px;
+  font-weight: 600;
+}
+
+.destination-meta small:last-child {
+  color: #1769ff;
+  font-weight: 800;
+}
+
+.destination-arrow {
+  flex-shrink: 0;
+  color: #b1bac8;
+  font-size: 14px;
+}
+
+/* =========================================================
+   ACTIVITY
+========================================================= */
+
+.activity-panel {
+  width: 100%;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px;
+  border-radius: 20px;
+  background: rgba(24, 178, 111, 0.08);
+  color: #159566;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+}
+
+.live-badge > span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1ab879;
+  box-shadow: 0 0 0 4px rgba(26, 184, 121, 0.09);
+}
+
+.activity-list {
+  width: 100%;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.activity-item {
+  min-width: 0;
+  min-height: 78px;
+  padding: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #edf0f5;
+  border-radius: 13px;
+  background: #fafcff;
+}
+
+.activity-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef4ff;
+  color: #1769ff;
+  font-size: 15px;
+}
+
+.activity-info {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.activity-info strong {
+  color: #293449;
+  font-size: 9px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-info span {
+  color: #929baa;
+  font-size: 8px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-item time {
+  flex-shrink: 0;
+  color: #a0a8b6;
+  font-size: 7px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.admin-footer {
+  width: 100%;
+  min-height: 45px;
+  padding: 15px 2px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  color: #9aa3b2;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   RESPONSIVE - 1250
+========================================================= */
+
+@media (max-width: 1250px) {
+
+  .admin-dashboard-page {
+    padding: 27px 27px 25px;
   }
 
-  .admin-stats {
-    grid-template-columns: repeat(2, 1fr);
+  .admin-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .quick-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .admin-middle-grid {
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.85fr);
+  }
+
+  .admin-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 700px) {
-  .admin-dashboard {
-    display: block;
+/* =========================================================
+   RESPONSIVE - 1000
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .admin-dashboard-page {
+    width: 100%;
+    padding: 25px 22px;
   }
 
-  .admin-sidebar {
-    width: 100%;
+  .admin-header {
+    min-height: 72px;
+  }
+
+  .admin-middle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .revenue-panel,
+  .quick-panel {
     min-height: auto;
   }
 
-  .admin-sidebar nav {
+  .quick-stat-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
   }
 
-  .admin-logout {
+  .quick-view-button {
     margin-top: 15px;
   }
+}
 
-  .admin-main {
-    padding: 20px;
+/* =========================================================
+   RESPONSIVE - 760
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .admin-dashboard-page {
+    padding: 20px 16px 22px;
+  }
+
+  .admin-header {
+    align-items: flex-start;
+    margin-bottom: 20px;
   }
 
   .admin-header h1 {
-    font-size: 25px;
+    font-size: 26px;
   }
 
-  .admin-stats {
+  .admin-header p {
+    max-width: 430px;
+    font-size: 11px;
+  }
+
+  .admin-header-actions {
+    gap: 8px;
+  }
+
+  .admin-header-user {
+    min-width: auto;
+    padding: 6px;
+    border-radius: 12px;
+  }
+
+  .admin-header-user-info {
+    display: none;
+  }
+
+  .admin-header-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .admin-icon-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .admin-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .admin-stat-card {
+    min-height: 145px;
+    padding: 17px;
+  }
+
+  .admin-stat-content {
+    margin-top: 18px;
+  }
+
+  .admin-stat-content strong {
+    font-size: 23px;
+  }
+
+  .admin-stat-line {
+    left: 17px;
+    right: 17px;
+  }
+
+  .admin-panel {
+    border-radius: 16px;
+  }
+
+  .revenue-panel,
+  .quick-panel,
+  .bookings-panel,
+  .destinations-panel,
+  .activity-panel {
+    padding: 18px;
+  }
+
+  .admin-panel-header h2 {
+    font-size: 16px;
+  }
+
+  .activity-list {
     grid-template-columns: 1fr;
   }
 
-  .quick-grid {
+  .admin-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - 560
+========================================================= */
+
+@media (max-width: 560px) {
+
+  .admin-dashboard-page {
+    padding: 17px 12px 20px;
+  }
+
+  .admin-header {
+    display: block;
+    min-height: auto;
+  }
+
+  .admin-header-actions {
+    margin-top: 15px;
+    justify-content: flex-end;
+  }
+
+  .admin-header h1 {
+    font-size: 24px;
+  }
+
+  .admin-header p {
+    font-size: 10px;
+  }
+
+  .admin-stats-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .admin-stat-card {
+    min-height: 135px;
+  }
+
+  .admin-middle-grid,
+  .admin-bottom-grid {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .revenue-panel,
+  .quick-panel,
+  .bookings-panel,
+  .destinations-panel,
+  .activity-panel {
+    padding: 15px;
+  }
+
+  .admin-panel-header {
+    align-items: flex-start;
+  }
+
+  .admin-panel-header h2 {
+    font-size: 15px;
+  }
+
+  .admin-select {
+    max-width: 125px;
+    height: 34px;
+    font-size: 9px;
+  }
+
+  .revenue-summary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .revenue-summary > div:first-child strong {
+    font-size: 26px;
+  }
+
+  .quick-stat-list {
+    display: flex;
+  }
+
+  .quick-stat-item {
+    min-height: 61px;
+  }
+
+  .chart-y-labels {
+    width: 24px;
+  }
+
+  .chart-y-labels span {
+    font-size: 7px;
+  }
+
+  .chart-x-labels span {
+    font-size: 7px;
+  }
+
+  .activity-item {
+    padding: 11px;
+  }
+
+  .activity-item time {
+    display: none;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - 400
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .admin-dashboard-page {
+    padding: 14px 9px 18px;
+  }
+
+  .admin-header h1 {
+    font-size: 22px;
+  }
+
+  .admin-stat-card {
+    padding: 15px;
+  }
+
+  .admin-stat-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 17px;
+  }
+
+  .admin-stat-change {
+    font-size: 8px;
+  }
+
+  .admin-stat-content strong {
+    font-size: 22px;
+  }
+
+  .admin-panel-label {
+    font-size: 7px;
+  }
+
+  .admin-panel-header h2 {
+    font-size: 14px;
+  }
+
+  .view-all-button {
+    font-size: 8px;
+  }
+
+  .revenue-chart {
+    height: 230px;
+  }
+
+  .chart-area {
+    height: 230px;
+  }
+
+  .revenue-svg {
+    height: 190px;
+  }
+
+  .chart-grid-lines {
+    inset: 0 0 40px;
   }
 }

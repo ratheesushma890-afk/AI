@@ -28,7 +28,7 @@ const Hero = () => {
       {/* MAIN CONTENT */}
       <div className="trip-content">
 
-        <div className="trip-small-label">
+        <div className="trip-small-label1">
           <FiStar />
           YOUR PERSONAL TRAVEL PLANNER
         </div>

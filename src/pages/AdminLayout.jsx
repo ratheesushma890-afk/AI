@@ -1,94 +1,580 @@
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+
+import {
+  FiActivity,
+  FiBarChart2,
+  FiBell,
+  FiCalendar,
+  FiChevronRight,
+  FiCreditCard,
+  FiGlobe,
+  FiHome,
+  FiLogOut,
+  FiMapPin,
+  FiMenu,
+  FiMessageSquare,
+  FiSettings,
+  FiShield,
+  FiStar,
+  FiUserCheck,
+  FiUsers,
+  FiX,
+} from "react-icons/fi";
+
 import "./AdminLayout.css";
 
-export default function AdminLayout() {
+const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const logout = () => {
-    localStorage.removeItem("isAdmin");
-    navigate("/admin-secret");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // ============================================
+  // ADMIN USER
+  // ============================================
+
+  let adminUser = {};
+
+  try {
+    adminUser = JSON.parse(
+      localStorage.getItem("adminUser") || "{}"
+    );
+  } catch (error) {
+    console.error("Admin user data error:", error);
+    adminUser = {};
+  }
+
+  const adminName = adminUser?.name || "Super Admin";
+
+  // ============================================
+  // LOGOUT
+  // ============================================
+
+  const handleLogout = () => {
+    localStorage.removeItem("adminUser");
+
+    navigate("/admin-secret", {
+      replace: true,
+    });
   };
 
-  const menuItems = [
-    {
-      name: "📊 Dashboard",
-      path: "/admin-secret/dashboard",
-    },
-    {
-      name: "✈️ Trips",
-      path: "/admin-secret/trips",
-    },
-    {
-      name: "📍 Destinations",
-      path: "/admin-secret/destinations",
-    },
-    {
-      name: "📋 Bookings",
-      path: "/admin-secret/bookings",
-    },
-    {
-      name: "👥 Customers",
-      path: "/admin-secret/customers",
-    },
-    {
-      name: "⭐ Reviews",
-      path: "/admin-secret/reviews",
-    },
-    {
-      name: "💬 Messages",
-      path: "/admin-secret/messages",
-    },
-    {
-      name: "⚙️ Settings",
-      path: "/admin-secret/settings",
-    },
-   
-  ];
+  // ============================================
+  // NAVIGATION
+  // ============================================
+
+  const goTo = (path) => {
+    navigate(path);
+    setSidebarOpen(false);
+  };
+
+  // ============================================
+  // ACTIVE MENU
+  // ============================================
+
+  const isActive = (path) => {
+    if (path === "/admin-secret/dashboard") {
+      return location.pathname === path;
+    }
+
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <div className="admin-layout">
 
-      {/* SIDEBAR */}
-      <aside className="admin-sidebar">
+      {/* =================================================
+          SIDEBAR
+      ================================================= */}
 
-        <div className="admin-brand">
-          ✈️ <span>Travel Admin</span>
+      <aside
+        className={`admin-sidebar ${
+          sidebarOpen ? "admin-sidebar-open" : ""
+        }`}
+      >
+
+        {/* =================================================
+            SIDEBAR HEADER
+        ================================================= */}
+
+        <div className="admin-sidebar-header">
+
+          <div className="admin-layout-logo">
+
+            <div className="admin-layout-logo-icon">
+              <FiShield />
+            </div>
+
+            <div>
+              <h2>TRIPPER</h2>
+
+              <span>
+                ADMIN PANEL
+              </span>
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            className="admin-sidebar-close"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Close sidebar"
+          >
+            <FiX />
+          </button>
+
         </div>
 
-        <nav className="admin-menu">
+        {/* =================================================
+            ADMIN PROFILE
+        ================================================= */}
 
-          {menuItems.map((item) => (
+        <div className="admin-layout-profile">
+
+          <div className="admin-layout-avatar">
+            {adminName
+              .charAt(0)
+              .toUpperCase()}
+          </div>
+
+          <div className="admin-layout-profile-info">
+
+            <strong>
+              {adminName}
+            </strong>
+
+            <span>
+              Super Administrator
+            </span>
+
+          </div>
+
+          <span className="admin-online"></span>
+
+        </div>
+
+        {/* =================================================
+            SIDEBAR SCROLL
+        ================================================= */}
+
+        <div className="admin-sidebar-scroll">
+
+          {/* =================================================
+              MAIN MENU
+          ================================================= */}
+
+          <div className="admin-sidebar-section-title">
+            MAIN MENU
+          </div>
+
+          <nav className="admin-layout-nav">
+
+            {/* DASHBOARD */}
+
             <button
-              key={item.path}
-              className={
-                location.pathname === item.path
-                  ? "admin-menu-btn active"
-                  : "admin-menu-btn"
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard"
+                )
               }
-              onClick={() => navigate(item.path)}
             >
-              {item.name}
+              <FiHome />
+
+              <span>
+                Dashboard
+              </span>
             </button>
-          ))}
 
-        </nav>
+            {/* TRIPS */}
 
-        {/* LOGOUT */}
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/trips"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/trips"
+                )
+              }
+            >
+              <FiGlobe />
+
+              <span>
+                Trips
+              </span>
+            </button>
+
+            {/* DESTINATIONS */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/destinations"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/destinations"
+                )
+              }
+            >
+              <FiMapPin />
+
+              <span>
+                Destinations
+              </span>
+            </button>
+
+            {/* BOOKINGS */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/bookings"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/bookings"
+                )
+              }
+            >
+              <FiCalendar />
+
+              <span>
+                Bookings
+              </span>
+
+              <small>
+                24
+              </small>
+            </button>
+
+            {/* CUSTOMERS */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/customers"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/customers"
+                )
+              }
+            >
+              <FiUsers />
+
+              <span>
+                Customers
+              </span>
+            </button>
+
+            {/* REVIEWS */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/reviews"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/reviews"
+                )
+              }
+            >
+              <FiStar />
+
+              <span>
+                Reviews
+              </span>
+            </button>
+
+          </nav>
+
+          {/* =================================================
+              MANAGEMENT
+          ================================================= */}
+
+          <div className="admin-sidebar-section-title second">
+            MANAGEMENT
+          </div>
+
+          <nav className="admin-layout-nav">
+
+            {/* MESSAGES */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/messages"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/messages"
+                )
+              }
+            >
+              <FiMessageSquare />
+
+              <span>
+                Messages
+              </span>
+            </button>
+
+            {/* PAYMENTS */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/payments"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/payments"
+                )
+              }
+            >
+              <FiCreditCard />
+
+              <span>
+                Payments
+              </span>
+            </button>
+
+            {/* ACTIVITIES */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/activities"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/activities"
+                )
+              }
+            >
+              <FiActivity />
+
+              <span>
+                Activities
+              </span>
+            </button>
+
+            {/* REPORTS */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/reports"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/reports"
+                )
+              }
+            >
+              <FiBarChart2 />
+
+              <span>
+                Reports
+              </span>
+            </button>
+
+            {/* =================================================
+                STAFF MANAGEMENT
+            ================================================= */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/staff"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/staff"
+                )
+              }
+            >
+              <FiUserCheck />
+
+              <span>
+                Staff Management
+              </span>
+            </button>
+
+            {/* SETTINGS */}
+
+            <button
+              type="button"
+              className={`admin-layout-nav-item ${
+                isActive(
+                  "/admin-secret/dashboard/settings"
+                )
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                goTo(
+                  "/admin-secret/dashboard/settings"
+                )
+              }
+            >
+              <FiSettings />
+
+              <span>
+                Settings
+              </span>
+            </button>
+
+          </nav>
+
+        </div>
+
+        {/* =================================================
+            LOGOUT
+        ================================================= */}
+
         <button
-          className="admin-logout"
-          onClick={logout}
+          type="button"
+          className="admin-layout-logout"
+          onClick={handleLogout}
         >
-          🚪 Logout
+          <FiLogOut />
+
+          <span>
+            Logout
+          </span>
+
+          <FiChevronRight />
         </button>
 
       </aside>
 
-      {/* PAGE CONTENT */}
-      <main className="admin-content">
-        <Outlet />
+      {/* =================================================
+          MOBILE OVERLAY
+      ================================================= */}
+
+      {sidebarOpen && (
+        <div
+          className="admin-sidebar-overlay"
+          onClick={() =>
+            setSidebarOpen(false)
+          }
+        />
+      )}
+
+      {/* =================================================
+          MAIN AREA
+      ================================================= */}
+
+      <main className="admin-layout-main">
+
+        {/* =================================================
+            MOBILE HEADER
+        ================================================= */}
+
+        <header className="admin-mobile-header">
+
+          <button
+            type="button"
+            className="admin-mobile-menu"
+            onClick={() =>
+              setSidebarOpen(true)
+            }
+            aria-label="Open menu"
+          >
+            <FiMenu />
+          </button>
+
+          <div className="admin-mobile-title">
+
+            <strong>
+              TRIPPER
+            </strong>
+
+            <span>
+              ADMIN PANEL
+            </span>
+
+          </div>
+
+          <button
+            type="button"
+            className="admin-mobile-notification"
+          >
+            <FiBell />
+
+            <span></span>
+          </button>
+
+        </header>
+
+        {/* =================================================
+            PAGE CONTENT
+        ================================================= */}
+
+        <div className="admin-layout-content">
+          <Outlet />
+        </div>
+
       </main>
 
     </div>
   );
-}
+};
+
+export default AdminLayout;

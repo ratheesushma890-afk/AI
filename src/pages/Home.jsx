@@ -5,7 +5,6 @@ import Hero from "../components/Hero";
 import LittleDetours from "../components/LittleDetours";
 
 
-import PopularDestinations from "../components/PopularDestinations";
 import StayHighlights from "../components/StayHighlights";
 import TravelMood from "../components/TravelMood";
 import TravelNotes from "../components/TravelNotes";
@@ -17,7 +16,7 @@ const Home = () => {
       
       <Hero />
       <TravelMood />
-      <PopularDestinations />
+    
     
       <TravelTape />
       <LittleDetours />

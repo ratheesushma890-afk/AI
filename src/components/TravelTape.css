@@ -1,28 +1,112 @@
 /* =========================================================
    TRAVEL TAPE
+   PREMIUM BLUE TRAVEL DESIGN
 ========================================================= */
 
 .travel-tape {
   position: relative;
+
   width: 100%;
-  padding:45px 6% 50px;
+
+  padding: 45px 6% 50px;
+
   overflow: hidden;
+
   box-sizing: border-box;
+
+  isolation: isolate;
+
+  color: #173f50;
+
+  background:
+    linear-gradient(
+      115deg,
+      rgba(218, 241, 255, 0.96) 0%,
+      rgba(247, 252, 255, 0.95) 35%,
+      rgba(234, 248, 255, 0.95) 68%,
+      rgba(208, 235, 252, 0.97) 100%
+    ),
+    url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1900&q=75");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* =========================================================
+   BACKGROUND BIG RIGHT RINGS
+========================================================= */
+
+.travel-tape::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  top: -315px;
+  right: -145px;
+
+  z-index: -1;
+
+  border-radius: 50%;
+
+  border:
+    1px dashed
+    rgba(26, 131, 203, 0.19);
+
+  box-shadow:
+    0 0 0 48px
+      rgba(40, 158, 220, 0.025),
+
+    0 0 0 95px
+      rgba(40, 158, 220, 0.016),
+
+    0 0 0 145px
+      rgba(40, 158, 220, 0.01);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   BACKGROUND LEFT CIRCLE
+========================================================= */
+
+.travel-tape::after {
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  left: -225px;
+  bottom: -165px;
+
+  z-index: -1;
+
+  border-radius: 50%;
+
+  border:
+    1px dashed
+    rgba(29, 132, 200, 0.15);
 
   background:
     radial-gradient(
-      circle at 10% 15%,
-      rgba(77, 170, 207, 0.10),
-      transparent 27%
-    ),
-    radial-gradient(
-      circle at 90% 80%,
-      rgba(215, 187, 139, 0.10),
-      transparent 25%
-    ),
-    #f7faf8;
+      circle,
+      rgba(62, 177, 228, 0.16) 0%,
+      rgba(62, 177, 228, 0.06) 38%,
+      transparent 70%
+    );
 
-  color: #173f50;
+  box-shadow:
+    0 0 0 45px
+      rgba(49, 164, 220, 0.02);
+
+  pointer-events: none;
 }
 
 
@@ -32,25 +116,38 @@
 
 .tape-orb {
   position: absolute;
+
   border-radius: 50%;
+
   pointer-events: none;
+
   filter: blur(70px);
+
+  z-index: -1;
 }
+
 
 .tape-orb-one {
-  width: 280px;
-  height: 280px;
+  width: 340px;
+  height: 340px;
+
   top: -130px;
-  left: 20%;
-  background: rgba(83, 178, 210, 0.08);
+  left: 18%;
+
+  background:
+    rgba(57, 174, 224, 0.16);
 }
 
+
 .tape-orb-two {
-  width: 320px;
-  height: 320px;
-  right: -150px;
-  bottom: -130px;
-  background: rgba(211, 181, 135, 0.09);
+  width: 390px;
+  height: 390px;
+
+  right: -170px;
+  bottom: -150px;
+
+  background:
+    rgba(26, 124, 216, 0.13);
 }
 
 
@@ -60,29 +157,40 @@
 
 .tape-header {
   position: relative;
+
   z-index: 2;
 
   max-width: 1180px;
+
   margin: 0 auto 50px;
 
   display: flex;
+
   align-items: flex-end;
+
   justify-content: space-between;
 
   gap: 20px;
 }
 
 
+/* =========================================================
+   KICKER
+========================================================= */
+
 .tape-kicker {
   display: flex;
+
   align-items: center;
+
   gap: 9px;
 
   margin-bottom: 10px;
 
-  color: #4aa4c8;
+  color: #1683c5;
 
   font-size: 12px;
+
   font-weight: 800;
 
   letter-spacing: 2.2px;
@@ -95,42 +203,58 @@
 
   border-radius: 50%;
 
-  background: #4aa4c8;
+  background: #1683c5;
 
   box-shadow:
-    0 0 0 5px rgba(74, 164, 200, 0.09);
+    0 0 0 5px
+    rgba(22, 131, 197, 0.1);
 }
 
+
+/* =========================================================
+   HEADER HEADING
+========================================================= */
 
 .tape-header h2 {
   margin: 0;
 
-  color: #173f50;
+  color: #103c59;
 
-  font-size: clamp(48px, 5.5vw, 72px);
+  font-size:
+    clamp(48px, 5.5vw, 72px);
 
   line-height: 0.91;
 
   font-weight: 400;
+
   white-space: nowrap;
+
   letter-spacing: -3.5px;
 }
 
 
 .tape-header h2 i {
-  color: #4aa7ca;
+  color: #1686c9;
 
-  font-family: Georgia, serif;
+  font-family:
+    Georgia,
+    serif;
 
   font-weight: 400;
- 
+
   letter-spacing: -2px;
 }
 
 
+/* =========================================================
+   HEADER NOTE
+========================================================= */
+
 .tape-header-note {
   display: flex;
+
   align-items: flex-start;
+
   gap: 10px;
 
   margin-bottom: 7px;
@@ -141,14 +265,14 @@
   width: 15px;
   height: 15px;
 
-  color: #56a9c9;
+  color: #2196d0;
 }
 
 
 .tape-header-note p {
   margin: 0;
 
-  color: #8199a5;
+  color: #658497;
 
   font-size: 14px;
 
@@ -164,16 +288,21 @@
 
 .tape-experience {
   position: relative;
+
   z-index: 2;
 
   max-width: 1180px;
+
   min-height: 450px;
 
   margin: 0 auto;
 
   display: grid;
 
-  grid-template-columns: 170px minmax(400px, 1fr) 260px;
+  grid-template-columns:
+    170px
+    minmax(400px, 1fr)
+    260px;
 
   gap: 20px;
 
@@ -195,7 +324,7 @@
 
   margin-bottom: 18px;
 
-  color: #3c3e3f;
+  color: #315d77;
 
   font-size: 14px;
 
@@ -207,12 +336,18 @@
 
 .index-list {
   display: flex;
+
   flex-direction: column;
 
-  border-top: 1px solid
-    rgba(40, 99, 121, 0.10);
+  border-top:
+    1px solid
+    rgba(32, 111, 159, 0.12);
 }
 
+
+/* =========================================================
+   INDEX ITEM
+========================================================= */
 
 .index-item {
   position: relative;
@@ -221,7 +356,8 @@
 
   display: grid;
 
-  grid-template-columns: 27px 1fr 15px;
+  grid-template-columns:
+    27px 1fr 15px;
 
   align-items: center;
 
@@ -231,12 +367,13 @@
 
   border: none;
 
-  border-bottom: 1px solid
-    rgba(40, 99, 121, 0.08);
+  border-bottom:
+    1px solid
+    rgba(40, 115, 160, 0.1);
 
   background: transparent;
 
-  color: #464748;
+  color: #3e647b;
 
   text-align: left;
 
@@ -244,12 +381,15 @@
 
   transition:
     color 0.3s ease,
-    padding 0.3s ease;
+    padding 0.3s ease,
+    background 0.3s ease;
 }
 
 
 .index-number {
-  font-size:12px;
+  color: #6a91a7;
+
+  font-size: 12px;
 
   letter-spacing: 1px;
 }
@@ -269,7 +409,8 @@
 
   opacity: 0;
 
-  transform: translate(-4px, 4px);
+  transform:
+    translate(-4px, 4px);
 
   transition:
     opacity 0.3s ease,
@@ -279,7 +420,7 @@
 
 .index-item:hover,
 .index-item.active {
-  color: #317d9b;
+  color: #137dbb;
 
   padding-left: 10px;
 }
@@ -287,7 +428,13 @@
 
 .index-item.active {
   background:
-    rgba(76, 166, 201, 0.055);
+    linear-gradient(
+      90deg,
+      rgba(50, 165, 221, 0.11),
+      rgba(255, 255, 255, 0.05)
+    );
+
+  border-radius: 8px;
 }
 
 
@@ -300,7 +447,7 @@
 
 
 /* =========================================================
-   IMAGE
+   IMAGE CARD
 ========================================================= */
 
 .tape-image-card {
@@ -310,15 +457,27 @@
 
   overflow: hidden;
 
-  border-radius: 4px;
+  border:
+    5px solid
+    rgba(255, 255, 255, 0.8);
 
-  background: #dce8ec;
+  border-radius:
+    24px
+    72px
+    24px
+    24px;
+
+  background: #dcecf5;
 
   box-shadow:
     0 25px 60px
-    rgba(29, 75, 92, 0.12);
+    rgba(15, 83, 124, 0.16);
 }
 
+
+/* =========================================================
+   IMAGE
+========================================================= */
 
 .tape-image-card img {
   width: 100%;
@@ -331,8 +490,14 @@
   object-fit: cover;
 
   animation:
-    tapeImageIn 0.65s
-    cubic-bezier(0.22, 1, 0.36, 1);
+    tapeImageIn
+    0.65s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
 }
 
 
@@ -353,9 +518,12 @@
       scale(1)
       translateY(0);
   }
-
 }
 
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
 
 .tape-image-overlay {
   position: absolute;
@@ -365,16 +533,20 @@
   background:
     linear-gradient(
       180deg,
-      rgba(10, 31, 40, 0.12),
+      rgba(5, 35, 55, 0.1),
       transparent 35%
     ),
     linear-gradient(
       0deg,
-      rgba(7, 29, 39, 0.62),
-      transparent 52%
+      rgba(5, 36, 56, 0.72),
+      transparent 55%
     );
 }
 
+
+/* =========================================================
+   IMAGE LOCATION
+========================================================= */
 
 .tape-location {
   position: absolute;
@@ -388,13 +560,30 @@
 
   gap: 7px;
 
-  color: rgba(255,255,255,0.88);
+  padding:
+    7px 10px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.22);
+
+  border-radius: 100px;
+
+  background:
+    rgba(5, 40, 62, 0.17);
+
+  backdrop-filter: blur(8px);
+
+  -webkit-backdrop-filter: blur(8px);
+
+  color:
+    rgba(255, 255, 255, 0.93);
 
   font-size: 12px;
 
   font-weight: 700;
 
-  letter-spacing: 1.7px;
+  letter-spacing: 1.4px;
 }
 
 
@@ -403,13 +592,18 @@
 }
 
 
+/* =========================================================
+   IMAGE NUMBER
+========================================================= */
+
 .tape-image-number {
   position: absolute;
 
   right: 22px;
   top: 8px;
 
-  color: rgba(255,255,255,0.22);
+  color:
+    rgba(255, 255, 255, 0.24);
 
   font-size: 125px;
 
@@ -421,23 +615,34 @@
 }
 
 
+/* =========================================================
+   IMAGE STAMP
+========================================================= */
+
 .tape-stamp {
   position: absolute;
 
   left: 21px;
   bottom: 20px;
 
-  padding: 7px 10px;
+  padding:
+    7px 10px;
 
-  border: 1px solid
-    rgba(255,255,255,0.30);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.3);
+
+  border-radius: 100px;
 
   background:
-    rgba(255,255,255,0.08);
+    rgba(255, 255, 255, 0.1);
 
   backdrop-filter: blur(10px);
 
-  color: rgba(255,255,255,0.86);
+  -webkit-backdrop-filter: blur(10px);
+
+  color:
+    rgba(255, 255, 255, 0.9);
 
   font-size: 12px;
 
@@ -453,7 +658,7 @@
   right: 21px;
   bottom: 20px;
 
-  color: #fff;
+  color: #ffffff;
 
   font-size: 12px;
 
@@ -483,7 +688,7 @@
 
 
 .story-small {
-  color: #5c5d5e;
+  color: #36708e;
 
   font-size: 12px;
 
@@ -496,20 +701,31 @@
 .story-line {
   width: 50px;
 
-  height: 1px;
+  height: 2px;
 
-  margin: 17px 0 20px;
+  margin:
+    17px 0
+    20px;
 
-  background: #54a9cb;
+  border-radius: 50px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1689c9,
+      #75c8ed
+    );
 }
 
 
 .tape-story h3 {
   max-width: 240px;
 
-  margin: 0 0 17px;
+  margin:
+    0 0
+    17px;
 
-  color: #234c5f;
+  color: #173f59;
 
   font-size: 31px;
 
@@ -524,9 +740,11 @@
 .tape-story p {
   max-width: 220px;
 
-  margin: 0 0 25px;
+  margin:
+    0 0
+    25px;
 
-  color: #8197a2;
+  color: #66889a;
 
   font-size: 15px;
 
@@ -553,7 +771,7 @@
 
   background: transparent;
 
-  color: #286b87;
+  color: #116fa8;
 
   font-family: inherit;
 
@@ -568,8 +786,8 @@
 
 
 .discover-btn div {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
 
   display: flex;
 
@@ -578,10 +796,16 @@
 
   border-radius: 50%;
 
-  border: 1px solid
-    rgba(53, 135, 167, 0.22);
+  border:
+    1px solid
+    rgba(25, 131, 194, 0.24);
 
-  background: #fff;
+  background:
+    rgba(255, 255, 255, 0.86);
+
+  box-shadow:
+    0 6px 15px
+    rgba(14, 84, 126, 0.07);
 
   transition:
     background 0.3s ease,
@@ -596,9 +820,9 @@
 
 
 .discover-btn:hover div {
-  background: #317e9d;
+  background: #1686c6;
 
-  color: #fff;
+  color: #ffffff;
 
   transform:
     translate(3px, -3px);
@@ -618,8 +842,9 @@
 
   padding-top: 15px;
 
-  border-top: 1px solid
-    rgba(38, 94, 114, 0.10);
+  border-top:
+    1px solid
+    rgba(38, 116, 159, 0.11);
 }
 
 
@@ -633,7 +858,7 @@
 
 
 .story-meta span {
-  color: #5ac1ed;
+  color: #168bd0;
 
   font-size: 14px;
 
@@ -644,7 +869,7 @@
 
 
 .story-meta strong {
-  color: #5d7b89;
+  color: #587c91;
 
   font-size: 12px;
 
@@ -661,24 +886,34 @@
 
   z-index: 2;
 
-  width: calc(100% + 12%);
+  width:
+    calc(100% + 12%);
 
   margin-left: -6%;
 
   margin-top: 40px;
 
-  padding: 13px 0;
+  padding:
+    13px 0;
 
   overflow: hidden;
 
-  border-top: 1px solid
-    rgba(42, 103, 125, 0.10);
+  border-top:
+    1px solid
+    rgba(31, 127, 186, 0.13);
 
-  border-bottom: 1px solid
-    rgba(42, 103, 125, 0.10);
+  border-bottom:
+    1px solid
+    rgba(31, 127, 186, 0.13);
 
   background:
-    rgba(255,255,255,0.45);
+    rgba(255, 255, 255, 0.52);
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
 }
 
 
@@ -692,12 +927,15 @@
   gap: 19px;
 
   animation:
-    tapeMove 28s linear infinite;
+    tapeMove
+    28s
+    linear
+    infinite;
 }
 
 
 .moving-track span {
-  color: #7995a2;
+  color: #5d879e;
 
   font-size: 14px;
 
@@ -708,7 +946,7 @@
 
 
 .moving-track b {
-  color: #4ba5c9;
+  color: #168bd0;
 
   font-size: 14px;
 
@@ -719,13 +957,14 @@
 @keyframes tapeMove {
 
   from {
-    transform: translateX(0);
+    transform:
+      translateX(0);
   }
 
   to {
-    transform: translateX(-50%);
+    transform:
+      translateX(-50%);
   }
-
 }
 
 
@@ -740,7 +979,8 @@
 
   max-width: 1180px;
 
-  margin: 23px auto 0;
+  margin:
+    23px auto 0;
 
   display: flex;
 
@@ -748,7 +988,7 @@
 
   gap: 15px;
 
-  color: #9aabb3;
+  color: #7392a4;
 
   font-size: 13px;
 
@@ -764,7 +1004,7 @@
   height: 1px;
 
   background:
-    rgba(45, 105, 126, 0.10);
+    rgba(45, 120, 163, 0.13);
 }
 
 
@@ -775,7 +1015,9 @@
 @media (max-width: 950px) {
 
   .travel-tape {
-    padding: 70px 5% 55px;
+    padding:
+      70px 5%
+      55px;
   }
 
 
@@ -789,7 +1031,8 @@
 
 
   .tape-story {
-    grid-column: 1 / -1;
+    grid-column:
+      1 / -1;
 
     padding:
       28px 0 0;
@@ -821,7 +1064,6 @@
   .story-meta {
     margin-top: 5px;
   }
-
 }
 
 
@@ -833,9 +1075,82 @@
 
   .travel-tape {
     padding:
-      40px 16px 40px;
+      40px 16px
+      40px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(218, 242, 255, 0.97) 0%,
+        rgba(248, 252, 255, 0.96) 48%,
+        rgba(212, 238, 253, 0.97) 100%
+      ),
+      url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=70");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
   }
 
+
+  /* =========================
+     BACKGROUND RINGS
+  ========================= */
+
+  .travel-tape::before {
+    width: 280px;
+    height: 280px;
+
+    top: -175px;
+    right: -105px;
+
+    box-shadow:
+      0 0 0 28px
+        rgba(40, 158, 220, 0.025),
+
+      0 0 0 55px
+        rgba(40, 158, 220, 0.015);
+  }
+
+
+  .travel-tape::after {
+    width: 220px;
+    height: 220px;
+
+    left: -150px;
+    bottom: -85px;
+  }
+
+
+  .tape-orb-one {
+    width: 230px;
+    height: 230px;
+
+    left: -90px;
+    top: 120px;
+
+    background:
+      rgba(43, 172, 229, 0.13);
+  }
+
+
+  .tape-orb-two {
+    width: 260px;
+    height: 260px;
+
+    right: -130px;
+    bottom: 150px;
+
+    background:
+      rgba(26, 124, 216, 0.11);
+  }
+
+
+  /* =========================
+     HEADER
+  ========================= */
 
   .tape-header {
     margin-bottom: 10px;
@@ -852,14 +1167,21 @@
     font-size: 35px;
 
     letter-spacing: -1.5px;
+
+    white-space: normal;
   }
 
 
   .tape-header-note {
     margin: 0;
+
     display: none;
   }
 
+
+  /* =========================
+     EXPERIENCE
+  ========================= */
 
   .tape-experience {
     display: flex;
@@ -872,7 +1194,9 @@
   }
 
 
-  /* image first */
+  /* =========================
+     IMAGE FIRST
+  ========================= */
 
   .tape-image-card {
     order: 1;
@@ -882,10 +1206,20 @@
     min-height: 320px;
 
     height: 320px;
+
+    border-width: 4px;
+
+    border-radius:
+      20px
+      55px
+      20px
+      20px;
   }
 
 
-  /* index second */
+  /* =========================
+     INDEX SECOND
+  ========================= */
 
   .tape-index {
     order: 2;
@@ -916,7 +1250,8 @@
 
     gap: 6px;
 
-    padding: 11px 7px;
+    padding:
+      11px 7px;
   }
 
 
@@ -938,7 +1273,9 @@
   }
 
 
-  /* story */
+  /* =========================
+     STORY
+  ========================= */
 
   .tape-story {
     order: 3;
@@ -966,23 +1303,31 @@
 
   .story-meta {
     margin-top: 25px;
+
     display: none;
   }
 
 
+  /* =========================
+     MOVING TAPE
+  ========================= */
+
   .moving-tape {
     margin-top: 40px;
 
-    width: calc(100% + 32px);
+    width:
+      calc(100% + 32px);
 
     margin-left: -16px;
+
+    background:
+      rgba(255, 255, 255, 0.58);
   }
 
 
   .tape-bottom {
     margin-top: 10px;
   }
-
 }
 
 
@@ -992,8 +1337,28 @@
 
 @media (max-width: 400px) {
 
+  .travel-tape::before {
+    width: 230px;
+    height: 230px;
+
+    top: -145px;
+    right: -90px;
+  }
+
+
+  .travel-tape::after {
+    width: 180px;
+    height: 180px;
+
+    left: -125px;
+    bottom: -60px;
+  }
+
+
   .tape-header h2 {
     font-size: 41px;
+
+    white-space: normal;
   }
 
 
@@ -1017,9 +1382,8 @@
 
 
   .index-name {
-    font-size: 6px;
+    font-size: 10px;
   }
-
 }
 
 
@@ -1033,5 +1397,4 @@
   .moving-track {
     animation: none;
   }
-
 }

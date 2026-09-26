@@ -1,5 +1,5 @@
 /* =========================================================
-   HERO
+   PREMIUM TRAVEL VIDEO HERO
 ========================================================= */
 
 .trip-hero {
@@ -7,12 +7,16 @@
   width: 100%;
   min-height: 90vh;
   height: 95vh;
+
   overflow: hidden;
-  background: #071a2d;
-  color: #fff;
   isolation: isolate;
+
+  color: #ffffff;
+  background: #061b2d;
+
   font-family: "Inter", sans-serif;
 }
+
 
 /* =========================================================
    BACKGROUND VIDEO
@@ -28,56 +32,157 @@
   object-fit: cover;
   object-position: center center;
 
-  z-index: -5;
-
   display: block;
+
+  z-index: -8;
+
+  filter:
+    saturate(1.08)
+    contrast(1.04)
+    brightness(0.92);
+
+  transform: scale(1.01);
 }
 
+
 /* =========================================================
-   BLUE OVERLAY
-   Keep it light so video remains visible
+   CINEMATIC BLUE OVERLAY
 ========================================================= */
 
 .trip-blue-overlay {
   position: absolute;
   inset: 0;
 
-  z-index: -4;
+  z-index: -7;
 
   background:
     linear-gradient(
       90deg,
-      rgba(3, 20, 38, 0.62) 0%,
-      rgba(4, 31, 55, 0.35) 42%,
-      rgba(5, 35, 58, 0.12) 75%,
-      rgba(3, 20, 38, 0.18) 100%
+      rgba(2, 18, 34, 0.82) 0%,
+      rgba(3, 31, 54, 0.63) 27%,
+      rgba(5, 49, 79, 0.31) 55%,
+      rgba(3, 30, 52, 0.17) 78%,
+      rgba(2, 18, 34, 0.34) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(1, 16, 30, 0.20) 0%,
+      transparent 40%,
+      rgba(2, 19, 34, 0.47) 100%
     );
 }
 
+
 /* =========================================================
-   WHITE GLOW
-   Very soft — don't hide video
+   PREMIUM VIDEO COLOR GLOW
+========================================================= */
+
+.trip-blue-overlay::before {
+  content: "";
+
+  position: absolute;
+
+  width: 520px;
+  height: 520px;
+
+  left: -220px;
+  top: 16%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(30, 167, 234, 0.26) 0%,
+      rgba(24, 143, 210, 0.10) 42%,
+      transparent 70%
+    );
+
+  filter: blur(15px);
+
+  pointer-events: none;
+}
+
+
+.trip-blue-overlay::after {
+  content: "";
+
+  position: absolute;
+
+  width: 620px;
+  height: 620px;
+
+  right: -280px;
+  bottom: -320px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(69, 191, 239, 0.18),
+      rgba(19, 115, 184, 0.07) 42%,
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   WHITE / SKY GLOW
 ========================================================= */
 
 .trip-white-glow {
   position: absolute;
-  width: 600px;
-  height: 600px;
 
-  top: -220px;
-  right: -180px;
+  width: 650px;
+  height: 650px;
 
-  z-index: -3;
+  top: -320px;
+  right: -190px;
 
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.13) 0%,
-    rgba(255, 255, 255, 0.05) 35%,
-    transparent 72%
-  );
+  z-index: -5;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(184, 235, 255, 0.25) 0%,
+      rgba(106, 207, 249, 0.10) 30%,
+      rgba(255, 255, 255, 0.035) 48%,
+      transparent 70%
+    );
 
   pointer-events: none;
 }
+
+
+/* DECORATIVE RING */
+
+.trip-white-glow::before {
+  content: "";
+
+  position: absolute;
+
+  width: 330px;
+  height: 330px;
+
+  left: 75px;
+  bottom: 20px;
+
+  border-radius: 50%;
+
+  border:
+    1px dashed
+    rgba(255, 255, 255, 0.19);
+
+  box-shadow:
+    0 0 0 42px rgba(255, 255, 255, 0.018),
+    0 0 0 84px rgba(255, 255, 255, 0.012);
+}
+
 
 /* =========================================================
    TOP BAR
@@ -97,61 +202,94 @@
   z-index: 10;
 }
 
-/* BRAND */
+
+/* =========================================================
+   BRAND PILL
+========================================================= */
 
 .trip-brand-pill {
   display: flex;
   align-items: center;
+
   gap: 9px;
 
-  padding: 9px 15px;
+  padding: 10px 16px;
 
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.25);
+
   border-radius: 50px;
 
-  background: rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(12px);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.07)
+    );
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  box-shadow:
+    0 8px 25px
+    rgba(0, 0, 0, 0.08);
 
   font-size: 14px;
   font-weight: 800;
+
   letter-spacing: 1.5px;
 
-  color: #fff;
+  color: #ffffff;
 }
+
 
 .trip-brand-dot {
   width: 7px;
   height: 7px;
 
+  flex-shrink: 0;
+
   border-radius: 50%;
 
-  background: #8ddcff;
+  background: #86ddff;
 
   box-shadow:
-    0 0 10px rgba(141, 220, 255, 0.9);
+    0 0 0 4px rgba(134, 221, 255, 0.10),
+    0 0 14px rgba(134, 221, 255, 0.95);
 }
 
-/* RIGHT */
+
+/* =========================================================
+   TOP RIGHT
+========================================================= */
 
 .trip-top-right {
   display: flex;
   align-items: center;
+
   gap: 25px;
 
   font-size: 10px;
   font-weight: 700;
+
   letter-spacing: 1.7px;
 
-  color: rgba(255, 255, 255, 0.78);
+  color:
+    rgba(255, 255, 255, 0.80);
 }
+
 
 .trip-page-number {
   padding-left: 20px;
 
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-left:
+    1px solid
+    rgba(255, 255, 255, 0.32);
 
-  color: #fff;
+  color: #ffffff;
 }
+
 
 /* =========================================================
    MAIN CONTENT
@@ -162,34 +300,91 @@
 
   z-index: 5;
 
-  width: min(760px, calc(100% - 80px));
+  width:
+    min(760px, calc(100% - 80px));
 
   margin-left: 8%;
 
   padding-top: 23vh;
 }
 
-/* SMALL LABEL */
 
-.trip-small-label {
+/* DECORATIVE GLOW BEHIND CONTENT */
+
+.trip-content::before {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 320px;
+
+  left: -170px;
+  top: 120px;
+
+  z-index: -1;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(34, 160, 222, 0.15),
+      transparent 68%
+    );
+
+  filter: blur(30px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   SMALL LABEL
+========================================================= */
+
+.trip-small-label,
+.trip-small-label1 {
   display: flex;
   align-items: center;
+
   gap: 9px;
+
+  width: fit-content;
 
   margin-bottom: 20px;
 
-  font-size: 14px;
+  padding: 7px 12px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.17);
+
+  border-radius: 100px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  font-size: 12px;
   font-weight: 800;
 
   letter-spacing: 2px;
 
-  color: rgba(255, 255, 255, 0.86);
+  color:
+    rgba(255, 255, 255, 0.91);
 }
 
-.trip-small-label svg {
+
+.trip-small-label svg,
+.trip-small-label1 svg {
   color: #8edfff;
+
   font-size: 15px;
 }
+
 
 /* =========================================================
    HEADING
@@ -200,56 +395,72 @@
 
   max-width: 720px;
 
-  font-size: clamp(52px, 6.5vw, 96px);
+  color: #ffffff;
 
-  line-height: 0.95;
+  font-size:
+    clamp(52px, 6.5vw, 96px);
+
+  line-height: 0.94;
 
   font-weight: 800;
 
   letter-spacing: -4px;
 
-  color: #fff;
-
   text-shadow:
-    0 4px 25px rgba(0, 0, 0, 0.28);
+    0 5px 30px rgba(0, 0, 0, 0.30);
 }
 
+
 .trip-content h1 span {
-  color: #9be5ff;
+  color: #94e3ff;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
   font-style: italic;
 
   font-weight: 500;
 
   text-shadow:
-    0 4px 25px rgba(0, 0, 0, 0.2);
+    0 4px 25px
+    rgba(0, 0, 0, 0.18);
 }
+
 
 /* =========================================================
    DESCRIPTION
 ========================================================= */
 
 .trip-content p {
+  max-width: 620px;
+
   margin: 25px 0 30px;
 
+  color:
+    rgba(255, 255, 255, 0.87);
+
   font-size: 18px;
-  
+
   line-height: 1.7;
 
-  color: rgba(255, 255, 255, 0.86);
-
   text-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.25);
+    0 2px 12px
+    rgba(0, 0, 0, 0.28);
 }
+
 
 /* =========================================================
    PLANNER BAR
 ========================================================= */
 
 .trip-planner-bar {
-  width: min(570px, 100%);
+  position: relative;
 
-  min-height: 72px;
+  width: min(580px, 100%);
+
+  min-height: 74px;
 
   display: flex;
   align-items: center;
@@ -257,19 +468,59 @@
 
   padding: 8px 9px 8px 10px;
 
-  border-radius: 18px;
+  overflow: hidden;
 
-  background: rgba(255, 255, 255, 0.94);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.65);
+
+  border-radius: 19px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.97),
+      rgba(237, 249, 255, 0.92)
+    );
 
   box-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.22);
+    0 20px 55px
+    rgba(0, 0, 0, 0.25);
 
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
-/* DESTINATION */
+
+.trip-planner-bar::before {
+  content: "";
+
+  position: absolute;
+
+  width: 100px;
+  height: 100px;
+
+  left: -55px;
+  top: -65px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(66, 181, 231, 0.13);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   DESTINATION
+========================================================= */
 
 .trip-destination {
+  position: relative;
+
+  z-index: 2;
+
   display: flex;
   align-items: center;
 
@@ -278,11 +529,14 @@
   min-width: 0;
 }
 
-/* LOCATION ICON */
+
+/* =========================================================
+   LOCATION ICON
+========================================================= */
 
 .trip-location-icon {
-  width: 45px;
-  height: 45px;
+  width: 46px;
+  height: 46px;
 
   flex-shrink: 0;
 
@@ -292,15 +546,26 @@
 
   border-radius: 14px;
 
-  background: #e8f7ff;
+  background:
+    linear-gradient(
+      145deg,
+      #e5f6ff,
+      #d7effc
+    );
 
   color: #1479b8;
 
   font-size: 19px;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(20, 121, 184, 0.06);
 }
+
 
 .trip-destination > div:last-child {
   display: flex;
+
   flex-direction: column;
 
   gap: 5px;
@@ -308,34 +573,41 @@
   min-width: 0;
 }
 
+
 .trip-destination small {
+  color: #8498a8;
+
   font-size: 9px;
 
   font-weight: 800;
 
   letter-spacing: 1.4px;
-
-  color: #8b97a5;
 }
 
+
 .trip-destination span {
+  color: #213d51;
+
   font-size: 13px;
 
-  font-weight: 600;
-
-  color: #263442;
+  font-weight: 650;
 
   white-space: nowrap;
 }
 
+
 /* =========================================================
-   EXPLORE BUTTON
+   PLAN BUTTON
 ========================================================= */
 
 .trip-plan-button {
-  height: 54px;
+  position: relative;
 
-  padding: 0 21px;
+  z-index: 2;
+
+  height: 55px;
+
+  padding: 0 22px;
 
   display: flex;
   align-items: center;
@@ -343,80 +615,231 @@
 
   gap: 12px;
 
+  overflow: hidden;
+
   border: none;
+
   border-radius: 14px;
 
-  background: #087ec1;
+  background:
+    linear-gradient(
+      135deg,
+      #086cc8,
+      #0d89d4 58%,
+      #32b2e9
+    );
 
-  color: #fff;
+  color: #ffffff;
 
   cursor: pointer;
 
   font-size: 12px;
+
   font-weight: 800;
 
   letter-spacing: 0.4px;
 
+  box-shadow:
+    0 10px 25px
+    rgba(8, 126, 193, 0.27);
+
   transition:
     transform 0.25s ease,
-    background 0.25s ease,
     box-shadow 0.25s ease;
 }
 
+
+.trip-plan-button::before {
+  content: "";
+
+  position: absolute;
+
+  width: 55px;
+  height: 150%;
+
+  left: -80px;
+  top: -25%;
+
+  transform: rotate(22deg);
+
+  background:
+    rgba(255, 255, 255, 0.14);
+
+  transition: left 0.55s ease;
+}
+
+
 .trip-plan-button svg {
+  position: relative;
+
+  z-index: 2;
+
   font-size: 17px;
 }
 
-.trip-plan-button:hover {
-  background: #056ca6;
 
-  transform: translateX(3px);
+.trip-plan-button:hover {
+  transform:
+    translateY(-2px)
+    translateX(3px);
 
   box-shadow:
-    0 10px 25px rgba(8, 126, 193, 0.35);
+    0 15px 32px
+    rgba(8, 126, 193, 0.37);
 }
 
-/* =========================================================
-   FLOATING PREVIEW
-========================================================= */
 
+.trip-plan-button:hover::before {
+  left: 115%;
+}
+
+
+/* =========================================================
+   FLOATING PREVIEW VIDEO
+========================================================= */
 
 .trip-preview {
   position: absolute;
+
   right: 5%;
-  bottom: 25px;
+  bottom: 38px;
 
-  width: 320px;
-  padding: 8px;
-  
-  border-radius: 26px;
+  width: 330px;
 
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.30),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  padding: 9px;
 
   overflow: hidden;
 
   z-index: 20;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.32);
+
+  border-radius:
+    28px 70px 28px 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.20),
+      rgba(255, 255, 255, 0.08)
+    );
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 28px 70px
+    rgba(0, 0, 0, 0.34),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.30);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 
-/* PREVIEW VIDEO */
+.trip-preview:hover {
+  transform:
+    translateY(-7px);
+
+  box-shadow:
+    0 35px 80px
+    rgba(0, 0, 0, 0.40),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.34);
+}
+
+
+/* DECORATIVE RING ON VIDEO */
+
+.trip-preview::before {
+  content: "";
+
+  position: absolute;
+
+  width: 100px;
+  height: 100px;
+
+  right: -46px;
+  top: -45px;
+
+  z-index: 5;
+
+  border:
+    1px dashed
+    rgba(255, 255, 255, 0.32);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+
+/* BLUE GLOW */
+
+.trip-preview::after {
+  content: "";
+
+  position: absolute;
+
+  width: 130px;
+  height: 130px;
+
+  left: -80px;
+  bottom: -70px;
+
+  z-index: -1;
+
+  border-radius: 50%;
+
+  background:
+    rgba(60, 187, 239, 0.22);
+
+  filter: blur(25px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PREVIEW VIDEO
+========================================================= */
 
 .trip-preview-video {
+  position: relative;
+
   width: 100%;
-  height:300px;
-  
+  height: 300px;
+
   overflow: hidden;
 
-  border-radius: 18px;
+  border-radius:
+    20px 57px 20px 20px;
+
+  background: #082a42;
 }
+
+
+.trip-preview-video::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent 45%,
+      rgba(3, 26, 42, 0.32) 100%
+    );
+}
+
 
 .trip-preview-video video {
   width: 100%;
@@ -425,46 +848,71 @@
   display: block;
 
   object-fit: cover;
-
   object-position: center;
 
-  transition: transform 0.6s ease;
+  filter:
+    saturate(1.08)
+    contrast(1.03);
+
+  transition:
+    transform 0.7s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
 }
 
-.trip-preview:hover .trip-preview-video video {
-  transform: scale(1.04);
+
+.trip-preview:hover
+.trip-preview-video video {
+  transform: scale(1.06);
 }
 
-/* PREVIEW INFO */
+
+/* =========================================================
+   PREVIEW INFO
+========================================================= */
 
 .trip-preview-info {
+  position: relative;
+
   display: flex;
+
   flex-direction: column;
 
   gap: 6px;
 
-  padding: 13px 10px 8px;
+  padding: 14px 11px 9px;
 }
+
 
 .trip-preview-info span {
+  color: #9ce5ff;
+
   font-size: 8px;
 
-  font-weight: 800;
+  font-weight: 850;
 
   letter-spacing: 1.5px;
-
-  color: #a9e8ff;
 }
+
 
 .trip-preview-info strong {
+  max-width: 240px;
+
+  color: #ffffff;
+
   font-size: 13px;
 
-  line-height: 1.35;
-
-  color: #fff;
+  line-height: 1.4;
 }
 
-/* PREVIEW ARROW */
+
+/* =========================================================
+   PREVIEW ARROW
+========================================================= */
 
 .trip-preview-arrow {
   position: absolute;
@@ -472,21 +920,45 @@
   right: 18px;
   bottom: 17px;
 
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.22);
+
   border-radius: 50%;
 
-  background: rgba(255, 255, 255, 0.16);
+  background:
+    rgba(255, 255, 255, 0.13);
 
-  color: #fff;
+  backdrop-filter: blur(8px);
+
+  color: #ffffff;
 
   font-size: 15px;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
 }
+
+
+.trip-preview:hover
+.trip-preview-arrow {
+  transform:
+    rotate(-8deg)
+    scale(1.07);
+
+  background:
+    rgba(255, 255, 255, 0.22);
+}
+
 
 /* =========================================================
    BOTTOM LINE
@@ -500,118 +972,185 @@
   bottom: 27px;
 
   display: flex;
+
   align-items: center;
 
   gap: 20px;
 
   z-index: 10;
 
+  color:
+    rgba(255, 255, 255, 0.72);
+
   font-size: 9px;
 
   font-weight: 800;
 
   letter-spacing: 1.7px;
-
-  color: rgba(255, 255, 255, 0.72);
 }
 
+
 .trip-line {
+  position: relative;
+
   flex: 1;
 
   height: 1px;
 
-  background: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+
+  background:
+    rgba(255, 255, 255, 0.25);
 }
+
 
 .trip-line span {
   display: block;
 
   width: 20%;
-
   height: 100%;
 
-  background: #9be5ff;
+  background:
+    linear-gradient(
+      90deg,
+      #72d1f5,
+      #c5f1ff
+    );
+
+  box-shadow:
+    0 0 10px
+    rgba(122, 215, 250, 0.8);
 }
 
 
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .trip-content {
+    width:
+      min(680px, calc(100% - 60px));
+
+    margin-left: 5%;
+
+    padding-top: 22vh;
+  }
 
 
+  .trip-content h1 {
+    font-size:
+      clamp(54px, 7vw, 78px);
+  }
 
 
+  .trip-preview {
+    right: 3%;
+
+    width: 285px;
+  }
 
 
-
-
+  .trip-preview-video {
+    height: 270px;
+  }
+}
 
 
 /* =========================================================
-   FINAL MOBILE HERO
-   Replace ALL old mobile media queries with this
+   MOBILE
 ========================================================= */
 
 @media (max-width: 768px) {
 
-  /* =======================================================
-     HERO
-  ======================================================= */
-
   .trip-hero {
     width: 100%;
-    min-height: 0;
+
+    min-height: 690px;
     height: auto;
-    padding: 0 0 16px;
+
+    padding: 0 0 18px;
+
     overflow: hidden;
   }
 
-  /* =======================================================
-     BACKGROUND VIDEO
-  ======================================================= */
+
+  /* VIDEO STILL FULL BACKGROUND */
 
   .trip-bg-video {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     object-position: center center;
+
+    filter:
+      saturate(1.05)
+      contrast(1.02)
+      brightness(0.88);
   }
+
 
   .trip-blue-overlay {
     background:
       linear-gradient(
         180deg,
-        rgba(3, 20, 38, 0.42) 0%,
-        rgba(4, 31, 55, 0.28) 45%,
-        rgba(3, 20, 38, 0.70) 100%
+        rgba(2, 18, 34, 0.48) 0%,
+        rgba(3, 29, 50, 0.33) 28%,
+        rgba(3, 31, 53, 0.49) 65%,
+        rgba(2, 18, 34, 0.78) 100%
       );
   }
 
-  /* =======================================================
-     WHITE GLOW
-  ======================================================= */
+
+  .trip-blue-overlay::before {
+    width: 330px;
+    height: 330px;
+
+    left: -190px;
+    top: 15%;
+  }
+
+
+  .trip-blue-overlay::after {
+    width: 370px;
+    height: 370px;
+
+    right: -220px;
+    bottom: -150px;
+  }
+
 
   .trip-white-glow {
     width: 350px;
     height: 350px;
+
     top: -150px;
     right: -130px;
-    opacity: 0.55;
+
+    opacity: 0.65;
   }
 
-  /* =======================================================
-     TOP BAR
-  ======================================================= */
+
+  .trip-white-glow::before {
+    width: 180px;
+    height: 180px;
+
+    left: 40px;
+    bottom: 10px;
+  }
+
+
+  /* TOP BAR */
 
   .trip-topbar {
-    position: absolute;
     top: 15px;
     left: 16px;
     right: 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
-  /* BRAND */
 
   .trip-brand-pill {
     padding: 7px 11px;
@@ -619,159 +1158,136 @@
     gap: 7px;
 
     font-size: 9px;
-    letter-spacing: 1px;
 
-    border-radius: 50px;
+    letter-spacing: 1px;
   }
+
 
   .trip-brand-dot {
     width: 5px;
     height: 5px;
   }
 
-  /* RIGHT SIDE */
 
   .trip-top-right {
     gap: 9px;
 
     font-size: 7px;
+
     letter-spacing: 1px;
   }
+
 
   .trip-page-number {
     padding-left: 9px;
   }
 
 
-  /* =======================================================
-     MAIN CONTENT
-  ======================================================= */
+  /* CONTENT */
 
   .trip-content {
     position: relative;
+
     z-index: 5;
 
-    width: calc(100% - 32px);
+    width:
+      calc(100% - 32px);
 
     margin-left: 16px;
 
-    /*
-      Top spacing increased so content
-      never touches/cuts under top bar
-    */
     padding-top: 112px;
 
     padding-bottom: 8px;
   }
 
 
-  /* =======================================================
-     SMALL LABEL
-  ======================================================= */
+  .trip-content::before {
+    width: 270px;
+    height: 220px;
 
-  .trip-small-label {
-    display: flex;
-    align-items: center;
-
-    gap: 6px;
-
-    margin-bottom: 10px;
-
-    font-size: 8px;
-    letter-spacing: 1.4px;
+    left: -120px;
+    top: 80px;
   }
 
-  .trip-small-label svg {
+
+  /* LABEL */
+
+  .trip-small-label,
+  .trip-small-label1 {
+    gap: 6px;
+
+    margin-bottom: 11px;
+
+    padding: 5px 8px;
+
+    font-size: 8px;
+
+    letter-spacing: 1.3px;
+  }
+
+
+  .trip-small-label svg,
+  .trip-small-label1 svg {
     font-size: 11px;
   }
 
 
-  /* =======================================================
-     HEADING
-  ======================================================= */
+  /* HEADING */
 
   .trip-content h1 {
-    margin: 0;
-
     width: 100%;
+
     max-width: 100%;
 
-    font-size: clamp(40px, 11.5vw, 58px);
+    font-size:
+      clamp(40px, 11.5vw, 58px);
 
     line-height: 0.95;
 
     letter-spacing: -2.2px;
-
-    text-shadow:
-      0 3px 18px rgba(0, 0, 0, 0.30);
-  }
-
-  .trip-content h1 span {
-    font-weight: 500;
   }
 
 
-  /* =======================================================
-     DESCRIPTION
-  ======================================================= */
+  /* DESCRIPTION */
 
   .trip-content p {
-    margin: 13px 0 17px;
-
     width: 100%;
+
     max-width: 350px;
+
+    margin: 14px 0 18px;
 
     font-size: 12px;
 
     line-height: 1.5;
-
-    color: rgba(255, 255, 255, 0.88);
   }
 
 
-  /* =======================================================
-     PLANNER BAR
-  ======================================================= */
+  /* PLANNER */
 
   .trip-planner-bar {
     width: 100%;
 
-    min-height: 58px;
+    min-height: 60px;
 
     padding: 5px 6px;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border-radius: 14px;
+    border-radius: 15px;
 
     box-shadow:
-      0 12px 30px rgba(0, 0, 0, 0.22);
+      0 14px 35px
+      rgba(0, 0, 0, 0.25);
   }
 
 
-  /* =======================================================
-     DESTINATION
-  ======================================================= */
-
   .trip-destination {
-    min-width: 0;
-
-    display: flex;
-    align-items: center;
-
     gap: 8px;
   }
 
 
-  /* LOCATION ICON */
-
   .trip-location-icon {
     width: 36px;
     height: 36px;
-
-    flex-shrink: 0;
 
     border-radius: 10px;
 
@@ -779,19 +1295,17 @@
   }
 
 
-  /* DESTINATION TEXT */
-
   .trip-destination > div:last-child {
-    min-width: 0;
-
     gap: 2px;
   }
+
 
   .trip-destination small {
     font-size: 7px;
 
     letter-spacing: 1px;
   }
+
 
   .trip-destination span {
     display: block;
@@ -808,14 +1322,10 @@
   }
 
 
-  /* =======================================================
-     EXPLORE BUTTON
-  ======================================================= */
-
   .trip-plan-button {
     flex-shrink: 0;
 
-    height: 44px;
+    height: 45px;
 
     padding: 0 13px;
 
@@ -828,23 +1338,20 @@
     letter-spacing: 0.2px;
   }
 
+
   .trip-plan-button svg {
     font-size: 13px;
   }
 
 
-  /* =======================================================
-     HIDE PREVIEW VIDEO ON MOBILE
-  ======================================================= */
+  /* PREVIEW HIDDEN ON MOBILE */
 
   .trip-preview {
     display: none !important;
   }
 
 
-  /* =======================================================
-     BOTTOM LINE
-  ======================================================= */
+  /* BOTTOM */
 
   .trip-bottom-line {
     position: relative;
@@ -853,12 +1360,11 @@
     right: auto;
     bottom: auto;
 
-    width: calc(100% - 32px);
+    width:
+      calc(100% - 32px);
 
-    margin: 13px 16px 0;
-
-    display: flex;
-    align-items: center;
+    margin:
+      15px 16px 0;
 
     gap: 9px;
 
@@ -867,9 +1373,6 @@
     letter-spacing: 1px;
   }
 
-  .trip-line {
-    flex: 1;
-  }
 
   .trip-line span {
     width: 30%;
@@ -878,25 +1381,24 @@
 
 
 /* =========================================================
-   SMALL MOBILE — 480px
+   SMALL MOBILE
 ========================================================= */
 
 @media (max-width: 480px) {
 
-  /* HERO */
-
   .trip-hero {
-    padding-bottom: 13px;
+    min-height: 640px;
+
+    padding-bottom: 14px;
   }
 
-
-  /* TOP BAR */
 
   .trip-topbar {
     top: 13px;
     left: 12px;
     right: 12px;
   }
+
 
   .trip-brand-pill {
     padding: 7px 10px;
@@ -906,34 +1408,33 @@
     letter-spacing: 0.9px;
   }
 
+
   .trip-top-right {
     gap: 7px;
 
     font-size: 6.5px;
   }
 
+
   .trip-page-number {
     padding-left: 7px;
   }
 
 
-  /* CONTENT */
-
   .trip-content {
-    width: calc(100% - 24px);
+    width:
+      calc(100% - 24px);
 
     margin-left: 12px;
 
-  
-    padding-top:95px;
+    padding-top: 95px;
 
     padding-bottom: 7px;
   }
 
 
-  /* LABEL */
-
-  .trip-small-label {
+  .trip-small-label,
+  .trip-small-label1 {
     margin-bottom: 9px;
 
     font-size: 7px;
@@ -941,15 +1442,16 @@
     letter-spacing: 1.2px;
   }
 
-  .trip-small-label svg {
+
+  .trip-small-label svg,
+  .trip-small-label1 svg {
     font-size: 10px;
   }
 
 
-  /* HEADING */
-
   .trip-content h1 {
-    font-size: clamp(37px, 12vw, 52px);
+    font-size:
+      clamp(37px, 12vw, 52px);
 
     line-height: 0.95;
 
@@ -957,12 +1459,10 @@
   }
 
 
-  /* DESCRIPTION */
-
   .trip-content p {
-    margin: 11px 0 14px;
-
     max-width: 330px;
+
+    margin: 11px 0 14px;
 
     font-size: 11px;
 
@@ -970,17 +1470,14 @@
   }
 
 
-  /* PLANNER */
-
   .trip-planner-bar {
     min-height: 54px;
 
     padding: 5px;
+
     border-radius: 13px;
   }
 
-
-  /* ICON */
 
   .trip-location-icon {
     width: 33px;
@@ -992,15 +1489,15 @@
   }
 
 
-  /* DESTINATION */
-
   .trip-destination {
     gap: 7px;
   }
 
+
   .trip-destination small {
     font-size: 6px;
   }
+
 
   .trip-destination span {
     max-width: 105px;
@@ -1008,8 +1505,6 @@
     font-size: 9px;
   }
 
-
-  /* BUTTON */
 
   .trip-plan-button {
     height: 40px;
@@ -1023,17 +1518,18 @@
     font-size: 8px;
   }
 
+
   .trip-plan-button svg {
     font-size: 12px;
   }
 
 
-  /* BOTTOM LINE */
-
   .trip-bottom-line {
-    width: calc(100% - 24px);
+    width:
+      calc(100% - 24px);
 
-    margin: 10px 12px 0;
+    margin:
+      11px 12px 0;
 
     gap: 7px;
 
@@ -1043,10 +1539,15 @@
 
 
 /* =========================================================
-   VERY SMALL MOBILE — 360px
+   VERY SMALL MOBILE
 ========================================================= */
 
 @media (max-width: 360px) {
+
+  .trip-hero {
+    min-height: 610px;
+  }
+
 
   .trip-content {
     padding-top: 98px;
@@ -1088,9 +1589,11 @@
     gap: 6px;
   }
 
+
   .trip-destination small {
     font-size: 5.5px;
   }
+
 
   .trip-destination span {
     max-width: 85px;
@@ -1115,3 +1618,17 @@
   }
 }
 
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .trip-preview,
+  .trip-preview-video video,
+  .trip-plan-button,
+  .trip-plan-button::before {
+    transition: none;
+  }
+}

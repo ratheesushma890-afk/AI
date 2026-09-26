@@ -1,77 +1,114 @@
 import React from "react";
 import {
   FiArrowUpRight,
-  FiHeart,
-  FiMap,
+  FiMapPin,
+  FiCoffee,
   FiSun,
-  FiWind,
+  FiHome,
   FiZap,
+  FiHeart,
+  FiCamera,
   FiCompass,
 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 import "./TravelMood.css";
 
-const moods = [
+const travelOptions = [
   {
     id: 1,
-    icon: <FiSun />,
-    title: "Beach Escape",
-    text: "Slow mornings & blue horizons",
+    icon: <FiMapPin />,
+    title: "Explore Places",
+    location: "Goa, India",
+    text: "Find beautiful destinations",
     image:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=85",
-    className: "mood-beach",
+      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=90",
     destinationId: "goa",
+    tag: "Destinations",
   },
+
   {
     id: 2,
-    icon: <FiWind />,
-    title: "Mountain Retreat",
-    text: "Fresh air & quiet places",
+    icon: <FiCoffee />,
+    title: "Food & Flavours",
+    location: "Delhi, India",
+    text: "Taste local food & culture",
     image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85",
-    className: "mood-mountain",
-    destinationId: "manali",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=90",
+    destinationId: "delhi",
+    tag: "Food",
   },
+
   {
     id: 3,
-    icon: <FiMap />,
-    title: "City Energy",
-    text: "Culture, food & nightlife",
+    icon: <FiSun />,
+    title: "Best Weather",
+    location: "Manali, India",
+    text: "Travel in the perfect season",
     image:
-      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=85",
-    className: "mood-city",
-    destinationId: "mumbai",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=90",
+    destinationId: "manali",
+    tag: "Weather",
   },
+
   {
     id: 4,
-    icon: <FiCompass />,
-    title: "Nature Reset",
-    text: "Disconnect & recharge",
+    icon: <FiHome />,
+    title: "Beautiful Stays",
+    location: "Udaipur, India",
+    text: "Hotels with unforgettable views",
     image:
-      "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=85",
-    className: "mood-nature",
-    destinationId: "kerala",
+      "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=900&q=90",
+    destinationId: "udaipur",
+    tag: "Stay",
   },
+
   {
     id: 5,
-    icon: <FiHeart />,
-    title: "Romantic Escape",
-    text: "Made for two",
+    icon: <FiZap />,
+    title: "Adventure",
+    location: "Rishikesh, India",
+    text: "Trekking, rafting & more",
     image:
-      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=85",
-    className: "mood-romantic",
-    destinationId: "udaipur",
+      "https://images.unsplash.com/photo-1521336575822-6da63fb45455?auto=format&fit=crop&w=900&q=90",
+    destinationId: "rishikesh",
+    tag: "Adventure",
   },
+
   {
     id: 6,
-    icon: <FiZap />,
-    title: "Adventure Mode",
-    text: "For the thrill seekers",
+    icon: <FiHeart />,
+    title: "Romantic Trips",
+    location: "Udaipur, India",
+    text: "Beautiful moments for two",
     image:
-      "https://images.unsplash.com/photo-1521336575822-6da63fb45455?auto=format&fit=crop&w=900&q=85",
-    className: "mood-adventure",
-    destinationId: "rishikesh",
+      "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=900&q=90",
+    destinationId: "udaipur",
+    tag: "Couples",
+  },
+
+  {
+    id: 7,
+    icon: <FiCamera />,
+    title: "Photo Spots",
+    location: "Jaipur, India",
+    text: "Places worth capturing",
+    image:
+      "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=90",
+    destinationId: "jaipur",
+    tag: "Photography",
+  },
+
+  {
+    id: 8,
+    icon: <FiCompass />,
+    title: "Nature Escape",
+    location: "Kerala, India",
+    text: "Green spaces & peaceful views",
+    image:
+      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=900&q=90",
+    destinationId: "kerala",
+    tag: "Nature",
   },
 ];
 
@@ -85,67 +122,120 @@ const TravelMood = () => {
   return (
     <section className="travel-mood">
 
-      {/* HEADER */}
+      {/* ================= HEADER ================= */}
+
       <div className="travel-mood-header">
-        <div>
+
+        <div className="travel-mood-heading">
+
           <span className="travel-mood-label">
-            ✦ TRAVEL BY MOOD
+            ✦ PLAN YOUR EXPERIENCE
           </span>
 
           <h2>
-            How do you want<span>to feel?</span>
-            
-            
+            Travel your <span>way.</span>
           </h2>
+
+          <p>
+            Choose a destination, taste, experience or mood
+            for your next journey.
+          </p>
+
         </div>
 
-      
+        <button
+          type="button"
+          className="travel-mood-explore"
+          onClick={() => navigate("/explore")}
+        >
+          Explore All
+          <FiArrowUpRight />
+        </button>
+
       </div>
 
-      {/* MOOD GRID */}
+
+      {/* ================= CARDS ================= */}
+
       <div className="travel-mood-grid">
 
-        {moods.map((mood) => (
+        {travelOptions.map((item) => (
+
           <button
+            key={item.id}
             type="button"
-            className={`mood-card ${mood.className}`}
-            key={mood.id}
-            onClick={() => openDestination(mood.destinationId)}
+            className="travel-option-card"
+            onClick={() => openDestination(item.destinationId)}
           >
 
             {/* IMAGE */}
+
             <img
-              src={mood.image}
-              alt={mood.title}
-              className="mood-image"
+              src={item.image}
+              alt={item.title}
+              className="travel-option-image"
             />
 
             {/* OVERLAY */}
-            <div className="mood-image-overlay"></div>
+
+            <div className="travel-option-overlay"></div>
+
 
             {/* TOP */}
-            <div className="mood-card-top">
 
-              <div className="mood-icon">
-                {mood.icon}
+            <div className="travel-option-top">
+
+              <div className="travel-option-icon">
+                {item.icon}
               </div>
 
-              <div className="mood-arrow">
-                <FiArrowUpRight />
-              </div>
+              <span className="travel-option-tag">
+                {item.tag}
+              </span>
 
             </div>
 
+
             {/* CONTENT */}
-            <div className="mood-card-content">
 
-              <h3>{mood.title}</h3>
+            <div className="travel-option-content">
 
-              <p>{mood.text}</p>
+              <h3>
+                {item.title}
+              </h3>
+
+              {/* LOCATION */}
+
+              <div className="travel-option-location">
+
+                <FiMapPin />
+
+                <span>
+                  {item.location}
+                </span>
+
+              </div>
+
+              <p>
+                {item.text}
+              </p>
+
+              {/* ACTION */}
+
+              <div className="travel-option-link">
+
+                <span>
+                  Explore {item.location.split(",")[0]}
+                </span>
+
+                <FiArrowUpRight />
+
+              </div>
 
             </div>
 
           </button>
+
         ))}
 
       </div>

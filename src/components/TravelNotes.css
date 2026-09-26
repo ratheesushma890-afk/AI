@@ -1,6 +1,6 @@
-
 /* =========================================================
    TRAVEL NOTES
+   PREMIUM BLUE TRAVEL JOURNAL DESIGN
 ========================================================= */
 
 .travel-notes {
@@ -8,56 +8,141 @@
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  isolation: isolate;
 
-  padding: 42px 5% 30px;
+  padding: 58px 5% 42px;
+
+  color: #123b56;
 
   background:
     radial-gradient(
-      circle at 8% 12%,
-      rgba(40, 143, 201, 0.13),
-      transparent 28%
+      circle at 7% 10%,
+      rgba(42, 166, 228, 0.22),
+      transparent 25%
     ),
     radial-gradient(
-      circle at 92% 82%,
-      rgba(75, 174, 225, 0.10),
-      transparent 25%
+      circle at 93% 17%,
+      rgba(30, 126, 215, 0.15),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 82% 90%,
+      rgba(79, 194, 236, 0.16),
+      transparent 27%
     ),
     linear-gradient(
       135deg,
-      #f5faff 0%,
-      #eef7fc 52%,
-      #f8fbfd 100%
+      #dff3ff 0%,
+      #f8fcff 31%,
+      #edf8ff 64%,
+      #d8effd 100%
     );
-
-  color: #123b56;
 }
 
 
 /* =========================================================
-   BACKGROUND
+   LARGE DECORATIVE CIRCLE - RIGHT
+========================================================= */
+
+.travel-notes::before {
+  content: "";
+
+  position: absolute;
+  width: 520px;
+  height: 520px;
+
+  top: -335px;
+  right: -145px;
+
+  z-index: -2;
+
+  border-radius: 50%;
+
+  border: 1px dashed rgba(23, 129, 198, 0.2);
+
+  box-shadow:
+    0 0 0 50px rgba(38, 155, 219, 0.026),
+    0 0 0 100px rgba(38, 155, 219, 0.018),
+    0 0 0 150px rgba(38, 155, 219, 0.011);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   LARGE DECORATIVE CIRCLE - LEFT
+========================================================= */
+
+.travel-notes::after {
+  content: "";
+
+  position: absolute;
+
+  width: 390px;
+  height: 390px;
+
+  left: -250px;
+  bottom: -175px;
+
+  z-index: -2;
+
+  border-radius: 50%;
+
+  border: 1px dashed rgba(24, 129, 195, 0.16);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(49, 171, 225, 0.17) 0%,
+      rgba(49, 171, 225, 0.07) 40%,
+      transparent 70%
+    );
+
+  box-shadow:
+    0 0 0 48px rgba(39, 155, 218, 0.018);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   BACKGROUND ORBS
 ========================================================= */
 
 .notes-orb {
   position: absolute;
+
   border-radius: 50%;
+
   pointer-events: none;
-  filter: blur(65px);
+
+  filter: blur(72px);
+
+  z-index: -1;
 }
+
 
 .notes-orb-one {
-  width: 180px;
-  height: 180px;
-  left: -100px;
-  top: 130px;
-  background: rgba(31, 145, 207, 0.12);
+  width: 350px;
+  height: 350px;
+
+  left: -145px;
+  top: 170px;
+
+  background:
+    rgba(31, 153, 215, 0.18);
 }
 
+
 .notes-orb-two {
-  width: 160px;
-  height: 160px;
-  right: -75px;
-  bottom: 50px;
-  background: rgba(71, 174, 224, 0.10);
+  width: 390px;
+  height: 390px;
+
+  right: -180px;
+  bottom: 40px;
+
+  background:
+    rgba(58, 176, 229, 0.15);
 }
 
 
@@ -72,13 +157,44 @@
   width: 100%;
   max-width: 1160px;
 
-  margin: 0 auto 30px;
+  margin: 0 auto 38px;
 
   display: flex;
+
   align-items: flex-end;
   justify-content: space-between;
 
   gap: 30px;
+}
+
+
+/* =========================================================
+   HEADER DECORATIVE GLOW
+========================================================= */
+
+.notes-header::before {
+  content: "";
+
+  position: absolute;
+
+  width: 240px;
+  height: 240px;
+
+  left: 27%;
+  top: -110px;
+
+  z-index: -1;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(67, 183, 234, 0.13),
+      transparent 70%
+    );
+
+  pointer-events: none;
 }
 
 
@@ -88,14 +204,17 @@
 
 .notes-eyebrow {
   display: flex;
+
   align-items: center;
+
   gap: 9px;
 
   margin-bottom: 10px;
 
-  color: #1977ad;
+  color: #147fc1;
 
   font-size: 13px;
+
   font-weight: 800;
 
   letter-spacing: 2px;
@@ -103,15 +222,21 @@
   white-space: nowrap;
 }
 
+
 .notes-eyebrow span {
-  width: 24px;
+  width: 27px;
   height: 2px;
 
   flex-shrink: 0;
 
   border-radius: 10px;
 
-  background: #3fa6d6;
+  background:
+    linear-gradient(
+      90deg,
+      #1686c9,
+      #66c8ec
+    );
 }
 
 
@@ -122,11 +247,15 @@
 .notes-header h2 {
   margin: 0;
 
-  color: #0b3552;
+  color: #103b59;
 
-  font-family: Georgia, "Times New Roman", serif;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
-  font-size: clamp(44px, 5vw, 68px);
+  font-size:
+    clamp(44px, 5vw, 68px);
 
   line-height: 0.98;
 
@@ -137,10 +266,12 @@
   white-space: nowrap;
 }
 
+
 .notes-header h2 em {
-  color: #2188bd;
+  color: #1688ca;
 
   font-style: italic;
+
   font-weight: 400;
 }
 
@@ -151,19 +282,21 @@
 
 .notes-intro {
   width: 100%;
+
   max-width: 300px;
 
   margin-bottom: 1px;
 }
 
+
 .notes-intro p {
   margin: 0 0 11px;
 
-  color: #708b9c;
+  color: #648497;
 
   font-size: 15px;
 
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 
@@ -179,42 +312,65 @@
 
   gap: 7px;
 
-  padding: 8px 13px;
+  padding: 9px 15px;
 
-  border: 1px solid rgba(31, 119, 165, 0.18);
+  border:
+    1px solid
+    rgba(27, 124, 186, 0.17);
 
   border-radius: 100px;
 
-  background: rgba(255, 255, 255, 0.78);
+  background:
+    rgba(255, 255, 255, 0.78);
 
-  color: #176994;
+  color: #146d9f;
 
   font-family: inherit;
 
   font-size: 12px;
+
   font-weight: 800;
 
   cursor: pointer;
 
-  box-shadow:
-    0 5px 16px rgba(22, 93, 126, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
-  transition: all 0.3s ease;
+  box-shadow:
+    0 7px 18px
+    rgba(17, 87, 128, 0.07);
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
+
 
 .notes-view-btn svg {
   font-size: 14px;
 }
 
+
 .notes-view-btn:hover {
-  background: #ffffff;
+  background:
+    linear-gradient(
+      135deg,
+      #147bd0,
+      #36aae5
+    );
 
-  color: #0d5c88;
+  border-color: transparent;
 
-  transform: translateY(-2px);
+  color: #ffffff;
+
+  transform:
+    translateY(-2px);
 
   box-shadow:
-    0 8px 20px rgba(22, 93, 126, 0.10);
+    0 10px 24px
+    rgba(20, 126, 194, 0.2);
 }
 
 
@@ -233,9 +389,42 @@
 
   display: grid;
 
-  grid-template-columns: 38px minmax(0, 1fr);
+  grid-template-columns:
+    38px minmax(0, 1fr);
 
   gap: 18px;
+}
+
+
+/* =========================================================
+   WALL BACKGROUND GLOW
+========================================================= */
+
+.notes-wall::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 270px;
+
+  left: 30%;
+  top: 20%;
+
+  z-index: -1;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(43, 162, 222, 0.09),
+      transparent 70%
+    );
+
+  filter: blur(25px);
+
+  pointer-events: none;
 }
 
 
@@ -256,23 +445,28 @@
   gap: 8px;
 
   border-right:
-    1px solid rgba(29, 105, 139, 0.13);
+    1px solid
+    rgba(24, 111, 158, 0.15);
 
-  color: #8ba4b2;
+  color: #7998a9;
 
   writing-mode: vertical-rl;
 
   text-orientation: mixed;
 }
 
+
 .notes-side-label span {
   font-size: 10px;
+
   letter-spacing: 2px;
+
   font-weight: 700;
 }
 
+
 .notes-side-label strong {
-  color: #327c9f;
+  color: #237da8;
 
   font-size: 12px;
 
@@ -290,7 +484,7 @@
   grid-template-columns:
     repeat(3, minmax(0, 1fr));
 
-  gap: 16px;
+  gap: 18px;
 
   align-items: start;
 }
@@ -307,26 +501,65 @@
 
   overflow: hidden;
 
-  border-radius: 16px;
+  border-radius: 20px;
 
-  background: #ffffff;
+  background:
+    rgba(255, 255, 255, 0.94);
 
   border:
-    1px solid rgba(26, 103, 139, 0.10);
+    1px solid
+    rgba(27, 118, 175, 0.13);
 
   box-shadow:
-    0 9px 25px rgba(25, 82, 110, 0.065);
+    0 14px 34px
+    rgba(17, 80, 119, 0.09);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   transition:
     transform 0.35s ease,
-    box-shadow 0.35s ease;
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
 
+
+.travel-note::before {
+  content: "";
+
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  right: -90px;
+  bottom: -90px;
+
+  z-index: 2;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(52, 174, 229, 0.11),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+
 .travel-note:hover {
-  transform: translateY(-5px);
+  transform:
+    translateY(-7px);
+
+  border-color:
+    rgba(29, 137, 202, 0.27);
 
   box-shadow:
-    0 17px 34px rgba(25, 82, 110, 0.12);
+    0 22px 46px
+    rgba(17, 80, 119, 0.15);
 }
 
 
@@ -335,8 +568,10 @@
 ========================================================= */
 
 .note-1 {
-  transform: rotate(-0.5deg);
+  transform:
+    rotate(-0.5deg);
 }
+
 
 .note-2 {
   transform:
@@ -344,15 +579,18 @@
     rotate(0.45deg);
 }
 
+
 .note-3 {
-  transform: rotate(-0.35deg);
+  transform:
+    rotate(-0.35deg);
 }
+
 
 .note-1:hover,
 .note-2:hover,
 .note-3:hover {
   transform:
-    translateY(-5px)
+    translateY(-7px)
     rotate(0deg);
 }
 
@@ -369,7 +607,10 @@
   height: 175px;
 
   overflow: hidden;
+
+  background: #d9edf7;
 }
+
 
 .note-image img {
   display: block;
@@ -380,11 +621,20 @@
   object-fit: cover;
 
   transition:
-    transform 0.65s ease;
+    transform 0.65s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
 }
 
-.travel-note:hover .note-image img {
-  transform: scale(1.05);
+
+.travel-note:hover
+.note-image img {
+  transform:
+    scale(1.07);
 }
 
 
@@ -400,9 +650,9 @@
   background:
     linear-gradient(
       180deg,
-      rgba(4, 36, 57, 0.02),
-      transparent 44%,
-      rgba(3, 42, 68, 0.58)
+      rgba(3, 37, 59, 0.04),
+      transparent 43%,
+      rgba(3, 40, 64, 0.64)
     );
 }
 
@@ -414,11 +664,11 @@
 .note-number {
   position: absolute;
 
-  top: 10px;
-  left: 10px;
+  top: 11px;
+  left: 11px;
 
-  width: 29px;
-  height: 29px;
+  width: 32px;
+  height: 32px;
 
   display: flex;
 
@@ -427,16 +677,25 @@
 
   border-radius: 50%;
 
-  background:
-    rgba(255, 255, 255, 0.88);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.6);
 
-  color: #236c91;
+  background:
+    rgba(255, 255, 255, 0.9);
+
+  color: #1d729b;
 
   font-size: 12px;
 
   font-weight: 800;
 
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+
+  box-shadow:
+    0 5px 15px
+    rgba(6, 46, 70, 0.09);
 }
 
 
@@ -447,8 +706,8 @@
 .note-place {
   position: absolute;
 
-  left: 12px;
-  bottom: 11px;
+  left: 13px;
+  bottom: 12px;
 
   display: flex;
 
@@ -465,8 +724,10 @@
   letter-spacing: 1.4px;
 
   text-shadow:
-    0 2px 7px rgba(0, 0, 0, 0.25);
+    0 2px 7px
+    rgba(0, 0, 0, 0.28);
 }
+
 
 .note-place svg {
   font-size: 14px;
@@ -480,13 +741,19 @@
 .note-paper {
   position: relative;
 
-  padding: 15px 15px 13px;
+  padding:
+    17px 16px 15px;
 
   background:
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(64, 182, 232, 0.07),
+      transparent 35%
+    ),
     linear-gradient(
       180deg,
-      #ffffff 0%,
-      #fafdff 100%
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(247, 252, 255, 0.96) 100%
     );
 }
 
@@ -499,12 +766,11 @@
   display: flex;
 
   align-items: center;
-
   justify-content: space-between;
 
   margin-bottom: 8px;
 
-  color: #91a5b1;
+  color: #809aa9;
 
   font-size: 11px;
 
@@ -513,18 +779,25 @@
   font-weight: 700;
 }
 
+
 .note-top svg {
   font-size: 15px;
 
-  color: #8aaebb;
+  color: #72a8be;
 
-  transition: 0.3s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
-.travel-note:hover .note-top svg {
-  color: #268bc0;
 
-  transform: scale(1.1);
+.travel-note:hover
+.note-top svg {
+  color: #1688c7;
+
+  transform:
+    scale(1.12)
+    rotate(-6deg);
 }
 
 
@@ -535,7 +808,8 @@
 .note-paper h3 {
   width: 100%;
 
-  margin: 0 0 8px;
+  margin:
+    0 0 8px;
 
   color: #174663;
 
@@ -562,11 +836,11 @@
 .note-paper p {
   margin: 0;
 
-  color: #7b929f;
+  color: #718c9b;
 
   font-size: 15px;
 
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 
@@ -578,15 +852,15 @@
   display: flex;
 
   align-items: center;
-
   justify-content: space-between;
 
-  margin-top: 12px;
+  margin-top: 13px;
 
-  padding-top: 9px;
+  padding-top: 11px;
 
   border-top:
-    1px solid rgba(34, 105, 133, 0.09);
+    1px solid
+    rgba(31, 115, 156, 0.1);
 }
 
 
@@ -602,9 +876,10 @@
   gap: 8px;
 }
 
+
 .author-circle {
-  width: 27px;
-  height: 27px;
+  width: 29px;
+  height: 29px;
 
   display: flex;
 
@@ -613,14 +888,24 @@
 
   border-radius: 50%;
 
-  background: #e4f3fb;
+  background:
+    linear-gradient(
+      145deg,
+      #e9f7ff,
+      #d7eefb
+    );
 
-  color: #277da5;
+  color: #207da8;
 
   font-size: 10px;
 
   font-weight: 800;
+
+  border:
+    1px solid
+    rgba(24, 128, 190, 0.09);
 }
+
 
 .note-author > div:last-child {
   display: flex;
@@ -630,14 +915,16 @@
   gap: 3px;
 }
 
+
 .note-author strong {
   color: #42687a;
 
   font-size: 11px;
 }
 
+
 .note-author span {
-  color: #9aabb3;
+  color: #91a8b4;
 
   font-size: 9px;
 
@@ -656,7 +943,7 @@
 
   gap: 5px;
 
-  color: #93a5ae;
+  color: #8ba3af;
 
   font-size: 10px;
 
@@ -665,10 +952,11 @@
   font-weight: 700;
 }
 
+
 .note-time svg {
   font-size: 11px;
 
-  color: #3b94bc;
+  color: #248ec0;
 }
 
 
@@ -683,7 +971,8 @@
   width: 100%;
   max-width: 1160px;
 
-  margin: 15px auto 0;
+  margin:
+    22px auto 0;
 
   padding-left: 56px;
 
@@ -693,14 +982,16 @@
 
   gap: 9px;
 
-  color: #849ca9;
+  color: #7895a5;
 }
 
+
 .notes-footer > span {
-  color: #318db7;
+  color: #1c89bb;
 
   font-size: 13px;
 }
+
 
 .notes-footer p {
   margin: 0;
@@ -710,17 +1001,23 @@
   font-style: italic;
 }
 
+
 .notes-footer-line {
   flex: 1;
 
   height: 1px;
 
   background:
-    rgba(38, 111, 143, 0.12);
+    linear-gradient(
+      90deg,
+      rgba(31, 125, 172, 0.17),
+      rgba(31, 125, 172, 0.04)
+    );
 }
 
+
 .notes-footer strong {
-  color: #4b7890;
+  color: #42758f;
 
   font-size: 10px;
 
@@ -729,46 +1026,56 @@
 
 
 /* =========================================================
-   1000px
+   1000PX
 ========================================================= */
 
 @media (max-width: 1000px) {
 
   .travel-notes {
-    padding: 38px 4% 30px;
+    padding:
+      48px 4% 35px;
   }
 
+
   .notes-header {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
   }
+
 
   .notes-header h2 {
     font-size: 52px;
   }
 
+
   .notes-intro {
     max-width: 280px;
   }
+
 
   .notes-intro p {
     font-size: 15px;
   }
 
+
   .notes-grid {
     gap: 13px;
   }
+
 
   .note-image {
     height: 160px;
   }
 
+
   .note-paper {
     padding: 14px;
   }
 
+
   .note-paper h3 {
     font-size: 18px;
   }
+
 
   .note-paper p {
     font-size: 15px;
@@ -777,14 +1084,24 @@
 
 
 /* =========================================================
-   850px — TABLET
+   850PX - TABLET
 ========================================================= */
 
 @media (max-width: 850px) {
 
+  .travel-notes::before {
+    width: 390px;
+    height: 390px;
+
+    top: -250px;
+    right: -150px;
+  }
+
+
   .notes-header {
     gap: 20px;
   }
+
 
   .notes-header h2 {
     font-size: 45px;
@@ -792,19 +1109,24 @@
     letter-spacing: -2px;
   }
 
+
   .notes-intro {
     max-width: 245px;
   }
+
 
   .notes-intro p {
     font-size: 15px;
   }
 
+
   .notes-wall {
-    grid-template-columns: 28px minmax(0, 1fr);
+    grid-template-columns:
+      28px minmax(0, 1fr);
 
     gap: 13px;
   }
+
 
   .notes-grid {
     grid-template-columns:
@@ -813,15 +1135,19 @@
     gap: 13px;
   }
 
+
   .note-3 {
     grid-column: span 2;
 
-    width: calc(50% - 6px);
+    width:
+      calc(50% - 6px);
 
     justify-self: center;
 
-    transform: rotate(-0.3deg);
+    transform:
+      rotate(-0.3deg);
   }
+
 
   .note-3:hover {
     transform:
@@ -829,13 +1155,16 @@
       rotate(0deg);
   }
 
+
   .note-image {
     height: 155px;
   }
 
+
   .note-paper h3 {
     font-size: 18px;
   }
+
 
   .note-paper p {
     font-size: 15px;
@@ -844,7 +1173,7 @@
 
 
 /* =========================================================
-   700px
+   700PX
 ========================================================= */
 
 @media (max-width: 700px) {
@@ -853,21 +1182,26 @@
     align-items: flex-end;
   }
 
+
   .notes-header h2 {
     font-size: 41px;
   }
+
 
   .notes-intro {
     max-width: 220px;
   }
 
+
   .notes-intro p {
     font-size: 15px;
   }
 
+
   .notes-wall {
     grid-template-columns: 1fr;
   }
+
 
   .notes-side-label {
     display: none;
@@ -882,14 +1216,82 @@
 @media (max-width: 650px) {
 
   .travel-notes {
-    padding: 30px 14px 25px;
+    padding:
+      38px 14px 30px;
+
+    background:
+      radial-gradient(
+        circle at 92% 7%,
+        rgba(42, 165, 225, 0.2),
+        transparent 25%
+      ),
+      radial-gradient(
+        circle at 7% 88%,
+        rgba(28, 123, 213, 0.12),
+        transparent 27%
+      ),
+      linear-gradient(
+        145deg,
+        #dcf3ff 0%,
+        #f9fdff 47%,
+        #d9effd 100%
+      );
   }
+
+
+  /* BACKGROUND DESIGN */
+
+  .travel-notes::before {
+    width: 280px;
+    height: 280px;
+
+    top: -175px;
+    right: -105px;
+
+    box-shadow:
+      0 0 0 28px
+        rgba(40, 158, 220, 0.025),
+
+      0 0 0 56px
+        rgba(40, 158, 220, 0.015);
+  }
+
+
+  .travel-notes::after {
+    width: 220px;
+    height: 220px;
+
+    left: -150px;
+    bottom: -75px;
+  }
+
+
+  .notes-orb-one {
+    width: 230px;
+    height: 230px;
+
+    left: -110px;
+    top: 190px;
+  }
+
+
+  .notes-orb-two {
+    width: 260px;
+    height: 260px;
+
+    right: -140px;
+    bottom: 100px;
+  }
+
+
+  /* HEADER */
 
   .notes-header {
     display: block;
 
-    margin-bottom: 20px;
+    margin-bottom: 23px;
   }
+
 
   .notes-eyebrow {
     margin-bottom: 8px;
@@ -899,9 +1301,11 @@
     letter-spacing: 1.7px;
   }
 
+
   .notes-eyebrow span {
     width: 19px;
   }
+
 
   .notes-header h2 {
     width: 100%;
@@ -915,11 +1319,13 @@
     white-space: normal;
   }
 
+
   .notes-intro {
     max-width: 100%;
 
     margin-top: 13px;
   }
+
 
   .notes-intro p {
     max-width: 340px;
@@ -931,8 +1337,10 @@
     line-height: 1.6;
   }
 
+
   .notes-view-btn {
-    padding: 8px 12px;
+    padding:
+      8px 12px;
 
     font-size: 12px;
   }
@@ -952,7 +1360,7 @@
   .notes-grid {
     grid-template-columns: 1fr;
 
-    gap: 13px;
+    gap: 16px;
   }
 
 
@@ -971,11 +1379,22 @@
     transform: none;
   }
 
+
   .travel-note:hover,
   .note-1:hover,
   .note-2:hover,
   .note-3:hover {
-    transform: translateY(-4px);
+    transform:
+      translateY(-4px);
+  }
+
+
+  .travel-note {
+    border-radius: 18px;
+
+    box-shadow:
+      0 12px 30px
+      rgba(17, 80, 119, 0.1);
   }
 
 
@@ -989,7 +1408,8 @@
   /* PAPER */
 
   .note-paper {
-    padding: 14px 15px 13px;
+    padding:
+      15px 15px 14px;
   }
 
 
@@ -1032,10 +1452,11 @@
   /* FOOTER */
 
   .notes-footer {
-    margin-top: 13px;
+    margin-top: 16px;
 
     padding-left: 0;
   }
+
 
   .notes-footer p {
     font-size: 15px;
@@ -1044,18 +1465,39 @@
 
 
 /* =========================================================
-   480px
+   480PX
 ========================================================= */
 
 @media (max-width: 480px) {
 
   .travel-notes {
-    padding: 28px 12px 23px;
+    padding:
+      34px 12px 27px;
   }
 
-  .notes-header {
-    margin-bottom: 18px;
+
+  .travel-notes::before {
+    width: 240px;
+    height: 240px;
+
+    top: -150px;
+    right: -90px;
   }
+
+
+  .travel-notes::after {
+    width: 185px;
+    height: 185px;
+
+    left: -125px;
+    bottom: -55px;
+  }
+
+
+  .notes-header {
+    margin-bottom: 20px;
+  }
+
 
   .notes-header h2 {
     font-size: 35px;
@@ -1063,9 +1505,11 @@
     letter-spacing: -1.5px;
   }
 
+
   .notes-intro {
     margin-top: 11px;
   }
+
 
   .notes-intro p {
     font-size: 15px;
@@ -1073,17 +1517,22 @@
     line-height: 1.6;
   }
 
+
   .note-image {
     height: 160px;
   }
 
+
   .note-paper {
-    padding: 13px 14px;
+    padding:
+      13px 14px;
   }
+
 
   .note-paper h3 {
     font-size: 18px;
   }
+
 
   .note-paper p {
     font-size: 17px;
@@ -1091,9 +1540,11 @@
     line-height: 1.6;
   }
 
+
   .note-place {
     font-size: 14px;
   }
+
 
   .author-circle {
     width: 25px;
@@ -1102,21 +1553,26 @@
     font-size: 12px;
   }
 
+
   .note-author strong {
     font-size: 15px;
   }
+
 
   .note-author span {
     font-size: 15px;
   }
 
+
   .note-time {
     font-size: 15px;
   }
 
+
   .notes-footer-line {
     display: none;
   }
+
 
   .notes-footer strong {
     font-size: 13px;
@@ -1125,7 +1581,7 @@
 
 
 /* =========================================================
-   380px
+   380PX
 ========================================================= */
 
 @media (max-width: 380px) {
@@ -1135,11 +1591,13 @@
     padding-right: 10px;
   }
 
+
   .notes-header h2 {
     font-size: 32px;
 
     letter-spacing: -1.3px;
   }
+
 
   .notes-eyebrow {
     font-size: 10px;
@@ -1147,17 +1605,21 @@
     letter-spacing: 1.4px;
   }
 
+
   .notes-intro p {
     font-size: 15px;
   }
+
 
   .note-image {
     height: 150px;
   }
 
+
   .note-paper h3 {
     font-size: 17px;
   }
+
 
   .note-paper p {
     font-size: 15px;
@@ -1166,34 +1628,41 @@
 
 
 /* =========================================================
-   340px
+   340PX
 ========================================================= */
 
 @media (max-width: 340px) {
 
   .travel-notes {
-    padding: 25px 9px 20px;
+    padding:
+      30px 9px 24px;
   }
+
 
   .notes-header h2 {
     font-size: 29px;
   }
 
+
   .notes-intro p {
     font-size: 15px;
   }
+
 
   .note-image {
     height: 140px;
   }
 
+
   .note-paper {
     padding: 11px;
   }
 
+
   .note-paper h3 {
     font-size: 16px;
   }
+
 
   .note-paper p {
     font-size: 15px;
@@ -1214,4 +1683,3 @@
     transition: none;
   }
 }
-

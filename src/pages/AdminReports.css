@@ -1,0 +1,1015 @@
+/* =========================================================
+   ADMIN REPORTS
+========================================================= */
+
+.admin-reports-page {
+  min-height: 100%;
+  padding: 30px;
+  background: #f7f8fc;
+  color: #172033;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-reports-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.admin-reports-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+  color: #b08d20;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.admin-reports-label svg {
+  font-size: 16px;
+}
+
+.admin-reports-heading h1 {
+  margin: 0;
+  color: #111827;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.admin-reports-heading p {
+  margin: 9px 0 0;
+  color: #7a8496;
+  font-size: 14px;
+}
+
+/* =========================================================
+   HEADER ACTIONS
+========================================================= */
+
+.admin-report-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.report-select-box {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 13px;
+  background: #fff;
+  border: 1px solid #e2e6ed;
+  border-radius: 10px;
+  color: #687386;
+}
+
+.report-select-box svg {
+  flex-shrink: 0;
+}
+
+.report-select-box select {
+  min-width: 125px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #343b49;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  appearance: none;
+}
+
+.report-select-box svg:last-child {
+  font-size: 14px;
+}
+
+.report-export-btn {
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 17px;
+  border: 0;
+  border-radius: 10px;
+  background: #c7a32c;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.report-export-btn:hover {
+  background: #aa891d;
+  transform: translateY(-1px);
+}
+
+.report-export-btn.small {
+  height: 38px;
+  padding: 0 14px;
+}
+
+/* =========================================================
+   TABS
+========================================================= */
+
+.admin-report-tabs {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px;
+  margin-bottom: 20px;
+  width: fit-content;
+  background: #fff;
+  border: 1px solid #e7ebf0;
+  border-radius: 11px;
+}
+
+.admin-report-tabs button {
+  padding: 9px 17px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #727c8d;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.admin-report-tabs button:hover {
+  color: #a7861e;
+}
+
+.admin-report-tabs button.active {
+  background: #f4e9bd;
+  color: #8d7017;
+}
+
+/* =========================================================
+   STAT CARDS
+========================================================= */
+
+.admin-report-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+  margin-bottom: 20px;
+}
+
+.admin-report-stat-card {
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e7ebf0;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(31, 41, 55, 0.035);
+}
+
+.report-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.report-stat-icon {
+  width: 43px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 19px;
+}
+
+.report-stat-icon.gold {
+  background: #fff5d5;
+  color: #b08d20;
+}
+
+.report-stat-icon.blue {
+  background: #e9f2ff;
+  color: #4d86c7;
+}
+
+.report-stat-icon.green {
+  background: #e8f8ef;
+  color: #319563;
+}
+
+.report-stat-icon.purple {
+  background: #f2ebff;
+  color: #8057bb;
+}
+
+.report-growth {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.report-growth.positive {
+  color: #2d9961;
+}
+
+.report-stat-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #7b8493;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-report-stat-card > strong {
+  display: block;
+  color: #172033;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.admin-report-stat-card small {
+  display: block;
+  margin-top: 7px;
+  color: #9aa2af;
+  font-size: 11px;
+}
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.admin-report-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr);
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.admin-report-chart-card,
+.admin-report-performance-card,
+.admin-report-section-card {
+  background: #fff;
+  border: 1px solid #e7ebf0;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(31, 41, 55, 0.035);
+}
+
+.admin-report-chart-card,
+.admin-report-performance-card {
+  min-height: 410px;
+}
+
+.report-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 21px 22px;
+}
+
+.report-card-header h2 {
+  margin: 0;
+  color: #1b2434;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.report-card-header p {
+  margin: 6px 0 0;
+  color: #929aa7;
+  font-size: 12px;
+}
+
+.report-chart-total {
+  text-align: right;
+}
+
+.report-chart-total span {
+  display: block;
+  margin-bottom: 3px;
+  color: #9ba2ae;
+  font-size: 10px;
+}
+
+.report-chart-total strong {
+  color: #a98416;
+  font-size: 17px;
+}
+
+/* =========================================================
+   CHART
+========================================================= */
+
+.report-chart {
+  height: 310px;
+  display: flex;
+  padding: 10px 22px 25px;
+}
+
+.report-y-axis {
+  width: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 26px;
+  color: #a0a7b2;
+  font-size: 10px;
+}
+
+.report-bars {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 20px;
+  padding: 0 10px 0;
+  border-bottom: 1px solid #e9ecf1;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 19%,
+    #f0f2f5 20%,
+    transparent 20%,
+    transparent 39%,
+    #f0f2f5 40%,
+    transparent 40%,
+    transparent 59%,
+    #f0f2f5 60%,
+    transparent 60%,
+    transparent 79%,
+    #f0f2f5 80%,
+    transparent 80%
+  );
+}
+
+.report-bar-wrapper {
+  height: 100%;
+  flex: 1;
+  max-width: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.report-bar-value {
+  margin-bottom: 7px;
+  color: #a6861e;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.report-bar-track {
+  width: 34px;
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.report-bar {
+  width: 100%;
+  min-height: 8px;
+  border-radius: 7px 7px 2px 2px;
+  background: linear-gradient(
+    180deg,
+    #d9b63e 0%,
+    #b18b1e 100%
+  );
+  transition: 0.35s ease;
+}
+
+.report-bar:hover {
+  opacity: 0.75;
+  transform: scaleX(1.08);
+}
+
+.report-bar-wrapper > span {
+  margin-top: 9px;
+  color: #858e9c;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   QUICK INSIGHTS
+========================================================= */
+
+.performance-list {
+  padding: 0 22px 22px;
+}
+
+.performance-item {
+  display: grid;
+  grid-template-columns: 39px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.performance-item:last-child {
+  border-bottom: 0;
+}
+
+.performance-icon {
+  width: 39px;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.performance-icon.green {
+  background: #eaf8ef;
+  color: #2f9860;
+}
+
+.performance-icon.blue {
+  background: #eaf2ff;
+  color: #4d82bd;
+}
+
+.performance-icon.gold {
+  background: #fff5d8;
+  color: #ae8a1e;
+}
+
+.performance-icon.purple {
+  background: #f2ebff;
+  color: #8056ba;
+}
+
+.performance-item strong {
+  display: block;
+  color: #30394a;
+  font-size: 12px;
+}
+
+.performance-item span {
+  display: block;
+  margin-top: 3px;
+  color: #9aa2ad;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.performance-item b {
+  color: #657083;
+  font-size: 12px;
+}
+
+.performance-item b.positive {
+  color: #29945b;
+}
+
+/* =========================================================
+   SECTION CARD
+========================================================= */
+
+.admin-report-section-card {
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.report-link-btn {
+  border: 0;
+  background: transparent;
+  color: #aa891d;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================================================
+   DESTINATIONS
+========================================================= */
+
+.destination-report-list {
+  padding: 0 22px 20px;
+}
+
+.destination-report-row {
+  display: grid;
+  grid-template-columns: 220px minmax(180px, 1fr) 120px;
+  align-items: center;
+  gap: 25px;
+  padding: 15px 0;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.destination-report-row:last-child {
+  border-bottom: 0;
+}
+
+.destination-report-info {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.destination-report-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #fff5d7;
+  color: #aa881c;
+}
+
+.destination-report-info strong {
+  display: block;
+  color: #313a4a;
+  font-size: 13px;
+}
+
+.destination-report-info span {
+  display: block;
+  margin-top: 3px;
+  color: #999fac;
+  font-size: 10px;
+}
+
+.destination-report-middle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.destination-progress {
+  flex: 1;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #edf0f3;
+}
+
+.destination-progress div {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #d7b43c,
+    #b08b20
+  );
+}
+
+.destination-report-middle > span {
+  width: 32px;
+  color: #7c8594;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.destination-revenue {
+  color: #30394a;
+  font-size: 12px;
+  text-align: right;
+}
+
+/* =========================================================
+   BOTTOM GRID
+========================================================= */
+
+.admin-report-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+.payment-report-list {
+  padding: 0 22px 20px;
+}
+
+.payment-report-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.payment-report-item:last-child {
+  border-bottom: 0;
+}
+
+.payment-report-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.payment-report-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #f1f5fb;
+  color: #627b9d;
+}
+
+.payment-report-left strong {
+  display: block;
+  color: #30394a;
+  font-size: 12px;
+}
+
+.payment-report-left span {
+  display: block;
+  margin-top: 3px;
+  color: #9ca3af;
+  font-size: 10px;
+}
+
+.payment-report-item > strong {
+  color: #343d4c;
+  font-size: 12px;
+}
+
+/* =========================================================
+   BOOKING SUMMARY
+========================================================= */
+
+.booking-summary-chart {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 5px 22px 25px;
+}
+
+.booking-circle {
+  width: 145px;
+  height: 145px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      #fff 53%,
+      transparent 54%
+    ),
+    conic-gradient(
+      #b89729 0 74%,
+      #e4c969 74% 90%,
+      #edf0f3 90% 100%
+    );
+}
+
+.booking-circle > div {
+  text-align: center;
+}
+
+.booking-circle strong {
+  display: block;
+  color: #273143;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.booking-circle span {
+  display: block;
+  margin-top: 3px;
+  color: #999fac;
+  font-size: 10px;
+}
+
+.booking-summary-list {
+  flex: 1;
+}
+
+.booking-summary-list > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 9px 0;
+}
+
+.booking-summary-list span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #697384;
+  font-size: 11px;
+}
+
+.booking-summary-list strong {
+  color: #343d4d;
+  font-size: 12px;
+}
+
+.summary-dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.summary-dot.completed {
+  background: #b89729;
+}
+
+.summary-dot.pending {
+  background: #e3c662;
+}
+
+.summary-dot.cancelled {
+  background: #d9dde4;
+}
+
+/* =========================================================
+   REPORT HISTORY
+========================================================= */
+
+.reports-history-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.reports-history-table table {
+  width: 100%;
+  min-width: 750px;
+  border-collapse: collapse;
+}
+
+.reports-history-table th {
+  padding: 12px 22px;
+  background: #fafbfc;
+  color: #8a93a1;
+  font-size: 10px;
+  font-weight: 800;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.reports-history-table td {
+  padding: 15px 22px;
+  border-top: 1px solid #eef0f3;
+  color: #5f6877;
+  font-size: 12px;
+}
+
+.reports-history-table td strong {
+  color: #30394a;
+}
+
+.report-type-badge {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 6px;
+  background: #f4f1e5;
+  color: #a17f18;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.table-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border: 1px solid #e5e8ed;
+  border-radius: 7px;
+  background: #fff;
+  color: #6e7786;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.table-download-btn:hover {
+  border-color: #d3b24a;
+  color: #a17e16;
+  background: #fffaf0;
+}
+
+/* =========================================================
+   FOOTER NOTE
+========================================================= */
+
+.reports-footer-note {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 4px;
+  padding: 13px 16px;
+  border: 1px dashed #ddd4b5;
+  border-radius: 10px;
+  background: #fffdf5;
+  color: #958b69;
+  font-size: 11px;
+}
+
+.reports-footer-note svg {
+  flex-shrink: 0;
+  color: #b08d20;
+}
+
+/* =========================================================
+   1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+  .admin-report-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .admin-report-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-report-performance-card {
+    min-height: auto;
+  }
+}
+
+/* =========================================================
+   850px
+========================================================= */
+
+@media (max-width: 850px) {
+  .admin-reports-page {
+    padding: 22px;
+  }
+
+  .admin-reports-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-report-actions {
+    width: 100%;
+  }
+
+  .report-select-box {
+    flex: 1;
+  }
+
+  .report-export-btn {
+    white-space: nowrap;
+  }
+
+  .admin-report-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .destination-report-row {
+    grid-template-columns: 180px minmax(150px, 1fr) 100px;
+    gap: 15px;
+  }
+}
+
+/* =========================================================
+   650px
+========================================================= */
+
+@media (max-width: 650px) {
+  .admin-reports-page {
+    padding: 16px;
+  }
+
+  .admin-reports-heading h1 {
+    font-size: 25px;
+  }
+
+  .admin-report-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .report-select-box {
+    width: 100%;
+  }
+
+  .report-select-box select {
+    flex: 1;
+  }
+
+  .report-export-btn {
+    width: 100%;
+  }
+
+  .admin-report-tabs {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .admin-report-tabs button {
+    white-space: nowrap;
+  }
+
+  .admin-report-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .report-chart-total {
+    display: none;
+  }
+
+  .report-bars {
+    gap: 8px;
+  }
+
+  .report-bar-track {
+    width: 25px;
+  }
+
+  .destination-report-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .destination-revenue {
+    text-align: left;
+  }
+
+  .booking-summary-chart {
+    flex-direction: column;
+  }
+}
+
+/* =========================================================
+   450px
+========================================================= */
+
+@media (max-width: 450px) {
+  .admin-reports-heading h1 {
+    font-size: 22px;
+  }
+
+  .admin-reports-heading p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .admin-report-stat-card {
+    padding: 17px;
+  }
+
+  .admin-report-stat-card > strong {
+    font-size: 21px;
+  }
+
+  .report-card-header {
+    padding: 17px;
+  }
+
+  .report-card-header h2 {
+    font-size: 14px;
+  }
+
+  .performance-list,
+  .destination-report-list,
+  .payment-report-list {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+
+  .report-chart {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .report-y-axis {
+    width: 35px;
+  }
+
+  .report-bar-track {
+    width: 21px;
+  }
+
+  .report-bar-value {
+    font-size: 8px;
+  }
+}

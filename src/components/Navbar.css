@@ -685,3 +685,166 @@
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   MOBILE NAVBAR FIX
+========================================================= */
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Main navbar */
+.navbar,
+.navbar-container,
+.navbar-inner,
+.nav-container {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+  }
+
+  .navbar-container,
+  .navbar-inner,
+  .nav-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  /* Logo */
+  .navbar-logo,
+  .logo {
+    max-width: 65%;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .navbar-logo img,
+  .logo img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Desktop menu hide */
+  .nav-links,
+  .navbar-links,
+  .desktop-menu {
+    display: none !important;
+  }
+
+  /* Hamburger */
+  .menu-btn,
+  .hamburger,
+  .mobile-menu-btn,
+  .navbar-menu-btn {
+    display: flex !important;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Right side */
+  .navbar-right,
+  .nav-right {
+    margin-left: auto;
+    min-width: 0;
+    flex-shrink: 0;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .navbar {
+    width: 100vw;
+    max-width: 100vw;
+    overflow: hidden;
+  }
+
+  .navbar-container,
+  .navbar-inner,
+  .nav-container {
+    width: 100%;
+    max-width: 100vw;
+    padding: 0 12px;
+  }
+
+  .navbar-logo,
+  .logo {
+    font-size: 20px;
+    max-width: calc(100% - 55px);
+  }
+
+  .menu-btn,
+  .hamburger,
+  .mobile-menu-btn,
+  .navbar-menu-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .navbar-container,
+  .navbar-inner,
+  .nav-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .navbar-logo,
+  .logo {
+    font-size: 18px;
+  }
+}

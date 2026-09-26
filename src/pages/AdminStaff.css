@@ -1,0 +1,364 @@
+/* =========================================
+   ADMIN STAFF MANAGEMENT
+========================================= */
+
+.admin-staff-page {
+  min-height: 100%;
+  padding: 30px;
+  background: #f7f8fc;
+  color: #20242b;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.admin-staff-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.admin-staff-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #b08d20;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.admin-staff-header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 800;
+  color: #17191d;
+}
+
+.admin-staff-header p {
+  margin: 8px 0 0;
+  color: #737b87;
+  font-size: 14px;
+}
+
+.add-staff-btn {
+  border: none;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 10px;
+  background: #d4af37;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(212, 175, 55, 0.22);
+  transition: 0.25s ease;
+}
+
+.add-staff-btn:hover {
+  background: #b08d20;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.28);
+}
+
+/* =========================================
+   STATS
+========================================= */
+
+.staff-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.staff-stat-card {
+  background: #fff;
+  border: 1px solid #e7ebf0;
+  border-radius: 15px;
+  padding: 22px;
+  box-shadow: 0 5px 20px rgba(25, 35, 50, 0.05);
+  transition: 0.25s ease;
+}
+
+.staff-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(25, 35, 50, 0.08);
+}
+
+.staff-stat-card span {
+  display: block;
+  margin-bottom: 10px;
+  color: #737b87;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.staff-stat-card strong {
+  display: block;
+  color: #20242b;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+/* =========================================
+   TABLE CARD
+========================================= */
+
+.staff-table-card {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e7ebf0;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(25, 35, 50, 0.05);
+}
+
+.staff-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 24px;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.staff-table-header h2 {
+  margin: 0;
+  color: #20242b;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.staff-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.staff-table-wrapper table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+}
+
+.staff-table-wrapper thead {
+  background: #fafbfc;
+}
+
+.staff-table-wrapper th {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e7ebf0;
+  color: #737b87;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.staff-table-wrapper td {
+  padding: 17px 20px;
+  border-bottom: 1px solid #eef1f4;
+  color: #343941;
+  font-size: 14px;
+  font-weight: 500;
+  vertical-align: middle;
+}
+
+.staff-table-wrapper tbody tr {
+  transition: background 0.2s ease;
+}
+
+.staff-table-wrapper tbody tr:hover {
+  background: #fffdf5;
+}
+
+.staff-table-wrapper tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.staff-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.staff-status.active {
+  background: #eaf8ef;
+  color: #208044;
+}
+
+.staff-status.inactive {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* =========================================
+   EDIT BUTTON
+========================================= */
+
+.staff-edit-btn {
+  border: 1px solid #e0c76a;
+  outline: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #fffdf5;
+  color: #9b7815;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.staff-edit-btn:hover {
+  background: #d4af37;
+  border-color: #d4af37;
+  color: #fff;
+}
+
+/* =========================================
+   TABLE SCROLLBAR
+========================================= */
+
+.staff-table-wrapper::-webkit-scrollbar {
+  height: 7px;
+}
+
+.staff-table-wrapper::-webkit-scrollbar-track {
+  background: #f1f2f4;
+}
+
+.staff-table-wrapper::-webkit-scrollbar-thumb {
+  background: #d4af37;
+  border-radius: 20px;
+}
+
+/* =========================================
+   RESPONSIVE - 1000px
+========================================= */
+
+@media (max-width: 1000px) {
+  .admin-staff-page {
+    padding: 24px;
+  }
+
+  .staff-stats {
+    gap: 14px;
+  }
+}
+
+/* =========================================
+   RESPONSIVE - 768px
+========================================= */
+
+@media (max-width: 768px) {
+  .admin-staff-page {
+    padding: 20px;
+  }
+
+  .admin-staff-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-staff-btn {
+    width: fit-content;
+  }
+
+  .staff-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .staff-table-header {
+    padding: 18px;
+  }
+
+  .staff-table-wrapper th,
+  .staff-table-wrapper td {
+    padding: 14px 16px;
+  }
+}
+
+/* =========================================
+   RESPONSIVE - 500px
+========================================= */
+
+@media (max-width: 500px) {
+  .admin-staff-page {
+    padding: 15px;
+  }
+
+  .admin-staff-header {
+    margin-bottom: 20px;
+  }
+
+  .admin-staff-header h1 {
+    font-size: 24px;
+  }
+
+  .admin-staff-header p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .add-staff-btn {
+    width: 100%;
+  }
+
+  .staff-stat-card {
+    padding: 18px;
+  }
+
+  .staff-stat-card strong {
+    font-size: 24px;
+  }
+
+  .staff-table-header {
+    padding: 16px;
+  }
+
+  .staff-table-header h2 {
+    font-size: 16px;
+  }
+}
+
+/* =========================================
+   RESPONSIVE - 380px
+========================================= */
+
+@media (max-width: 380px) {
+  .admin-staff-page {
+    padding: 12px;
+  }
+
+  .admin-staff-header h1 {
+    font-size: 22px;
+  }
+
+  .staff-stat-card {
+    border-radius: 12px;
+  }
+
+  .staff-table-card {
+    border-radius: 12px;
+  }
+}

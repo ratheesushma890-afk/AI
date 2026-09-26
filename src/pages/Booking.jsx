@@ -9,6 +9,7 @@ import {
   FiClock,
   FiCreditCard,
   FiDownload,
+  FiTrash2,
   FiMapPin,
   FiNavigation,
   FiStar,
@@ -26,6 +27,10 @@ const Booking = () => {
 
   const [bookings, setBookings] = useState([]);
 
+  /* =========================================================
+     LOAD BOOKINGS
+  ========================================================= */
+
   useEffect(() => {
     const loadBookings = () => {
       try {
@@ -42,17 +47,37 @@ const Booking = () => {
 
     loadBookings();
 
-    window.addEventListener("tripBookingsUpdated", loadBookings);
-    window.addEventListener("storage", loadBookings);
+    window.addEventListener(
+      "tripBookingsUpdated",
+      loadBookings
+    );
+
+    window.addEventListener(
+      "storage",
+      loadBookings
+    );
 
     return () => {
-      window.removeEventListener("tripBookingsUpdated", loadBookings);
-      window.removeEventListener("storage", loadBookings);
+      window.removeEventListener(
+        "tripBookingsUpdated",
+        loadBookings
+      );
+
+      window.removeEventListener(
+        "storage",
+        loadBookings
+      );
     };
   }, []);
 
+  /* =========================================================
+     FORMAT DATE
+  ========================================================= */
+
   const formatDate = (value) => {
-    if (!value) return "Not selected";
+    if (!value) {
+      return "Not selected";
+    }
 
     const date = new Date(value);
 
@@ -67,6 +92,10 @@ const Booking = () => {
     });
   };
 
+  /* =========================================================
+     FORMAT PRICE
+  ========================================================= */
+
   const formatPrice = (value) => {
     const amount = Number(value);
 
@@ -77,6 +106,10 @@ const Booking = () => {
     return `₹${amount.toLocaleString("en-IN")}`;
   };
 
+  /* =========================================================
+     HOTEL IMAGE
+  ========================================================= */
+
   const getImage = (booking) => {
     return (
       booking?.hotel?.image ||
@@ -86,6 +119,10 @@ const Booking = () => {
     );
   };
 
+  /* =========================================================
+     HOTEL NAME
+  ========================================================= */
+
   const getHotelName = (booking) => {
     return (
       booking?.hotel?.name ||
@@ -93,6 +130,10 @@ const Booking = () => {
       "Selected Hotel"
     );
   };
+
+  /* =========================================================
+     HOTEL LOCATION
+  ========================================================= */
 
   const getLocation = (booking) => {
     return (
@@ -102,14 +143,73 @@ const Booking = () => {
     );
   };
 
+  /* =========================================================
+     PRINT BOOKING
+  ========================================================= */
+
   const handlePrint = () => {
     window.print();
   };
 
+  /* =========================================================
+     DELETE BOOKING
+  ========================================================= */
+
+  const handleDeleteBooking = (bookingToDelete) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this booking?"
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    const updatedBookings = bookings.filter((item) => {
+      /*
+        If booking has an ID,
+        use ID for deletion.
+      */
+      if (bookingToDelete?.id) {
+        return item.id !== bookingToDelete.id;
+      }
+
+      /*
+        Fallback if there is no ID.
+      */
+      return item !== bookingToDelete;
+    });
+
+    /*
+      Update localStorage
+    */
+    localStorage.setItem(
+      "tripBookings",
+      JSON.stringify(updatedBookings)
+    );
+
+    /*
+      Update React state immediately
+    */
+    setBookings(updatedBookings);
+
+    /*
+      Tell other components that bookings changed
+    */
+    window.dispatchEvent(
+      new Event("tripBookingsUpdated")
+    );
+  };
+
+  /* =========================================================
+     EMPTY BOOKING
+  ========================================================= */
+
   if (bookings.length === 0) {
     return (
       <div className="booking-page">
+
         <div className="booking-empty">
+
           <div className="empty-icon">
             <FiNavigation />
           </div>
@@ -119,8 +219,8 @@ const Booking = () => {
           <h1>No Bookings Yet</h1>
 
           <p>
-            Your confirmed trips will appear here after you
-            complete your payment.
+            Your confirmed trips will appear here after
+            you complete your payment.
           </p>
 
           <button
@@ -130,15 +230,23 @@ const Booking = () => {
             Plan Your Trip
             <FiNavigation />
           </button>
+
         </div>
+
       </div>
     );
   }
 
+  /* =========================================================
+     MAIN
+  ========================================================= */
+
   return (
     <div className="booking-page">
 
-      {/* ================= HEADER ================= */}
+      {/* =====================================================
+          HEADER
+      ===================================================== */}
 
       <header className="booking-page-header">
 
@@ -152,6 +260,7 @@ const Booking = () => {
         </button>
 
         <div className="booking-header-content">
+
           <span className="booking-brand">
             TRIPPER
           </span>
@@ -162,6 +271,7 @@ const Booking = () => {
             Your trip is confirmed. Here are all your
             journey and payment details.
           </p>
+
         </div>
 
         <button
@@ -175,7 +285,9 @@ const Booking = () => {
 
       </header>
 
-      {/* ================= ALL BOOKINGS ================= */}
+      {/* =====================================================
+          ALL BOOKINGS
+      ===================================================== */}
 
       <div className="booking-container">
 
@@ -193,7 +305,8 @@ const Booking = () => {
             booking.budget ||
             0;
 
-          const days = Number(booking.days) || 1;
+          const days =
+            Number(booking.days) || 1;
 
           const travellers =
             Number(booking.travellers) ||
@@ -210,7 +323,9 @@ const Booking = () => {
               }
             >
 
-              {/* ================= CONFIRMED TOP ================= */}
+              {/* =================================================
+                  CONFIRMED HEADER
+              ================================================= */}
 
               <div className="booking-confirmed-header">
 
@@ -221,18 +336,26 @@ const Booking = () => {
                   </div>
 
                   <div>
-                    <span>BOOKING CONFIRMED</span>
+
+                    <span>
+                      BOOKING CONFIRMED
+                    </span>
 
                     <h2>
                       Your trip is successfully booked
                     </h2>
+
                   </div>
 
                 </div>
 
+                {/* BOOKING ID */}
+
                 <div className="booking-id-box">
 
-                  <span>BOOKING ID</span>
+                  <span>
+                    BOOKING ID
+                  </span>
 
                   <strong>
                     {booking.id || "TRP-BOOKING"}
@@ -240,9 +363,24 @@ const Booking = () => {
 
                 </div>
 
+                {/* DELETE BUTTON */}
+
+                <button
+                  type="button"
+                  className="booking-delete-btn"
+                  onClick={() =>
+                    handleDeleteBooking(booking)
+                  }
+                >
+                  <FiTrash2 />
+                  Delete
+                </button>
+
               </div>
 
-              {/* ================= MAIN CARD ================= */}
+              {/* =================================================
+                  MAIN CARD
+              ================================================= */}
 
               <div className="booking-main-card">
 
@@ -267,12 +405,14 @@ const Booking = () => {
                   </div>
 
                   <div className="image-location">
+
                     <FiMapPin />
 
                     <span>
                       {booking.destination ||
                         "Your Destination"}
                     </span>
+
                   </div>
 
                 </div>
@@ -280,6 +420,8 @@ const Booking = () => {
                 {/* DETAILS */}
 
                 <div className="booking-main-details">
+
+                  {/* HOTEL HEADING */}
 
                   <div className="hotel-heading-row">
 
@@ -320,7 +462,9 @@ const Booking = () => {
 
                   </div>
 
-                  {/* BASIC TRIP DETAILS */}
+                  {/* =================================================
+                      BASIC TRIP DETAILS
+                  ================================================= */}
 
                   <div className="main-info-grid">
 
@@ -331,13 +475,17 @@ const Booking = () => {
                       </div>
 
                       <div>
-                        <span>TRAVEL DATE</span>
+
+                        <span>
+                          TRAVEL DATE
+                        </span>
 
                         <strong>
                           {formatDate(
                             booking.date
                           )}
                         </strong>
+
                       </div>
 
                     </div>
@@ -349,7 +497,10 @@ const Booking = () => {
                       </div>
 
                       <div>
-                        <span>DURATION</span>
+
+                        <span>
+                          DURATION
+                        </span>
 
                         <strong>
                           {days}{" "}
@@ -357,6 +508,7 @@ const Booking = () => {
                             ? "Day"
                             : "Days"}
                         </strong>
+
                       </div>
 
                     </div>
@@ -368,7 +520,10 @@ const Booking = () => {
                       </div>
 
                       <div>
-                        <span>TRAVELLERS</span>
+
+                        <span>
+                          TRAVELLERS
+                        </span>
 
                         <strong>
                           {travellers}{" "}
@@ -376,18 +531,23 @@ const Booking = () => {
                             ? "Traveller"
                             : "Travellers"}
                         </strong>
+
                       </div>
 
                     </div>
 
                   </div>
 
-                  {/* TRIP SUMMARY */}
+                  {/* =================================================
+                      TRIP SUMMARY
+                  ================================================= */}
 
                   <div className="trip-summary">
 
                     <div className="trip-summary-heading">
+
                       <div>
+
                         <span>
                           YOUR JOURNEY
                         </span>
@@ -395,50 +555,70 @@ const Booking = () => {
                         <h3>
                           Trip Details
                         </h3>
+
                       </div>
 
                       <FiNavigation />
+
                     </div>
 
                     <div className="trip-detail-grid">
 
                       <div>
-                        <span>Travel Type</span>
+
+                        <span>
+                          Travel Type
+                        </span>
 
                         <strong>
                           {booking.travelType ||
                             "Solo"}
                         </strong>
+
                       </div>
 
                       <div>
-                        <span>Travel Style</span>
+
+                        <span>
+                          Travel Style
+                        </span>
 
                         <strong>
                           {booking.style ||
                             "Relaxed"}
                         </strong>
+
                       </div>
 
                       <div>
-                        <span>Stay</span>
+
+                        <span>
+                          Stay
+                        </span>
 
                         <strong>
                           {booking.stay ||
                             "Any"}
                         </strong>
+
                       </div>
 
                       <div>
-                        <span>Transport</span>
+
+                        <span>
+                          Transport
+                        </span>
 
                         <strong>
                           {booking.transport ||
                             "Any"}
                         </strong>
+
                       </div>
 
                     </div>
+
+                    {/* INTERESTS */}
 
                     {Array.isArray(
                       booking.interests
@@ -476,7 +656,9 @@ const Booking = () => {
 
               </div>
 
-              {/* ================= PAYMENT ================= */}
+              {/* =================================================
+                  PAYMENT
+              ================================================= */}
 
               <div className="payment-section">
 
@@ -487,6 +669,7 @@ const Booking = () => {
                   </div>
 
                   <div>
+
                     <span>
                       PAYMENT INFORMATION
                     </span>
@@ -494,6 +677,7 @@ const Booking = () => {
                     <h3>
                       Payment Confirmed
                     </h3>
+
                   </div>
 
                 </div>
@@ -507,9 +691,12 @@ const Booking = () => {
                     </span>
 
                     <strong className="paid">
+
                       <FiCheckCircle />
+
                       {booking.paymentStatus ||
                         "Paid"}
+
                     </strong>
 
                   </div>
@@ -556,97 +743,14 @@ const Booking = () => {
 
               </div>
 
-              {/* ================= TIMELINE ================= */}
+             
+              {/* =================================================
+                  ITINERARY
+              ================================================= */}
 
-              <div className="journey-section">
-
-                <div className="journey-heading">
-
-                  <div>
-                    <span>
-                      BOOKING JOURNEY
-                    </span>
-
-                    <h3>
-                      Your Reservation Status
-                    </h3>
-                  </div>
-
-                  <FiShield />
-
-                </div>
-
-                <div className="journey-timeline">
-
-                  <div className="timeline-item active">
-
-                    <div className="timeline-circle">
-                      <FiCheck />
-                    </div>
-
-                    <div>
-                      <strong>
-                        Booking Confirmed
-                      </strong>
-
-                      <span>
-                        Your reservation has been
-                        confirmed.
-                      </span>
-                    </div>
-
-                  </div>
-
-                  <div className="timeline-line active-line" />
-
-                  <div className="timeline-item active">
-
-                    <div className="timeline-circle">
-                      <FiCheck />
-                    </div>
-
-                    <div>
-                      <strong>
-                        Payment Received
-                      </strong>
-
-                      <span>
-                        Your payment has been
-                        successfully received.
-                      </span>
-                    </div>
-
-                  </div>
-
-                  <div className="timeline-line" />
-
-                  <div className="timeline-item">
-
-                    <div className="timeline-circle upcoming">
-                      <FiCalendar />
-                    </div>
-
-                    <div>
-                      <strong>
-                        Trip Day
-                      </strong>
-
-                      <span>
-                        {formatDate(
-                          booking.date
-                        )}
-                      </span>
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-              {/* ================= ITINERARY ================= */}
-
-              {Array.isArray(booking.itinerary) &&
+              {Array.isArray(
+                booking.itinerary
+              ) &&
                 booking.itinerary.length > 0 && (
                   <div className="itinerary-section">
 
@@ -665,7 +769,10 @@ const Booking = () => {
                     <div className="itinerary-list">
 
                       {booking.itinerary.map(
-                        (item, itineraryIndex) => {
+                        (
+                          item,
+                          itineraryIndex
+                        ) => {
 
                           const title =
                             item?.title ||
@@ -697,10 +804,10 @@ const Booking = () => {
                               </div>
 
                               <div>
+
                                 <span>
                                   DAY{" "}
-                                  {itineraryIndex +
-                                    1}
+                                  {itineraryIndex + 1}
                                 </span>
 
                                 <h4>
@@ -712,6 +819,7 @@ const Booking = () => {
                                     {description}
                                   </p>
                                 )}
+
                               </div>
 
                             </div>
@@ -724,26 +832,33 @@ const Booking = () => {
                   </div>
                 )}
 
-              {/* ================= FOOTER ================= */}
+              {/* =================================================
+                  FOOTER
+              ================================================= */}
 
               <div className="booking-footer">
 
                 <div>
+
                   <FiCheckCircle />
 
                   <span>
                     Your booking is securely
                     stored with TRIPPER.
                   </span>
+
                 </div>
 
                 <span>
+
                   Booked on{" "}
+
                   {booking.bookedAt
                     ? formatDate(
                         booking.bookedAt
                       )
                     : "Today"}
+
                 </span>
 
               </div>
