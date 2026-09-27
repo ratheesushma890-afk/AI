@@ -8,7 +8,7 @@ import rishikesh from "../assets/rishikesh.mp4";
 import udaipur from "../assets/udaipur.mp4";
 import Mumbai from "../assets/Mumbai.mp4";
 import agra from "../assets/agra.mp4";
-import uttarakhand from "../assets/uttarakhand.mp4";
+import Uttarakhand from "../assets/Uttarakhand.mp4";
 
 const destinations = {
   /* =========================================================
@@ -553,7 +553,7 @@ const destinations = {
      UTTARAKHAND
   ========================================================= */
 
-  uttarakhand: {
+  Uttarakhand: {
     id: "uttarakhand",
     name: "Uttarakhand",
     country: "India",
@@ -562,7 +562,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=90",
 
-    video: uttarakhand,
+    video: Uttarakhand,
 
     description:
       "Discover the beauty of the Himalayas with peaceful hill stations, rivers, temples, adventure and breathtaking mountain views.",
