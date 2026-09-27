@@ -1632,3 +1632,658 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   FINAL MOBILE HERO FIX
+   EXTRA BOTTOM GAP REMOVED
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .trip-hero {
+    width: 100%;
+
+    /* IMPORTANT */
+    min-height: 0 !important;
+    height: auto !important;
+
+    position: relative;
+    overflow: hidden;
+
+    padding: 0 0 28px !important;
+
+    background: #061b2d;
+  }
+
+  /* FULL HERO BACKGROUND VIDEO */
+  .trip-bg-video {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    display: block;
+
+    transform: none;
+
+    filter:
+      saturate(1.05)
+      contrast(1.02)
+      brightness(0.84);
+  }
+
+  /* OVERLAY */
+  .trip-blue-overlay,
+  .trip-white-glow {
+    position: absolute;
+  }
+
+  /* ==========================
+     MAIN CONTENT
+  ========================== */
+
+  .trip-content {
+    position: relative;
+
+    width: calc(100% - 32px);
+
+    margin: 0 16px;
+
+    padding-top: 90px !important;
+    padding-bottom: 0 !important;
+
+    z-index: 5;
+  }
+
+  /* LABEL */
+
+  .trip-small-label,
+  .trip-small-label1 {
+    margin-bottom: 10px;
+
+    padding: 6px 9px;
+
+    gap: 6px;
+
+    font-size: 8px;
+    letter-spacing: 1.2px;
+  }
+
+  .trip-small-label svg,
+  .trip-small-label1 svg {
+    font-size: 11px;
+  }
+
+  /* ==========================
+     HEADING
+  ========================== */
+
+  .trip-content h1 {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    font-size: clamp(39px, 11.5vw, 55px);
+
+    line-height: 0.96;
+
+    letter-spacing: -2px;
+  }
+
+  /* DESCRIPTION */
+
+  .trip-content p {
+    width: 100%;
+    max-width: 340px;
+
+    margin: 13px 0 17px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+  }
+
+  /* ==========================
+     PLANNER BAR
+  ========================== */
+
+  .trip-planner-bar {
+    width: 100%;
+
+    min-height: 58px;
+
+    margin: 0;
+
+    padding: 5px 6px;
+
+    border-radius: 15px;
+  }
+
+  .trip-destination {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .trip-location-icon {
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    font-size: 15px;
+  }
+
+  .trip-destination > div:last-child {
+    min-width: 0;
+
+    gap: 2px;
+  }
+
+  .trip-destination small {
+    font-size: 7px;
+
+    letter-spacing: 0.8px;
+  }
+
+  .trip-destination span {
+    display: block;
+
+    max-width: 135px;
+
+    overflow: hidden;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  /* EXPLORE BUTTON */
+
+  .trip-plan-button {
+    height: 45px;
+
+    flex-shrink: 0;
+
+    padding: 0 14px;
+
+    gap: 6px;
+
+    border-radius: 11px;
+
+    font-size: 9px;
+  }
+
+  .trip-plan-button svg {
+    font-size: 13px;
+  }
+
+  /* ==========================
+     PREVIEW
+     DESKTOP ONLY
+  ========================== */
+
+  .trip-preview {
+    display: none !important;
+  }
+
+  /* REMOVE UNUSED BOTTOM SPACE */
+
+  .trip-bottom-line {
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   PHONE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .trip-hero {
+    min-height: 0 !important;
+    height: auto !important;
+
+    padding-bottom: 24px !important;
+  }
+
+  .trip-content {
+    width: calc(100% - 24px);
+
+    margin: 0 12px;
+
+    padding-top: 82px !important;
+    padding-bottom: 0 !important;
+  }
+
+  .trip-small-label,
+  .trip-small-label1 {
+    margin-bottom: 9px;
+
+    padding: 5px 8px;
+
+    font-size: 7px;
+  }
+
+  .trip-content h1 {
+    font-size: clamp(37px, 12vw, 49px);
+
+    line-height: 0.96;
+
+    letter-spacing: -1.7px;
+  }
+
+  .trip-content p {
+    max-width: 315px;
+
+    margin: 11px 0 14px;
+
+    font-size: 11px;
+
+    line-height: 1.45;
+  }
+
+  .trip-planner-bar {
+    min-height: 54px;
+
+    padding: 5px;
+
+    border-radius: 13px;
+  }
+
+  .trip-location-icon {
+    width: 33px;
+    height: 33px;
+
+    border-radius: 9px;
+
+    font-size: 14px;
+  }
+
+  .trip-destination {
+    gap: 7px;
+  }
+
+  .trip-destination small {
+    font-size: 6px;
+  }
+
+  .trip-destination span {
+    max-width: 108px;
+
+    font-size: 9px;
+  }
+
+  .trip-plan-button {
+    height: 41px;
+
+    padding: 0 11px;
+
+    font-size: 8px;
+  }
+
+  .trip-plan-button svg {
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .trip-hero {
+    min-height: 0 !important;
+    height: auto !important;
+
+    padding-bottom: 21px !important;
+  }
+
+  .trip-content {
+    padding-top: 78px !important;
+  }
+
+  .trip-content h1 {
+    font-size: 36px;
+
+    line-height: 0.97;
+
+    letter-spacing: -1.4px;
+  }
+
+  .trip-content p {
+    margin: 9px 0 12px;
+
+    font-size: 10px;
+  }
+
+  .trip-planner-bar {
+    min-height: 51px;
+
+    padding: 4px;
+  }
+
+  .trip-location-icon {
+    width: 31px;
+    height: 31px;
+
+    font-size: 13px;
+  }
+
+  .trip-destination {
+    gap: 6px;
+  }
+
+  .trip-destination span {
+    max-width: 88px;
+
+    font-size: 8px;
+  }
+
+  .trip-plan-button {
+    height: 39px;
+
+    padding: 0 9px;
+
+    font-size: 7px;
+  }
+}
+
+/* =========================================================
+   FINAL MOBILE PLANNER BOX FIX
+   DESTINATION + EXPLORE COMPACT
+========================================================= */
+
+@media (max-width: 768px) {
+
+  /* HERO */
+  .trip-hero {
+    min-height: 0 !important;
+    height: auto !important;
+    padding-bottom: 24px !important;
+  }
+
+  /* CONTENT */
+  .trip-content {
+    width: calc(100% - 32px) !important;
+    margin: 0 16px !important;
+
+    padding-top: 88px !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* DESCRIPTION */
+  .trip-content p {
+    margin: 12px 0 15px !important;
+  }
+
+  /* =====================================
+     WHITE DESTINATION / EXPLORE BOX
+  ===================================== */
+
+  .trip-planner-bar {
+    width: 100% !important;
+
+    /* THIS REMOVES BIG HEIGHT */
+    height: 62px !important;
+    min-height: 62px !important;
+
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+
+    gap: 8px !important;
+
+    margin: 0 !important;
+
+    padding: 6px 7px !important;
+
+    overflow: hidden !important;
+
+    border-radius: 16px !important;
+
+    box-sizing: border-box !important;
+  }
+
+  /* LEFT DESTINATION */
+  .trip-destination {
+    flex: 1 1 auto !important;
+
+    height: 100% !important;
+    min-height: 0 !important;
+
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+
+    gap: 8px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    min-width: 0 !important;
+  }
+
+  /* LOCATION ICON */
+  .trip-location-icon {
+    width: 38px !important;
+    height: 38px !important;
+
+    min-width: 38px !important;
+    min-height: 38px !important;
+
+    flex: 0 0 38px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    border-radius: 10px !important;
+
+    font-size: 15px !important;
+  }
+
+  /* DESTINATION TEXT CONTAINER */
+  .trip-destination > div:last-child {
+    flex: 1 !important;
+
+    min-width: 0 !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+
+    gap: 2px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .trip-destination small {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 7px !important;
+    line-height: 1.1 !important;
+
+    letter-spacing: 0.8px !important;
+  }
+
+  .trip-destination span {
+    display: block !important;
+
+    max-width: 145px !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* =====================================
+     EXPLORE BUTTON
+  ===================================== */
+
+  .trip-plan-button {
+    position: relative !important;
+
+    width: auto !important;
+    min-width: 82px !important;
+
+    height: 44px !important;
+    min-height: 44px !important;
+
+    flex: 0 0 auto !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 6px !important;
+
+    margin: 0 !important;
+    padding: 0 12px !important;
+
+    border-radius: 11px !important;
+
+    font-size: 9px !important;
+  }
+
+  .trip-plan-button svg {
+    font-size: 12px !important;
+  }
+
+  /* PREVIEW DESKTOP ONLY */
+  .trip-preview {
+    display: none !important;
+  }
+
+  .trip-bottom-line {
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .trip-content {
+    width: calc(100% - 24px) !important;
+
+    margin: 0 12px !important;
+
+    padding-top: 80px !important;
+  }
+
+  .trip-planner-bar {
+    height: 58px !important;
+    min-height: 58px !important;
+
+    padding: 5px 6px !important;
+
+    gap: 5px !important;
+
+    border-radius: 14px !important;
+  }
+
+  .trip-location-icon {
+    width: 35px !important;
+    height: 35px !important;
+
+    min-width: 35px !important;
+    min-height: 35px !important;
+
+    flex-basis: 35px !important;
+
+    font-size: 14px !important;
+  }
+
+  .trip-destination {
+    gap: 7px !important;
+  }
+
+  .trip-destination small {
+    font-size: 6px !important;
+  }
+
+  .trip-destination span {
+    max-width: 115px !important;
+
+    font-size: 8px !important;
+  }
+
+  .trip-plan-button {
+    min-width: 76px !important;
+
+    height: 42px !important;
+    min-height: 42px !important;
+
+    padding: 0 10px !important;
+
+    font-size: 8px !important;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .trip-planner-bar {
+    height: 56px !important;
+    min-height: 56px !important;
+
+    padding: 5px !important;
+  }
+
+  .trip-location-icon {
+    width: 33px !important;
+    height: 33px !important;
+
+    min-width: 33px !important;
+    min-height: 33px !important;
+
+    flex-basis: 33px !important;
+  }
+
+  .trip-destination span {
+    max-width: 90px !important;
+  }
+
+  .trip-plan-button {
+    min-width: 70px !important;
+
+    height: 40px !important;
+    min-height: 40px !important;
+
+    padding: 0 8px !important;
+
+    font-size: 7px !important;
+  }
+}
