@@ -1,0 +1,555 @@
+/* =========================================================
+   CLIENT DASHBOARD
+========================================================= */
+
+.client-dashboard {
+  width: 100%;
+  min-height: 100%;
+  padding: 30px;
+  font-family: "DM Sans", sans-serif;
+  color: #17263c;
+}
+
+
+/* =========================================================
+   WELCOME SECTION
+========================================================= */
+
+.client-welcome {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 245px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  padding: 42px 46px;
+
+  background:
+    radial-gradient(
+      circle at 82% 20%,
+      rgba(255, 255, 255, 0.22),
+      transparent 26%
+    ),
+    linear-gradient(
+      135deg,
+      #075fcb 0%,
+      #1683ed 55%,
+      #58b7f8 100%
+    );
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 22px 55px rgba(15, 102, 195, 0.16);
+
+  color: #ffffff;
+}
+
+
+/* decorative circle */
+
+.client-welcome::before {
+  content: "";
+  position: absolute;
+
+  width: 270px;
+  height: 270px;
+
+  right: -70px;
+  top: -115px;
+
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+}
+
+
+.client-welcome::after {
+  content: "";
+  position: absolute;
+
+  width: 160px;
+  height: 160px;
+
+  right: 120px;
+  bottom: -105px;
+
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   WELCOME CONTENT
+========================================================= */
+
+.client-welcome > div:first-child {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
+}
+
+
+.client-welcome > div:first-child > span {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: 13px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 0.82);
+}
+
+
+.client-welcome h1 {
+  margin: 0;
+
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.05;
+  font-weight: 750;
+
+  letter-spacing: -1.6px;
+
+  color: #ffffff;
+}
+
+
+.client-welcome p {
+  max-width: 550px;
+
+  margin: 18px 0 0;
+
+  font-size: 16px;
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.82);
+}
+
+
+/* =========================================================
+   LIMITED ACCESS BADGE
+========================================================= */
+
+.client-welcome-badge {
+  position: relative;
+  z-index: 2;
+
+  min-width: 185px;
+  min-height: 130px;
+
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.15);
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 24px;
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 16px 35px rgba(0, 57, 126, 0.13);
+}
+
+
+.client-welcome-badge strong {
+  display: block;
+
+  font-size: 26px;
+  font-weight: 800;
+
+  color: #ffffff;
+}
+
+
+.client-welcome-badge span {
+  margin-top: 5px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* =========================================================
+   STATS GRID
+========================================================= */
+
+.client-stats-grid {
+  width: 100%;
+
+  margin-top: 25px;
+
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   STAT CARD
+========================================================= */
+
+.client-stat-card {
+  position: relative;
+  overflow: hidden;
+
+  min-width: 0;
+  min-height: 205px;
+
+  padding: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #f8fbff 100%
+    );
+
+  border: 1px solid #e4edf8;
+  border-radius: 23px;
+
+  box-shadow:
+    0 12px 35px rgba(22, 77, 129, 0.07);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+
+.client-stat-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 100px;
+  height: 100px;
+
+  right: -48px;
+  bottom: -50px;
+
+  background: rgba(31, 132, 235, 0.06);
+
+  border-radius: 50%;
+}
+
+
+.client-stat-card:hover {
+  transform: translateY(-6px);
+
+  border-color: rgba(27, 126, 229, 0.22);
+
+  box-shadow:
+    0 20px 45px rgba(20, 93, 160, 0.12);
+}
+
+
+/* =========================================================
+   STAT TOP
+========================================================= */
+
+.client-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 22px;
+}
+
+
+.client-stat-top > svg {
+  width: 19px;
+  height: 19px;
+
+  color: #9aadc1;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.client-stat-card:hover .client-stat-top > svg {
+  color: #1678df;
+  transform: translate(3px, -3px);
+}
+
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.client-stat-icon {
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #e7f3ff,
+      #f3f9ff
+    );
+
+  color: #1678df;
+
+  font-size: 21px;
+
+  border: 1px solid #d9ebfc;
+}
+
+
+.client-stat-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+
+/* =========================================================
+   STAT TEXT
+========================================================= */
+
+.client-stat-card > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  letter-spacing: 0.2px;
+
+  color: #71859b;
+}
+
+
+.client-stat-card h2 {
+  margin: 0;
+
+  font-size: 31px;
+  line-height: 1.15;
+  font-weight: 800;
+
+  letter-spacing: -0.8px;
+
+  color: #172b43;
+}
+
+
+.client-stat-card p {
+  margin: 8px 0 0;
+
+  font-size: 13px;
+  line-height: 1.55;
+
+  color: #8a9aad;
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+========================================================= */
+
+@media (min-width: 1500px) {
+
+  .client-dashboard {
+    padding: 34px 38px;
+  }
+
+  .client-welcome {
+    min-height: 260px;
+    padding: 45px 52px;
+  }
+
+  .client-stat-card {
+    min-height: 215px;
+    padding: 27px;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .client-dashboard {
+    padding: 25px;
+  }
+
+  .client-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .client-dashboard {
+    padding: 18px;
+  }
+
+  .client-welcome {
+    min-height: auto;
+
+    padding: 30px 25px;
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    border-radius: 23px;
+  }
+
+  .client-welcome h1 {
+    font-size: 34px;
+  }
+
+  .client-welcome p {
+    font-size: 15px;
+  }
+
+  .client-welcome-badge {
+    width: 100%;
+    min-width: 0;
+    min-height: 95px;
+
+    align-items: flex-start;
+
+    text-align: left;
+
+    padding: 19px 22px;
+  }
+
+  .client-welcome-badge strong {
+    font-size: 22px;
+  }
+
+  .client-stats-grid {
+    margin-top: 18px;
+
+    gap: 14px;
+  }
+
+  .client-stat-card {
+    min-height: 190px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+
+  .client-dashboard {
+    padding: 13px;
+  }
+
+  .client-welcome {
+    padding: 26px 20px;
+
+    border-radius: 20px;
+  }
+
+  .client-welcome > div:first-child > span {
+    font-size: 10px;
+    letter-spacing: 1.6px;
+  }
+
+  .client-welcome h1 {
+    font-size: 29px;
+    letter-spacing: -1px;
+  }
+
+  .client-welcome p {
+    margin-top: 14px;
+
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .client-welcome-badge {
+    border-radius: 18px;
+  }
+
+  .client-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .client-stat-card {
+    min-height: 175px;
+
+    padding: 20px;
+
+    border-radius: 19px;
+  }
+
+  .client-stat-top {
+    margin-bottom: 17px;
+  }
+
+  .client-stat-icon {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 13px;
+  }
+
+  .client-stat-card h2 {
+    font-size: 28px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .client-dashboard {
+    padding: 10px;
+  }
+
+  .client-welcome {
+    padding: 23px 17px;
+  }
+
+  .client-welcome h1 {
+    font-size: 26px;
+  }
+
+  .client-stat-card {
+    padding: 18px;
+  }
+}

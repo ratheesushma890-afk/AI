@@ -24,8 +24,8 @@ const AdminLogin = () => {
   // ==========================================
   // TEMPORARY SUPER ADMIN LOGIN
   // ==========================================
-  const ADMIN_EMAIL = "admin@tripper.com";
-  const ADMIN_PASSWORD = "Admin@123";
+  const ADMIN_EMAIL = "abcd@gmail.com";
+  const ADMIN_PASSWORD = "abcd123";
 
   // ==========================================
   // LOGIN
@@ -344,32 +344,7 @@ const AdminLogin = () => {
           </div>
 
 
-          {/* DEVELOPMENT LOGIN */}
-          <div className="admin-demo-info">
-
-            <strong>
-              Development Login
-            </strong>
-
-            <p>
-              Email:
-              {" "}
-              <b>
-                admin@tripper.com
-              </b>
-            </p>
-
-            <p>
-              Password:
-              {" "}
-              <b>
-                Admin@123
-              </b>
-            </p>
-
           </div>
-
-        </div>
 
       </div>
 

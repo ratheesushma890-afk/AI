@@ -2393,3 +2393,36 @@ body {
     font-size: 11px;
   }
 }
+
+
+
+
+
+
+
+
+
+/* =========================================
+   FIX EXTRA GREY RIGHT STRIP
+========================================= */
+
+.trip-plan-page {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+
+/* form ka andar wala scroll SAME rahe */
+.trip-planner-card {
+  height: 650px !important;
+  overflow-y: auto !important;
+  overflow-x: clip !important;
+
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.trip-planner-card::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}

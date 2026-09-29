@@ -50,8 +50,7 @@ import BookingSummary from "./pages/BookingSummary";
 import BookingDetails from "./pages/BookingDetails";
 
 /* =====================================================
-   ADMIN PAGES
-   All admin files are inside src/pages/
+   SUPER ADMIN PAGES
 ===================================================== */
 
 import AdminLogin from "./pages/AdminLogin";
@@ -80,6 +79,20 @@ import AdminReports from "./pages/AdminReports";
 import AdminSettings from "./pages/AdminSettings";
 
 /* =====================================================
+   CLIENT ADMIN PAGES
+===================================================== */
+
+import ClientAdminLogin from "./pages/clientAdmin/ClientAdminLogin";
+import ClientAdminLayout from "./pages/clientAdmin/ClientAdminLayout";
+import ClientDashboard from "./pages/clientAdmin/ClientDashboard";
+
+import ClientBookings from "./pages/clientAdmin/ClientBookings";
+import ClientDestinations from "./pages/clientAdmin/ClientDestinations";
+import ClientCustomers from "./pages/clientAdmin/ClientCustomers";
+import ClientReviews from "./pages/clientAdmin/ClientReviews";
+import ClientMessages from "./pages/clientAdmin/ClientMessages";
+
+/* =====================================================
    SCROLL TO TOP
 ===================================================== */
 
@@ -98,20 +111,25 @@ const ScrollToTop = () => {
 };
 
 /* =====================================================
-   ADMIN PROTECTED ROUTE
+   SUPER ADMIN PROTECTED ROUTE
 ===================================================== */
 
 const AdminProtectedRoute = ({ children }) => {
   let adminUser = null;
 
   try {
-    const storedAdmin = localStorage.getItem("adminUser");
+    const storedAdmin =
+      localStorage.getItem("adminUser");
 
     if (storedAdmin) {
       adminUser = JSON.parse(storedAdmin);
     }
   } catch (error) {
-    console.error("Admin authentication error:", error);
+    console.error(
+      "Admin authentication error:",
+      error
+    );
+
     adminUser = null;
   }
 
@@ -119,6 +137,42 @@ const AdminProtectedRoute = ({ children }) => {
     return (
       <Navigate
         to="/admin-secret"
+        replace
+      />
+    );
+  }
+
+  return children;
+};
+
+/* =====================================================
+   CLIENT ADMIN PROTECTED ROUTE
+===================================================== */
+
+const ClientAdminProtectedRoute = ({ children }) => {
+  let clientAdmin = null;
+
+  try {
+    const storedClientAdmin =
+      localStorage.getItem("clientAdmin");
+
+    if (storedClientAdmin) {
+      clientAdmin =
+        JSON.parse(storedClientAdmin);
+    }
+  } catch (error) {
+    console.error(
+      "Client admin authentication error:",
+      error
+    );
+
+    clientAdmin = null;
+  }
+
+  if (!clientAdmin?.loggedIn) {
+    return (
+      <Navigate
+        to="/client-admin/login"
         replace
       />
     );
@@ -139,7 +193,8 @@ const App = () => {
   =================================================== */
 
   const isAdminPage =
-    location.pathname.startsWith("/admin-secret");
+    location.pathname.startsWith("/admin-secret") ||
+    location.pathname.startsWith("/client-admin");
 
   /* ===================================================
      HIDE FOOTER
@@ -161,7 +216,6 @@ const App = () => {
 
       {/* =============================================
           MAIN WEBSITE NAVBAR
-          Hidden on admin pages
       ============================================= */}
 
       {!isAdminPage && <Navbar />}
@@ -207,7 +261,7 @@ const App = () => {
         />
 
         {/* =================================================
-            AUTH
+            USER AUTH
         ================================================= */}
 
         <Route
@@ -264,7 +318,7 @@ const App = () => {
         />
 
         {/* =================================================
-            ADMIN LOGIN
+            SUPER ADMIN LOGIN
         ================================================= */}
 
         <Route
@@ -273,7 +327,7 @@ const App = () => {
         />
 
         {/* =================================================
-            ADMIN DASHBOARD
+            SUPER ADMIN DASHBOARD
         ================================================= */}
 
         <Route
@@ -285,18 +339,14 @@ const App = () => {
           }
         >
 
-          {/* ===============================================
-              DASHBOARD HOME
-          =============================================== */}
+          {/* DASHBOARD */}
 
           <Route
             index
             element={<AdminDashboard />}
           />
 
-          {/* ===============================================
-              TRIPS
-          =============================================== */}
+          {/* TRIPS */}
 
           <Route
             path="trips"
@@ -313,9 +363,7 @@ const App = () => {
             element={<AdminEditTrip />}
           />
 
-          {/* ===============================================
-              DESTINATIONS
-          =============================================== */}
+          {/* DESTINATIONS */}
 
           <Route
             path="destinations"
@@ -332,9 +380,7 @@ const App = () => {
             element={<AdminEditDestination />}
           />
 
-          {/* ===============================================
-              BOOKINGS
-          =============================================== */}
+          {/* BOOKINGS */}
 
           <Route
             path="bookings"
@@ -346,76 +392,126 @@ const App = () => {
             element={<AdminBookingDetails />}
           />
 
-          {/* ===============================================
-              CUSTOMERS
-          =============================================== */}
+          {/* CUSTOMERS */}
 
           <Route
             path="customers"
             element={<AdminCustomers />}
           />
 
-          {/* ===============================================
-              REVIEWS
-          =============================================== */}
+          {/* REVIEWS */}
 
           <Route
             path="reviews"
             element={<AdminReviews />}
           />
 
-          {/* ===============================================
-              MESSAGES
-          =============================================== */}
+          {/* MESSAGES */}
 
           <Route
             path="messages"
             element={<AdminMessages />}
           />
 
-          {/* ===============================================
-              PAYMENTS
-          =============================================== */}
+          {/* PAYMENTS */}
 
           <Route
             path="payments"
             element={<AdminPayments />}
           />
 
-          {/* ===============================================
-              ACTIVITIES
-          =============================================== */}
+          {/* ACTIVITIES */}
 
           <Route
             path="activities"
             element={<AdminActivities />}
           />
 
-          {/* ===============================================
-              REPORTS
-          =============================================== */}
+          {/* REPORTS */}
 
           <Route
             path="reports"
             element={<AdminReports />}
           />
 
-          {/* ===============================================
-              STAFF MANAGEMENT
-          =============================================== */}
+          {/* STAFF */}
 
           <Route
             path="staff"
             element={<AdminStaff />}
           />
 
-          {/* ===============================================
-              SETTINGS
-          =============================================== */}
+          {/* SETTINGS */}
 
           <Route
             path="settings"
             element={<AdminSettings />}
+          />
+
+        </Route>
+
+        {/* =================================================
+            CLIENT ADMIN LOGIN
+        ================================================= */}
+
+        <Route
+          path="/client-admin/login"
+          element={<ClientAdminLogin />}
+        />
+
+        {/* =================================================
+            CLIENT ADMIN DASHBOARD
+        ================================================= */}
+
+        <Route
+          path="/client-admin/dashboard"
+          element={
+            <ClientAdminProtectedRoute>
+              <ClientAdminLayout />
+            </ClientAdminProtectedRoute>
+          }
+        >
+
+          {/* CLIENT DASHBOARD */}
+
+          <Route
+            index
+            element={<ClientDashboard />}
+          />
+
+          {/* BOOKINGS */}
+
+          <Route
+            path="bookings"
+            element={<ClientBookings />}
+          />
+
+          {/* DESTINATIONS */}
+
+          <Route
+            path="destinations"
+            element={<ClientDestinations />}
+          />
+
+          {/* CUSTOMERS */}
+
+          <Route
+            path="customers"
+            element={<ClientCustomers />}
+          />
+
+          {/* REVIEWS */}
+
+          <Route
+            path="reviews"
+            element={<ClientReviews />}
+          />
+
+          {/* MESSAGES */}
+
+          <Route
+            path="messages"
+            element={<ClientMessages />}
           />
 
         </Route>
@@ -446,7 +542,7 @@ const App = () => {
           WISHLIST DRAWER
       ============================================= */}
 
-      <WishlistDrawer />
+      {!isAdminPage && <WishlistDrawer />}
 
     </WishlistProvider>
   );

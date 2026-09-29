@@ -24,7 +24,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=90",
 
-    video: goa,
+    video: "/goa.mp4",
 
     description:
       "Discover Goa's beautiful beaches, vibrant nightlife, delicious food, historic forts and relaxing coastal experiences.",
@@ -93,7 +93,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=90",
 
-    video: manali,
+    video: "/manali.mp4",
 
     description:
       "Experience snow-covered mountains, peaceful valleys, adventure activities, cafés and beautiful Himalayan landscapes.",
@@ -162,7 +162,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1200&q=90",
 
-    video: jaipur,
+    video: "/jaipur.mp4",
 
     description:
       "Explore Jaipur's royal heritage, magnificent forts, colourful bazaars, traditional food and beautiful architecture.",
@@ -224,7 +224,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=90",
 
-    video: kerala,
+    video: "/kerala.mp4",
 
     description:
       "Relax among peaceful backwaters, lush tea gardens, tropical beaches, beautiful hills and Kerala's rich culture.",
@@ -286,7 +286,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1200&q=90",
 
-    video: rishikesh,
+    video: "/rishikesh.mp4",
 
     description:
       "Experience river adventures, peaceful yoga, spiritual moments, mountain views and exciting outdoor activities.",
@@ -341,7 +341,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=90",
 
-    video: delhi,
+    video: "/delhi.mp4",
 
     description:
       "Discover Delhi's historic monuments, colourful markets, famous street food and vibrant city culture.",
@@ -424,7 +424,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1200&q=90",
 
-    video: Mumbai,
+    video: "/Mumbai.mp4",
 
     description:
       "Explore Mumbai's iconic coastline, historic landmarks, colourful markets, street food and vibrant city life.",
@@ -493,7 +493,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=90",
 
-    video: agra,
+    video: "/agra.mp4",
 
     description:
       "Explore the magnificent Taj Mahal, historic Mughal monuments, beautiful gardens and the rich heritage of Agra.",
@@ -562,7 +562,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1200&q=90",
 
-    video: Uttarakhand,
+    video: "/Uttarakhand.mp4",
 
     description:
       "Discover the beauty of the Himalayas with peaceful hill stations, rivers, temples, adventure and breathtaking mountain views.",
@@ -631,7 +631,7 @@ const destinations = {
     image:
       "https://images.unsplash.com/photo-1602643163986-6d7b7b5b4b6e?auto=format&fit=crop&w=1200&q=90",
 
-    video: udaipur,
+    video: "/udaipur.mp4",
 
     description:
       "Experience the romantic charm of Udaipur with beautiful lakes, royal palaces, heritage streets and stunning sunset views.",
