@@ -458,9 +458,9 @@
 .trip-planner-bar {
   position: relative;
 
-  width: min(580px, 100%);
+  width: min(550px, 90%);
 
-  min-height: 74px;
+  min-height: 44px;
 
   display: flex;
   align-items: center;
@@ -577,7 +577,7 @@
 .trip-destination small {
   color: #8498a8;
 
-  font-size: 9px;
+  font-size: 17px;
 
   font-weight: 800;
 
@@ -585,10 +585,10 @@
 }
 
 
-.trip-destination span {
+.trip-destination span1 {
   color: #213d51;
 
-  font-size: 13px;
+  font-size: 18px;
 
   font-weight: 650;
 
@@ -633,7 +633,7 @@
 
   cursor: pointer;
 
-  font-size: 12px;
+  font-size: 16px;
 
   font-weight: 800;
 

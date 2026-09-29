@@ -1280,11 +1280,14 @@ body {
 
   font-size: 15px;
 }
+.price-row span{
+  font-size: 17px;
+}
 
 .price-row strong {
   color: white;
 
-  font-size: 15px;
+  font-size: 17px;
   text-align: right;
 }
 

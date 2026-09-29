@@ -472,7 +472,7 @@
 
   color: #0755a7;
 
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 900;
 
   letter-spacing: 0.18em;
@@ -530,7 +530,7 @@
 
   color: #4976a2;
 
-  font-size: 14px;
+  font-size: 16px;
 
   line-height: 1.7;
 }
@@ -646,7 +646,7 @@
 
   color: #7289a1;
 
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .secure-small {
@@ -672,13 +672,13 @@
 }
 
 .secure-small strong {
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .secure-small span {
   color: #8ba0b4;
 
-  font-size: 8px;
+  font-size: 14px;
 }
 
 /* =========================================================
@@ -755,7 +755,7 @@
   color:
     rgba(255, 255, 255, 0.9);
 
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 900;
 
   letter-spacing: 0.1em;
@@ -776,7 +776,7 @@
   color:
     rgba(255, 255, 255, 0.75);
 
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .amount-travel-art {
@@ -854,7 +854,7 @@
 
   color: #1e4269;
 
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 800;
 
   cursor: pointer;
@@ -987,7 +987,7 @@
 }
 
 .demo-card-top span {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 900;
 
   letter-spacing: 0.1em;
@@ -1060,11 +1060,11 @@
   color:
     rgba(255, 255, 255, 0.65);
 
-  font-size: 7px;
+  font-size: 14px;
 }
 
 .demo-card-bottom strong {
-  font-size: 10px;
+  font-size: 13px;
 }
 
 .card-plane {
@@ -1100,7 +1100,7 @@
 
   color: #173c64;
 
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -1124,7 +1124,7 @@
 
   font-family: inherit;
 
-  font-size: 11px;
+  font-size: 16px;
 
   transition: 0.25s ease;
 }
@@ -1157,6 +1157,7 @@
 
 .input-with-icon input {
   padding-left: 42px;
+  
 }
 
 .form-row {
@@ -1221,7 +1222,7 @@
 .alternative-payment span {
   color: #1681d5;
 
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
 
   letter-spacing: 0.13em;
@@ -1266,7 +1267,7 @@
       #f1f9ff
     );
 
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .security-icon {
@@ -1344,7 +1345,7 @@
 .final-payment-text small {
   color: #718ba5;
 
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .final-payment-text strong {
@@ -1363,7 +1364,7 @@
 
   color: #0872d4;
 
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -1517,7 +1518,7 @@
 
   color: #137b52;
 
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 900;
 
   box-shadow:
@@ -1570,7 +1571,7 @@
   color:
     rgba(255, 255, 255, 0.8);
 
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .summary-image-content p svg {
@@ -1621,7 +1622,7 @@
 .trip-details-link {
   color: #0876dd;
 
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -1685,7 +1686,7 @@
 .summary-mini-card small {
   color: #7590aa;
 
-  font-size: 8px;
+  font-size: 15px;
 }
 
 .summary-mini-card strong {
@@ -1693,7 +1694,7 @@
 
   color: #193f66;
 
-  font-size: 9px;
+  font-size: 14px;
 
   white-space: nowrap;
 
@@ -1724,7 +1725,7 @@
 .summary-info-row span {
   color: #63809c;
 
-  font-size: 9px;
+  font-size: 15px;
 }
 
 .summary-info-row strong {
@@ -1732,7 +1733,7 @@
 
   color: #183c61;
 
-  font-size: 9px;
+  font-size: 15px;
 
   text-align: right;
 }
@@ -1757,7 +1758,7 @@
 
   color: #63809c;
 
-  font-size: 8px;
+  font-size: 14px;
 }
 
 .summary-place-chips {
@@ -1776,7 +1777,7 @@
 
   color: #0873d3;
 
-  font-size: 7px;
+  font-size: 15px;
   font-weight: 800;
 }
 
@@ -1865,7 +1866,7 @@
 }
 
 .order-total-text span {
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -1873,7 +1874,7 @@
   color:
     rgba(255, 255, 255, 0.58);
 
-  font-size: 7px;
+  font-size: 15px;
 }
 
 .order-total > strong {
@@ -1929,7 +1930,7 @@
 
   color: #19466f;
 
-  font-size: 9px;
+  font-size: 14px;
 }
 
 .summary-safe-box p {
@@ -1937,7 +1938,7 @@
 
   color: #7990a5;
 
-  font-size: 7px;
+  font-size: 12px;
 }
 
 /* =========================================================
@@ -2109,7 +2110,7 @@
 .success-small {
   color: #087bdc;
 
-  font-size: 8px;
+  font-size: 14px;
   font-weight: 900;
 
   letter-spacing: 0.15em;
@@ -2128,7 +2129,7 @@
 .payment-success-popup > p {
   color: #758da3;
 
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.7;
 }
 
@@ -2163,13 +2164,13 @@
 .success-trip-card small {
   color: #8aa0b3;
 
-  font-size: 7px;
+  font-size: 16px;
 }
 
 .success-trip-card strong {
   color: #164771;
 
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .success-booking-button {

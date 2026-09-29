@@ -285,11 +285,7 @@ const Destinations = () => {
 
 
   /* =======================================================
-     SEARCH DESTINATION AND SCROLL TO CARD
-
-     IMPORTANT:
-     Search sirf scroll karega.
-     Cards filter/hide nahi honge.
+     SEARCH DESTINATION
   ======================================================= */
 
   useEffect(() => {
@@ -308,15 +304,6 @@ const Destinations = () => {
           const destinationId =
             normalizeText(item.id);
 
-          /*
-            Example:
-            g
-            go
-            goa
-
-            tino Goa ko match kar sakte hain.
-          */
-
           return (
             destinationName.startsWith(query) ||
             destinationId.startsWith(query)
@@ -324,28 +311,16 @@ const Destinations = () => {
         });
 
 
-      /*
-        Galat naam hai to kuch nahi hoga.
-      */
-
       if (!foundDestination) {
         return;
       }
 
-
-      /*
-        Matching destination ka card find karo.
-      */
 
       const destinationElement =
         destinationRefs.current[
           foundDestination.id
         ];
 
-
-      /*
-        Smooth scroll to card/image.
-      */
 
       if (destinationElement) {
         destinationElement.scrollIntoView({
@@ -379,16 +354,8 @@ const Destinations = () => {
 
     setActive(index);
 
-    /*
-      Featured selector click par search clear.
-    */
-
     setSearch("");
 
-
-    /*
-      Featured card par smooth scroll.
-    */
 
     setTimeout(() => {
       const feature =
@@ -416,51 +383,19 @@ const Destinations = () => {
 
 
   /* =======================================================
-     PAUSE MOVING SELECTOR
-  ======================================================= */
-
-  const pauseMovement = (e) => {
-    const moving =
-      e.currentTarget.querySelector(
-        ".atlas-selector-moving"
-      );
-
-    if (moving) {
-      moving.style.animationPlayState =
-        "paused";
-    }
-  };
-
-
-  /* =======================================================
-     RESUME MOVING SELECTOR
-  ======================================================= */
-
-  const resumeMovement = (e) => {
-    const moving =
-      e.currentTarget.querySelector(
-        ".atlas-selector-moving"
-      );
-
-    if (moving) {
-      moving.style.animationPlayState =
-        "running";
-    }
-  };
-
-
-  /* =======================================================
      JSX
   ======================================================= */
 
   return (
     <main className="atlas-page">
 
+
       {/* ===================================================
           INTRO SECTION
       =================================================== */}
 
       <section className="atlas-intro">
+
 
         {/* LEFT */}
 
@@ -469,6 +404,7 @@ const Destinations = () => {
           <span className="atlas-kicker">
             AI TRIP / DESTINATIONS
           </span>
+
 
           <h1>
             The world
@@ -497,6 +433,7 @@ const Destinations = () => {
           <div className="atlas-search">
 
             <FiSearch />
+
 
             <input
               type="text"
@@ -529,35 +466,24 @@ const Destinations = () => {
 
 
       {/* ===================================================
-          MOVING DESTINATION SELECTOR
+          DESTINATION SELECTOR
+
+          IMPORTANT:
+          Har destination sirf EK BAAR render hoga.
+          Duplicate destination set remove kar diya hai.
       =================================================== */}
 
       <section className="atlas-selector">
 
-        <div
-          className="atlas-selector-track"
-
-          onMouseEnter={pauseMovement}
-          onMouseLeave={resumeMovement}
-
-          onMouseDown={pauseMovement}
-          onMouseUp={resumeMovement}
-
-          onTouchStart={pauseMovement}
-          onTouchEnd={resumeMovement}
-        >
+        <div className="atlas-selector-track">
 
           <div className="atlas-selector-moving">
 
-            {/* ===========================================
-                FIRST DESTINATION SET
-            =========================================== */}
-
             {destinations.map(
               (item, index) => (
 
                 <button
-                  key={`first-${item.id}`}
+                  key={item.id}
                   type="button"
 
                   className={
@@ -575,46 +501,13 @@ const Destinations = () => {
 
                   <span className="atlas-place-dot" />
 
-                  <strong>
-                    {item.name}
-                  </strong>
-
-                </button>
-              )
-            )}
-
-
-            {/* ===========================================
-                SECOND DESTINATION SET
-            =========================================== */}
-
-            {destinations.map(
-              (item, index) => (
-
-                <button
-                  key={`second-${item.id}`}
-                  type="button"
-
-                  className={
-                    active === index
-                      ? "atlas-place active"
-                      : "atlas-place"
-                  }
-
-                  onClick={() =>
-                    selectDestination(
-                      item.id
-                    )
-                  }
-                >
-
-                  <span className="atlas-place-dot" />
 
                   <strong>
                     {item.name}
                   </strong>
 
                 </button>
+
               )
             )}
 
@@ -631,6 +524,7 @@ const Destinations = () => {
 
       <section className="atlas-feature">
 
+
         {/* =============================================
             FEATURE IMAGE
         ============================================= */}
@@ -641,6 +535,7 @@ const Destinations = () => {
             src={current.image}
             alt={current.name}
           />
+
 
           <div className="atlas-image-overlay" />
 
@@ -662,6 +557,7 @@ const Destinations = () => {
         ============================================= */}
 
         <div className="atlas-feature-content">
+
 
           <div className="atlas-feature-top">
 
@@ -741,6 +637,7 @@ const Destinations = () => {
                 Discover place
               </span>
 
+
               <span className="atlas-details-icon">
                 <FiArrowUpRight />
               </span>
@@ -760,6 +657,7 @@ const Destinations = () => {
 
       <section className="atlas-all">
 
+
         {/* =============================================
             SECTION HEADING
         ============================================= */}
@@ -771,6 +669,7 @@ const Destinations = () => {
             <span className="atlas-kicker">
               EXPLORE MORE
             </span>
+
 
             <h2>
               Find your next{" "}
@@ -790,12 +689,7 @@ const Destinations = () => {
 
 
         {/* =================================================
-            IMPORTANT
-
-            YAHAN SEARCH FILTER NAHI HAI.
-
-            Hamesha destinations.map() chalega.
-            Isliye saare cards visible rahenge.
+            DESTINATION LIST
         ================================================= */}
 
         <div className="atlas-list">
@@ -823,6 +717,7 @@ const Destinations = () => {
                   }`}
                 >
 
+
                   {/* =====================================
                       NUMBER
                   ===================================== */}
@@ -843,6 +738,7 @@ const Destinations = () => {
                       alt={item.name}
                     />
 
+
                     <div className="atlas-list-image-overlay" />
 
                   </div>
@@ -853,6 +749,7 @@ const Destinations = () => {
                   ===================================== */}
 
                   <div className="atlas-list-info">
+
 
                     <span className="atlas-list-category">
                       {item.category}
@@ -910,6 +807,7 @@ const Destinations = () => {
                       <span>
                         Explore destination
                       </span>
+
 
                       <div>
                         <FiArrowUpRight />

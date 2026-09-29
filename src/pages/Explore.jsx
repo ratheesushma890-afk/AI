@@ -293,7 +293,7 @@ const Explore = () => {
 
             <h2 className="tripExplore-sectionTitle">
               Places people are
-              <br />
+        
               dreaming about.
             </h2>
 
@@ -419,7 +419,7 @@ const Explore = () => {
 
             <h2 className="tripExplore-sectionTitle">
               Find your next
-              <br />
+            
               favourite place.
             </h2>
 

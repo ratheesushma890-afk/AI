@@ -28,7 +28,7 @@
   overflow: hidden;
 
   padding:
-    175px
+    105px
     clamp(20px, 5vw, 78px)
     90px;
 
@@ -274,7 +274,7 @@
 ========================================================= */
 
 .trip-info-strip {
-  max-width: 1380px;
+  max-width: 1280px;
   margin: 0 auto 65px;
 
   position: relative;
@@ -399,10 +399,10 @@
 ========================================================= */
 
 .experience-section {
-  max-width: 1380px;
-  min-height: 680px;
+  max-width: 1280px;
+  min-height: 650px;
 
-  margin: 0 auto 110px;
+  margin: 0 auto 100px;
 
   position: relative;
   z-index: 2;
@@ -411,7 +411,7 @@
 
   grid-template-columns:
     minmax(0, 1.12fr)
-    minmax(400px, 0.88fr);
+    minmax(300px, 0.88fr);
 
   overflow: hidden;
 
@@ -451,7 +451,7 @@
 ========================================================= */
 
 .experience-image {
-  min-height: 680px;
+  min-height: 480px;
 
   position: relative;
   overflow: hidden;
@@ -509,7 +509,7 @@
 
 .experience-auto-label {
   position: absolute;
-  top: 28px;
+  top: 18px;
   left: 28px;
 
   z-index: 5;
@@ -672,8 +672,8 @@
   position: relative;
 
   padding:
-    clamp(44px, 5vw, 72px)
-    clamp(35px, 4vw, 62px);
+    clamp(24px, 3vw, 52px)
+    clamp(25px, 2vw, 42px);
 
   display: flex;
   flex-direction: column;
@@ -749,9 +749,9 @@
 }
 
 .experience-details h2 {
-  max-width: 540px;
+  max-width: 520px;
 
-  margin: 0 0 13px;
+  margin: 0 0 12px;
 
   color: white;
 
@@ -994,14 +994,14 @@
 ========================================================= */
 
 .hotel-stay-section {
-  max-width: 1380px;
+  max-width: 1280px;
   margin: 0 auto;
 
   position: relative;
   z-index: 2;
 
   padding:
-    clamp(35px, 5vw, 68px);
+    clamp(25px, 5vw, 68px);
 
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 39px;
@@ -1032,7 +1032,7 @@
 ========================================================= */
 
 .hotel-section-header {
-  margin-bottom: 42px;
+  margin-bottom: 25px;
 
   display: flex;
   justify-content: space-between;

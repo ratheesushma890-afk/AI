@@ -56,7 +56,7 @@ const Hero = () => {
 
             <div>
               <small>DESTINATION</small>
-              <span>Where do you want to go?</span>
+              <span1>Where do you want to go?</span1>
             </div>
 
           </div>

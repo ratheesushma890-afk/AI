@@ -1,77 +1,38 @@
 /* =========================================================
-   EXPLORE.CSS
-   MODERN PREMIUM TRAVEL UI
-   Unique classes: tripExplore-
-========================================================= */
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-}
-
-
-/* =========================================================
-   PAGE
+   EXPLORE PAGE
 ========================================================= */
 
 .tripExplore-page {
-  --blue: #1476e5;
-  --blue-dark: #0758b4;
-  --blue-light: #e9f5ff;
-  --navy: #102f4d;
-  --text: #284760;
-  --muted: #6c8295;
-  --white: #ffffff;
-  --border: rgba(45, 126, 192, 0.15);
-
-  width: 100%;
-  min-height: 100vh;
-
   position: relative;
-  isolation: isolate;
-
-  overflow-x: hidden;
-
-  padding-bottom: 90px;
-
-  font-family:
-    Inter,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-
-  color: var(--text);
+  width: 100%;
+  margin-top: 60px;
+  
+  overflow: hidden;
 
   background:
     radial-gradient(
-      circle at 4% 15%,
-      rgba(52, 176, 239, 0.16),
-      transparent 22%
+      circle at 4% 28%,
+      rgba(65, 174, 233, 0.11),
+      transparent 19%
     ),
     radial-gradient(
-      circle at 96% 42%,
-      rgba(35, 121, 224, 0.12),
-      transparent 24%
-    ),
-    radial-gradient(
-      circle at 10% 82%,
-      rgba(70, 191, 239, 0.12),
+      circle at 97% 64%,
+      rgba(81, 183, 238, 0.1),
       transparent 22%
     ),
     linear-gradient(
-      135deg,
-      #eaf7ff 0%,
-      #f9fcff 35%,
-      #f3f9ff 70%,
-      #e7f5ff 100%
+      180deg,
+      #fbfeff 0%,
+      #f4fbff 48%,
+      #ffffff 100%
     );
+
+  color: #153d5d;
+  font-family: "DM Sans", sans-serif;
+}
+
+.tripExplore-page * {
+  box-sizing: border-box;
 }
 
 
@@ -83,53 +44,20 @@ body {
   content: "";
 
   position: absolute;
+  top: 620px;
+  right: -230px;
 
-  width: 480px;
-  height: 480px;
+  width: 500px;
+  height: 500px;
 
-  top: 800px;
-  right: -300px;
-
-  z-index: -1;
-
+  border: 1px solid rgba(35, 140, 205, 0.08);
   border-radius: 50%;
-
-  border:
-    1px dashed
-    rgba(20, 118, 229, 0.14);
-
-  box-shadow:
-    0 0 0 50px rgba(20, 118, 229, 0.02),
-    0 0 0 100px rgba(20, 118, 229, 0.012);
-
-  pointer-events: none;
-}
-
-
-.tripExplore-page::after {
-  content: "";
-
-  position: absolute;
-
-  width: 380px;
-  height: 380px;
-
-  left: -250px;
-  top: 1750px;
-
-  z-index: -1;
-
-  border-radius: 50%;
-
-  border:
-    1px dashed
-    rgba(20, 118, 229, 0.13);
 
   background:
     radial-gradient(
       circle,
-      rgba(50, 177, 236, 0.13),
-      transparent 67%
+      rgba(75, 180, 236, 0.11),
+      transparent 68%
     );
 
   pointer-events: none;
@@ -141,39 +69,40 @@ body {
 ========================================================= */
 
 .tripExplore-hero {
-  width: min(1380px, calc(100% - 50px));
-  min-height: 650px;
-
   position: relative;
-  isolation: isolate;
 
-  margin: 28px auto 90px;
+  width: calc(100% - 36px);
+  height: 455px;
 
-  display: flex;
-  align-items: center;
+  margin: 18px auto 0;
 
   overflow: hidden;
 
-  border-radius:
-    38px
-    100px
-    38px
-    38px;
+  border: 6px solid #ffffff;
+  border-radius: 32px;
 
-  clip-path:
-    polygon(
-      0 0,
-      94% 0,
-      100% 11%,
-      100% 100%,
-      0 100%
-    );
-
-  background: #102e48;
+  background: #173f5f;
 
   box-shadow:
-    0 32px 75px
-    rgba(12, 58, 98, 0.2);
+    0 22px 55px rgba(21, 76, 112, 0.14),
+    0 0 0 1px rgba(30, 125, 187, 0.07);
+}
+
+
+/* HERO INNER FRAME */
+
+.tripExplore-hero::after {
+  content: "";
+
+  position: absolute;
+  inset: 12px;
+
+  z-index: 2;
+
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 21px;
+
+  pointer-events: none;
 }
 
 
@@ -182,32 +111,21 @@ body {
 ========================================================= */
 
 .tripExplore-heroImage {
-  width: 100%;
-  height: 100%;
-
   position: absolute;
   inset: 0;
 
-  z-index: -3;
+  width: 100%;
+  height: 100%;
 
   object-fit: cover;
 
-  transform: scale(1.01);
+  transform: scale(1.02);
 
-  transition:
-    transform 1.2s
-    cubic-bezier(
-      0.22,
-      1,
-      0.36,
-      1
-    );
+  transition: transform 8s ease;
 }
 
-
-.tripExplore-hero:hover
-.tripExplore-heroImage {
-  transform: scale(1.045);
+.tripExplore-hero:hover .tripExplore-heroImage {
+  transform: scale(1.08);
 }
 
 
@@ -219,58 +137,19 @@ body {
   position: absolute;
   inset: 0;
 
-  z-index: -2;
-
   background:
     linear-gradient(
       90deg,
-      rgba(4, 22, 39, 0.91) 0%,
-      rgba(5, 28, 48, 0.78) 38%,
-      rgba(6, 30, 51, 0.35) 70%,
-      rgba(5, 27, 46, 0.12) 100%
+      rgba(5, 30, 49, 0.8) 0%,
+      rgba(6, 37, 58, 0.57) 40%,
+      rgba(6, 34, 54, 0.14) 74%,
+      rgba(6, 34, 54, 0.05) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(4, 28, 45, 0.28),
+      transparent 55%
     );
-}
-
-
-.tripExplore-hero::before {
-  content: "";
-
-  position: absolute;
-
-  width: 270px;
-  height: 270px;
-
-  right: 65px;
-  top: 65px;
-
-  z-index: -1;
-
-  border-radius: 50%;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.15);
-
-  box-shadow:
-    0 0 0 35px rgba(255, 255, 255, 0.025),
-    0 0 0 70px rgba(255, 255, 255, 0.018);
-}
-
-
-.tripExplore-hero::after {
-  content: "✈";
-
-  position: absolute;
-
-  right: 135px;
-  bottom: 55px;
-
-  color:
-    rgba(255, 255, 255, 0.15);
-
-  font-size: 75px;
-
-  transform: rotate(-25deg);
 }
 
 
@@ -279,12 +158,18 @@ body {
 ========================================================= */
 
 .tripExplore-heroContent {
-  width: min(770px, 67%);
-
   position: relative;
   z-index: 3;
 
-  padding: 80px 0 80px 75px;
+  width: min(1320px, calc(100% - 90px));
+  height: 100%;
+
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 
@@ -293,38 +178,33 @@ body {
 ========================================================= */
 
 .tripExplore-eyebrow {
-  width: fit-content;
-  min-height: 42px;
-
-  padding: 9px 15px;
-
   display: inline-flex;
   align-items: center;
 
-  gap: 8px;
+  gap: 10px;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.25);
+  margin-bottom: 11px;
 
-  border-radius: 100px;
+  color: #e2f5ff;
 
-  background:
-    rgba(255, 255, 255, 0.12);
-
-  backdrop-filter: blur(12px);
-
-  color: white;
-
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
 
-  letter-spacing: 1.5px;
+  letter-spacing: 2.5px;
 }
 
-
 .tripExplore-eyebrow svg {
-  font-size: 18px;
+  width: 34px;
+  height: 34px;
+
+  padding: 8px;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(8px);
 }
 
 
@@ -333,31 +213,26 @@ body {
 ========================================================= */
 
 .tripExplore-heroTitle {
-  margin: 24px 0 0;
+  max-width: 850px;
 
-  color: white;
+  margin: 0;
 
-  font-size: clamp(60px, 6vw, 88px);
-  line-height: 0.98;
+  color: #ffffff;
 
-  font-weight: 800;
+  font-family: "Playfair Display", Georgia, serif;
 
-  letter-spacing: -4px;
+  font-size: clamp(60px, 5.2vw, 80px);
+  font-weight: 500;
 
-  text-shadow:
-    0 5px 20px
-    rgba(0, 0, 0, 0.15);
+  line-height: 0.92;
+
+  letter-spacing: -3px;
 }
 
-
 .tripExplore-heroTitle em {
-  color: #91d9ff;
+  color: #afe5ff;
 
-  font-family:
-    Georgia,
-    serif;
-
-  font-weight: 500;
+  font-weight: 400;
 }
 
 
@@ -366,304 +241,150 @@ body {
 ========================================================= */
 
 .tripExplore-heroDescription {
-  max-width: 650px;
+  max-width: 590px;
 
-  margin: 26px 0 0;
+  margin: 15px 0 18px;
 
-  color:
-    rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.82);
 
-  font-size: 18px;
-  line-height: 1.7;
+  font-size: 16px;
 
-  font-weight: 500;
+  line-height: 1.55;
 }
 
 
 /* =========================================================
-   SEARCH BOX
+   SEARCH
 ========================================================= */
 
 .tripExplore-searchBox {
-  width: min(680px, 100%);
-  min-height: 68px;
-
-  position: relative;
-
-  margin-top: 34px;
-
-  padding: 7px;
+  width: min(660px, 100%);
+  height: 60px;
 
   display: flex;
   align-items: center;
 
-  gap: 8px;
+  padding: 5px 5px 5px 19px;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 100px;
 
-  border-radius: 19px;
-
-  background:
-    rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.96);
 
   box-shadow:
-    0 17px 40px
-    rgba(0, 0, 0, 0.17);
+    0 15px 38px rgba(3, 29, 47, 0.2);
 
   backdrop-filter: blur(14px);
 }
 
-
 .tripExplore-searchIcon {
   flex-shrink: 0;
 
-  margin-left: 13px;
+  color: #2188c9;
 
-  color: var(--blue);
-
-  font-size: 22px;
+  font-size: 20px;
 }
 
-
 .tripExplore-searchInput {
-  width: 100%;
-  height: 52px;
+  flex: 1;
 
   min-width: 0;
 
-  padding: 0 10px;
+  padding: 0 13px;
 
   border: none;
   outline: none;
 
   background: transparent;
 
-  color: #26435c;
+  color: #214761;
 
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 15px;
 }
-
 
 .tripExplore-searchInput::placeholder {
-  color: #8295a6;
+  color: #8aa1b2;
 }
 
-
 .tripExplore-searchButton {
-  min-width: 130px;
-  height: 52px;
-
-  flex-shrink: 0;
-
-  padding: 0 18px;
+  height: 48px;
 
   display: flex;
   align-items: center;
-  justify-content: center;
 
   gap: 8px;
 
-  border: none;
+  padding: 0 23px;
 
-  border-radius: 13px;
+  border: none;
+  border-radius: 100px;
 
   background:
     linear-gradient(
       135deg,
-      #126fdc,
-      #259ee5
+      #35a9e9,
+      #1479bf
     );
 
-  color: white;
+  color: #ffffff;
 
   font-family: inherit;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 800;
 
   cursor: pointer;
 
   box-shadow:
-    0 9px 22px
-    rgba(18, 111, 220, 0.28);
+    0 8px 20px rgba(24, 126, 196, 0.25);
 
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
-
 
 .tripExplore-searchButton:hover {
   transform: translateY(-2px);
 
   box-shadow:
-    0 13px 27px
-    rgba(18, 111, 220, 0.35);
+    0 12px 25px rgba(24, 126, 196, 0.32);
 }
 
 
 /* =========================================================
-   HERO MINI INFO
+   MINI INFO
 ========================================================= */
 
 .tripExplore-miniInfo {
-  margin-top: 24px;
-
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
 
-  gap: 20px;
-}
+  gap: 24px;
 
+  margin-top: 13px;
+}
 
 .tripExplore-miniInfo span {
-  color:
-    rgba(255, 255, 255, 0.83);
+  color: rgba(255, 255, 255, 0.76);
 
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
+
+  letter-spacing: 0.3px;
 }
 
 
 /* =========================================================
-   COMMON SECTION HEADING
+   COMMON SECTION WIDTH
 ========================================================= */
 
-.tripExplore-sectionHeading {
-  margin-bottom: 42px;
+.tripExplore-trendingSection,
+.tripExplore-discoverSection {
+  width: min(1380px, calc(100% - 70px));
 
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-
-  gap: 30px;
-}
-
-
-.tripExplore-headingLeft {
-  min-width: 0;
-}
-
-
-.tripExplore-smallLabel {
-  width: fit-content;
-
-  padding: 8px 13px;
-
-  display: inline-flex;
-
-  border:
-    1px solid
-    rgba(20, 118, 229, 0.15);
-
-  border-radius: 100px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ffffff,
-      #e5f4ff
-    );
-
-  color: var(--blue);
-
-  font-size: 14px;
-  font-weight: 800;
-
-  letter-spacing: 1.5px;
-
-  box-shadow:
-    0 6px 17px
-    rgba(15, 71, 119, 0.05);
-}
-
-
-.tripExplore-sectionTitle {
-  margin: 16px 0 0;
-
-  color: var(--navy);
-
-  font-size: clamp(48px, 4.5vw, 68px);
-  line-height: 1;
-
-  font-weight: 800;
-
-  letter-spacing: -3px;
-}
-
-
-/* =========================================================
-   VIEW ALL LINK
-========================================================= */
-
-.tripExplore-headingLink {
-  min-height: 52px;
-
-  padding:
-    6px 7px
-    6px 19px;
-
-  display: inline-flex;
-  align-items: center;
-
-  gap: 13px;
-
-  flex-shrink: 0;
-
-  text-decoration: none;
-
-  border:
-    1px solid
-    rgba(20, 118, 229, 0.14);
-
-  border-radius: 100px;
-
-  background: white;
-
-  color: var(--navy);
-
-  font-size: 15px;
-  font-weight: 800;
-
-  box-shadow:
-    0 8px 22px
-    rgba(16, 70, 116, 0.07);
-
-  transition:
-    transform 0.25s ease,
-    color 0.25s ease;
-}
-
-
-.tripExplore-headingLink:hover {
-  color: var(--blue);
-
-  transform: translateY(-2px);
-}
-
-
-.tripExplore-headingCircle {
-  width: 40px;
-  height: 40px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 50%;
-
-  background:
-    linear-gradient(
-      135deg,
-      #1476e5,
-      #34ade8
-    );
-
-  color: white;
-
-  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -672,27 +393,142 @@ body {
 ========================================================= */
 
 .tripExplore-trendingSection {
-  width: min(1340px, calc(100% - 56px));
-
   position: relative;
+  z-index: 2;
 
-  margin: 0 auto 105px;
+  padding: 48px 0 50px;
 }
 
 
 /* =========================================================
-   TRENDING SLIDER
+   SECTION HEADING
+========================================================= */
+
+.tripExplore-sectionHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 24px;
+}
+
+.tripExplore-smallLabel {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 7px;
+
+  color: #1686ca;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 2.4px;
+}
+
+.tripExplore-smallLabel::before {
+  content: "";
+
+  width: 27px;
+  height: 2px;
+
+  flex-shrink: 0;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1c93d6,
+      #8dd4f6
+    );
+}
+
+.tripExplore-sectionTitle {
+  margin: 0;
+
+  color: #143e5e;
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: clamp(48px, 4vw, 62px);
+  font-weight: 500;
+
+  line-height: 0.95;
+
+  letter-spacing: -2px;
+}
+
+
+/* =========================================================
+   VIEW ALL
+========================================================= */
+
+.tripExplore-headingLink {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  color: #55758d;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  transition: 0.25s ease;
+}
+
+.tripExplore-headingCircle {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid #d1eaf7;
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #1685cb;
+
+  box-shadow:
+    0 6px 18px rgba(25, 100, 148, 0.08);
+
+  transition: 0.3s ease;
+}
+
+.tripExplore-headingLink:hover {
+  color: #1685cb;
+}
+
+.tripExplore-headingLink:hover .tripExplore-headingCircle {
+  background: #1685cb;
+
+  color: #ffffff;
+
+  transform: rotate(45deg);
+}
+
+
+/* =========================================================
+   TRENDING GRID
 ========================================================= */
 
 .tripExplore-trendingSlider {
-  width: 100%;
-
   display: grid;
 
-  grid-template-columns:
-    repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(5, 1fr);
 
-  gap: 18px;
+  gap: 16px;
+
+  align-items: start;
 }
 
 
@@ -701,64 +537,53 @@ body {
 ========================================================= */
 
 .tripExplore-trendingCard {
-  min-width: 0;
-  height: 420px;
-
   position: relative;
+
+  height: 355px;
 
   overflow: hidden;
 
+  border: 5px solid #ffffff;
+  border-radius: 24px;
+
+  outline: 1px solid rgba(28, 124, 188, 0.08);
+
   text-decoration: none;
 
-  border:
-    5px solid
-    rgba(255, 255, 255, 0.95);
-
-  border-radius:
-    24px
-    65px
-    24px
-    24px;
-
-  background: #d8ebf7;
+  background: #dcecf5;
 
   box-shadow:
-    0 16px 38px
-    rgba(13, 66, 111, 0.12);
+    0 12px 30px rgba(27, 79, 113, 0.11);
 
   transition:
-    transform 0.4s ease,
-    box-shadow 0.4s ease;
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-
-/* Different shapes */
-
-.tripExplore-trendingCard:nth-child(2n) {
-  border-radius:
-    65px
-    24px
-    24px
-    24px;
+.tripExplore-trendingCard:nth-child(2),
+.tripExplore-trendingCard:nth-child(4) {
+  margin-top: 0;
 }
 
+.tripExplore-trendingCard::after {
+  content: "";
 
-.tripExplore-trendingCard:nth-child(3) {
-  transform: translateY(20px);
+  position: absolute;
+  inset: 10px;
+
+  z-index: 2;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+
+  pointer-events: none;
 }
-
 
 .tripExplore-trendingCard:hover {
-  transform: translateY(-8px);
+  transform: translateY(-7px);
 
   box-shadow:
-    0 24px 48px
-    rgba(13, 66, 111, 0.18);
-}
-
-
-.tripExplore-trendingCard:nth-child(3):hover {
-  transform: translateY(10px);
+    0 20px 40px rgba(26, 76, 110, 0.16);
 }
 
 
@@ -770,31 +595,15 @@ body {
   width: 100%;
   height: 100%;
 
-  position: absolute;
-  inset: 0;
-
   object-fit: cover;
 
-  transition:
-    transform 0.7s
-    cubic-bezier(
-      0.22,
-      1,
-      0.36,
-      1
-    );
+  transition: transform 0.65s ease;
 }
-
 
 .tripExplore-trendingCard:hover
 .tripExplore-trendingImage {
   transform: scale(1.07);
 }
-
-
-/* =========================================================
-   TRENDING GRADIENT
-========================================================= */
 
 .tripExplore-trendingGradient {
   position: absolute;
@@ -803,9 +612,8 @@ body {
   background:
     linear-gradient(
       180deg,
-      rgba(5, 20, 32, 0.02) 30%,
-      rgba(5, 22, 37, 0.18) 55%,
-      rgba(4, 20, 34, 0.88) 100%
+      transparent 30%,
+      rgba(4, 26, 43, 0.84) 100%
     );
 }
 
@@ -823,61 +631,40 @@ body {
 
   z-index: 3;
 
-  padding: 25px 21px;
+  padding: 20px;
 
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-
-  gap: 12px;
+  color: #ffffff;
 }
-
 
 .tripExplore-trendingInfo h3 {
-  margin: 0;
+  margin: 0 0 5px;
 
-  color: white;
+  font-family: "Playfair Display", Georgia, serif;
 
-  font-size: 28px;
+  font-size: 30px;
+  font-weight: 500;
+
   line-height: 1;
-
-  font-weight: 800;
-
-  letter-spacing: -1px;
 }
 
-
 .tripExplore-trendingLocation {
-  margin-top: 10px;
-
   display: flex;
   align-items: center;
 
-  gap: 6px;
+  gap: 5px;
 
-  color:
-    rgba(255, 255, 255, 0.82);
+  color: rgba(255, 255, 255, 0.78);
 
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
 }
-
-
-.tripExplore-trendingLocation svg {
-  flex-shrink: 0;
-}
-
 
 .tripExplore-trendingBottom {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: space-between;
 
-  gap: 10px;
-
-  color: white;
+  margin-top: 13px;
 }
-
 
 .tripExplore-trendingRating {
   display: flex;
@@ -885,17 +672,14 @@ body {
 
   gap: 5px;
 
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 700;
 }
-
 
 .tripExplore-trendingRating svg {
-  color: #ffd267;
-
-  fill: #ffd267;
+  fill: #ffd166;
+  color: #ffd166;
 }
-
 
 .tripExplore-trendingArrow {
   width: 38px;
@@ -904,31 +688,23 @@ body {
   display: grid;
   place-items: center;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.22);
-
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
 
-  background:
-    rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.15);
 
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 
-  font-size: 18px;
-
-  transition:
-    transform 0.3s ease,
-    background 0.3s ease;
+  transition: 0.3s ease;
 }
-
 
 .tripExplore-trendingCard:hover
 .tripExplore-trendingArrow {
-  transform: translateX(3px);
+  background: #ffffff;
 
-  background:
-    rgba(255, 255, 255, 0.22);
+  color: #147fc4;
+
+  transform: rotate(45deg);
 }
 
 
@@ -937,708 +713,473 @@ body {
 ========================================================= */
 
 .tripExplore-discoverSection {
-  width: min(1340px, calc(100% - 56px));
-
   position: relative;
 
-  margin: 0 auto;
-
-  scroll-margin-top: 110px;
+  padding: 34px 0 58px;
 }
-
-
-/* Decorative glow */
 
 .tripExplore-discoverSection::before {
   content: "";
 
   position: absolute;
 
-  width: 280px;
-  height: 280px;
-
-  top: 350px;
-  left: -170px;
-
   z-index: -1;
 
-  border-radius: 50%;
+  top: 0;
+  bottom: 18px;
+
+  left: 50%;
+
+  width: 100vw;
+
+  transform: translateX(-50%);
 
   background:
     radial-gradient(
-      circle,
-      rgba(42, 168, 232, 0.15),
-      transparent 68%
+      circle at 5% 10%,
+      rgba(73, 177, 234, 0.14),
+      transparent 22%
+    ),
+    radial-gradient(
+      circle at 96% 85%,
+      rgba(73, 177, 234, 0.12),
+      transparent 23%
+    ),
+    linear-gradient(
+      135deg,
+      #edf9ff 0%,
+      #f9fdff 50%,
+      #eef9ff 100%
     );
+
+  border-top: 1px solid rgba(29, 128, 191, 0.07);
+  border-bottom: 1px solid rgba(29, 128, 191, 0.07);
 }
 
 
 /* =========================================================
-   FILTER ROW
+   FILTERS
 ========================================================= */
 
 .tripExplore-filterRow {
-  width: 100%;
-
-  margin: -7px 0 42px;
-
-  padding: 9px;
-
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
 
-  gap: 8px;
+  gap: 9px;
 
-  border:
-    1px solid
-    rgba(39, 126, 195, 0.12);
-
-  border-radius: 18px;
-
-  background:
-    rgba(255, 255, 255, 0.7);
-
-  backdrop-filter: blur(12px);
-
-  box-shadow:
-    0 9px 26px
-    rgba(15, 69, 115, 0.05);
+  margin: 0 0 24px;
 }
 
-
-/* =========================================================
-   FILTER BUTTON
-========================================================= */
-
 .tripExplore-filterButton {
-  min-height: 46px;
+  min-height: 42px;
 
   padding: 0 19px;
 
-  border:
-    1px solid transparent;
+  border: 1px solid #d7eaf5;
+  border-radius: 100px;
 
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
 
-  background: transparent;
-
-  color: #58738a;
+  color: #52758c;
 
   font-family: inherit;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
 
   cursor: pointer;
 
-  transition:
-    background 0.25s ease,
-    color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
+  box-shadow:
+    0 5px 14px rgba(28, 93, 134, 0.04);
 
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
 
 .tripExplore-filterButton:hover {
-  color: var(--blue);
+  border-color: #56ace0;
 
-  background: #edf7ff;
+  color: #167fc2;
+
+  transform: translateY(-2px);
 }
 
-
 .tripExplore-filterButtonActive {
-  color: white;
+  border-color: #1681c4;
 
   background:
     linear-gradient(
       135deg,
-      #116cd9,
-      #259de4
+      #299dde,
+      #126fac
     );
 
+  color: #ffffff;
+
   box-shadow:
-    0 8px 20px
-    rgba(20, 118, 229, 0.2);
+    0 8px 19px rgba(22, 123, 188, 0.19);
 }
 
 
 /* =========================================================
    DESTINATION GRID
+   WIDTH SAME
 ========================================================= */
 
 .tripExplore-destinationGrid {
   display: grid;
 
-  grid-template-columns:
-    repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 
-  gap: 28px;
+  gap: 22px;
 }
 
 
 /* =========================================================
    DESTINATION CARD
+   PREMIUM POSTCARD STYLE
 ========================================================= */
 
 .tripExplore-destinationCard {
-  min-width: 0;
-
   position: relative;
-  isolation: isolate;
 
   overflow: hidden;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.96);
-
-  border-radius: 28px;
+  border: 1px solid rgba(31, 125, 186, 0.14);
+  border-radius: 25px;
 
   background:
-    radial-gradient(
-      circle at 100% 100%,
-      rgba(51, 175, 235, 0.1),
-      transparent 31%
-    ),
     linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.99),
-      rgba(239, 249, 255, 0.98)
+      #ffffff 0%,
+      #fbfeff 100%
     );
 
   box-shadow:
-    0 18px 48px
-    rgba(13, 65, 109, 0.09);
+    0 12px 30px rgba(25, 82, 119, 0.08);
 
   transition:
-    transform 0.4s
-      cubic-bezier(
-        0.22,
-        1,
-        0.36,
-        1
-      ),
-    box-shadow 0.4s ease;
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
 
+
+/* CARD TOP BLUE DETAIL */
+
+.tripExplore-destinationCard::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 25px;
+
+  z-index: 6;
+
+  width: 70px;
+  height: 4px;
+
+  border-radius: 0 0 10px 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #45b8ee,
+      #167bc0
+    );
+}
 
 .tripExplore-destinationCard:hover {
-  transform: translateY(-9px);
+  transform: translateY(-7px);
+
+  border-color: rgba(24, 132, 200, 0.28);
 
   box-shadow:
-    0 28px 60px
-    rgba(13, 65, 109, 0.15);
-}
-
-
-/* DIFFERENT CARD STYLE */
-
-.tripExplore-destinationCard:nth-child(3n + 2) {
-  background:
-    radial-gradient(
-      circle at 0 100%,
-      rgba(38, 148, 228, 0.1),
-      transparent 30%
-    ),
-    linear-gradient(
-      145deg,
-      #f7fcff,
-      #eaf6ff
-    );
-}
-
-
-.tripExplore-destinationCard:nth-child(3n + 3) {
-  background:
-    radial-gradient(
-      circle at 100% 0,
-      rgba(71, 192, 238, 0.11),
-      transparent 29%
-    ),
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #edf8ff
-    );
+    0 22px 45px rgba(25, 82, 119, 0.14);
 }
 
 
 /* =========================================================
-   IMAGE LINK
+   DESTINATION IMAGE LINK
 ========================================================= */
 
 .tripExplore-imageLink {
   display: block;
-
-  padding: 9px;
 
   text-decoration: none;
 }
 
 
 /* =========================================================
-   CARD IMAGE BOX
+   DESTINATION IMAGE FRAME
 ========================================================= */
 
 .tripExplore-cardImageBox {
-  height: 325px;
-
   position: relative;
+
+  height: 245px;
+
+  margin: 9px;
 
   overflow: hidden;
 
-  border-radius:
-    20px
-    65px
-    20px
-    20px;
+  border: 1px solid rgba(29, 130, 193, 0.15);
+  border-radius: 18px;
 
-  clip-path:
-    polygon(
-      0 0,
-      90% 0,
-      100% 14%,
-      100% 100%,
-      0 100%
-    );
+  background: #e8f5fc;
 
-  background: #dcecf6;
+  box-shadow:
+    inset 0 0 0 4px #ffffff;
 }
 
 
-/* Different image shape for middle cards */
+/* DARK BOTTOM SHADE */
 
-.tripExplore-destinationCard:nth-child(3n + 2)
-.tripExplore-cardImageBox {
-  border-radius:
-    65px
-    20px
-    20px
-    20px;
-
-  clip-path:
-    polygon(
-      10% 0,
-      100% 0,
-      100% 100%,
-      0 100%,
-      0 14%
-    );
-}
-
-
-.tripExplore-destinationCard:nth-child(3n + 3)
-.tripExplore-cardImageBox {
-  border-radius:
-    20px
-    20px
-    65px
-    20px;
-
-  clip-path:
-    polygon(
-      0 0,
-      100% 0,
-      100% 86%,
-      90% 100%,
-      0 100%
-    );
-}
-
-
-/* =========================================================
-   CARD IMAGE
-========================================================= */
-
-.tripExplore-cardImage {
-  width: 100%;
-  height: 100%;
-
-  position: absolute;
-  inset: 0;
-
-  object-fit: cover;
-
-  transition:
-    transform 0.7s
-    cubic-bezier(
-      0.22,
-      1,
-      0.36,
-      1
-    );
-}
-
-
-.tripExplore-destinationCard:hover
-.tripExplore-cardImage {
-  transform: scale(1.065);
-}
-
-
-/* IMAGE DARK GRADIENT */
-
-.tripExplore-cardImageBox::after {
+.tripExplore-cardImageBox::before {
   content: "";
 
   position: absolute;
-  inset: 0;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 2;
+
+  height: 80px;
 
   background:
     linear-gradient(
-      180deg,
-      rgba(5, 23, 38, 0.1),
-      transparent 40%,
-      rgba(5, 23, 38, 0.32) 100%
+      to top,
+      rgba(6, 38, 58, 0.2),
+      transparent
     );
 
   pointer-events: none;
 }
 
 
+/* INNER WHITE FRAME */
+
+.tripExplore-cardImageBox::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 9px;
+
+  z-index: 3;
+
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: 11px;
+
+  pointer-events: none;
+}
+
+.tripExplore-cardImage {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  border-radius: 17px;
+
+  transition:
+    transform 0.65s ease,
+    filter 0.4s ease;
+}
+
+.tripExplore-destinationCard:hover
+.tripExplore-cardImage {
+  transform: scale(1.055);
+
+  filter: saturate(1.06);
+}
+
+
 /* =========================================================
-   IMAGE TOP
+   IMAGE TOP TAGS
 ========================================================= */
 
 .tripExplore-imageTop {
   position: absolute;
 
-  top: 16px;
-  left: 15px;
-  right: 15px;
+  z-index: 5;
 
-  z-index: 3;
+  left: 14px;
+  right: 14px;
+  top: 14px;
 
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 
   gap: 10px;
 }
 
-
-/* =========================================================
-   DESTINATION TAG
-========================================================= */
-
-.tripExplore-destinationTag {
-  max-width: 55%;
-
-  padding: 8px 11px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.28);
-
-  border-radius: 100px;
-
-  background:
-    rgba(255, 255, 255, 0.88);
-
-  backdrop-filter: blur(10px);
-
-  color: #1269ca;
-
-  font-size: 12px;
-  font-weight: 800;
-
-  letter-spacing: 0.5px;
-
-  box-shadow:
-    0 6px 15px
-    rgba(0, 0, 0, 0.08);
-}
-
-
-/* =========================================================
-   IMAGE LOCATION
-========================================================= */
-
+.tripExplore-destinationTag,
 .tripExplore-cardLocation {
-  max-width: 55%;
-
-  padding: 8px 10px;
+  min-height: 31px;
 
   display: flex;
   align-items: center;
 
-  gap: 5px;
+  padding: 0 11px;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.25);
-
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 100px;
 
-  background:
-    rgba(10, 34, 53, 0.47);
-
-  backdrop-filter: blur(9px);
-
-  color: white;
-
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
+
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    0 5px 15px rgba(8, 43, 65, 0.09);
 }
 
+.tripExplore-destinationTag {
+  background: rgba(255, 255, 255, 0.92);
 
-.tripExplore-cardLocation svg {
-  flex-shrink: 0;
+  color: #1c628e;
 }
+
+.tripExplore-cardLocation {
+  gap: 4px;
+
+  background: rgba(11, 51, 77, 0.63);
+
+  color: #ffffff;
+}
+
 
 /* =========================================================
-   WISHLIST BUTTON
-   WHITE CIRCLE + RED HEART ONLY
+   WISHLIST HEART
 ========================================================= */
 
 .tripExplore-wishlistButton {
-  width: 48px;
-  height: 48px;
-
   position: absolute;
 
-  top: 287px;
-  right: 27px;
+  z-index: 7;
 
-  z-index: 8;
+  top: 205px;
+  right: 22px;
+
+  width: 44px;
+  height: 44px;
 
   display: grid;
   place-items: center;
 
-  padding: 0;
-
   border: 4px solid #ffffff;
   border-radius: 50%;
 
-  /* circle always white */
   background: #ffffff;
 
-  /* normal heart */
-  color: #47627a;
+  color: #41657d;
 
-  font-size: 20px;
+  font-size: 18px;
 
   cursor: pointer;
 
   box-shadow:
-    0 9px 23px rgba(14, 63, 105, 0.16);
+    0 8px 20px rgba(22, 71, 103, 0.17);
 
   transition:
-    color 0.25s ease,
     transform 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease;
+    color 0.25s ease;
 }
-
-
-/* =========================================================
-   HEART ICON
-========================================================= */
-
-.tripExplore-wishlistButton svg {
-  width: 20px;
-  height: 20px;
-
-  display: block;
-
-  fill: transparent;
-
-  stroke: currentColor;
-
-  stroke-width: 2;
-
-  transition:
-    fill 0.25s ease,
-    color 0.25s ease,
-    stroke 0.25s ease,
-    transform 0.25s ease;
-}
-
-
-/* =========================================================
-   HOVER
-   Circle white hi rahega
-========================================================= */
 
 .tripExplore-wishlistButton:hover {
-  background: #ffffff;
-
-  color: #e44762;
-
-  transform: scale(1.08);
-
-  box-shadow:
-    0 12px 27px rgba(14, 63, 105, 0.2);
-}
-
-.tripExplore-wishlistButton:hover svg {
   transform: scale(1.08);
 }
-
-
-/* =========================================================
-   ACTIVE / WISHLIST ADDED
-
-   IMPORTANT:
-   Circle = WHITE
-   Heart  = RED
-========================================================= */
 
 .tripExplore-wishlistButtonActive {
-  background: #ffffff !important;
+  background: #ffffff;
 
-  color: #e53f5d !important;
-
-  border-color: #ffffff;
-
-  box-shadow:
-    0 9px 23px rgba(14, 63, 105, 0.16),
-    0 0 0 1px rgba(229, 63, 93, 0.06);
+  color: #ef4d62;
 }
-
-
-/* heart red + filled */
 
 .tripExplore-wishlistButtonActive svg {
-  color: #e53f5d;
-
-  stroke: #e53f5d;
-
-  fill: #e53f5d;
+  fill: #ef4d62;
+  color: #ef4d62;
 }
 
-
-/* active hover */
-
-.tripExplore-wishlistButtonActive:hover {
-  background: #ffffff !important;
-
-  color: #d92f4e !important;
-
-  transform: scale(1.08);
-}
-
-.tripExplore-wishlistButtonActive:hover svg {
-  color: #d92f4e;
-
-  stroke: #d92f4e;
-
-  fill: #d92f4e;
-
-  transform: scale(1.08);
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 600px) {
-
-  .tripExplore-wishlistButton {
-    width: 46px;
-    height: 46px;
-
-    top: 274px;
-    right: 24px;
-
-    border: 4px solid #ffffff;
-
-    background: #ffffff;
-
-    font-size: 19px;
-  }
-
-  .tripExplore-wishlistButton svg {
-    width: 19px;
-    height: 19px;
-  }
-
-  .tripExplore-wishlistButtonActive {
-    background: #ffffff !important;
-
-    color: #e53f5d !important;
-  }
-
-  .tripExplore-wishlistButtonActive svg {
-    fill: #e53f5d;
-    stroke: #e53f5d;
-  }
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
-
-@media (max-width: 390px) {
-
-  .tripExplore-wishlistButton {
-    top: 244px;
-
-    background: #ffffff;
-  }
-
-  .tripExplore-wishlistButtonActive {
-    background: #ffffff !important;
-  }
-
-  .tripExplore-wishlistButtonActive svg {
-    color: #e53f5d;
-    fill: #e53f5d;
-    stroke: #e53f5d;
-  }
-}
 
 /* =========================================================
    CARD CONTENT
 ========================================================= */
 
 .tripExplore-cardContent {
-  padding:
-    27px 25px
-    25px;
+  position: relative;
+
+  padding: 17px 20px 20px;
+}
+
+
+/* SMALL BLUE LINE */
+
+.tripExplore-cardContent::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 20px;
+
+  width: 38px;
+  height: 2px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2398d8,
+      #a8dff8
+    );
 }
 
 
 /* =========================================================
-   TITLE ROW
+   CARD TITLE
 ========================================================= */
 
 .tripExplore-cardTitleRow {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
 
-  gap: 15px;
+  gap: 14px;
 }
-
 
 .tripExplore-cardTitleLink {
-  min-width: 0;
-
   text-decoration: none;
 }
-
 
 .tripExplore-cardTitleLink h3 {
   margin: 0;
 
-  color: #102f4c;
+  color: #143f5f;
+
+  font-family: "Playfair Display", Georgia, serif;
 
   font-size: 31px;
-  line-height: 1.05;
+  font-weight: 600;
 
-  font-weight: 800;
+  line-height: 1;
 
-  letter-spacing: -1.2px;
+  letter-spacing: -0.6px;
 
-  transition:
-    color 0.25s ease;
+  transition: color 0.25s ease;
 }
 
-
 .tripExplore-cardTitleLink:hover h3 {
-  color: var(--blue);
+  color: #1783c5;
 }
 
 
@@ -1647,56 +1188,51 @@ body {
 ========================================================= */
 
 .tripExplore-cardRating {
-  min-height: 36px;
+  min-height: 31px;
 
   flex-shrink: 0;
-
-  padding: 7px 10px;
 
   display: flex;
   align-items: center;
 
   gap: 5px;
 
-  border:
-    1px solid #dfebf3;
+  padding: 0 10px;
 
+  border: 1px solid #f5e4ae;
   border-radius: 100px;
 
-  background: white;
+  background: #fffaf0;
 
-  color: #28445c;
+  color: #675832;
 
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 800;
 
   box-shadow:
-    0 5px 14px
-    rgba(16, 66, 108, 0.05);
+    0 3px 10px rgba(103, 86, 43, 0.05);
 }
 
-
 .tripExplore-cardRating svg {
-  color: #f1aa26;
-  fill: #f1aa26;
+  fill: #f4b92d;
+  color: #f4b92d;
 }
 
 
 /* =========================================================
-   DESCRIPTION
+   CARD DESCRIPTION
 ========================================================= */
 
 .tripExplore-cardDescription {
-  min-height: 58px;
+  min-height: 44px;
 
-  margin: 16px 0 0;
+  margin: 10px 0 14px;
 
-  color: #627b91;
+  color: #688397;
 
-  font-size: 16px;
-  line-height: 1.65;
+  font-size: 14px;
 
-  font-weight: 500;
+  line-height: 1.55;
 }
 
 
@@ -1705,18 +1241,44 @@ body {
 ========================================================= */
 
 .tripExplore-cardFooter {
-  margin-top: 23px;
-
-  padding-top: 20px;
+  position: relative;
 
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
 
   gap: 15px;
 
-  border-top:
-    1px solid #dce9f2;
+  padding-top: 15px;
+
+  border-top: 1px dashed #dbeaf3;
+}
+
+
+/* TICKET CUT EFFECT */
+
+.tripExplore-cardFooter::before,
+.tripExplore-cardFooter::after {
+  content: "";
+
+  position: absolute;
+
+  top: -7px;
+
+  width: 13px;
+  height: 13px;
+
+  border-radius: 50%;
+
+  background: #eff9fe;
+}
+
+.tripExplore-cardFooter::before {
+  left: -27px;
+}
+
+.tripExplore-cardFooter::after {
+  right: -27px;
 }
 
 
@@ -1728,77 +1290,98 @@ body {
   display: flex;
   flex-direction: column;
 
-  gap: 4px;
+  gap: 1px;
 }
-
 
 .tripExplore-priceBox small {
-  color: #8093a4;
+  color: #91a5b4;
 
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 800;
 
-  letter-spacing: 1.2px;
+  letter-spacing: 1.1px;
 }
 
-
 .tripExplore-priceBox strong {
-  color: #102f4c;
+  color: #1479b9;
 
-  font-size: 23px;
-  line-height: 1;
-
+  font-size: 22px;
   font-weight: 800;
 }
 
 
 /* =========================================================
-   VIEW DETAILS BUTTON
+   VIEW DETAILS
 ========================================================= */
 
 .tripExplore-viewButton {
-  min-height: 45px;
+  min-height: 39px;
 
-  padding: 0 15px;
-
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
 
-  gap: 7px;
+  gap: 8px;
+
+  padding: 0 5px 0 14px;
+
+  border: 1px solid #d9edf7;
+  border-radius: 100px;
+
+  background: #f0f9fe;
+
+  color: #176fa7;
 
   text-decoration: none;
 
-  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 800;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.tripExplore-viewButton svg {
+  width: 31px;
+  height: 31px;
+
+  padding: 8px;
+
+  border-radius: 50%;
 
   background:
     linear-gradient(
       135deg,
-      #116dd9,
-      #279fe5
+      #32a7e4,
+      #1478b9
     );
 
-  color: white;
-
-  font-size: 14px;
-  font-weight: 800;
+  color: #ffffff;
 
   box-shadow:
-    0 8px 19px
-    rgba(20, 118, 229, 0.18);
+    0 5px 12px rgba(22, 120, 184, 0.18);
 
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
-
 .tripExplore-viewButton:hover {
-  transform: translateY(-2px);
+  background: #1479b9;
 
-  box-shadow:
-    0 12px 24px
-    rgba(20, 118, 229, 0.26);
+  color: #ffffff;
+
+  transform: translateX(2px);
+}
+
+.tripExplore-viewButton:hover svg {
+  background: #ffffff;
+
+  color: #1479b9;
+
+  transform: rotate(45deg);
 }
 
 
@@ -1807,94 +1390,73 @@ body {
 ========================================================= */
 
 .tripExplore-emptyState {
-  width: 100%;
+  max-width: 520px;
 
-  padding: 80px 25px;
+  margin: 32px auto 0;
+
+  padding: 45px 25px;
 
   text-align: center;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.95);
+  border: 1px solid #dcecf5;
+  border-radius: 24px;
 
-  border-radius: 30px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #eaf7ff
-    );
+  background: #ffffff;
 
   box-shadow:
-    0 18px 45px
-    rgba(15, 68, 113, 0.08);
+    0 12px 35px rgba(31, 89, 128, 0.07);
 }
 
-
 .tripExplore-emptyIcon {
-  width: 72px;
-  height: 72px;
-
-  margin: 0 auto 19px;
+  width: 60px;
+  height: 60px;
 
   display: grid;
   place-items: center;
 
-  border-radius: 22px;
+  margin: 0 auto 15px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #dcefff,
-      #c8e9ff
-    );
+  border-radius: 50%;
 
-  color: var(--blue);
+  background: #e9f7ff;
+
+  color: #1688cd;
+
+  font-size: 23px;
+}
+
+.tripExplore-emptyTitle {
+  margin: 0 0 6px;
+
+  color: #173f60;
+
+  font-family: "Playfair Display", Georgia, serif;
 
   font-size: 29px;
 }
 
-
-.tripExplore-emptyTitle {
-  margin: 0;
-
-  color: var(--navy);
-
-  font-size: 31px;
-  font-weight: 800;
-}
-
-
 .tripExplore-emptyText {
-  margin: 11px 0 22px;
+  margin: 0 0 18px;
 
-  color: var(--muted);
+  color: #718a9d;
 
-  font-size: 16px;
+  font-size: 14px;
 }
-
 
 .tripExplore-resetButton {
-  min-height: 48px;
+  height: 42px;
 
-  padding: 0 22px;
+  padding: 0 20px;
 
   border: none;
-
   border-radius: 100px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #116dd9,
-      #269fe5
-    );
+  background: #1687cb;
 
-  color: white;
+  color: #ffffff;
 
   font-family: inherit;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 800;
 
   cursor: pointer;
@@ -1902,277 +1464,203 @@ body {
 
 
 /* =========================================================
-   RESPONSIVE - LAPTOP
+   LARGE TABLET
 ========================================================= */
 
 @media (max-width: 1150px) {
 
-  .tripExplore-hero {
-    min-height: 600px;
-  }
-
-  .tripExplore-heroContent {
-    width: 75%;
-
-    padding-left: 55px;
-  }
-
   .tripExplore-trendingSlider {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-  }
-
-  .tripExplore-trendingCard:nth-child(3) {
-    transform: none;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .tripExplore-destinationGrid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 
 /* =========================================================
-   RESPONSIVE - TABLET
+   TABLET
 ========================================================= */
 
 @media (max-width: 850px) {
 
   .tripExplore-hero {
-    width: calc(100% - 32px);
-    min-height: 610px;
+    width: calc(100% - 26px);
+    height: 480px;
 
-    margin-top: 18px;
-    margin-bottom: 70px;
-
-    border-radius:
-      30px
-      75px
-      30px
-      30px;
+    border-radius: 26px;
   }
 
   .tripExplore-heroContent {
-    width: 90%;
-
-    padding:
-      65px 0
-      65px 40px;
+    width: calc(100% - 50px);
   }
 
   .tripExplore-heroTitle {
-    font-size: 64px;
+    font-size: 56px;
   }
 
   .tripExplore-trendingSection,
   .tripExplore-discoverSection {
-    width: calc(100% - 32px);
-  }
-
-  .tripExplore-sectionHeading {
-    align-items: flex-start;
-  }
-
-  .tripExplore-trendingSlider {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
-
-  .tripExplore-trendingCard {
-    height: 400px;
+    width: calc(100% - 36px);
   }
 
   .tripExplore-sectionTitle {
-    font-size: 50px;
+    font-size: 46px;
   }
 }
 
 
 /* =========================================================
-   RESPONSIVE - MOBILE
+   MOBILE
 ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
 
-  .tripExplore-page {
-    padding-bottom: 55px;
+  /* PAGE */
+
+  .tripExplore-page::before {
+    display: none;
   }
 
 
   /* HERO */
 
   .tripExplore-hero {
-    width: calc(100% - 20px);
-    min-height: 630px;
+    width: calc(100% - 18px);
+    height: 470px;
 
-    margin:
-      10px auto
-      55px;
+    margin-top: 9px;
 
-    align-items: flex-end;
+    border-width: 4px;
+    border-radius: 23px;
+  }
 
-    border-radius:
-      24px
-      55px
-      24px
-      24px;
+  .tripExplore-hero::after {
+    inset: 8px;
 
-    clip-path:
-      polygon(
-        0 0,
-        89% 0,
-        100% 9%,
-        100% 100%,
-        0 100%
-      );
+    border-radius: 15px;
   }
 
   .tripExplore-heroOverlay {
     background:
       linear-gradient(
-        180deg,
-        rgba(4, 22, 38, 0.15) 0%,
-        rgba(4, 22, 38, 0.42) 37%,
-        rgba(4, 22, 38, 0.94) 100%
+        90deg,
+        rgba(5, 30, 49, 0.8),
+        rgba(5, 30, 49, 0.42)
+      ),
+      linear-gradient(
+        0deg,
+        rgba(5, 30, 49, 0.45),
+        transparent
       );
-  }
-
-  .tripExplore-hero::before,
-  .tripExplore-hero::after {
-    display: none;
   }
 
   .tripExplore-heroContent {
-    width: 100%;
+    width: calc(100% - 32px);
 
-    padding:
-      40px 17px
-      34px;
+    justify-content: flex-end;
+
+    padding-bottom: 31px;
   }
 
   .tripExplore-eyebrow {
-    min-height: 36px;
+    margin-bottom: 8px;
 
-    padding: 7px 11px;
+    font-size: 10px;
 
-    font-size: 11px;
+    letter-spacing: 1.8px;
+  }
+
+  .tripExplore-eyebrow svg {
+    width: 28px;
+    height: 28px;
   }
 
   .tripExplore-heroTitle {
-    margin-top: 17px;
+    font-size: 44px;
 
-    font-size:
-      clamp(
-        46px,
-        13vw,
-        59px
-      );
+    line-height: 0.94;
 
-    line-height: 0.98;
-
-    letter-spacing: -2.5px;
+    letter-spacing: -2px;
   }
 
   .tripExplore-heroDescription {
-    margin-top: 19px;
+    margin: 12px 0 15px;
 
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 13px;
+
+    line-height: 1.5;
   }
 
 
   /* SEARCH */
 
   .tripExplore-searchBox {
-    min-height: 58px;
+    height: 53px;
 
-    margin-top: 25px;
-
-    padding: 5px;
-
-    border-radius: 15px;
-  }
-
-  .tripExplore-searchIcon {
-    margin-left: 9px;
-
-    font-size: 19px;
+    padding-left: 13px;
   }
 
   .tripExplore-searchInput {
-    height: 47px;
+    padding: 0 8px;
 
-    padding: 0 6px;
-
-    font-size: 14px;
-  }
-
-  .tripExplore-searchButton {
-    min-width: 100px;
-    height: 47px;
-
-    padding: 0 11px;
-
-    border-radius: 11px;
-
-    font-size: 14px;
-  }
-
-  .tripExplore-miniInfo {
-    gap: 10px 14px;
-
-    margin-top: 18px;
-  }
-
-  .tripExplore-miniInfo span {
     font-size: 12px;
   }
 
+  .tripExplore-searchButton {
+    height: 43px;
 
-  /* SECTION */
-
-  .tripExplore-trendingSection,
-  .tripExplore-discoverSection {
-    width: calc(100% - 20px);
-  }
-
-  .tripExplore-trendingSection {
-    margin-bottom: 70px;
-  }
-
-  .tripExplore-sectionHeading {
-    margin-bottom: 30px;
-
-    flex-direction: column;
-    align-items: flex-start;
-
-    gap: 19px;
-  }
-
-  .tripExplore-smallLabel {
-    padding: 7px 10px;
+    padding: 0 14px;
 
     font-size: 11px;
   }
 
+  .tripExplore-miniInfo {
+    display: none;
+  }
+
+
+  /* SECTIONS */
+
+  .tripExplore-trendingSection,
+  .tripExplore-discoverSection {
+    width: calc(100% - 24px);
+  }
+
+  .tripExplore-trendingSection {
+    padding: 37px 0 40px;
+  }
+
+  .tripExplore-discoverSection {
+    padding: 38px 0 45px;
+  }
+
+  .tripExplore-sectionHeading {
+    align-items: flex-start;
+
+    margin-bottom: 19px;
+  }
+
+  .tripExplore-smallLabel {
+    font-size: 10px;
+
+    letter-spacing: 1.8px;
+  }
+
   .tripExplore-sectionTitle {
-    margin-top: 12px;
+    font-size: 38px;
 
-    font-size:
-      clamp(
-        39px,
-        11vw,
-        48px
-      );
-
-    letter-spacing: -2px;
+    line-height: 0.96;
   }
 
   .tripExplore-headingLink {
-    min-height: 47px;
+    font-size: 0;
+  }
 
-    font-size: 14px;
+  .tripExplore-headingCircle {
+    width: 38px;
+    height: 38px;
   }
 
 
@@ -2181,13 +1669,11 @@ body {
   .tripExplore-trendingSlider {
     display: flex;
 
+    gap: 12px;
+
     overflow-x: auto;
 
-    gap: 14px;
-
-    padding:
-      2px 2px
-      18px;
+    padding: 0 2px 13px;
 
     scroll-snap-type: x mandatory;
 
@@ -2199,15 +1685,11 @@ body {
   }
 
   .tripExplore-trendingCard {
-    width: 82%;
-    min-width: 82%;
-    height: 390px;
+    flex: 0 0 78%;
+
+    height: 325px;
 
     scroll-snap-align: start;
-  }
-
-  .tripExplore-trendingContent {
-    padding: 22px 18px;
   }
 
   .tripExplore-trendingInfo h3 {
@@ -2218,15 +1700,11 @@ body {
   /* FILTER */
 
   .tripExplore-filterRow {
-    margin-bottom: 27px;
-
-    padding: 7px;
-
     flex-wrap: nowrap;
 
     overflow-x: auto;
 
-    border-radius: 15px;
+    padding-bottom: 5px;
 
     scrollbar-width: none;
   }
@@ -2236,45 +1714,34 @@ body {
   }
 
   .tripExplore-filterButton {
-    min-width: max-content;
-    min-height: 43px;
+    flex-shrink: 0;
+
+    min-height: 38px;
 
     padding: 0 15px;
 
-    font-size: 14px;
+    font-size: 11px;
   }
 
 
-  /* GRID */
+  /* DESTINATION */
 
   .tripExplore-destinationGrid {
     grid-template-columns: 1fr;
 
-    gap: 22px;
-  }
-
-  .tripExplore-destinationCard {
-    border-radius: 24px;
+    gap: 16px;
   }
 
   .tripExplore-cardImageBox {
-    height: 310px;
+    height: 225px;
   }
 
   .tripExplore-wishlistButton {
-    width: 46px;
-    height: 46px;
-
-    top: 274px;
-    right: 24px;
-
-    font-size: 19px;
+    top: 186px;
   }
 
   .tripExplore-cardContent {
-    padding:
-      25px 19px
-      21px;
+    padding: 16px 18px 18px;
   }
 
   .tripExplore-cardTitleLink h3 {
@@ -2284,73 +1751,7 @@ body {
   .tripExplore-cardDescription {
     min-height: 0;
 
-    font-size: 15px;
-  }
-
-  .tripExplore-cardFooter {
-    margin-top: 19px;
-
-    padding-top: 17px;
-  }
-
-  .tripExplore-priceBox strong {
-    font-size: 22px;
-  }
-
-  .tripExplore-viewButton {
-    min-height: 43px;
-
-    padding: 0 13px;
-
     font-size: 13px;
-  }
-}
-
-
-/* =========================================================
-   VERY SMALL MOBILE
-========================================================= */
-
-@media (max-width: 390px) {
-
-  .tripExplore-hero {
-    width: calc(100% - 14px);
-  }
-
-  .tripExplore-heroTitle {
-    font-size: 43px;
-  }
-
-  .tripExplore-searchButton {
-    min-width: 90px;
-
-    font-size: 13px;
-  }
-
-  .tripExplore-trendingSection,
-  .tripExplore-discoverSection {
-    width: calc(100% - 16px);
-  }
-
-  .tripExplore-trendingCard {
-    width: 88%;
-    min-width: 88%;
-  }
-
-  .tripExplore-cardImageBox {
-    height: 280px;
-  }
-
-  .tripExplore-wishlistButton {
-    top: 244px;
-  }
-
-  .tripExplore-cardTitleLink h3 {
-    font-size: 27px;
-  }
-
-  .tripExplore-cardFooter {
-    align-items: center;
   }
 
   .tripExplore-priceBox strong {
@@ -2358,6 +1759,61 @@ body {
   }
 
   .tripExplore-viewButton {
+    min-height: 37px;
+
+    font-size: 11px;
+  }
+
+  .tripExplore-viewButton svg {
+    width: 29px;
+    height: 29px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 390px) {
+
+  .tripExplore-heroTitle {
+    font-size: 39px;
+  }
+
+  .tripExplore-searchButton {
     padding: 0 11px;
+  }
+
+  .tripExplore-searchButton svg {
+    display: none;
+  }
+
+  .tripExplore-sectionTitle {
+    font-size: 34px;
+  }
+
+  .tripExplore-trendingCard {
+    flex-basis: 85%;
+  }
+
+  .tripExplore-cardImageBox {
+    height: 210px;
+  }
+
+  .tripExplore-wishlistButton {
+    top: 171px;
+  }
+
+  .tripExplore-cardTitleLink h3 {
+    font-size: 27px;
+  }
+
+  .tripExplore-cardDescription {
+    font-size: 12px;
+  }
+
+  .tripExplore-cardFooter {
+    gap: 8px;
   }
 }
