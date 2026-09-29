@@ -850,59 +850,6 @@ const DestinationDetail = () => {
     <main className="destination-detail-page">
 
 
-      {/* =====================================================
-          TOP NAV
-      ===================================================== */}
-
-      <div className="destination-topbar">
-
-        <Link
-          to="/explore"
-          className="destination-back"
-        >
-
-          <FiArrowLeft />
-
-          <span>
-            Back to Explore
-          </span>
-
-        </Link>
-
-
-        <div className="destination-top-info">
-
-          <span>
-            {destination.category}
-          </span>
-
-          <strong>
-            {destination.name}
-          </strong>
-
-        </div>
-
-
-        <button
-          type="button"
-          className={`destination-wishlist ${
-            liked ? "liked" : ""
-          }`}
-          onClick={() =>
-            toggleWishlist(destination)
-          }
-          aria-label={
-            liked
-              ? "Remove from wishlist"
-              : "Add to wishlist"
-          }
-        >
-
-          <FiHeart />
-
-        </button>
-
-      </div>
 
 {/* =====================================================
     DESTINATION HERO

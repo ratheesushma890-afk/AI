@@ -26,6 +26,7 @@ body {
 
   min-height: 100vh;
   position: relative;
+  padding: 80px;
   overflow-x: hidden;
 
   font-family: Inter, "Segoe UI", Arial, sans-serif;
@@ -237,7 +238,7 @@ body {
   width: min(1420px, calc(100% - 42px));
 
   height: min(75vh, 720px);
-  min-height: 540px;
+  min-height: 450px;
 
   margin: 22px auto 0;
 
@@ -314,7 +315,7 @@ body {
 }
 
 .destination-hero-content h1 {
-  margin: 18px 0 13px;
+  margin: 15px 0 13px;
 
   color: #ffffff;
 
@@ -354,7 +355,7 @@ body {
 
   margin: 0 auto;
 
-  padding: 100px 0 75px;
+  padding: 40px 0 45px;
 
   position: relative;
 }
@@ -394,7 +395,7 @@ body {
   align-items: flex-end;
   justify-content: space-between;
 
-  gap: 40px;
+  gap: 30px;
 }
 
 .intro-heading-row h1 {
@@ -507,7 +508,7 @@ body {
 .intro-description {
   max-width: 880px;
 
-  margin: 40px 0 0;
+  margin: 20px 0 0;
 
   color: #5d778c;
 
@@ -526,7 +527,7 @@ body {
 
   margin: 0 auto;
 
-  padding: 65px 0 100px;
+  padding: 25px 0 100px;
 
   position: relative;
 }
@@ -1084,9 +1085,9 @@ body {
 .destination-plan-section {
   width: min(1220px, 92%);
 
-  margin: 30px auto 95px;
+  margin: 20px auto 95px;
 
-  padding: 56px;
+  padding: 46px;
 
   position: relative;
   isolation: isolate;
@@ -1126,7 +1127,7 @@ body {
   position: absolute;
 
   width: 260px;
-  height: 260px;
+  height: 220px;
 
   right: -90px;
   bottom: -140px;
@@ -1167,7 +1168,7 @@ body {
 }
 
 .plan-mini-info h2 {
-  max-width: 550px;
+  max-width: 520px;
 
   margin: 13px 0 0;
 
