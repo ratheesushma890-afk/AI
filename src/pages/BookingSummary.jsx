@@ -30,6 +30,8 @@ const BookingSummary = () => {
   ===================================================== */
 
   const [trip, setTrip] = useState(null);
+  const [bankUserId, setBankUserId] = useState("");
+  
 
   const [paymentMethod, setPaymentMethod] = useState("card");
 
@@ -39,10 +41,13 @@ const BookingSummary = () => {
   const [cvv, setCvv] = useState("");
 
   const [upiId, setUpiId] = useState("");
-  const [bank, setBank] = useState("");
+const [upiVerified, setUpiVerified] = useState(false);
 
-  const [isPaying, setIsPaying] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+const [bank, setBank] = useState("");
+const [bankReady, setBankReady] = useState(false);
+
+const [isPaying, setIsPaying] = useState(false);
+const [showSuccess, setShowSuccess] = useState(false);
 
   /* =====================================================
      LOAD TRIP
@@ -65,12 +70,17 @@ const BookingSummary = () => {
     } catch (error) {
       console.error("Trip load error:", error);
     }
+const finalTrip = {
+  ...(savedTrip || {}),
+  ...(stateTrip || {}),
+};
 
-    const finalTrip = stateTrip || savedTrip;
-
-    if (finalTrip) {
-      setTrip(finalTrip);
-    }
+if (
+  Object.keys(finalTrip).length > 0
+) {
+  setTrip(finalTrip);
+}
+    
   }, [location.state]);
 
   /* =====================================================
@@ -285,38 +295,137 @@ const BookingSummary = () => {
   /* =====================================================
      SAME FINAL BOOKING AMOUNT
 
-     IMPORTANT:
-     Budget se amount calculate nahi hoga.
-     Booking Details ka final amount hi use hoga.
   ===================================================== */
 
-  const bookingAmount = useMemo(() => {
-    const candidates = [
-      trip?.bookingAmount,
-      trip?.amountToPay,
-      trip?.payableAmount,
-      trip?.finalPrice,
-      trip?.totalPrice,
-      trip?.estimatedPrice,
-      trip?.packagePrice,
-      trip?.price,
-      trip?.basePrice,
-    ];
 
-    for (const candidate of candidates) {
-      const amount = parsePrice(candidate);
+const bookingAmount = useMemo(() => {
+  /* -----------------------------------------------
+     BOOKING DATA FROM LOCAL STORAGE
+  ----------------------------------------------- */
 
-      if (amount > 0) {
-        return amount;
-      }
+  let savedBookingData = {};
+
+  try {
+    const storedBookingData =
+      localStorage.getItem("bookingData");
+
+    if (storedBookingData) {
+      savedBookingData =
+        JSON.parse(storedBookingData);
     }
+  } catch (error) {
+    console.error(
+      "Booking price load error:",
+      error
+    );
+  }
 
-    return 0;
-  }, [trip]);
+  /* -----------------------------------------------
+     ROUTER SE BOOKING DETAILS KA DATA
+  ----------------------------------------------- */
 
-  const formattedBookingAmount =
-    formatMoney(bookingAmount);
+  const stateBookingData =
+    location.state?.bookingData || {};
 
+  const stateTrip =
+    location.state?.trip ||
+    location.state?.booking ||
+    {};
+
+  /* -----------------------------------------------
+     PRICE SOURCES
+
+     Sabse pehle BookingDetails se directly
+     bheja hua amount check hoga.
+  ----------------------------------------------- */
+
+  const candidates = [
+    /* DIRECT ROUTER STATE */
+
+    location.state?.bookingAmount,
+    location.state?.amountToPay,
+    location.state?.payableAmount,
+    location.state?.finalPrice,
+    location.state?.totalPrice,
+    location.state?.price,
+
+    /* ROUTER TRIP */
+
+    stateTrip?.bookingAmount,
+    stateTrip?.amountToPay,
+    stateTrip?.payableAmount,
+    stateTrip?.finalPrice,
+    stateTrip?.totalPrice,
+    stateTrip?.estimatedPrice,
+    stateTrip?.packagePrice,
+    stateTrip?.price,
+    stateTrip?.basePrice,
+
+    /* ROUTER BOOKING DATA */
+
+    stateBookingData?.bookingAmount,
+    stateBookingData?.amountToPay,
+    stateBookingData?.payableAmount,
+    stateBookingData?.finalPrice,
+    stateBookingData?.totalPrice,
+    stateBookingData?.price,
+
+    stateBookingData?.trip?.bookingAmount,
+    stateBookingData?.trip?.amountToPay,
+    stateBookingData?.trip?.payableAmount,
+    stateBookingData?.trip?.finalPrice,
+    stateBookingData?.trip?.totalPrice,
+    stateBookingData?.trip?.price,
+
+    /* CURRENT TRIP */
+
+    trip?.bookingAmount,
+    trip?.amountToPay,
+    trip?.payableAmount,
+    trip?.finalPrice,
+    trip?.totalPrice,
+    trip?.estimatedPrice,
+    trip?.packagePrice,
+    trip?.price,
+    trip?.basePrice,
+
+    /* LOCAL STORAGE BOOKING DATA */
+
+    savedBookingData?.bookingAmount,
+    savedBookingData?.amountToPay,
+    savedBookingData?.payableAmount,
+    savedBookingData?.finalPrice,
+    savedBookingData?.totalPrice,
+    savedBookingData?.price,
+
+    savedBookingData?.trip?.bookingAmount,
+    savedBookingData?.trip?.amountToPay,
+    savedBookingData?.trip?.payableAmount,
+    savedBookingData?.trip?.finalPrice,
+    savedBookingData?.trip?.totalPrice,
+    savedBookingData?.trip?.price,
+  ];
+
+  /* -----------------------------------------------
+     FIRST VALID PRICE
+  ----------------------------------------------- */
+
+  for (const candidate of candidates) {
+    const amount =
+      parsePrice(candidate);
+
+    if (amount > 0) {
+      return amount;
+    }
+  }
+
+  return 0;
+}, [
+  trip,
+  location.state,
+]);
+const formattedBookingAmount =
+  formatMoney(bookingAmount);
   /* =====================================================
      CARD NUMBER
   ===================================================== */
@@ -351,79 +460,177 @@ const BookingSummary = () => {
 
     setExpiry(value);
   };
+/* =====================================================
+   UPI VERIFY
+===================================================== */
 
+const handleVerifyUpi = () => {
+  const value = upiId.trim();
+
+  const upiPattern =
+    /^[a-zA-Z0-9._-]{2,}@[a-zA-Z0-9.-]{2,}$/;
+
+  if (!value) {
+    alert("Please enter your UPI ID.");
+    return;
+  }
+
+  if (!upiPattern.test(value)) {
+    alert(
+      "Please enter a valid UPI ID. Example: name@upi"
+    );
+    return;
+  }
+
+  setUpiVerified(true);
+};
+
+
+/* =====================================================
+   UPI CHANGE
+===================================================== */
+
+const handleUpiChange = (e) => {
+  setUpiId(e.target.value);
+
+  // ID change hone par dobara verify hoga
+  setUpiVerified(false);
+};
+
+
+/* =====================================================
+   BANK CHANGE
+===================================================== */
+
+const handleBankChange = (e) => {
+  const selectedBank = e.target.value;
+
+  setBank(selectedBank);
+  setBankReady(Boolean(selectedBank));
+};
+
+
+/* =====================================================
+   GET BANK NAME
+===================================================== */
+
+const getBankName = () => {
+  const banks = {
+    sbi: "State Bank of India",
+    hdfc: "HDFC Bank",
+    icici: "ICICI Bank",
+    axis: "Axis Bank",
+    kotak: "Kotak Mahindra Bank",
+  };
+
+  return banks[bank] || "Selected Bank";
+};
   /* =====================================================
      VALIDATION
   ===================================================== */
+const validatePayment = () => {
+  if (bookingAmount <= 0) {
+    alert(
+      "Booking amount missing. Please go back to Booking Details."
+    );
+    return false;
+  }
 
-  const validatePayment = () => {
-    if (bookingAmount <= 0) {
+  /* =========================
+     CARD
+  ========================= */
+
+  if (paymentMethod === "card") {
+    const number =
+      cardNumber.replace(/\s/g, "");
+
+    if (number.length !== 16) {
       alert(
-        "Booking amount missing. Please go back to Booking Details."
+        "Please enter a valid 16 digit card number."
       );
-
       return false;
     }
 
-    if (paymentMethod === "card") {
-      const number =
-        cardNumber.replace(/\s/g, "");
-
-      if (number.length !== 16) {
-        alert(
-          "Please enter a valid 16 digit card number."
-        );
-
-        return false;
-      }
-
-      if (!cardName.trim()) {
-        alert(
-          "Please enter card holder name."
-        );
-
-        return false;
-      }
-
-      if (expiry.length !== 5) {
-        alert(
-          "Please enter expiry date."
-        );
-
-        return false;
-      }
-
-      if (cvv.length !== 3) {
-        alert(
-          "Please enter valid CVV."
-        );
-
-        return false;
-      }
+    if (!cardName.trim()) {
+      alert(
+        "Please enter card holder name."
+      );
+      return false;
     }
 
-    if (paymentMethod === "upi") {
-      if (!upiId.trim()) {
-        alert(
-          "Please enter your UPI ID."
-        );
-
-        return false;
-      }
+    if (expiry.length !== 5) {
+      alert(
+        "Please enter expiry date."
+      );
+      return false;
     }
 
-    if (paymentMethod === "netbanking") {
-      if (!bank) {
-        alert(
-          "Please select your bank."
-        );
+    if (cvv.length !== 3) {
+      alert(
+        "Please enter valid CVV."
+      );
+      return false;
+    }
+  }
 
-        return false;
-      }
+
+  /* =========================
+     UPI
+  ========================= */
+
+  if (paymentMethod === "upi") {
+    if (!upiId.trim()) {
+      alert(
+        "Please enter your UPI ID."
+      );
+      return false;
     }
 
-    return true;
-  };
+    const upiPattern =
+      /^[a-zA-Z0-9._-]{2,}@[a-zA-Z0-9.-]{2,}$/;
+
+    if (!upiPattern.test(upiId.trim())) {
+      alert(
+        "Please enter a valid UPI ID."
+      );
+      return false;
+    }
+
+    if (!upiVerified) {
+      alert(
+        "Please verify your UPI ID first."
+      );
+      return false;
+    }
+  }
+
+
+  /* =========================
+     NET BANKING
+  ========================= */
+if (paymentMethod === "netbanking") {
+  if (!bank) {
+    alert("Please select your bank.");
+    return false;
+  }
+
+  if (!bankUserId.trim()) {
+    alert("Please enter Customer ID.");
+    return false;
+  }
+
+  if (!/^\d+$/.test(bankUserId)) {
+    alert("Customer ID must contain numbers only.");
+    return false;
+  }
+
+  if (bankUserId.length < 6) {
+    alert("Please enter at least 6 digits.");
+    return false;
+  }
+}
+  return true;
+};
 
   /* =====================================================
      FINAL BOOKING
@@ -458,28 +665,101 @@ const BookingSummary = () => {
   ===================================================== */
 
   const handlePayment = () => {
-    if (isPaying) return;
+  if (isPaying) return;
 
-    if (!validatePayment()) return;
+  if (!validatePayment()) return;
 
-    setIsPaying(true);
+  setIsPaying(true);
 
-    const updatedTrip =
-      createFinalBooking();
+  const updatedTrip = {
+    ...createFinalBooking(),
 
-    localStorage.setItem(
-      "tripperTrip",
-      JSON.stringify(updatedTrip)
-    );
+    id: `TRP-${Date.now()}`,
 
-    setTrip(updatedTrip);
+    transactionId: `TXN-${Date.now()}`,
 
-    setTimeout(() => {
-      setIsPaying(false);
-      setShowSuccess(true);
-    }, 900);
+    bookedAt: new Date().toISOString(),
+
+    paymentStatus: "Paid",
+
+    bookingStatus: "Confirmed",
+
+    total: bookingAmount,
   };
 
+
+  /* =========================
+     SAVE CURRENT TRIP
+  ========================= */
+
+  localStorage.setItem(
+    "tripperTrip",
+    JSON.stringify(updatedTrip)
+  );
+
+
+  /* =========================
+     GET OLD BOOKINGS
+  ========================= */
+
+  let oldBookings = [];
+
+  try {
+    const savedBookings =
+      localStorage.getItem("tripBookings");
+
+    if (savedBookings) {
+      const parsed =
+        JSON.parse(savedBookings);
+
+      if (Array.isArray(parsed)) {
+        oldBookings = parsed;
+      }
+    }
+  } catch (error) {
+    console.error(
+      "Booking load error:",
+      error
+    );
+  }
+
+
+  /* =========================
+     ADD NEW BOOKING
+  ========================= */
+
+  const updatedBookings = [
+    updatedTrip,
+    ...oldBookings,
+  ];
+
+  localStorage.setItem(
+    "tripBookings",
+    JSON.stringify(updatedBookings)
+  );
+
+
+  /* =========================
+     UPDATE BOOKING PAGE
+  ========================= */
+
+  window.dispatchEvent(
+    new Event("tripBookingsUpdated")
+  );
+
+
+  setTrip(updatedTrip);
+
+
+  /* =========================
+     SUCCESS POPUP
+  ========================= */
+
+  setTimeout(() => {
+    setIsPaying(false);
+    setShowSuccess(true);
+  }, 900);
+};
   /* =====================================================
      VIEW BOOKING
   ===================================================== */
@@ -937,129 +1217,196 @@ const BookingSummary = () => {
                 UPI
             ================================================= */}
 
-            {paymentMethod === "upi" && (
+       
 
-              <div className="payment-form">
+{paymentMethod === "upi" && (
 
-                <div className="alternative-payment">
+  <div className="payment-form">
 
-                  <div className="alternative-icon">
-                    <FiSmartphone />
-                  </div>
+    <div className="alternative-payment">
 
-                  <div>
-                    <span>
-                      QUICK PAYMENT
-                    </span>
+      <div className="alternative-icon">
+        <FiSmartphone />
+      </div>
 
-                    <h3>
-                      Pay using UPI
-                    </h3>
+      <div>
+        <span>QUICK PAYMENT</span>
 
-                    <p>
-                      Use Google Pay, PhonePe,
-                      Paytm or any UPI app.
-                    </p>
-                  </div>
+        <h3>Pay using UPI</h3>
 
-                </div>
+        <p>
+          Use Google Pay, PhonePe,
+          Paytm or any UPI app.
+        </p>
+      </div>
 
-                <div className="form-field">
+    </div>
 
-                  <label>UPI ID</label>
 
-                  <input
-                    type="text"
-                    placeholder="yourname@upi"
-                    value={upiId}
-                    onChange={(e) =>
-                      setUpiId(
-                        e.target.value
-                      )
-                    }
-                  />
+    <div className="form-field">
 
-                </div>
+      <label>UPI ID</label>
 
-              </div>
-            )}
+      <input
+        type="text"
+        placeholder="yourname@upi"
+        value={upiId}
+        onChange={handleUpiChange}
+      />
 
-            {/* =================================================
-                NET BANKING
-            ================================================= */}
+    </div>
 
-            {paymentMethod ===
-              "netbanking" && (
 
-              <div className="payment-form">
+    {/* UPI VERIFY */}
 
-                <div className="alternative-payment">
+    {!upiVerified ? (
 
-                  <div className="alternative-icon">
-                    <FiHome />
-                  </div>
+      <button
+        type="button"
+        className="pay-now-button"
+        onClick={handleVerifyUpi}
+      >
+        <FiCheck />
 
-                  <div>
-                    <span>
-                      ONLINE BANKING
-                    </span>
+        <span>
+          Verify UPI ID
+        </span>
 
-                    <h3>
-                      Net Banking
-                    </h3>
+        <span className="pay-arrow">
+          →
+        </span>
+      </button>
 
-                    <p>
-                      Choose your bank and
-                      continue securely.
-                    </p>
-                  </div>
+    ) : (
 
-                </div>
+      <div className="payment-security">
 
-                <div className="form-field">
+        <span className="security-icon">
+          <FiCheck />
+        </span>
 
-                  <label>
-                    Select Bank
-                  </label>
+        <p>
+          <strong>UPI ID Verified</strong>
+          {" "}
+          {upiId}
+        </p>
 
-                  <select
-                    value={bank}
-                    onChange={(e) =>
-                      setBank(
-                        e.target.value
-                      )
-                    }
-                  >
-                    <option value="">
-                      Select your bank
-                    </option>
+      </div>
 
-                    <option value="sbi">
-                      State Bank of India
-                    </option>
+    )}
 
-                    <option value="hdfc">
-                      HDFC Bank
-                    </option>
+  </div>
 
-                    <option value="icici">
-                      ICICI Bank
-                    </option>
+)}
 
-                    <option value="axis">
-                      Axis Bank
-                    </option>
 
-                    <option value="kotak">
-                      Kotak Mahindra Bank
-                    </option>
-                  </select>
+{/* =================================================
+    NET BANKING
+================================================= */}
 
-                </div>
+{paymentMethod === "netbanking" && (
 
-              </div>
-            )}
+  <div className="payment-form">
 
+    <div className="alternative-payment">
+
+      <div className="alternative-icon">
+        <FiHome />
+      </div>
+
+      <div>
+        <span>ONLINE BANKING</span>
+
+        <h3>Net Banking</h3>
+
+        <p>
+          Choose your bank and
+          continue securely.
+        </p>
+      </div>
+
+    </div>
+
+
+    <div className="form-field">
+
+      <label>
+        Select Bank
+      </label>
+
+      <select
+        value={bank}
+        onChange={handleBankChange}
+      >
+
+        <option value="">
+          Select your bank
+        </option>
+
+        <option value="sbi">
+          State Bank of India
+        </option>
+
+        <option value="hdfc">
+          HDFC Bank
+        </option>
+
+        <option value="icici">
+          ICICI Bank
+        </option>
+
+        <option value="axis">
+          Axis Bank
+        </option>
+
+        <option value="kotak">
+          Kotak Mahindra Bank
+        </option>
+
+      </select>
+
+    </div>
+<div className="form-field">
+  <label>Customer ID</label>
+
+  <input
+    type="text"
+    inputMode="numeric"
+    placeholder="Enter Customer ID"
+    value={bankUserId}
+    maxLength={16}
+    onChange={(e) => {
+      const value = e.target.value.replace(/\D/g, "");
+      setBankUserId(value);
+    }}
+  />
+</div>
+    {/* SELECTED BANK */}
+
+    {bank && (
+
+      <div className="payment-security">
+
+        <span className="security-icon">
+          <FiCheck />
+        </span>
+
+        <p>
+          <strong>
+            {getBankName()} selected.
+          </strong>
+          {" "}
+          You will continue securely
+          to authorize your payment.
+        </p>
+
+      </div>
+
+    )}
+
+  </div>
+
+)}
             {/* =================================================
                 SECURITY
             ================================================= */}

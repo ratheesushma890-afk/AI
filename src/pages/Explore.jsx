@@ -585,20 +585,8 @@ const Explore = () => {
 
                   <div className="tripExplore-cardFooter">
 
-                    {/* PRICE */}
-
-                    <div className="tripExplore-priceBox">
-
-                      <small>
-                        STARTING FROM
-                      </small>
-
-                      <strong>
-                        {item.price}
-                      </strong>
-
-                    </div>
-
+                    
+                    
 
                     {/* VIEW DETAILS */}
 

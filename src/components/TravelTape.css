@@ -1398,3 +1398,67 @@
     animation: none;
   }
 }
+
+
+
+
+/* =========================================================
+   MOVING TAPE - PAUSE
+========================================================= */
+
+.moving-tape.paused .moving-track {
+  animation-play-state: paused;
+}
+
+/* Mouse hover par bhi pause */
+.moving-tape:hover .moving-track {
+  animation-play-state: paused;
+}
+
+
+/* =========================================================
+   CLICKABLE DESTINATION NAMES
+========================================================= */
+
+.tape-destination-link {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: inherit;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+
+  padding: 0;
+  margin: 0;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.tape-destination-link:hover {
+  opacity: 0.65;
+  transform: translateY(-2px);
+}
+
+
+/* Stamp text */
+.tape-stamp-link {
+  font-size: inherit;
+}
+
+
+/* =========================================================
+   DISCOVER BUTTON
+========================================================= */
+
+.discover-btn {
+  cursor: pointer;
+}

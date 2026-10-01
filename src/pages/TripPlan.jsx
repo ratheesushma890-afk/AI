@@ -1,5 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+
+import {
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 
 import {
   FiMapPin,
@@ -20,7 +28,8 @@ const TripPlan = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const dateInputRef = useRef(null);
+  const goingDateInputRef = useRef(null);
+  const returnDateInputRef = useRef(null);
   const destinationInitializedRef = useRef("");
 
   /* =====================================================
@@ -28,11 +37,22 @@ const TripPlan = () => {
   ===================================================== */
 
   const [destination, setDestination] = useState("");
+
   const [date, setDate] = useState("");
-  const [days, setDays] = useState("3");
-  const [travellers, setTravellers] = useState("2");
+  const [returnDate, setReturnDate] = useState("");
+  const [days, setDays] = useState("0");
+
   const [travelType, setTravelType] = useState("Couple");
 
+  const [adults, setAdults] = useState("2");
+  const [children, setChildren] = useState("0");
+  const [travellers, setTravellers] = useState("2");
+
+  /*
+    IMPORTANT:
+    Budget ab automatic lock nahi hoga.
+    User available higher budget me se choose kar sakta hai.
+  */
   const [budget, setBudget] = useState(
     "₹25,000 – ₹50,000"
   );
@@ -47,138 +67,39 @@ const TripPlan = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   /* =====================================================
-     VALID DESTINATIONS
+     DESTINATION OPTIONS
   ===================================================== */
 
-  const validDestinations = [
-    "goa",
-    "manali",
-    "jaipur",
-    "kerala",
-    "rishikesh",
-    "mumbai",
-    "delhi",
-    "new delhi",
-    "agra",
-    "amritsar",
-    "shimla",
-    "udaipur",
-    "jodhpur",
-    "jaisalmer",
-    "varanasi",
-    "haridwar",
-    "mussoorie",
-    "nainital",
-    "darjeeling",
-    "srinagar",
-    "leh",
-    "ladakh",
-    "kasol",
-    "dharamshala",
-    "mount abu",
-    "pushkar",
-    "pondicherry",
-    "puducherry",
-    "andaman",
-    "andaman and nicobar",
-    "lakshadweep",
-    "coorg",
-    "ooty",
-    "munnar",
-    "alleppey",
-    "varkala",
-    "hyderabad",
-    "bangalore",
-    "bengaluru",
-    "chennai",
-    "kolkata",
-    "pune",
-    "ahmedabad",
-    "surat",
-    "lucknow",
-    "chandigarh",
-    "karnal",
-    "panipat",
-    "kurukshetra",
+  const destinationOptions = {
+    "Popular India": [
+      "Goa",
+      "Manali",
+      "Jaipur",
+      "Kerala",
+      "Rishikesh",
+      "Udaipur",
+      "Delhi",
+      "Mumbai",
+      "Agra",
+    ],
 
-    "london",
-    "paris",
-    "dubai",
-    "abu dhabi",
-    "new york",
-    "los angeles",
-    "san francisco",
-    "las vegas",
-    "miami",
-    "orlando",
-    "chicago",
-    "toronto",
-    "vancouver",
-    "singapore",
-    "bali",
-    "jakarta",
-    "bangkok",
-    "phuket",
-    "krabi",
-    "malaysia",
-    "kuala lumpur",
-    "maldives",
-    "nepal",
-    "kathmandu",
-    "bhutan",
-    "thimphu",
-    "sri lanka",
-    "colombo",
-    "tokyo",
-    "osaka",
-    "kyoto",
-    "japan",
-    "seoul",
-    "south korea",
-    "hong kong",
-    "australia",
-    "sydney",
-    "melbourne",
-    "new zealand",
-    "auckland",
-    "rome",
-    "venice",
-    "milan",
-    "italy",
-    "switzerland",
-    "zurich",
-    "interlaken",
-    "greece",
-    "athens",
-    "istanbul",
-    "turkey",
-    "spain",
-    "barcelona",
-    "madrid",
-    "portugal",
-    "lisbon",
-    "egypt",
-    "cairo",
-    "cape town",
-    "south africa",
-    "mauritius",
-    "seychelles",
-    "vietnam",
-    "hanoi",
-    "ho chi minh city",
-    "philippines",
-    "manila",
-    "indonesia",
-    "usa",
-    "united states",
-    "canada",
-    "france",
-    "uk",
-    "united kingdom",
-  ];
+    
+  };
+
+  const validDestinations = Object.values(
+    destinationOptions
+  )
+    .flat()
+    .map((item) =>
+      item
+        .toLowerCase()
+        .replace(/[,.]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+    );
 
   /* =====================================================
-     OPTIONS
+     INTEREST OPTIONS
   ===================================================== */
 
   const interestOptions = [
@@ -194,6 +115,28 @@ const TripPlan = () => {
     "Relaxation",
   ];
 
+  /* =====================================================
+     MEMBER OPTIONS
+  ===================================================== */
+
+  const adultOptions = [
+    1, 2, 3, 4, 5,
+    6, 7, 8, 9, 10,
+  ];
+
+  const childrenOptions = [
+    0, 1, 2, 3, 4,
+    5, 6, 7, 8,
+  ];
+
+  /* =====================================================
+     BUDGET OPTIONS
+
+     Ye saare options rahenge.
+     Members + days ke hisaab se sirf LOW options hide honge.
+     Higher options user khud select kar sakta hai.
+  ===================================================== */
+
   const budgetOptions = [
     "₹5,000 – ₹10,000",
     "₹10,000 – ₹25,000",
@@ -205,7 +148,7 @@ const TripPlan = () => {
   ];
 
   /* =====================================================
-     NORMALIZE
+     NORMALIZE DESTINATION
   ===================================================== */
 
   const normalizeDestination = (value = "") => {
@@ -217,19 +160,26 @@ const TripPlan = () => {
   };
 
   /* =====================================================
-     DESTINATION DATA
+     GET DESTINATION DATA
   ===================================================== */
 
   const getDestinationData = (value = "") => {
     const normalized = normalizeDestination(value);
 
-    if (!normalized) return null;
+    if (!normalized) {
+      return null;
+    }
 
     if (Array.isArray(destinations)) {
       return (
         destinations.find((item) => {
-          const itemId = normalizeDestination(item?.id || "");
-          const itemName = normalizeDestination(item?.name || "");
+          const itemId = normalizeDestination(
+            item?.id || ""
+          );
+
+          const itemName = normalizeDestination(
+            item?.name || ""
+          );
 
           return (
             itemId === normalized ||
@@ -246,7 +196,7 @@ const TripPlan = () => {
     getDestinationData(destination);
 
   /* =====================================================
-     PLACES
+     GET PLACES
   ===================================================== */
 
   const getPlacesForDestination = (value = "") => {
@@ -283,95 +233,48 @@ const TripPlan = () => {
   };
 
   /* =====================================================
-     DAYS
+     DATE HELPERS
   ===================================================== */
 
-  const getDaysNumber = (value) => {
-    if (value === undefined || value === null) {
-      return "3";
-    }
-
-    const match = String(value).match(/\d+/);
-
-    return match ? match[0] : "3";
-  };
-
-  /* =====================================================
-     PRICE -> BUDGET
-
-     ₹8,999  -> ₹5,000 – ₹10,000
-     ₹10,499 -> ₹10,000 – ₹25,000
-
-     NOTE:
-     Ye sirf starting budget select karega.
-     Budget LOCK nahi hoga.
-  ===================================================== */
-
-  const getBudgetFromPrice = (value) => {
-    if (!value) return "";
-
-    const match = String(value).match(/[\d,]+/);
-
-    if (!match) return "";
-
-    const cleanPrice = Number(
-      match[0].replace(/,/g, "")
-    );
-
-    if (!Number.isFinite(cleanPrice)) {
-      return "";
-    }
-
-    if (cleanPrice <= 10000) {
-      return "₹5,000 – ₹10,000";
-    }
-
-    if (cleanPrice <= 25000) {
-      return "₹10,000 – ₹25,000";
-    }
-
-    if (cleanPrice <= 50000) {
-      return "₹25,000 – ₹50,000";
-    }
-
-    if (cleanPrice <= 100000) {
-      return "₹50,000 – ₹1,00,000";
-    }
-
-    if (cleanPrice <= 200000) {
-      return "₹1,00,000 – ₹2,00,000";
-    }
-
-    if (cleanPrice <= 300000) {
-      return "₹2,00,000 – ₹3,00,000";
-    }
-
-    return "₹3,00,000 – ₹5,00,000";
-  };
-
-  /* =====================================================
-     TODAY
-  ===================================================== */
-
-  const getTodayDate = () => {
-    const today = new Date();
-
-    const year = today.getFullYear();
+  const formatLocalDate = (dateObject) => {
+    const year = dateObject.getFullYear();
 
     const month = String(
-      today.getMonth() + 1
+      dateObject.getMonth() + 1
     ).padStart(2, "0");
 
     const day = String(
-      today.getDate()
+      dateObject.getDate()
     ).padStart(2, "0");
 
     return `${year}-${month}-${day}`;
   };
 
-  /* =====================================================
-     FORMAT DATE
-  ===================================================== */
+  const getTomorrowDate = () => {
+    const tomorrow = new Date();
+
+    tomorrow.setDate(
+      tomorrow.getDate() + 1
+    );
+
+    return formatLocalDate(tomorrow);
+  };
+
+  const getNextDate = (value) => {
+    if (!value) {
+      return getTomorrowDate();
+    }
+
+    const nextDate = new Date(
+      `${value}T00:00:00`
+    );
+
+    nextDate.setDate(
+      nextDate.getDate() + 1
+    );
+
+    return formatLocalDate(nextDate);
+  };
 
   const formatDate = (value) => {
     if (!value) {
@@ -390,42 +293,128 @@ const TripPlan = () => {
   };
 
   /* =====================================================
-     TRAVELLERS
+     CALCULATE DAYS
   ===================================================== */
 
-  const getTravellerOptions = () => {
-    if (travelType === "Solo") {
-      return [1];
+  const calculateDays = (
+    startDate,
+    endDate
+  ) => {
+    if (!startDate || !endDate) {
+      return 0;
     }
 
+    const start = new Date(
+      `${startDate}T00:00:00`
+    );
+
+    const end = new Date(
+      `${endDate}T00:00:00`
+    );
+
+    const difference =
+      end.getTime() - start.getTime();
+
+    const totalDays = Math.round(
+      difference /
+        (1000 * 60 * 60 * 24)
+    );
+
+    return totalDays > 0
+      ? totalDays
+      : 0;
+  };
+    /* =====================================================
+     DATE CHANGE HANDLERS
+  ===================================================== */
+
+  const handleGoingDateChange = (e) => {
+    const selectedDate = e.target.value;
+
+    setDate(selectedDate);
+
+    /*
+      Agar return date going date se
+      chhoti ya same ho gayi to reset.
+    */
     if (
-      travelType === "Family" ||
-      travelType === "Friends"
+      returnDate &&
+      returnDate <= selectedDate
     ) {
-      return [
-        1, 2, 3, 4, 5,
-        6, 7, 8, 9, 10,
-      ];
+      setReturnDate("");
+      setDays("0");
+      return;
     }
 
-    return [2, 4, 6, 8, 10];
+    if (returnDate) {
+      const totalDays = calculateDays(
+        selectedDate,
+        returnDate
+      );
+
+      setDays(
+        totalDays > 0
+          ? String(totalDays)
+          : "0"
+      );
+    } else {
+      setDays("0");
+    }
+  };
+
+  const handleReturnDateChange = (e) => {
+    const selectedReturnDate =
+      e.target.value;
+
+    setReturnDate(selectedReturnDate);
+
+    const totalDays = calculateDays(
+      date,
+      selectedReturnDate
+    );
+
+    setDays(
+      totalDays > 0
+        ? String(totalDays)
+        : "0"
+    );
   };
 
   /* =====================================================
-     DATE
+     OPEN DATE PICKER
   ===================================================== */
 
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
-  };
-
-  const openDatePicker = () => {
-    const input = dateInputRef.current;
+  const openGoingDatePicker = () => {
+    const input =
+      goingDateInputRef.current;
 
     if (!input) return;
 
     try {
-      if (typeof input.showPicker === "function") {
+      if (
+        typeof input.showPicker ===
+        "function"
+      ) {
+        input.showPicker();
+      } else {
+        input.click();
+      }
+    } catch {
+      input.click();
+    }
+  };
+
+  const openReturnDatePicker = () => {
+    const input =
+      returnDateInputRef.current;
+
+    if (!input || !date) return;
+
+    try {
+      if (
+        typeof input.showPicker ===
+        "function"
+      ) {
         input.showPicker();
       } else {
         input.click();
@@ -436,24 +425,442 @@ const TripPlan = () => {
   };
 
   /* =====================================================
-     PAYMENT RESET
+     TOTAL MEMBERS
+  ===================================================== */
+
+  const getTotalMembers = (
+    type = travelType,
+    adultCount = adults,
+    childCount = children
+  ) => {
+    if (type === "Solo") {
+      return 1;
+    }
+
+    if (type === "Couple") {
+      return 2;
+    }
+
+    if (type === "Family") {
+      return (
+        (Number(adultCount) || 0) +
+        (Number(childCount) || 0)
+      );
+    }
+
+    if (type === "Friends") {
+      return Number(adultCount) || 2;
+    }
+
+    return 1;
+  };
+
+  /* =====================================================
+     MINIMUM BUDGET CALCULATION
+
+     IMPORTANT:
+     Ye budget ko lock nahi karta.
+
+     Sirf ye decide karta hai ki
+     sabse kam kaunsa budget option
+     dikhna chahiye.
+
+     Example:
+     Family = 4 members
+     Days = 5
+
+     4 × 5 × ₹4,000
+     = ₹80,000
+
+     To ₹50k – ₹1L minimum rahega.
+
+     Isse niche wale options hide.
+     Isse upar wale options show.
+  ===================================================== */
+
+  const getMinimumBudgetIndex = (
+    type,
+    adultCount,
+    childCount,
+    totalDays
+  ) => {
+    const memberCount =
+      getTotalMembers(
+        type,
+        adultCount,
+        childCount
+      );
+
+    /*
+      Agar dates abhi select nahi hain,
+      minimum 1 day maan rahe hain.
+    */
+    const tripDays =
+      Number(totalDays) > 0
+        ? Number(totalDays)
+        : 1;
+
+    /*
+      Demo estimated cost:
+      ₹4,000 per member / per day.
+    */
+    const minimumAmount =
+      memberCount *
+      tripDays *
+      4000;
+
+    if (minimumAmount <= 10000) {
+      return 0;
+    }
+
+    if (minimumAmount <= 25000) {
+      return 1;
+    }
+
+    if (minimumAmount <= 50000) {
+      return 2;
+    }
+
+    if (minimumAmount <= 100000) {
+      return 3;
+    }
+
+    if (minimumAmount <= 200000) {
+      return 4;
+    }
+
+    if (minimumAmount <= 300000) {
+      return 5;
+    }
+
+    return 6;
+  };
+
+  /* =====================================================
+     CURRENT MINIMUM BUDGET
+  ===================================================== */
+
+  const minimumBudgetIndex =
+    getMinimumBudgetIndex(
+      travelType,
+      adults,
+      children,
+      days
+    );
+
+  const minimumBudget =
+    budgetOptions[
+      minimumBudgetIndex
+    ];
+
+  /*
+    MAIN FIX:
+
+    Example minimum index = 3
+
+    Then:
+    0,1,2 hide
+
+    Only:
+    ₹50k – ₹1L
+    ₹1L – ₹2L
+    ₹2L – ₹3L
+    ₹3L – ₹5L
+
+    show honge.
+  */
+
+  const availableBudgetOptions =
+    budgetOptions.slice(
+      minimumBudgetIndex
+    );
+
+  /* =====================================================
+     TRAVEL TYPE CHANGE
+  ===================================================== */
+
+  useEffect(() => {
+    /*
+      SOLO
+      Fixed 1 Adult
+    */
+
+    if (travelType === "Solo") {
+      setAdults("1");
+      setChildren("0");
+      setTravellers("1");
+
+      return;
+    }
+
+    /*
+      COUPLE
+      Fixed 2 Adults
+    */
+
+    if (travelType === "Couple") {
+      setAdults("2");
+      setChildren("0");
+      setTravellers("2");
+
+      return;
+    }
+
+    /*
+      FAMILY
+
+      Family me Adults + Children
+      dono choose kar sakte hain.
+    */
+
+    if (travelType === "Family") {
+      setAdults((current) => {
+        const value = Number(current);
+
+        if (value >= 1) {
+          return String(value);
+        }
+
+        return "2";
+      });
+
+      return;
+    }
+
+    /*
+      FRIENDS
+
+      Minimum 2 friends.
+      Children nahi.
+    */
+
+    if (travelType === "Friends") {
+      setChildren("0");
+
+      setAdults((current) => {
+        const value = Number(current);
+
+        if (value >= 2) {
+          return String(value);
+        }
+
+        return "2";
+      });
+    }
+  }, [travelType]);
+
+  /* =====================================================
+     AUTO TOTAL TRAVELLERS
+  ===================================================== */
+
+  useEffect(() => {
+    const total =
+      getTotalMembers(
+        travelType,
+        adults,
+        children
+      );
+
+    setTravellers(
+      String(total)
+    );
+  }, [
+    travelType,
+    adults,
+    children,
+  ]);
+
+  /* =====================================================
+     IMPORTANT BUDGET FIX
+
+     Purana code:
+     setBudget(newBudget)
+
+     har baar chalta tha.
+
+     Isliye user ₹1L–₹2L choose karta
+     tha to bhi budget automatic
+     wapas change ho jata tha.
+
+     Ab:
+     Selected budget valid hai
+     to SAME rahega.
+
+     Sirf selected budget minimum
+     se kam hua to minimum par jayega.
+  ===================================================== */
+
+  useEffect(() => {
+    const newMinimumIndex =
+      getMinimumBudgetIndex(
+        travelType,
+        adults,
+        children,
+        days
+      );
+
+    const currentBudgetIndex =
+      budgetOptions.indexOf(
+        budget
+      );
+
+    /*
+      Current budget kam ho gaya
+      ya valid list me nahi mila.
+    */
+
+    if (
+      currentBudgetIndex === -1 ||
+      currentBudgetIndex <
+        newMinimumIndex
+    ) {
+      setBudget(
+        budgetOptions[
+          newMinimumIndex
+        ]
+      );
+    }
+
+    /*
+      Agar user ka selected budget
+      minimum se HIGHER hai,
+      kuch mat karo.
+
+      Example:
+      Minimum = ₹50k – ₹1L
+      User selected = ₹1L – ₹2L
+
+      To ₹1L – ₹2L hi rahega.
+    */
+  }, [
+    travelType,
+    adults,
+    children,
+    days,
+    budget,
+  ]);
+
+  /* =====================================================
+     BUDGET SELECT
+  ===================================================== */
+
+  const handleBudgetSelect = (
+    selectedBudget
+  ) => {
+    const selectedIndex =
+      budgetOptions.indexOf(
+        selectedBudget
+      );
+
+    /*
+      Normally hidden options click
+      hi nahi ho sakte.
+
+      Extra safety ke liye check.
+    */
+
+    if (
+      selectedIndex <
+      minimumBudgetIndex
+    ) {
+      alert(
+        `For ${travellers} travellers and ${
+          Number(days) > 0
+            ? `${days} days`
+            : "your trip"
+        }, please select ${minimumBudget} or a higher budget.`
+      );
+
+      return;
+    }
+
+    setBudget(
+      selectedBudget
+    );
+  };
+
+  /* =====================================================
+     INTEREST TOGGLE
+  ===================================================== */
+
+  const toggleInterest = (item) => {
+    setInterests((prev) => {
+      if (prev.includes(item)) {
+        return prev.filter(
+          (interest) =>
+            interest !== item
+        );
+      }
+
+      return [
+        ...prev,
+        item,
+      ];
+    });
+  };
+
+  /* =====================================================
+     PLACE SELECT
+  ===================================================== */
+
+  const handlePlaceSelect = (
+    placeName
+  ) => {
+    if (!placeName) {
+      return;
+    }
+
+    setSelectedPlaces(
+      (prev) => {
+        if (
+          prev.includes(placeName)
+        ) {
+          return prev.filter(
+            (item) =>
+              item !== placeName
+          );
+        }
+
+        if (prev.length >= 3) {
+          return prev;
+        }
+
+        return [
+          ...prev,
+          placeName,
+        ];
+      }
+    );
+  };
+    /* =====================================================
+     PAYMENT COMPLETE RESET
   ===================================================== */
 
   useEffect(() => {
     const paymentDone =
-      localStorage.getItem("tripPaymentDone");
+      localStorage.getItem(
+        "tripPaymentDone"
+      );
 
     if (paymentDone !== "true") {
       return;
     }
 
     setDestination("");
+
     setDate("");
-    setDays("3");
-    setTravellers("2");
+    setReturnDate("");
+    setDays("0");
+
     setTravelType("Couple");
 
-    setBudget("₹25,000 – ₹50,000");
+    setAdults("2");
+    setChildren("0");
+    setTravellers("2");
+
+    setBudget(
+      "₹25,000 – ₹50,000"
+    );
 
     setStyle("Relaxed");
     setStay("Any");
@@ -462,34 +869,49 @@ const TripPlan = () => {
     setInterests([]);
     setSelectedPlaces([]);
 
-    destinationInitializedRef.current = "";
+    destinationInitializedRef.current =
+      "";
 
-    localStorage.removeItem("tripPaymentDone");
-    localStorage.removeItem("tripperTrip");
+    localStorage.removeItem(
+      "tripPaymentDone"
+    );
+
+    localStorage.removeItem(
+      "tripperTrip"
+    );
 
     setIsLoaded(true);
   }, []);
 
   /* =====================================================
-     RESTORE DATA
+     RESTORE TRIP DATA
   ===================================================== */
 
   useEffect(() => {
     const paymentDone =
-      localStorage.getItem("tripPaymentDone");
+      localStorage.getItem(
+        "tripPaymentDone"
+      );
 
     if (paymentDone === "true") {
       return;
     }
 
+    /* =========================
+       LOCAL STORAGE DATA
+    ========================= */
+
     let savedData = null;
 
     const savedTrip =
-      localStorage.getItem("tripperTrip");
+      localStorage.getItem(
+        "tripperTrip"
+      );
 
     if (savedTrip) {
       try {
-        savedData = JSON.parse(savedTrip);
+        savedData =
+          JSON.parse(savedTrip);
       } catch (error) {
         console.error(
           "Error restoring trip:",
@@ -498,12 +920,19 @@ const TripPlan = () => {
       }
     }
 
-    const stateData = location.state || {};
-    const stateTrip = stateData.trip || {};
+    /* =========================
+       LOCATION STATE
+    ========================= */
 
-    /* =================================================
+    const stateData =
+      location.state || {};
+
+    const stateTrip =
+      stateData.trip || {};
+
+    /* =========================
        DESTINATION
-    ================================================= */
+    ========================= */
 
     const finalDestination =
       stateData.destination ||
@@ -511,42 +940,63 @@ const TripPlan = () => {
       savedData?.destination ||
       "";
 
-    setDestination(finalDestination);
+    setDestination(
+      finalDestination
+    );
 
     destinationInitializedRef.current =
-      normalizeDestination(finalDestination);
+      normalizeDestination(
+        finalDestination
+      );
 
-    const destinationData =
-      getDestinationData(finalDestination);
-
-    /* =================================================
-       DAYS
-    ================================================= */
-
-    const finalDays =
-      stateData.days ??
-      stateTrip.days ??
-      destinationData?.days ??
-      savedData?.days ??
-      "3";
-
-    setDays(getDaysNumber(finalDays));
-
-    /* =================================================
-       DATE
-    ================================================= */
+    /* =========================
+       DATES
+    ========================= */
 
     const finalDate =
       stateData.date ||
+      stateData.goingDate ||
       stateTrip.date ||
+      stateTrip.goingDate ||
       savedData?.date ||
+      savedData?.goingDate ||
+      "";
+
+    const finalReturnDate =
+      stateData.returnDate ||
+      stateTrip.returnDate ||
+      savedData?.returnDate ||
       "";
 
     setDate(finalDate);
+    setReturnDate(
+      finalReturnDate
+    );
 
-    /* =================================================
+    /* =========================
+       DAYS
+    ========================= */
+
+    let finalDays = 0;
+
+    if (
+      finalDate &&
+      finalReturnDate
+    ) {
+      finalDays =
+        calculateDays(
+          finalDate,
+          finalReturnDate
+        );
+    }
+
+    setDays(
+      String(finalDays)
+    );
+
+    /* =========================
        TRAVEL TYPE
-    ================================================= */
+    ========================= */
 
     const finalTravelType =
       stateData.travelType ||
@@ -554,49 +1004,171 @@ const TripPlan = () => {
       savedData?.travelType ||
       "Couple";
 
-    setTravelType(finalTravelType);
+    setTravelType(
+      finalTravelType
+    );
 
-    /* =================================================
-       BUDGET
+    /* =========================
+       MEMBERS
+    ========================= */
 
-       Detail se price mila:
-       price ke according starting budget.
+    const savedAdults =
+      Number(
+        stateData.adults ??
+          stateTrip.adults ??
+          savedData?.adults ??
+          0
+      );
 
-       BUT USER CAN CHANGE IT.
-    ================================================= */
+    const savedChildren =
+      Number(
+        stateData.children ??
+          stateTrip.children ??
+          savedData?.children ??
+          0
+      );
 
-    const detailPrice =
-      stateData.price ??
-      stateData.basePrice ??
-      stateTrip.price ??
-      stateTrip.basePrice ??
-      "";
+    /* SOLO */
 
-    if (detailPrice) {
-      const priceBudget =
-        getBudgetFromPrice(detailPrice);
+    if (
+      finalTravelType === "Solo"
+    ) {
+      setAdults("1");
+      setChildren("0");
+      setTravellers("1");
+    }
 
+    /* COUPLE */
+
+    else if (
+      finalTravelType === "Couple"
+    ) {
+      setAdults("2");
+      setChildren("0");
+      setTravellers("2");
+    }
+
+    /* FAMILY */
+
+    else if (
+      finalTravelType === "Family"
+    ) {
+      const familyAdults =
+        savedAdults >= 1
+          ? savedAdults
+          : 2;
+
+      const familyChildren =
+        savedChildren >= 0
+          ? savedChildren
+          : 0;
+
+      setAdults(
+        String(familyAdults)
+      );
+
+      setChildren(
+        String(familyChildren)
+      );
+
+      setTravellers(
+        String(
+          familyAdults +
+            familyChildren
+        )
+      );
+    }
+
+    /* FRIENDS */
+
+    else if (
+      finalTravelType === "Friends"
+    ) {
+      const friendCount =
+        savedAdults >= 2
+          ? savedAdults
+          : 2;
+
+      setAdults(
+        String(friendCount)
+      );
+
+      setChildren("0");
+
+      setTravellers(
+        String(friendCount)
+      );
+    }
+
+    /* =========================
+       RESTORE BUDGET
+
+       IMPORTANT:
+       Saved selected budget ko
+       restore kar rahe hain.
+
+       Lekin agar wo current
+       members + days ke hisaab
+       se bahut low hai to
+       minimum budget use hoga.
+    ========================= */
+
+    const restoredBudget =
+      stateData.budget ||
+      stateTrip.budget ||
+      savedData?.budget ||
+      "₹25,000 – ₹50,000";
+
+    const restoreMinimumIndex =
+      getMinimumBudgetIndex(
+        finalTravelType,
+
+        finalTravelType === "Solo"
+          ? 1
+          : finalTravelType ===
+              "Couple"
+            ? 2
+            : savedAdults ||
+              2,
+
+        finalTravelType ===
+        "Family"
+          ? savedChildren
+          : 0,
+
+        finalDays
+      );
+
+    const restoredBudgetIndex =
+      budgetOptions.indexOf(
+        restoredBudget
+      );
+
+    if (
+      restoredBudgetIndex === -1 ||
+      restoredBudgetIndex <
+        restoreMinimumIndex
+    ) {
       setBudget(
-        priceBudget ||
-          "₹25,000 – ₹50,000"
+        budgetOptions[
+          restoreMinimumIndex
+        ]
       );
     } else {
       /*
-       * Normal Plan Trip
-       */
+        User ne higher budget
+        choose kiya tha to wahi
+        restore hoga.
+      */
 
-      const normalBudget =
-        stateData.budget ||
-        stateTrip.budget ||
-        savedData?.budget ||
-        "₹25,000 – ₹50,000";
-
-      setBudget(normalBudget);
+      setBudget(
+        restoredBudget
+      );
     }
 
-    /* =================================================
+    /* =========================
        STYLE
-    ================================================= */
+    ========================= */
 
     setStyle(
       stateData.style ||
@@ -605,9 +1177,9 @@ const TripPlan = () => {
         "Relaxed"
     );
 
-    /* =================================================
+    /* =========================
        STAY
-    ================================================= */
+    ========================= */
 
     setStay(
       stateData.stay ||
@@ -616,9 +1188,9 @@ const TripPlan = () => {
         "Any"
     );
 
-    /* =================================================
+    /* =========================
        TRANSPORT
-    ================================================= */
+    ========================= */
 
     setTransport(
       stateData.transport ||
@@ -627,49 +1199,72 @@ const TripPlan = () => {
         "Any"
     );
 
-    /* =================================================
+    /* =========================
        INTERESTS
-    ================================================= */
+    ========================= */
 
     let restoredInterests = [];
 
-    if (Array.isArray(stateData.interests)) {
+    if (
+      Array.isArray(
+        stateData.interests
+      )
+    ) {
       restoredInterests =
         stateData.interests;
     } else if (
-      Array.isArray(stateTrip.interests)
+      Array.isArray(
+        stateTrip.interests
+      )
     ) {
       restoredInterests =
         stateTrip.interests;
     } else if (
-      Array.isArray(savedData?.interests)
+      Array.isArray(
+        savedData?.interests
+      )
     ) {
       restoredInterests =
         savedData.interests;
     }
 
-    setInterests(restoredInterests);
+    setInterests(
+      restoredInterests
+    );
 
-    /* =================================================
+    /* =========================
        PLACES
-    ================================================= */
+    ========================= */
 
     let restoredPlaces = [];
 
-    if (Array.isArray(stateData.places)) {
-      restoredPlaces = stateData.places;
-    } else if (
-      Array.isArray(stateTrip.places)
+    if (
+      Array.isArray(
+        stateData.places
+      )
     ) {
-      restoredPlaces = stateTrip.places;
+      restoredPlaces =
+        stateData.places;
     } else if (
-      Array.isArray(savedData?.places)
+      Array.isArray(
+        stateTrip.places
+      )
     ) {
-      restoredPlaces = savedData.places;
+      restoredPlaces =
+        stateTrip.places;
+    } else if (
+      Array.isArray(
+        savedData?.places
+      )
+    ) {
+      restoredPlaces =
+        savedData.places;
     }
 
     const availablePlaces =
-      getPlacesForDestination(finalDestination);
+      getPlacesForDestination(
+        finalDestination
+      );
 
     const availableNames =
       availablePlaces.map(
@@ -679,7 +1274,10 @@ const TripPlan = () => {
     const validPlaces =
       restoredPlaces
         .map((place) => {
-          if (typeof place === "string") {
+          if (
+            typeof place ===
+            "string"
+          ) {
             return place;
           }
 
@@ -687,74 +1285,44 @@ const TripPlan = () => {
         })
         .filter(Boolean)
         .filter((name) =>
-          availableNames.includes(name)
+          availableNames.includes(
+            name
+          )
         )
         .slice(0, 3);
 
-    setSelectedPlaces(validPlaces);
-
-    /* =================================================
-       TRAVELLERS
-    ================================================= */
-
-    const savedTravellers =
-      Number(
-        stateData.travellers ??
-          stateData.travelers ??
-          stateTrip.travellers ??
-          stateTrip.travelers ??
-          savedData?.travellers ??
-          savedData?.travelers ??
-          0
-      );
-
-    if (finalTravelType === "Solo") {
-      setTravellers("1");
-    } else if (
-      finalTravelType === "Family" ||
-      finalTravelType === "Friends"
-    ) {
-      if (
-        Number.isInteger(savedTravellers) &&
-        savedTravellers >= 1 &&
-        savedTravellers <= 10
-      ) {
-        setTravellers(
-          String(savedTravellers)
-        );
-      } else {
-        setTravellers("1");
-      }
-    } else {
-      if (
-        [2, 4, 6, 8, 10].includes(
-          savedTravellers
-        )
-      ) {
-        setTravellers(
-          String(savedTravellers)
-        );
-      } else {
-        setTravellers("2");
-      }
-    }
+    setSelectedPlaces(
+      validPlaces
+    );
 
     setIsLoaded(true);
   }, [location.state]);
 
   /* =====================================================
      DESTINATION CHANGE
+
+     Destination change hone par
+     old destination ke selected
+     places remove honge.
   ===================================================== */
 
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded) {
+      return;
+    }
 
     const currentDestination =
-      normalizeDestination(destination);
+      normalizeDestination(
+        destination
+      );
 
-    if (!currentDestination) return;
+    if (!currentDestination) {
+      return;
+    }
 
-    if (!destinationInitializedRef.current) {
+    if (
+      !destinationInitializedRef.current
+    ) {
       destinationInitializedRef.current =
         currentDestination;
 
@@ -770,143 +1338,128 @@ const TripPlan = () => {
       destinationInitializedRef.current =
         currentDestination;
     }
-  }, [destination, isLoaded]);
+  }, [
+    destination,
+    isLoaded,
+  ]);
 
   /* =====================================================
-     AUTO SAVE
+     AUTO SAVE TRIP
   ===================================================== */
 
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded) {
+      return;
+    }
 
-    if (!destination.trim()) return;
+    if (!destination.trim()) {
+      return;
+    }
 
     const tripData = {
-      destination: destination.trim(),
+      destination:
+        destination.trim(),
+
       date,
-      days: Number(days) || 3,
+
+      goingDate:
+        date,
+
+      returnDate,
+
+      dateFormatted:
+        formatDate(date),
+
+      returnDateFormatted:
+        formatDate(
+          returnDate
+        ),
+
+      days:
+        Number(days) || 0,
+
       travellers:
-        Number(travellers) || 2,
+        Number(travellers) || 1,
+
+      adults:
+        Number(adults) || 1,
+
+      children:
+        travelType === "Family"
+          ? Number(children) || 0
+          : 0,
+
       travelType,
+
+      /*
+        User ka actual selected
+        budget save hoga.
+      */
       budget,
+
+      /*
+        Minimum suggested budget
+        bhi save kar rahe hain.
+        CreateTrip me future me
+        use kar sakti ho.
+      */
+      minimumBudget,
+
       style,
       stay,
       transport,
-      interests: [...interests],
-      places: [...selectedPlaces],
+
+      interests: [
+        ...interests,
+      ],
+
+      places: [
+        ...selectedPlaces,
+      ],
     };
 
     localStorage.setItem(
       "tripperTrip",
-      JSON.stringify(tripData)
+      JSON.stringify(
+        tripData
+      )
     );
   }, [
     isLoaded,
     destination,
     date,
+    returnDate,
     days,
     travellers,
+    adults,
+    children,
     travelType,
     budget,
+    minimumBudget,
     style,
     stay,
     transport,
     interests,
     selectedPlaces,
   ]);
-
-  /* =====================================================
-     TRAVEL TYPE CHANGE
-  ===================================================== */
-
-  useEffect(() => {
-    const current = Number(travellers);
-
-    if (travelType === "Solo") {
-      if (travellers !== "1") {
-        setTravellers("1");
-      }
-
-      return;
-    }
-
-    if (
-      travelType === "Family" ||
-      travelType === "Friends"
-    ) {
-      if (
-        current < 1 ||
-        current > 10 ||
-        !Number.isFinite(current)
-      ) {
-        setTravellers("1");
-      }
-
-      return;
-    }
-
-    if (
-      ![2, 4, 6, 8, 10].includes(current)
-    ) {
-      setTravellers("2");
-    }
-  }, [travelType]);
-
-  /* =====================================================
-     INTEREST
-  ===================================================== */
-
-  const toggleInterest = (item) => {
-    setInterests((prev) => {
-      if (prev.includes(item)) {
-        return prev.filter(
-          (interest) =>
-            interest !== item
-        );
-      }
-
-      return [...prev, item];
-    });
-  };
-
-  /* =====================================================
-     PLACE
-  ===================================================== */
-
-  const handlePlaceSelect = (placeName) => {
-    if (!placeName) return;
-
-    setSelectedPlaces((prev) => {
-      if (prev.includes(placeName)) {
-        return prev.filter(
-          (item) =>
-            item !== placeName
-        );
-      }
-
-      if (prev.length >= 3) {
-        return prev;
-      }
-
-      return [...prev, placeName];
-    });
-  };
-
-  /* =====================================================
-     SUBMIT
+    /* =====================================================
+     SUBMIT / CREATE TRIP
   ===================================================== */
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    /* =================================================
+       DESTINATION VALIDATION
+    ================================================= */
 
     const cleanDestination =
       destination.trim();
 
     if (!cleanDestination) {
       alert(
-        "Please enter your destination."
+        "Please select your destination."
       );
-
       return;
     }
 
@@ -921,162 +1474,405 @@ const TripPlan = () => {
       )
     ) {
       alert(
-        "Please enter a valid destination."
+        "Please select a valid destination."
       );
-
       return;
     }
+
+    /* =================================================
+       GOING DATE
+    ================================================= */
 
     if (!date) {
       alert(
-        "Please select your travel date."
+        "Please select your going date."
       );
-
       return;
     }
 
-    if (date < getTodayDate()) {
+    if (
+      date < getTomorrowDate()
+    ) {
       alert(
-        "Please select today or a future travel date."
+        "Trip must start from tomorrow or a future date."
       );
-
       return;
     }
+
+    /* =================================================
+       RETURN DATE
+    ================================================= */
+
+    if (!returnDate) {
+      alert(
+        "Please select your return date."
+      );
+      return;
+    }
+
+    if (
+      returnDate <= date
+    ) {
+      alert(
+        "Return date must be after going date."
+      );
+      return;
+    }
+
+    /* =================================================
+       DAYS
+    ================================================= */
 
     const selectedDays =
-      Number(days);
-
-    if (
-      !Number.isFinite(selectedDays) ||
-      selectedDays < 1
-    ) {
-      alert(
-        "Please select trip duration."
+      calculateDays(
+        date,
+        returnDate
       );
 
+    if (selectedDays < 1) {
+      alert(
+        "Please select valid travel dates."
+      );
       return;
     }
 
-    const selectedTravellers =
-      Number(travellers);
+    /* =================================================
+       MEMBERS
+    ================================================= */
 
-    let validTravellerNumbers = [];
+    let selectedTravellers = 1;
+    let finalAdults = 1;
+    let finalChildren = 0;
 
-    if (travelType === "Solo") {
-      validTravellerNumbers = [1];
-    } else if (
-      travelType === "Family" ||
+    /* =========================
+       SOLO
+    ========================= */
+
+    if (
+      travelType === "Solo"
+    ) {
+      selectedTravellers = 1;
+
+      finalAdults = 1;
+      finalChildren = 0;
+    }
+
+    /* =========================
+       COUPLE
+    ========================= */
+
+    if (
+      travelType === "Couple"
+    ) {
+      selectedTravellers = 2;
+
+      finalAdults = 2;
+      finalChildren = 0;
+    }
+
+    /* =========================
+       FAMILY
+    ========================= */
+
+    if (
+      travelType === "Family"
+    ) {
+      finalAdults =
+        Number(adults);
+
+      finalChildren =
+        Number(children);
+
+      /*
+        Family me kam se kam
+        1 adult required hai.
+      */
+
+      if (
+        !Number.isInteger(
+          finalAdults
+        ) ||
+        finalAdults < 1
+      ) {
+        alert(
+          "Please select at least 1 adult."
+        );
+        return;
+      }
+
+      /*
+        Children 0 ho sakte hain.
+      */
+
+      if (
+        !Number.isInteger(
+          finalChildren
+        ) ||
+        finalChildren < 0
+      ) {
+        alert(
+          "Please select valid children."
+        );
+        return;
+      }
+
+      selectedTravellers =
+        finalAdults +
+        finalChildren;
+
+      if (
+        selectedTravellers < 1
+      ) {
+        alert(
+          "Please select family members."
+        );
+        return;
+      }
+    }
+
+    /* =========================
+       FRIENDS
+    ========================= */
+
+    if (
       travelType === "Friends"
     ) {
-      validTravellerNumbers = [
-        1, 2, 3, 4, 5,
-        6, 7, 8, 9, 10,
-      ];
-    } else {
-      validTravellerNumbers = [
-        2, 4, 6, 8, 10,
-      ];
+      finalAdults =
+        Number(adults);
+
+      finalChildren = 0;
+
+      /*
+        Friends trip me
+        minimum 2 friends.
+      */
+
+      if (
+        !Number.isInteger(
+          finalAdults
+        ) ||
+        finalAdults < 2
+      ) {
+        alert(
+          "Please select at least 2 friends."
+        );
+        return;
+      }
+
+      selectedTravellers =
+        finalAdults;
     }
+
+    /* =================================================
+       CHECK MINIMUM BUDGET
+    ================================================= */
+
+    const finalMinimumBudgetIndex =
+      getMinimumBudgetIndex(
+        travelType,
+        finalAdults,
+        finalChildren,
+        selectedDays
+      );
+
+    const finalMinimumBudget =
+      budgetOptions[
+        finalMinimumBudgetIndex
+      ];
+
+    const selectedBudgetIndex =
+      budgetOptions.indexOf(
+        budget
+      );
+
+    /*
+      Safety validation:
+
+      Agar kisi wajah se selected
+      budget minimum se kam reh gaya,
+      user ko error milega.
+
+      Normally UI me lower budgets
+      hidden honge isliye ye error
+      nahi aana chahiye.
+    */
 
     if (
-      !validTravellerNumbers.includes(
-        selectedTravellers
-      )
+      selectedBudgetIndex === -1 ||
+      selectedBudgetIndex <
+        finalMinimumBudgetIndex
     ) {
       alert(
-        "Please select valid travellers."
+        `For ${selectedTravellers} travellers and ${selectedDays} days, please select ${finalMinimumBudget} or a higher budget.`
       );
 
       return;
     }
 
-    if (!budget) {
-      alert(
-        "Please select your budget."
-      );
+    /* =================================================
+       INTERESTS
+    ================================================= */
 
-      return;
-    }
-
-    if (interests.length === 0) {
+    if (
+      interests.length === 0
+    ) {
       alert(
         "Please select at least one interest."
       );
-
       return;
     }
 
+    /* =================================================
+       PLACES
+    ================================================= */
+
     const finalSelectedPlaces =
-      selectedPlaces.filter(Boolean);
+      selectedPlaces.filter(
+        Boolean
+      );
+
+    const availablePlaces =
+      getPlacesForDestination(
+        cleanDestination
+      );
+
+    /*
+      Agar destination ke places
+      available hain to minimum
+      1 place select hona chahiye.
+    */
 
     if (
+      availablePlaces.length > 0 &&
       finalSelectedPlaces.length === 0
     ) {
       alert(
         "Please select at least one place to visit."
       );
-
       return;
     }
 
+    /* =================================================
+       FINAL TRIP DATA
+    ================================================= */
+
     const tripData = {
-      destination: cleanDestination,
+      /* DESTINATION */
+
+      destination:
+        cleanDestination,
 
       destinationId:
         normalizeDestination(
           cleanDestination
         ),
 
+      /* DATES */
+
       date,
+
+      goingDate:
+        date,
+
+      returnDate,
 
       dateFormatted:
         formatDate(date),
 
-      days: selectedDays,
+      returnDateFormatted:
+        formatDate(
+          returnDate
+        ),
+
+      /* DURATION */
+
+      days:
+        selectedDays,
+
+      /* MEMBERS */
 
       travellers:
         selectedTravellers,
 
+      adults:
+        finalAdults,
+
+      children:
+        finalChildren,
+
       travelType,
+
+      /* =========================
+         IMPORTANT BUDGET FIX
+
+         User ne jo budget choose
+         kiya hai wahi save hoga.
+
+         Yahan calculateAutoBudget()
+         bilkul nahi lagana.
+      ========================= */
 
       budget,
 
+      minimumBudget:
+        finalMinimumBudget,
+
+      /* OTHER PREFERENCES */
+
       style,
-
       stay,
-
       transport,
 
-      interests: [...interests],
+      interests: [
+        ...interests,
+      ],
 
       places: [
         ...finalSelectedPlaces,
       ],
 
-      destinationData:
-        selectedDestination || null,
+      /* DESTINATION DATA */
 
-      paymentStatus: "pending",
+      destinationData:
+        selectedDestination ||
+        null,
+
+      paymentStatus:
+        "pending",
     };
+
+    /* =================================================
+       SAVE LOCAL STORAGE
+    ================================================= */
 
     localStorage.setItem(
       "tripperTrip",
-      JSON.stringify(tripData)
+      JSON.stringify(
+        tripData
+      )
     );
 
-    navigate("/create-trip", {
-      state: tripData,
-    });
-  };
+    /* =================================================
+       NEXT PAGE
+    ================================================= */
 
-  /* =====================================================
+    navigate(
+      "/create-trip",
+      {
+        state: tripData,
+      }
+    );
+  };
+    /* =====================================================
      JSX
   ===================================================== */
 
   return (
     <main className="trip-plan-page">
 
-      {/* HERO */}
+      {/* =================================================
+          HERO
+      ================================================= */}
 
       <section className="trip-plan-hero">
 
@@ -1096,23 +1892,26 @@ const TripPlan = () => {
           </h1>
 
           <p>
-            Enter your destination,
-            budget, people and interests.
-            Your personalized itinerary
-            will be created around your
-            travel style.
+            Enter your destination, dates,
+            people and interests. Your
+            personalized itinerary will be
+            created around your travel style.
           </p>
 
           <div className="trip-plan-features">
 
             <div>
               <FiCompass />
-              <span>Smart itinerary</span>
+              <span>
+                Smart itinerary
+              </span>
             </div>
 
             <div>
               <FiHome />
-              <span>Stay suggestions</span>
+              <span>
+                Stay suggestions
+              </span>
             </div>
 
             <div>
@@ -1164,7 +1963,9 @@ const TripPlan = () => {
 
       </section>
 
-      {/* PLANNER */}
+      {/* =================================================
+          PLANNER
+      ================================================= */}
 
       <section className="trip-planner-section">
 
@@ -1212,7 +2013,9 @@ const TripPlan = () => {
 
           </div>
 
-          {/* FORM */}
+          {/* =================================================
+              FORM
+          ================================================= */}
 
           <form
             className="trip-planner-card"
@@ -1227,18 +2030,21 @@ const TripPlan = () => {
                 </span>
 
                 <h2>
-                  Where do you want to go?
+                  Where do you want
+                  to go?
                 </h2>
               </div>
 
               <p>
-                Give us the basics and
-                we'll handle the planning.
+                Give us the basics
+                and we'll handle the planning.
               </p>
 
             </div>
 
-            {/* BASIC */}
+            {/* =================================================
+                DESTINATION + PLACES + DATES
+            ================================================= */}
 
             <div className="planner-grid">
 
@@ -1254,17 +2060,49 @@ const TripPlan = () => {
 
                   <FiMapPin />
 
-                  <input
-                    type="text"
-                    placeholder="Goa, Manali, Jaipur..."
+                  <select
                     value={destination}
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setDestination(
                         e.target.value
+                      );
+
+                      setSelectedPlaces([]);
+                    }}
+                  >
+
+                    <option value="">
+                      Choose destination
+                    </option>
+
+                    {Object.entries(
+                      destinationOptions
+                    ).map(
+                      ([
+                        group,
+                        options,
+                      ]) => (
+                        <optgroup
+                          key={group}
+                          label={group}
+                        >
+
+                          {options.map(
+                            (item) => (
+                              <option
+                                key={item}
+                                value={item}
+                              >
+                                {item}
+                              </option>
+                            )
+                          )}
+
+                        </optgroup>
                       )
-                    }
-                    autoComplete="off"
-                  />
+                    )}
+
+                  </select>
 
                   {destination && (
                     <FiCheck className="input-success-icon" />
@@ -1274,7 +2112,9 @@ const TripPlan = () => {
 
               </label>
 
-              {/* PLACES */}
+              {/* =================================================
+                  PLACES
+              ================================================= */}
 
               <div className="planner-field places-field">
 
@@ -1283,8 +2123,8 @@ const TripPlan = () => {
                 </span>
 
                 <p className="places-select-description">
-                  Choose up to 3 places
-                  you want to explore.
+                  Choose up to 3 places you
+                  want to explore.
                 </p>
 
                 <div className="places-circle-grid">
@@ -1335,25 +2175,49 @@ const TripPlan = () => {
 
                 </div>
 
-                <small className="places-help-text">
-                  {selectedPlaces.length}/3 places selected
-                </small>
+                {getPlacesForDestination(
+                  destination
+                ).length > 0 ? (
+
+                  <small className="places-help-text">
+                    {selectedPlaces.length}/3
+                    {" "}places selected
+                  </small>
+
+                ) : destination ? (
+
+                  <small className="places-help-text">
+                    Places will be added for
+                    this destination.
+                  </small>
+
+                ) : (
+
+                  <small className="places-help-text">
+                    Select a destination first.
+                  </small>
+
+                )}
 
               </div>
 
-              {/* DATE */}
+              {/* =================================================
+                  GOING DATE
+              ================================================= */}
 
               <label className="planner-field">
 
                 <span>
-                  Travel date
+                  Going Date
                 </span>
 
                 <div className="input-wrap date-input-wrap">
 
                   <span
                     className={`date-display ${
-                      date ? "has-date" : ""
+                      date
+                        ? "has-date"
+                        : ""
                     }`}
                   >
                     {date
@@ -1362,13 +2226,13 @@ const TripPlan = () => {
                   </span>
 
                   <input
-                    ref={dateInputRef}
+                    ref={goingDateInputRef}
                     className="real-date-input"
                     type="date"
                     value={date}
-                    min={getTodayDate()}
+                    min={getTomorrowDate()}
                     onChange={
-                      handleDateChange
+                      handleGoingDateChange
                     }
                   />
 
@@ -1376,7 +2240,7 @@ const TripPlan = () => {
                     type="button"
                     className="date-calendar-button"
                     onClick={
-                      openDatePicker
+                      openGoingDatePicker
                     }
                   >
                     <FiCalendar />
@@ -1386,90 +2250,100 @@ const TripPlan = () => {
 
               </label>
 
-              {/* DAYS */}
+              {/* =================================================
+                  RETURN DATE
+              ================================================= */}
 
               <label className="planner-field">
+
+                <span>
+                  Return Date
+                </span>
+
+                <div
+                  className={`input-wrap date-input-wrap ${
+                    !date
+                      ? "date-disabled"
+                      : ""
+                  }`}
+                >
+
+                  <span
+                    className={`date-display ${
+                      returnDate
+                        ? "has-date"
+                        : ""
+                    }`}
+                  >
+                    {returnDate
+                      ? formatDate(
+                          returnDate
+                        )
+                      : "DD/MM/YYYY"}
+                  </span>
+
+                  <input
+                    ref={returnDateInputRef}
+                    className="real-date-input"
+                    type="date"
+                    value={returnDate}
+                    min={getNextDate(date)}
+                    disabled={!date}
+                    onChange={
+                      handleReturnDateChange
+                    }
+                  />
+
+                  <button
+                    type="button"
+                    className="date-calendar-button"
+                    disabled={!date}
+                    onClick={
+                      openReturnDatePicker
+                    }
+                  >
+                    <FiCalendar />
+                  </button>
+
+                </div>
+
+              </label>
+
+              {/* =================================================
+                  DURATION
+              ================================================= */}
+
+              <div className="planner-field">
 
                 <span>
                   Duration
                 </span>
 
-                <div className="input-wrap">
+                <div className="input-wrap duration-auto-field">
 
-                  <select
-                    value={days}
-                    onChange={(e) =>
-                      setDays(
-                        e.target.value
-                      )
-                    }
-                  >
+                  <FiCalendar />
 
-                    {[
-                      2, 3, 4, 5, 6,
-                      7, 8, 9, 10,
-                      12, 15, 20, 25, 30,
-                    ].map((day) => (
-                      <option
-                        key={day}
-                        value={day}
-                      >
-                        {day} Days
-                      </option>
-                    ))}
-
-                  </select>
+                  <strong>
+                    {date && returnDate
+                      ? `${days} ${
+                          Number(days) === 1
+                            ? "Day"
+                            : "Days"
+                        }`
+                      : "Select both dates"}
+                  </strong>
 
                 </div>
 
-              </label>
-
-              {/* TRAVELLERS */}
-
-              <label className="planner-field">
-
-                <span>
-                  Travellers
-                </span>
-
-                <div className="input-wrap">
-
-                  <FiUsers />
-
-                  <select
-                    value={travellers}
-                    onChange={(e) =>
-                      setTravellers(
-                        e.target.value
-                      )
-                    }
-                  >
-
-                    {getTravellerOptions().map(
-                      (number) => (
-                        <option
-                          key={number}
-                          value={number}
-                        >
-                          {number}{" "}
-                          {number === 1
-                            ? "Traveller"
-                            : "Travellers"}
-                        </option>
-                      )
-                    )}
-
-                  </select>
-
-                </div>
-
-              </label>
+              </div>
 
             </div>
 
             <div className="planner-divider" />
 
-            {/* TRAVEL TYPE */}
+            {/* =================================================
+                TRAVEL TYPE
+            ================================================= */}
 
             <div className="planner-section-block">
 
@@ -1480,7 +2354,10 @@ const TripPlan = () => {
               <div className="travel-type-grid">
 
                 {[
-                  ["Solo", "Just me"],
+                  [
+                    "Solo",
+                    "Just me",
+                  ],
                   [
                     "Couple",
                     "Romantic escape",
@@ -1493,31 +2370,289 @@ const TripPlan = () => {
                     "Friends",
                     "Fun together",
                   ],
-                ].map(([type, text]) => (
-                  <button
-                    type="button"
-                    key={type}
-                    className={`travel-type ${
-                      travelType === type
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      setTravelType(type)
-                    }
-                  >
-                    <FiHeart />
+                ].map(
+                  ([
+                    type,
+                    text,
+                  ]) => (
 
-                    <strong>
-                      {type}
-                    </strong>
+                    <button
+                      type="button"
+                      key={type}
+                      className={`travel-type ${
+                        travelType === type
+                          ? "active"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setTravelType(type)
+                      }
+                    >
 
-                    <span>
-                      {text}
-                    </span>
+                      <FiHeart />
 
-                  </button>
-                ))}
+                      <strong>
+                        {type}
+                      </strong>
+
+                      <span>
+                        {text}
+                      </span>
+
+                    </button>
+
+                  )
+                )}
+
+              </div>
+
+              {/* =================================================
+                  MEMBER DETAILS
+              ================================================= */}
+
+              <div className="member-selection-box">
+
+                {/* SOLO */}
+
+                {travelType === "Solo" && (
+
+                  <div className="member-fixed-card">
+
+                    <FiUsers />
+
+                    <div>
+
+                      <span>
+                        Travellers
+                      </span>
+
+                      <strong>
+                        1 Adult
+                      </strong>
+
+                      <small>
+                        Solo trip
+                      </small>
+
+                    </div>
+
+                  </div>
+
+                )}
+
+                {/* COUPLE */}
+
+                {travelType === "Couple" && (
+
+                  <div className="member-fixed-card">
+
+                    <FiUsers />
+
+                    <div>
+
+                      <span>
+                        Travellers
+                      </span>
+
+                      <strong>
+                        2 Adults
+                      </strong>
+
+                      <small>
+                        Couple trip
+                      </small>
+
+                    </div>
+
+                  </div>
+
+                )}
+
+                {/* =================================================
+                    FAMILY
+                ================================================= */}
+
+                {travelType === "Family" && (
+                  <>
+
+                    <div className="family-member-grid">
+
+                      {/* ADULTS */}
+
+                      <label className="planner-field">
+
+                        <span>
+                          Adults
+                        </span>
+
+                        <div className="input-wrap">
+
+                          <FiUsers />
+
+                          <select
+                            value={adults}
+                            onChange={(e) =>
+                              setAdults(
+                                e.target.value
+                              )
+                            }
+                          >
+
+                            {adultOptions.map(
+                              (number) => (
+
+                                <option
+                                  key={number}
+                                  value={number}
+                                >
+                                  {number}{" "}
+                                  {number === 1
+                                    ? "Adult"
+                                    : "Adults"}
+                                </option>
+
+                              )
+                            )}
+
+                          </select>
+
+                        </div>
+
+                      </label>
+
+                      {/* CHILDREN */}
+
+                      <label className="planner-field">
+
+                        <span>
+                          Children
+                        </span>
+
+                        <div className="input-wrap">
+
+                          <FiUsers />
+
+                          <select
+                            value={children}
+                            onChange={(e) =>
+                              setChildren(
+                                e.target.value
+                              )
+                            }
+                          >
+
+                            {childrenOptions.map(
+                              (number) => (
+
+                                <option
+                                  key={number}
+                                  value={number}
+                                >
+                                  {number}{" "}
+                                  {number === 1
+                                    ? "Child"
+                                    : "Children"}
+                                </option>
+
+                              )
+                            )}
+
+                          </select>
+
+                        </div>
+
+                      </label>
+
+                    </div>
+
+                    {/* FAMILY TOTAL */}
+
+                    <div className="total-member-card">
+
+                      <span>
+                        Total Family Members
+                      </span>
+
+                      <strong>
+                        {Number(adults) +
+                          Number(children)}
+                        {" "}Members
+                      </strong>
+
+                      <small>
+                        {adults} Adults •{" "}
+                        {children} Children
+                      </small>
+
+                    </div>
+
+                  </>
+                )}
+
+                {/* =================================================
+                    FRIENDS
+                ================================================= */}
+
+                {travelType === "Friends" && (
+                  <>
+
+                    <label className="planner-field">
+
+                      <span>
+                        Number of Friends
+                      </span>
+
+                      <div className="input-wrap">
+
+                        <FiUsers />
+
+                        <select
+                          value={adults}
+                          onChange={(e) =>
+                            setAdults(
+                              e.target.value
+                            )
+                          }
+                        >
+
+                          {adultOptions
+                            .filter(
+                              (number) =>
+                                number >= 2
+                            )
+                            .map(
+                              (number) => (
+
+                                <option
+                                  key={number}
+                                  value={number}
+                                >
+                                  {number} Friends
+                                </option>
+
+                              )
+                            )}
+
+                        </select>
+
+                      </div>
+
+                    </label>
+
+                    <div className="total-member-card">
+
+                      <span>
+                        Total Travellers
+                      </span>
+
+                      <strong>
+                        {adults} Friends
+                      </strong>
+
+                    </div>
+
+                  </>
+                )}
 
               </div>
 
@@ -1526,11 +2661,7 @@ const TripPlan = () => {
             <div className="planner-divider" />
 
             {/* =================================================
-                BUDGET
-
-                NO LOCK
-                NO ERROR
-                USER CAN CHANGE
+                BUDGET — MAIN FIX
             ================================================= */}
 
             <div className="planner-section-block">
@@ -1540,14 +2671,79 @@ const TripPlan = () => {
               </span>
 
               <p className="section-description">
-                Select your approximate
-                budget for the complete trip.
+                Based on {travellers}{" "}
+                {Number(travellers) === 1
+                  ? "traveller"
+                  : "travellers"}
+
+                {Number(days) > 0
+                  ? ` and ${days} ${
+                      Number(days) === 1
+                        ? "day"
+                        : "days"
+                    }`
+                  : ""}
+
+                , lower budgets that may not
+                fit your trip are hidden.
+                You can choose any higher budget.
               </p>
 
-              <div className="option-row">
+              {/* MINIMUM BUDGET INFO */}
 
-                {budgetOptions.map(
+              <div className="budget-info">
+
+                <div>
+                  <small>
+                    Minimum suggested
+                  </small>
+
+                  <strong>
+                    {minimumBudget}
+                  </strong>
+                </div>
+
+                <div>
+                  <small>
+                    Travellers
+                  </small>
+
+                  <strong>
+                    {travellers}
+                  </strong>
+                </div>
+
+                <div>
+                  <small>
+                    Duration
+                  </small>
+
+                  <strong>
+                    {Number(days) > 0
+                      ? `${days} ${
+                          Number(days) === 1
+                            ? "Day"
+                            : "Days"
+                        }`
+                      : "Select dates"}
+                  </strong>
+                </div>
+
+              </div>
+
+              {/* =================================================
+                  AVAILABLE BUDGET OPTIONS
+
+                  IMPORTANT:
+                  Sirf minimum aur usse
+                  HIGHER options render honge.
+              ================================================= */}
+
+              <div className="option-row budget-option-row">
+
+                {availableBudgetOptions.map(
                   (item) => (
+
                     <button
                       type="button"
                       key={item}
@@ -1557,7 +2753,9 @@ const TripPlan = () => {
                           : ""
                       }`}
                       onClick={() =>
-                        setBudget(item)
+                        handleBudgetSelect(
+                          item
+                        )
                       }
                     >
 
@@ -1565,98 +2763,30 @@ const TripPlan = () => {
                         <FiCheck />
                       )}
 
-                      {item}
+                      <span>
+                        {item}
+                      </span>
 
                     </button>
+
                   )
                 )}
 
               </div>
 
-            </div>
-
-            <div className="planner-divider" />
-
-            {/* STAY + TRANSPORT */}
-
-            <div className="planner-two-column">
-
-              <div className="planner-section-block">
-
-                <span className="section-label">
-                  STAY
-                </span>
-
-                <div className="mini-options">
-
-                  {[
-                    "Any",
-                    "Hotel",
-                    "Resort",
-                    "Hostel",
-                    "Villa",
-                  ].map((item) => (
-                    <button
-                      type="button"
-                      key={item}
-                      className={
-                        stay === item
-                          ? "selected"
-                          : ""
-                      }
-                      onClick={() =>
-                        setStay(item)
-                      }
-                    >
-                      {item}
-                    </button>
-                  ))}
-
-                </div>
-
-              </div>
-
-              <div className="planner-section-block">
-
-                <span className="section-label">
-                  TRANSPORT
-                </span>
-
-                <div className="mini-options">
-
-                  {[
-                    "Any",
-                    "Flight",
-                    "Train",
-                    "Bus",
-                    "Car",
-                    "Bike",
-                  ].map((item) => (
-                    <button
-                      type="button"
-                      key={item}
-                      className={
-                        transport === item
-                          ? "selected"
-                          : ""
-                      }
-                      onClick={() =>
-                        setTransport(item)
-                      }
-                    >
-                      {item}
-                    </button>
-                  ))}
-
-                </div>
-
-              </div>
+              <p className="budget-help-text">
+                You can select the suggested
+                budget or any higher budget
+                according to your preference.
+              </p>
 
             </div>
 
             <div className="planner-divider" />
 
-            {/* INTEREST */}
+            {/* =================================================
+                INTERESTS
+            ================================================= */}
 
             <div className="planner-section-block">
 
@@ -1665,18 +2795,22 @@ const TripPlan = () => {
               </span>
 
               <p className="section-description">
-                Select everything you
-                want in your trip.
+                Select everything you want
+                in your trip.
               </p>
 
               <div className="interest-grid">
 
                 {interestOptions.map(
                   (item) => {
+
                     const active =
-                      interests.includes(item);
+                      interests.includes(
+                        item
+                      );
 
                     return (
+
                       <button
                         type="button"
                         key={item}
@@ -1686,15 +2820,20 @@ const TripPlan = () => {
                             : ""
                         }`}
                         onClick={() =>
-                          toggleInterest(item)
+                          toggleInterest(
+                            item
+                          )
                         }
                       >
+
                         {active && (
                           <FiCheck />
                         )}
 
                         {item}
+
                       </button>
+
                     );
                   }
                 )}
@@ -1703,11 +2842,16 @@ const TripPlan = () => {
 
             </div>
 
-            {/* SUMMARY */}
+            {/* =================================================
+                SUMMARY
+            ================================================= */}
 
             <div className="trip-selection-summary">
 
+              {/* DESTINATION */}
+
               <div>
+
                 <small>
                   Destination
                 </small>
@@ -1716,69 +2860,160 @@ const TripPlan = () => {
                   {destination ||
                     "Not selected"}
                 </strong>
+
               </div>
 
-              <div>
-                <small>Date</small>
-
-                <strong>
-                  {formatDate(date)}
-                </strong>
-              </div>
+              {/* GOING */}
 
               <div>
-                <small>Duration</small>
 
-                <strong>
-                  {days} Days
-                </strong>
-              </div>
-
-              <div>
                 <small>
-                  Travellers
+                  Going
+                </small>
+
+                <strong>
+                  {date
+                    ? formatDate(date)
+                    : "Not selected"}
+                </strong>
+
+              </div>
+
+              {/* RETURN */}
+
+              <div>
+
+                <small>
+                  Return
+                </small>
+
+                <strong>
+                  {returnDate
+                    ? formatDate(
+                        returnDate
+                      )
+                    : "Not selected"}
+                </strong>
+
+              </div>
+
+              {/* DURATION */}
+
+              <div>
+
+                <small>
+                  Duration
+                </small>
+
+                <strong>
+                  {date && returnDate
+                    ? `${days} ${
+                        Number(days) === 1
+                          ? "Day"
+                          : "Days"
+                      }`
+                    : "Not selected"}
+                </strong>
+
+              </div>
+
+              {/* TRIP TYPE */}
+
+              <div>
+
+                <small>
+                  Trip Type
+                </small>
+
+                <strong>
+                  {travelType}
+                </strong>
+
+              </div>
+
+              {/* MEMBERS */}
+
+              <div>
+
+                <small>
+                  Members
                 </small>
 
                 <strong>
                   {travellers}
                 </strong>
+
               </div>
 
+              {/* FAMILY DETAILS */}
+
+              {travelType === "Family" && (
+
+                <div>
+
+                  <small>
+                    Family
+                  </small>
+
+                  <strong>
+                    {adults} Adults •{" "}
+                    {children} Children
+                  </strong>
+
+                </div>
+
+              )}
+
+              {/* FRIENDS DETAILS */}
+
+              {travelType === "Friends" && (
+
+                <div>
+
+                  <small>
+                    Friends
+                  </small>
+
+                  <strong>
+                    {adults} Friends
+                  </strong>
+
+                </div>
+
+              )}
+
+              {/* BUDGET */}
+
               <div>
-                <small>Budget</small>
+
+                <small>
+                  Budget
+                </small>
 
                 <strong>
                   {budget}
                 </strong>
+
               </div>
 
-              <div>
-                <small>Stay</small>
-
-                <strong>
-                  {stay}
-                </strong>
-              </div>
+              {/* PLACES */}
 
               <div>
+
                 <small>
-                  Transport
+                  Places
                 </small>
-
-                <strong>
-                  {transport}
-                </strong>
-              </div>
-
-              <div>
-                <small>Places</small>
 
                 <strong>
                   {selectedPlaces.length}/3
                 </strong>
+
               </div>
 
+              {/* INTERESTS */}
+
               <div>
+
                 <small>
                   Interests
                 </small>
@@ -1786,28 +3021,33 @@ const TripPlan = () => {
                 <strong>
                   {interests.length}
                 </strong>
+
               </div>
 
             </div>
 
-            {/* BUTTON */}
+            {/* =================================================
+                CREATE TRIP
+            ================================================= */}
 
             <button
               type="submit"
               className="create-trip-button"
             >
+
               <span>
                 Create My Personalized Trip
               </span>
 
               <FiArrowRight />
+
             </button>
 
             <p className="planner-note">
-              Your plan will automatically
-              adjust according to your
-              budget, travel type, selected
-              places and interests.
+              Your plan automatically adjusts
+              according to your dates,
+              travellers, budget, travel type,
+              selected places and interests.
             </p>
 
           </form>

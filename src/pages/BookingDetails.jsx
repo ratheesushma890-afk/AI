@@ -1,5 +1,13 @@
-import React, { useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import {
   FiArrowLeft,
@@ -7,254 +15,421 @@ import {
   FiCalendar,
   FiCheck,
   FiClock,
+  FiEdit3,
   FiMapPin,
-  FiNavigation,
-  FiStar,
+  FiTag,
   FiUsers,
+  FiX,
 } from "react-icons/fi";
+
+import destinations from "../Data/destinations";
 
 import "./BookingDetails.css";
 
 /* =========================================================
-   DESTINATION FALLBACK DATA
+   OPTIONS
 ========================================================= */
 
-const destinationData = {
-  Jaipur: {
-    image:
-      "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=90",
-    location: "Rajasthan, India",
-    description:
-      "Explore royal palaces, historic forts, colourful markets and traditional Rajasthani culture. Discover the beautiful Pink City with a comfortable and memorable travel experience.",
-  },
+const budgetOptions = [
+  "₹5,000 – ₹10,000",
+  "₹10,000 – ₹25,000",
+  "₹25,000 – ₹50,000",
+  "₹50,000 – ₹1,00,000",
+  "₹1,00,000 – ₹2,00,000",
+  "₹2,00,000 – ₹3,00,000",
+  "₹3,00,000 – ₹5,00,000",
+];
 
-  Goa: {
-    image:
-      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1200&q=90",
-    location: "Goa, India",
-    description:
-      "Enjoy beautiful beaches, peaceful sunsets, local food and the vibrant coastal atmosphere of Goa.",
-  },
+const travelTypes = [
+  "Solo",
+  "Couple",
+  "Family",
+  "Friends",
+];
 
-  Manali: {
-    image:
-      "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=90",
-    location: "Himachal Pradesh, India",
-    description:
-      "Experience beautiful mountains, peaceful valleys, cafés and exciting adventure activities in Manali.",
-  },
+const interestOptions = [
+  "Sightseeing",
+  "Food",
+  "Beaches",
+  "Mountains",
+  "Adventure",
+  "Nightlife",
+  "Culture",
+  "Nature",
+  "Photography",
+  "Relaxation",
+];
 
-  Kerala: {
-    image:
-      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=90",
-    location: "Kerala, India",
-    description:
-      "Explore peaceful backwaters, lush tea gardens, tropical beaches, beautiful hills and Kerala's rich culture.",
-  },
+const adultOptions = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+];
 
-  Rishikesh: {
-    image:
-      "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1200&q=90",
-    location: "Uttarakhand, India",
-    description:
-      "Enjoy the peaceful Ganga river, mountain surroundings, spiritual experiences and adventure activities.",
-  },
-
-  Delhi: {
-    image:
-      "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1200&q=90",
-    location: "Delhi, India",
-    description:
-      "Explore historical monuments, famous landmarks, markets and delicious food across Delhi.",
-  },
-
-  Mumbai: {
-    image:
-      "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1200&q=90",
-    location: "Maharashtra, India",
-    description:
-      "Discover Mumbai's famous landmarks, beaches, food, entertainment and energetic city life.",
-  },
-
-  Agra: {
-    image:
-      "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=90",
-    location: "Uttar Pradesh, India",
-    description:
-      "Visit the iconic Taj Mahal and explore the beautiful historical architecture of Agra.",
-  },
-
-  Udaipur: {
-    image:
-      "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=90",
-    location: "Rajasthan, India",
-    description:
-      "Experience beautiful lakes, royal palaces and the peaceful romantic charm of Udaipur.",
-  },
-};
+const childOptions = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8,
+];
 
 /* =========================================================
-   DEFAULT HOTEL
+   HELPERS
 ========================================================= */
 
-const defaultHotel = {
-  name: "Royal Heritage Hotel",
-  type: "Hotel",
-  location: "City Centre",
-  rating: "4.8",
-  reviews:
-    "Comfortable premium stay with excellent service and a convenient location.",
-  image:
-    "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1000&q=90",
+const formatDate = (value) => {
+  if (!value) return "Not selected";
+
+  const parts = String(value).split("-");
+
+  if (parts.length !== 3) {
+    return value;
+  }
+
+  const [year, month, day] = parts;
+
+  return `${day}/${month}/${year}`;
 };
 
+const calculateDays = (start, end) => {
+  if (!start || !end) return 0;
+
+  const startDate = new Date(
+    `${start}T00:00:00`
+  );
+
+  const endDate = new Date(
+    `${end}T00:00:00`
+  );
+
+  const difference =
+    endDate.getTime() -
+    startDate.getTime();
+
+  const result = Math.round(
+    difference /
+      (1000 * 60 * 60 * 24)
+  );
+
+  return result > 0 ? result : 0;
+};
+
+const normalize = (value = "") =>
+  String(value)
+    .toLowerCase()
+    .replace(/[,.]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
 /* =========================================================
-   BOOKING DETAILS
+   COMPONENT
 ========================================================= */
 
 const BookingDetails = () => {
-  const location = useLocation();
   const navigate = useNavigate();
 
-  /* =======================================================
-     GET LOCAL STORAGE TRIP
-  ======================================================= */
-
-  let storedTrip = {};
-
-  try {
-    const savedTrip =
-      localStorage.getItem("tripperTrip");
-
-    storedTrip = savedTrip
-      ? JSON.parse(savedTrip)
-      : {};
-  } catch (error) {
-    console.error(
-      "Trip data error:",
-      error
-    );
-
-    storedTrip = {};
-  }
+  const location = useLocation();
 
   /* =======================================================
-     MAIN TRIP
+     GET SAVED TRIP
   ======================================================= */
 
-  const trip =
-    location.state?.trip ||
-    storedTrip ||
-    {};
+  const savedTrip = useMemo(() => {
+    try {
+      const stored =
+        localStorage.getItem(
+          "tripperTrip"
+        );
+
+      return stored
+        ? JSON.parse(stored)
+        : {};
+    } catch (error) {
+      console.error(
+        "Trip restore error:",
+        error
+      );
+
+      return {};
+    }
+  }, []);
+
+  /* =======================================================
+     MERGE DATA
+  ======================================================= */
+
+  const initialTrip = useMemo(
+    () => ({
+      ...savedTrip,
+      ...(location.state?.trip || {}),
+    }),
+    [savedTrip, location.state]
+  );
 
   /* =======================================================
      DESTINATION
   ======================================================= */
 
   const destinationName =
+    initialTrip?.destination ||
     location.state?.destination ||
-    trip?.destination ||
     "Jaipur";
 
-  const destination =
-    destinationData[destinationName] ||
-    destinationData.Jaipur;
+  const destinationData = useMemo(() => {
+    if (!Array.isArray(destinations)) {
+      return null;
+    }
+
+    return (
+      destinations.find(
+        (item) =>
+          normalize(item?.name) ===
+            normalize(
+              destinationName
+            ) ||
+          normalize(item?.id) ===
+            normalize(
+              destinationName
+            )
+      ) || null
+    );
+  }, [destinationName]);
+
+  const destinationState =
+    initialTrip?.destinationState ||
+    initialTrip?.state ||
+    destinationData?.state ||
+    "India";
 
   /* =======================================================
-     SAME IMAGE FROM PREVIOUS PAGE
+     STATES
   ======================================================= */
 
-  const destinationImage =
-    trip?.image ||
-    trip?.destinationImage ||
-    location.state?.image ||
-    location.state?.destinationImage ||
-    destination?.image;
+  const [goingDate, setGoingDate] =
+    useState(
+      initialTrip?.goingDate ||
+        initialTrip?.date ||
+        ""
+    );
+
+  const [returnDate, setReturnDate] =
+    useState(
+      initialTrip?.returnDate || ""
+    );
+
+  const [travelType, setTravelType] =
+    useState(
+      initialTrip?.travelType ||
+        initialTrip?.tripType ||
+        "Couple"
+    );
+
+  const [adults, setAdults] =
+    useState(
+      String(
+        initialTrip?.adults ??
+          (initialTrip?.travelType ===
+          "Solo"
+            ? 1
+            : 2)
+      )
+    );
+
+  const [children, setChildren] =
+    useState(
+      String(
+        initialTrip?.children ?? 0
+      )
+    );
+
+  const [budget, setBudget] =
+    useState(
+      initialTrip?.budget ||
+        initialTrip?.selectedBudget ||
+        "₹25,000 – ₹50,000"
+    );
+
+  const [interests, setInterests] =
+    useState(
+      Array.isArray(
+        initialTrip?.interests
+      )
+        ? initialTrip.interests
+        : Array.isArray(
+            initialTrip?.selectedInterests
+          )
+        ? initialTrip.selectedInterests
+        : []
+    );
+
+  const [places, setPlaces] =
+    useState(() => {
+      const tripPlaces =
+        initialTrip?.places ||
+        initialTrip?.selectedPlaces ||
+        [];
+
+      if (!Array.isArray(tripPlaces)) {
+        return [];
+      }
+
+      return tripPlaces
+        .map((item) =>
+          typeof item === "string"
+            ? item
+            : item?.name
+        )
+        .filter(Boolean)
+        .slice(0, 3);
+    });
+
+  const [editing, setEditing] =
+    useState(null);
+
+  const [
+    savedMessage,
+    setSavedMessage,
+  ] = useState("");
 
   /* =======================================================
-     LOCATION
+     AVAILABLE PLACES
   ======================================================= */
 
-  const destinationLocation =
-    trip?.state ||
-    trip?.destinationState ||
-    location.state?.state ||
-    location.state?.destinationState ||
-    destination?.location;
+  const availablePlaces =
+    useMemo(() => {
+      if (
+        destinationData &&
+        Array.isArray(
+          destinationData?.places
+        )
+      ) {
+        return destinationData.places
+          .map((place) => {
+            if (
+              typeof place === "string"
+            ) {
+              return {
+                name: place,
+              };
+            }
+
+            return {
+              name:
+                place?.name || "",
+            };
+          })
+          .filter(
+            (place) => place.name
+          )
+          .slice(0, 3);
+      }
+
+      return places
+        .map((name) => ({
+          name,
+        }))
+        .slice(0, 3);
+    }, [
+      destinationData,
+      places,
+    ]);
 
   /* =======================================================
-     DESCRIPTION
+     DURATION
   ======================================================= */
 
-  const destinationDescription =
-    trip?.description ||
-    location.state?.description ||
-    destination?.description;
+  const days = useMemo(() => {
+    const calculatedDays =
+      calculateDays(
+        goingDate,
+        returnDate
+      );
 
-  /* =======================================================
-     DATE
-  ======================================================= */
+    if (calculatedDays > 0) {
+      return calculatedDays;
+    }
 
-  const date =
-    trip?.dateFormatted ||
-    trip?.date ||
-    "Not selected";
-
-  /* =======================================================
-     DAYS
-  ======================================================= */
-
-  const days =
-    trip?.totalDays ||
-    trip?.days ||
-    trip?.duration ||
-    3;
+    return (
+      Number(
+        initialTrip?.days ||
+          initialTrip?.totalDays
+      ) || 0
+    );
+  }, [
+    goingDate,
+    returnDate,
+    initialTrip?.days,
+    initialTrip?.totalDays,
+  ]);
 
   /* =======================================================
      TRAVELLERS
   ======================================================= */
 
-  const travellers = Number(
-    trip?.travellers ||
-      trip?.travelers ||
-      trip?.guests ||
-      2
-  );
+  const travellers = useMemo(() => {
+    if (travelType === "Solo") {
+      return 1;
+    }
+
+    if (travelType === "Couple") {
+      return 2;
+    }
+
+    if (travelType === "Family") {
+      return (
+        (Number(adults) || 0) +
+        (Number(children) || 0)
+      );
+    }
+
+    if (travelType === "Friends") {
+      return Number(adults) || 2;
+    }
+
+    return 1;
+  }, [
+    travelType,
+    adults,
+    children,
+  ]);
 
   /* =======================================================
-     TRANSPORT
+     TRIP TYPE RULES
   ======================================================= */
 
-  const transport =
-    trip?.transport ||
-    trip?.travelPreference ||
-    "Any";
+  useEffect(() => {
+    if (travelType === "Solo") {
+      setAdults("1");
+      setChildren("0");
+
+      return;
+    }
+
+    if (travelType === "Couple") {
+      setAdults("2");
+      setChildren("0");
+
+      return;
+    }
+
+    if (travelType === "Friends") {
+      setChildren("0");
+
+      if (Number(adults) < 2) {
+        setAdults("2");
+      }
+
+      return;
+    }
+
+    if (
+      travelType === "Family" &&
+      Number(adults) < 1
+    ) {
+      setAdults("2");
+    }
+  }, [travelType]);
 
   /* =======================================================
-     TRIP TYPE
+     BASE PRICE FROM BUDGET
   ======================================================= */
 
-  const travelType =
-    trip?.travelType ||
-    trip?.tripType ||
-    trip?.travelStyle ||
-    "Couple";
-
-  /* =======================================================
-     BUDGET
-  ======================================================= */
-
-  const budget =
-    trip?.budget ||
-    trip?.selectedBudget ||
-    trip?.budgetAmount ||
-    "₹5,000 – ₹10,000";
-
-  /* =======================================================
-     BUDGET CALCULATION
-  ======================================================= */
-
-  const budgetInfo = useMemo(() => {
+  const basePrice = useMemo(() => {
     const numbers =
       String(budget)
         .replace(/,/g, "")
@@ -262,187 +437,338 @@ const BookingDetails = () => {
         ?.map(Number) || [];
 
     if (numbers.length >= 2) {
-      return {
-        min: Math.min(
-          numbers[0],
-          numbers[1]
-        ),
-
-        max: Math.max(
-          numbers[0],
-          numbers[1]
-        ),
-      };
+      return Math.round(
+        (numbers[0] +
+          numbers[1]) /
+          2
+      );
     }
 
     if (numbers.length === 1) {
-      return {
-        min: numbers[0],
-        max: numbers[0],
-      };
+      return numbers[0];
     }
 
-    return {
-      min: 5000,
-      max: 10000,
-    };
+    return 0;
   }, [budget]);
 
   /* =======================================================
-     ESTIMATED PRICE
+     DYNAMIC PRICE
+
+     Adult = 100%
+     Child = 50%
   ======================================================= */
 
-  const estimatedPrice =
-    budgetInfo.min ===
-    budgetInfo.max
-      ? budgetInfo.min
-      : Math.round(
-          (budgetInfo.min +
-            budgetInfo.max) /
-            2
+  const estimatedAmount =
+    useMemo(() => {
+      if (basePrice <= 0) {
+        return 0;
+      }
+
+      const adultPrice =
+        basePrice;
+
+      const childPrice =
+        Math.round(
+          basePrice * 0.5
         );
 
-  /* =======================================================
-     PER PERSON
-  ======================================================= */
+      /* SOLO */
 
-  const perPerson =
-    travellers > 0
-      ? Math.round(
-          estimatedPrice /
-            travellers
-        )
-      : estimatedPrice;
+      if (
+        travelType === "Solo"
+      ) {
+        return adultPrice;
+      }
 
-  /* =======================================================
-     HOTEL
-  ======================================================= */
+      /* COUPLE */
 
-  const hotel =
-    location.state?.hotel ||
-    trip?.hotel ||
-    defaultHotel;
+      if (
+        travelType === "Couple"
+      ) {
+        return (
+          adultPrice * 2
+        );
+      }
 
-  const stayType =
-    trip?.stay ||
-    hotel?.type ||
-    "Hotel";
+      /* FAMILY */
 
-  /* =======================================================
-     PLACES
-  ======================================================= */
+      if (
+        travelType === "Family"
+      ) {
+        const totalAdults =
+          Number(adults) || 1;
 
-  let places =
-    trip?.places ||
-    trip?.selectedPlaces ||
-    [];
+        const totalChildren =
+          Number(children) || 0;
 
-  if (!Array.isArray(places)) {
-    places = String(places)
-      .split(",")
-      .map((item) =>
-        item.trim()
-      )
-      .filter(Boolean);
-  }
+        return (
+          totalAdults *
+            adultPrice +
+          totalChildren *
+            childPrice
+        );
+      }
 
-  if (!places.length) {
-    places = [
-      "City Sightseeing",
-      "Local Market",
-      "Famous Attractions",
-    ];
-  }
+      /* FRIENDS */
 
-  /* =======================================================
-     INTERESTS
-  ======================================================= */
+      if (
+        travelType === "Friends"
+      ) {
+        const totalFriends =
+          Number(adults) || 2;
 
-  let interests =
-    trip?.interests ||
-    trip?.selectedInterests ||
-    [];
+        return (
+          totalFriends *
+          adultPrice
+        );
+      }
 
-  if (!Array.isArray(interests)) {
-    interests = [interests];
-  }
+      return basePrice;
+    }, [
+      basePrice,
+      travelType,
+      adults,
+      children,
+    ]);
 
-  if (!interests.length) {
-    interests = [
-      "Sightseeing",
-      "Local Experience",
-      "Relaxation",
-    ];
-  }
+  const formattedAmount =
+    estimatedAmount > 0
+      ? `₹${estimatedAmount.toLocaleString(
+          "en-IN"
+        )}`
+      : "₹0";
 
   /* =======================================================
-     CONFIRM BOOKING
+     INTEREST TOGGLE
   ======================================================= */
 
-  const handleConfirm = () => {
-    const updatedTrip = {
-      ...trip,
+  const toggleInterest = (item) => {
+    setInterests((current) => {
+      if (
+        current.includes(item)
+      ) {
+        return current.filter(
+          (value) =>
+            value !== item
+        );
+      }
 
-      destination:
-        destinationName,
+      return [
+        ...current,
+        item,
+      ];
+    });
+  };
 
-      image:
-        destinationImage,
+  /* =======================================================
+     PLACE TOGGLE
+  ======================================================= */
 
-      destinationImage:
-        destinationImage,
+  const togglePlace = (name) => {
+    setPlaces((current) => {
+      /*
+       Selected place hai to
+       remove kar sakte ho
+      */
 
-      state:
-        destinationLocation,
+      if (
+        current.includes(name)
+      ) {
+        return current.filter(
+          (item) =>
+            item !== name
+        );
+      }
 
-      destinationState:
-        destinationLocation,
+      /*
+       Maximum 3
+      */
 
-      description:
-        destinationDescription,
+      if (
+        current.length >= 3
+      ) {
+        alert(
+          "3 places already selected hain. Pehle kisi ek selected place ko remove karo."
+        );
 
-      date,
+        return current;
+      }
 
-      days,
+      return [
+        ...current,
+        name,
+      ];
+    });
+  };
 
-      totalDays:
+  /* =======================================================
+     UPDATED TRIP
+  ======================================================= */
+
+  const createUpdatedTrip =
+    () => {
+      return {
+        ...initialTrip,
+
+        destination:
+          destinationName,
+
+        state:
+          destinationState,
+
+        destinationState,
+
+        date: goingDate,
+
+        goingDate,
+
+        returnDate,
+
+        dateFormatted:
+          formatDate(
+            goingDate
+          ),
+
+        returnDateFormatted:
+          formatDate(
+            returnDate
+          ),
+
         days,
 
-      travellers,
+        totalDays: days,
 
-      transport,
+        travelType,
 
-      travelType,
+        tripType:
+          travelType,
 
-      budget,
+        adults:
+          travelType ===
+          "Solo"
+            ? 1
+            : travelType ===
+              "Couple"
+            ? 2
+            : Number(
+                adults
+              ) || 1,
 
-      stay:
-        stayType,
+        children:
+          travelType ===
+          "Family"
+            ? Number(
+                children
+              ) || 0
+            : 0,
 
-      hotel,
+        travellers,
 
-      places,
+        budget,
 
-      selectedPlaces:
-        places,
+        selectedBudget:
+          budget,
 
-      interests,
+        interests: [
+          ...interests,
+        ],
 
-      selectedInterests:
-        interests,
+        selectedInterests: [
+          ...interests,
+        ],
 
-      estimatedPrice,
+        places: [
+          ...places,
+        ],
 
-      perPerson,
+        selectedPlaces: [
+          ...places,
+        ],
 
-      bookingStatus:
-        "confirmed",
+        /* PRICE */
 
-      paymentStatus:
-        "pending",
+        basePrice,
+
+        estimatedPrice:
+          estimatedAmount,
+
+        bookingAmount:
+          estimatedAmount,
+
+        finalPrice:
+          estimatedAmount,
+
+        totalPrice:
+          estimatedAmount,
+
+        bookingStatus:
+          "reviewed",
+
+        paymentStatus:
+          "pending",
+      };
     };
 
-    /* SAVE */
+  /* =======================================================
+     VALIDATION
+  ======================================================= */
+
+  const validateTrip = () => {
+    if (!goingDate) {
+      alert(
+        "Please select going date."
+      );
+
+      return false;
+    }
+
+    if (!returnDate) {
+      alert(
+        "Please select return date."
+      );
+
+      return false;
+    }
+
+    if (
+      returnDate <= goingDate
+    ) {
+      alert(
+        "Return date going date ke baad honi chahiye."
+      );
+
+      return false;
+    }
+
+    if (
+      travelType ===
+        "Family" &&
+      Number(adults) < 1
+    ) {
+      alert(
+        "Family trip ke liye at least 1 adult select karo."
+      );
+
+      return false;
+    }
+
+    return true;
+  };
+
+  /* =======================================================
+     SAVE CHANGES
+  ======================================================= */
+
+  const saveChanges = () => {
+    if (
+      editing === "dates" &&
+      !validateTrip()
+    ) {
+      return;
+    }
+
+    const updatedTrip =
+      createUpdatedTrip();
 
     localStorage.setItem(
       "tripperTrip",
@@ -451,35 +777,118 @@ const BookingDetails = () => {
       )
     );
 
-    /* PAYMENT PAGE */
+    setEditing(null);
+
+    setSavedMessage(
+      "Changes saved"
+    );
+
+    window.setTimeout(() => {
+      setSavedMessage("");
+    }, 1800);
+  };
+
+  /* =======================================================
+     PAYMENT
+  ======================================================= */
+
+  const handlePayment = () => {
+    if (!validateTrip()) {
+      return;
+    }
+
+    if (
+      places.length === 0
+    ) {
+      alert(
+        "Please select at least one place."
+      );
+
+      return;
+    }
+
+    if (
+      interests.length === 0
+    ) {
+      alert(
+        "Please select at least one interest."
+      );
+
+      return;
+    }
+
+    const updatedTrip =
+      createUpdatedTrip();
+
+    localStorage.setItem(
+      "tripperTrip",
+      JSON.stringify(
+        updatedTrip
+      )
+    );
 
     navigate(
       "/booking-summary",
       {
         state: {
-          trip:
-            updatedTrip,
+          trip: updatedTrip,
 
           destination:
             destinationName,
 
-          hotel,
-
-          image:
-            destinationImage,
-
-          destinationImage:
-            destinationImage,
-
-          description:
-            destinationDescription,
-
           state:
-            destinationLocation,
+            destinationState,
 
-          places,
+          destinationState,
 
-          interests,
+          date:
+            goingDate,
+
+          goingDate,
+
+          returnDate,
+
+          days,
+
+          totalDays:
+            days,
+
+          travelType,
+
+          adults:
+            updatedTrip.adults,
+
+          children:
+            updatedTrip.children,
+
+          travellers,
+
+          budget,
+
+          selectedBudget:
+            budget,
+
+          interests: [
+            ...interests,
+          ],
+
+          places: [
+            ...places,
+          ],
+
+          basePrice,
+
+          bookingAmount:
+            estimatedAmount,
+
+          estimatedPrice:
+            estimatedAmount,
+
+          finalPrice:
+            estimatedAmount,
+
+          totalPrice:
+            estimatedAmount,
         },
       }
     );
@@ -490,675 +899,1435 @@ const BookingDetails = () => {
   ======================================================= */
 
   return (
-    <div className="booking-details-page">
+    <div className="bd-page">
 
-      <main className="booking-container">
+      {/* BACKGROUND */}
 
-        {/* =================================================
-            BACK
-        ================================================= */}
+      <div className="bd-orb bd-orb-one" />
+      <div className="bd-orb bd-orb-two" />
+
+      <main className="bd-container">
+
+        {/* BACK */}
 
         <button
           type="button"
-          className="back-link"
+          className="bd-back"
           onClick={() =>
             navigate(-1)
           }
         >
           <FiArrowLeft />
-
-          <span>
-            Back to trip
-          </span>
+          Back to Trip
         </button>
 
-        {/* =================================================
-            PAGE HEADING
-        ================================================= */}
+        {/* HEADER */}
 
-        <section className="page-heading">
+        <header className="bd-header">
 
-          <div>
+          <span className="bd-eyebrow">
+            REVIEW YOUR JOURNEY
+          </span>
 
-            <span>
-              TRIP DETAILS
-            </span>
+          <h1>
+            Booking Details
+          </h1>
 
-            <h1>
-              {destinationName} Trip
-            </h1>
+          <p>
+            Check your trip
+            details and make any
+            changes before
+            proceeding to payment.
+          </p>
 
-            <p>
-              Everything you selected for your
-              trip, organised in one simple place.
-            </p>
+        </header>
 
+        {/* SAVED */}
+
+        {savedMessage && (
+          <div className="bd-toast">
+            <FiCheck />
+            {savedMessage}
           </div>
-
-          <div className="heading-budget">
-
-            <small>
-              SELECTED BUDGET
-            </small>
-
-            <strong>
-              {budget}
-            </strong>
-
-          </div>
-
-        </section>
+        )}
 
         {/* =================================================
-            DESTINATION
+            LAYOUT
         ================================================= */}
 
-        <section className="destination-card">
+        <div className="bd-layout">
 
-          {/* IMAGE */}
+          {/* =================================================
+              LEFT
+          ================================================= */}
 
-          <div className="destination-photo">
+          <div className="bd-left">
 
-            <img
-              src={destinationImage}
-              alt={destinationName}
-              onError={(event) => {
-                event.currentTarget.src =
-                  destination?.image;
-              }}
-            />
+            <section className="bd-main-card">
 
-            <div className="photo-label">
+              {/* =============================================
+                  DESTINATION & DATES
+              ============================================= */}
 
-              <FiMapPin />
+              <div className="bd-section">
 
-              <span>
-                {destinationLocation}
-              </span>
+                <div className="bd-section-head">
 
-            </div>
+                  <div className="bd-section-title">
 
-          </div>
+                    <div className="bd-section-icon">
+                      <FiMapPin />
+                    </div>
 
-          {/* DETAILS */}
+                    <div>
+                      <span>
+                        TRIP DETAILS
+                      </span>
 
-          <div className="destination-info">
+                      <h2>
+                        Destination & Dates
+                      </h2>
+                    </div>
 
-            <div className="destination-top">
+                  </div>
 
-              <div>
+                  <button
+                    type="button"
+                    className="bd-edit-btn"
+                    onClick={() =>
+                      setEditing(
+                        editing ===
+                          "dates"
+                          ? null
+                          : "dates"
+                      )
+                    }
+                  >
+                    {editing ===
+                    "dates" ? (
+                      <>
+                        <FiX />
+                        Close
+                      </>
+                    ) : (
+                      <>
+                        <FiEdit3 />
+                        Edit
+                      </>
+                    )}
+                  </button>
 
-                <span className="section-label">
-                  DESTINATION
-                </span>
+                </div>
 
-                <h2>
-                  {destinationName}
-                </h2>
+                <div className="bd-destination-row">
+
+                  <div className="bd-destination-name">
+
+                    <small>
+                      DESTINATION
+                    </small>
+
+                    <strong>
+                      {destinationName}
+                    </strong>
+
+                    <p>
+                      <FiMapPin />
+                      {destinationState}
+                    </p>
+
+                  </div>
+
+                  <div className="bd-date-row">
+
+                    <div>
+                      <small>
+                        GOING
+                      </small>
+
+                      <strong>
+                        {formatDate(
+                          goingDate
+                        )}
+                      </strong>
+                    </div>
+
+                    <FiArrowRight className="bd-date-arrow" />
+
+                    <div>
+                      <small>
+                        RETURN
+                      </small>
+
+                      <strong>
+                        {formatDate(
+                          returnDate
+                        )}
+                      </strong>
+                    </div>
+
+                    <div className="bd-days-pill">
+                      <FiClock />
+                      {days} Days
+                    </div>
+
+                  </div>
+
+                </div>
+
+                {/* DATE EDIT */}
+
+                {editing ===
+                  "dates" && (
+                  <div className="bd-edit-panel">
+
+                    <div className="bd-two-fields">
+
+                      <label>
+                        <span>
+                          Going Date
+                        </span>
+
+                        <input
+                          type="date"
+                          value={
+                            goingDate
+                          }
+                          onChange={(
+                            e
+                          ) =>
+                            setGoingDate(
+                              e.target
+                                .value
+                            )
+                          }
+                        />
+                      </label>
+
+                      <label>
+                        <span>
+                          Return Date
+                        </span>
+
+                        <input
+                          type="date"
+                          value={
+                            returnDate
+                          }
+                          min={
+                            goingDate ||
+                            undefined
+                          }
+                          onChange={(
+                            e
+                          ) =>
+                            setReturnDate(
+                              e.target
+                                .value
+                            )
+                          }
+                        />
+                      </label>
+
+                    </div>
+
+                    <button
+                      type="button"
+                      className="bd-save-btn"
+                      onClick={
+                        saveChanges
+                      }
+                    >
+                      <FiCheck />
+                      Save Dates
+                    </button>
+
+                  </div>
+                )}
 
               </div>
 
-              <div className="destination-rating">
+              {/* =============================================
+                  TRAVELLERS
+              ============================================= */}
 
-                <FiStar />
+              <div className="bd-section">
 
-                <strong>
-                  {trip?.rating ||
-                    "4.8"}
-                </strong>
+                <div className="bd-section-head">
+
+                  <div className="bd-section-title">
+
+                    <div className="bd-section-icon">
+                      <FiUsers />
+                    </div>
+
+                    <div>
+                      <span>
+                        TRAVELLERS
+                      </span>
+
+                      <h2>
+                        {travelType} Details
+                      </h2>
+                    </div>
+
+                  </div>
+
+                  <button
+                    type="button"
+                    className="bd-edit-btn"
+                    onClick={() =>
+                      setEditing(
+                        editing ===
+                          "travellers"
+                          ? null
+                          : "travellers"
+                      )
+                    }
+                  >
+                    {editing ===
+                    "travellers" ? (
+                      <>
+                        <FiX />
+                        Close
+                      </>
+                    ) : (
+                      <>
+                        <FiEdit3 />
+                        Edit
+                      </>
+                    )}
+                  </button>
+
+                </div>
+
+                <div className="bd-traveller-row">
+
+                  <div className="bd-total-travellers">
+
+                    <small>
+                      TOTAL TRAVELLERS
+                    </small>
+
+                    <strong>
+                      {travellers}{" "}
+                      {travellers === 1
+                        ? "Traveller"
+                        : "Travellers"}
+                    </strong>
+
+                  </div>
+
+                  {/* SOLO */}
+
+                  {travelType ===
+                    "Solo" && (
+                    <div className="bd-member-info">
+
+                      <div>
+                        <strong>
+                          1
+                        </strong>
+
+                        <span>
+                          Adult
+                        </span>
+                      </div>
+
+                    </div>
+                  )}
+
+                  {/* COUPLE */}
+
+                  {travelType ===
+                    "Couple" && (
+                    <div className="bd-member-info">
+
+                      <div>
+                        <strong>
+                          2
+                        </strong>
+
+                        <span>
+                          Adults
+                        </span>
+                      </div>
+
+                    </div>
+                  )}
+
+                  {/* FAMILY */}
+
+                  {travelType ===
+                    "Family" && (
+                    <div className="bd-member-info">
+
+                      <div>
+                        <strong>
+                          {adults}
+                        </strong>
+
+                        <span>
+                          Adults
+                        </span>
+                      </div>
+
+                      <i />
+
+                      <div>
+                        <strong>
+                          {children}
+                        </strong>
+
+                        <span>
+                          Children
+                        </span>
+                      </div>
+
+                    </div>
+                  )}
+
+                  {/* FRIENDS */}
+
+                  {travelType ===
+                    "Friends" && (
+                    <div className="bd-member-info">
+
+                      <div>
+                        <strong>
+                          {adults}
+                        </strong>
+
+                        <span>
+                          Friends
+                        </span>
+                      </div>
+
+                    </div>
+                  )}
+
+                </div>
+
+                {/* TRAVELLER EDIT */}
+
+                {editing ===
+                  "travellers" && (
+                  <div className="bd-edit-panel">
+
+                    <label className="bd-full-field">
+
+                      <span>
+                        Trip Type
+                      </span>
+
+                      <select
+                        value={
+                          travelType
+                        }
+                        onChange={(
+                          e
+                        ) =>
+                          setTravelType(
+                            e.target
+                              .value
+                          )
+                        }
+                      >
+                        {travelTypes.map(
+                          (type) => (
+                            <option
+                              key={
+                                type
+                              }
+                              value={
+                                type
+                              }
+                            >
+                              {type}
+                            </option>
+                          )
+                        )}
+                      </select>
+
+                    </label>
+
+                    {/* FAMILY */}
+
+                    {travelType ===
+                      "Family" && (
+                      <div className="bd-two-fields">
+
+                        <label>
+
+                          <span>
+                            Adults
+                          </span>
+
+                          <select
+                            value={
+                              adults
+                            }
+                            onChange={(
+                              e
+                            ) =>
+                              setAdults(
+                                e
+                                  .target
+                                  .value
+                              )
+                            }
+                          >
+                            {adultOptions.map(
+                              (
+                                number
+                              ) => (
+                                <option
+                                  key={
+                                    number
+                                  }
+                                  value={
+                                    number
+                                  }
+                                >
+                                  {
+                                    number
+                                  }{" "}
+                                  {number ===
+                                  1
+                                    ? "Adult"
+                                    : "Adults"}
+                                </option>
+                              )
+                            )}
+                          </select>
+
+                        </label>
+
+                        <label>
+
+                          <span>
+                            Children
+                          </span>
+
+                          <select
+                            value={
+                              children
+                            }
+                            onChange={(
+                              e
+                            ) =>
+                              setChildren(
+                                e
+                                  .target
+                                  .value
+                              )
+                            }
+                          >
+                            {childOptions.map(
+                              (
+                                number
+                              ) => (
+                                <option
+                                  key={
+                                    number
+                                  }
+                                  value={
+                                    number
+                                  }
+                                >
+                                  {
+                                    number
+                                  }{" "}
+                                  {number ===
+                                  1
+                                    ? "Child"
+                                    : "Children"}
+                                </option>
+                              )
+                            )}
+                          </select>
+
+                        </label>
+
+                      </div>
+                    )}
+
+                    {/* FRIENDS */}
+
+                    {travelType ===
+                      "Friends" && (
+                      <label className="bd-full-field">
+
+                        <span>
+                          Number of Friends
+                        </span>
+
+                        <select
+                          value={
+                            adults
+                          }
+                          onChange={(
+                            e
+                          ) =>
+                            setAdults(
+                              e.target
+                                .value
+                            )
+                          }
+                        >
+                          {adultOptions
+                            .filter(
+                              (
+                                number
+                              ) =>
+                                number >=
+                                2
+                            )
+                            .map(
+                              (
+                                number
+                              ) => (
+                                <option
+                                  key={
+                                    number
+                                  }
+                                  value={
+                                    number
+                                  }
+                                >
+                                  {
+                                    number
+                                  }{" "}
+                                  Friends
+                                </option>
+                              )
+                            )}
+                        </select>
+
+                      </label>
+                    )}
+
+                    {/* LIVE PRICE */}
+
+                    <div className="bd-price-preview">
+
+                      <span>
+                        Updated Estimated Price
+                      </span>
+
+                      <strong>
+                        {formattedAmount}
+                      </strong>
+
+                      <small>
+                        {travelType ===
+                        "Family"
+                          ? `${adults} Adults + ${children} Children`
+                          : `${travellers} ${
+                              travellers ===
+                              1
+                                ? "Traveller"
+                                : "Travellers"
+                            }`}
+                      </small>
+
+                    </div>
+
+                    <button
+                      type="button"
+                      className="bd-save-btn"
+                      onClick={
+                        saveChanges
+                      }
+                    >
+                      <FiCheck />
+                      Save Travellers
+                    </button>
+
+                  </div>
+                )}
 
               </div>
 
-            </div>
+              {/* =============================================
+                  BUDGET
+              ============================================= */}
 
-            <p className="destination-description">
-              {destinationDescription}
-            </p>
+              <div className="bd-section">
 
-            {/* QUICK DETAILS */}
+                <div className="bd-section-head">
 
-            <div className="quick-details">
+                  <div className="bd-section-title">
 
-              {/* DATE */}
+                    <div className="bd-section-icon">
+                      <span className="bd-rupee">
+                        ₹
+                      </span>
+                    </div>
 
-              <div className="quick-detail">
+                    <div>
+                      <span>
+                        YOUR BUDGET
+                      </span>
 
-                <div className="quick-icon">
+                      <h2>
+                        Budget Range
+                      </h2>
+                    </div>
+
+                  </div>
+
+                  <button
+                    type="button"
+                    className="bd-edit-btn"
+                    onClick={() =>
+                      setEditing(
+                        editing ===
+                          "budget"
+                          ? null
+                          : "budget"
+                      )
+                    }
+                  >
+                    {editing ===
+                    "budget" ? (
+                      <>
+                        <FiX />
+                        Close
+                      </>
+                    ) : (
+                      <>
+                        <FiEdit3 />
+                        Change
+                      </>
+                    )}
+                  </button>
+
+                </div>
+
+                <div className="bd-budget-display">
+
+                  <div>
+                    <small>
+                      SELECTED BUDGET
+                    </small>
+
+                    <strong>
+                      {budget}
+                    </strong>
+                  </div>
+
+                  <p>
+                    Complete trip
+                    budget for{" "}
+                    {travellers}{" "}
+                    {travellers === 1
+                      ? "traveller"
+                      : "travellers"}
+                  </p>
+
+                </div>
+
+                {/* BUDGET EDIT */}
+
+                {editing ===
+                  "budget" && (
+                  <div className="bd-edit-panel">
+
+                    <div className="bd-budget-options">
+
+                      {budgetOptions.map(
+                        (item) => (
+                          <button
+                            type="button"
+                            key={item}
+                            className={
+                              budget ===
+                              item
+                                ? "active"
+                                : ""
+                            }
+                            onClick={() =>
+                              setBudget(
+                                item
+                              )
+                            }
+                          >
+                            <span>
+                              {item}
+                            </span>
+
+                            {budget ===
+                              item && (
+                              <FiCheck />
+                            )}
+                          </button>
+                        )
+                      )}
+
+                    </div>
+
+                    <div className="bd-price-preview">
+
+                      <span>
+                        Estimated Total
+                      </span>
+
+                      <strong>
+                        {formattedAmount}
+                      </strong>
+
+                      <small>
+                        For{" "}
+                        {travellers}{" "}
+                        {travellers ===
+                        1
+                          ? "Traveller"
+                          : "Travellers"}
+                      </small>
+
+                    </div>
+
+                    <button
+                      type="button"
+                      className="bd-save-btn"
+                      onClick={
+                        saveChanges
+                      }
+                    >
+                      <FiCheck />
+                      Save Budget
+                    </button>
+
+                  </div>
+                )}
+
+              </div>
+
+              {/* =============================================
+                  INTERESTS
+              ============================================= */}
+
+              <div className="bd-section">
+
+                <div className="bd-section-head">
+
+                  <div className="bd-section-title">
+
+                    <div className="bd-section-icon">
+                      <FiTag />
+                    </div>
+
+                    <div>
+                      <span>
+                        YOUR CHOICES
+                      </span>
+
+                      <h2>
+                        Interests
+                      </h2>
+                    </div>
+
+                  </div>
+
+                  <button
+                    type="button"
+                    className="bd-edit-btn"
+                    onClick={() =>
+                      setEditing(
+                        editing ===
+                          "interests"
+                          ? null
+                          : "interests"
+                      )
+                    }
+                  >
+                    {editing ===
+                    "interests" ? (
+                      <>
+                        <FiX />
+                        Close
+                      </>
+                    ) : (
+                      <>
+                        <FiEdit3 />
+                        Edit
+                      </>
+                    )}
+                  </button>
+
+                </div>
+
+                <div className="bd-tags">
+
+                  {interests.length >
+                  0 ? (
+                    interests.map(
+                      (item) => (
+                        <span
+                          key={item}
+                        >
+                          <FiCheck />
+                          {item}
+                        </span>
+                      )
+                    )
+                  ) : (
+                    <p className="bd-empty">
+                      No interests
+                      selected
+                    </p>
+                  )}
+
+                </div>
+
+                {/* INTEREST EDIT */}
+
+                {editing ===
+                  "interests" && (
+                  <div className="bd-edit-panel">
+
+                    <div className="bd-choice-grid">
+
+                      {interestOptions.map(
+                        (item) => {
+                          const active =
+                            interests.includes(
+                              item
+                            );
+
+                          return (
+                            <button
+                              type="button"
+                              key={
+                                item
+                              }
+                              className={
+                                active
+                                  ? "active"
+                                  : ""
+                              }
+                              onClick={() =>
+                                toggleInterest(
+                                  item
+                                )
+                              }
+                            >
+                              {active && (
+                                <FiCheck />
+                              )}
+
+                              {item}
+                            </button>
+                          );
+                        }
+                      )}
+
+                    </div>
+
+                    <button
+                      type="button"
+                      className="bd-save-btn"
+                      onClick={
+                        saveChanges
+                      }
+                    >
+                      <FiCheck />
+                      Save Interests
+                    </button>
+
+                  </div>
+                )}
+
+              </div>
+
+              {/* =============================================
+                  PLACES
+              ============================================= */}
+
+              <div className="bd-section bd-last-section">
+
+                <div className="bd-section-head">
+
+                  <div className="bd-section-title">
+
+                    <div className="bd-section-icon">
+                      <FiMapPin />
+                    </div>
+
+                    <div>
+                      <span>
+                        YOUR ROUTE
+                      </span>
+
+                      <h2>
+                        Places You'll Visit
+                      </h2>
+                    </div>
+
+                  </div>
+
+                  {/* EDIT ALWAYS VISIBLE */}
+
+                  <button
+                    type="button"
+                    className="bd-edit-btn"
+                    onClick={() =>
+                      setEditing(
+                        editing ===
+                          "places"
+                          ? null
+                          : "places"
+                      )
+                    }
+                  >
+                    {editing ===
+                    "places" ? (
+                      <>
+                        <FiX />
+                        Close
+                      </>
+                    ) : (
+                      <>
+                        <FiEdit3 />
+                        Edit
+                      </>
+                    )}
+                  </button>
+
+                </div>
+
+                {/* SELECTED PLACES */}
+
+                <div className="bd-place-list">
+
+                  {places.length > 0 ? (
+                    places.map(
+                      (
+                        place,
+                        index
+                      ) => (
+                        <div
+                          className="bd-place-item"
+                          key={
+                            place
+                          }
+                        >
+                          <span>
+                            {String(
+                              index +
+                                1
+                            ).padStart(
+                              2,
+                              "0"
+                            )}
+                          </span>
+
+                          <strong>
+                            {place}
+                          </strong>
+                        </div>
+                      )
+                    )
+                  ) : (
+                    <p className="bd-empty">
+                      No places
+                      selected
+                    </p>
+                  )}
+
+                </div>
+
+                {/* PLACES EDIT */}
+
+                {editing ===
+                  "places" && (
+                  <div className="bd-edit-panel">
+
+                    <p className="bd-help">
+                      Maximum 3
+                      places select
+                      karo. Agar 3
+                      already selected
+                      hain to pehle
+                      kisi selected
+                      place ko remove
+                      karo.
+                    </p>
+
+                    <div className="bd-choice-grid">
+
+                      {availablePlaces.map(
+                        (place) => {
+                          const active =
+                            places.includes(
+                              place.name
+                            );
+
+                          return (
+                            <button
+                              type="button"
+                              key={
+                                place.name
+                              }
+                              className={
+                                active
+                                  ? "active"
+                                  : ""
+                              }
+                              onClick={() =>
+                                togglePlace(
+                                  place.name
+                                )
+                              }
+                            >
+                              {active && (
+                                <FiCheck />
+                              )}
+
+                              {
+                                place.name
+                              }
+                            </button>
+                          );
+                        }
+                      )}
+
+                    </div>
+
+                    <p className="bd-place-count">
+                      {places.length} / 3
+                      places selected
+                    </p>
+
+                    <button
+                      type="button"
+                      className="bd-save-btn"
+                      onClick={
+                        saveChanges
+                      }
+                    >
+                      <FiCheck />
+                      Save Places
+                    </button>
+
+                  </div>
+                )}
+
+              </div>
+
+            </section>
+
+          </div>
+
+          {/* =================================================
+              RIGHT SUMMARY
+          ================================================= */}
+
+          <aside className="bd-right">
+
+            <div className="bd-summary">
+
+              {/* HEADER */}
+
+              <div className="bd-summary-head">
+
+                <div className="bd-summary-icon">
                   <FiCalendar />
                 </div>
 
                 <div>
+                  <span>
+                    YOUR JOURNEY
+                  </span>
 
-                  <small>
-                    TRAVEL DATE
-                  </small>
-
-                  <strong>
-                    {date}
-                  </strong>
-
+                  <h2>
+                    Trip Summary
+                  </h2>
                 </div>
 
               </div>
 
-              {/* DURATION */}
+              {/* DESTINATION */}
 
-              <div className="quick-detail">
+              <div className="bd-summary-destination">
 
-                <div className="quick-icon">
-                  <FiClock />
+                <small>
+                  DESTINATION
+                </small>
+
+                <strong>
+                  {destinationName}
+                </strong>
+
+                <p>
+                  <FiMapPin />
+                  {destinationState}
+                </p>
+
+              </div>
+
+              {/* SUMMARY */}
+
+              <div className="bd-summary-list">
+
+                <div>
+                  <span>
+                    Going Date
+                  </span>
+
+                  <strong>
+                    {formatDate(
+                      goingDate
+                    )}
+                  </strong>
                 </div>
 
                 <div>
+                  <span>
+                    Return Date
+                  </span>
 
-                  <small>
-                    DURATION
-                  </small>
+                  <strong>
+                    {formatDate(
+                      returnDate
+                    )}
+                  </strong>
+                </div>
+
+                <div>
+                  <span>
+                    Duration
+                  </span>
 
                   <strong>
                     {days} Days
                   </strong>
-
-                </div>
-
-              </div>
-
-              {/* TRAVELLERS */}
-
-              <div className="quick-detail">
-
-                <div className="quick-icon">
-                  <FiUsers />
                 </div>
 
                 <div>
-
-                  <small>
-                    TRAVELLERS
-                  </small>
+                  <span>
+                    Trip Type
+                  </span>
 
                   <strong>
-                    {travellers}{" "}
-                    {travellers === 1
-                      ? "Person"
-                      : "People"}
+                    {travelType}
                   </strong>
-
                 </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* =================================================
-            HOTEL + PREFERENCES + PRICE
-        ================================================= */}
-
-        <section className="details-grid">
-
-          {/* =================================================
-              LEFT SIDE
-          ================================================= */}
-
-          <div className="details-left-column">
-
-            {/* ===============================================
-                HOTEL
-            =============================================== */}
-
-            <div className="hotel-box">
-
-              <div className="box-title">
 
                 <div>
-
                   <span>
-                    YOUR STAY
+                    Travellers
                   </span>
 
-                  <h2>
-                    {stayType}
-                  </h2>
-
+                  <strong>
+                    {travellers}
+                  </strong>
                 </div>
 
-                <div className="hotel-stars">
-
-                  <FiStar />
-
-                  <span>
-                    {hotel?.rating ||
-                      "4.8"}
-                  </span>
-
-                </div>
-
-              </div>
-
-              {/* HOTEL CONTENT */}
-
-              <div className="hotel-main">
-
-                <img
-                  src={
-                    hotel?.image ||
-                    defaultHotel.image
-                  }
-                  alt={
-                    hotel?.name ||
-                    "Hotel"
-                  }
-                  onError={(event) => {
-                    event.currentTarget.src =
-                      defaultHotel.image;
-                  }}
-                />
-
-                <div className="hotel-details">
-
-                  <h3>
-                    {hotel?.name ||
-                      "Premium Stay"}
-                  </h3>
-
-                  <div className="hotel-place">
-
-                    <FiMapPin />
-
-                    <span>
-                      {hotel?.location ||
-                        destinationLocation}
-                    </span>
-
-                  </div>
-
-                  <p>
-                    {hotel?.reviews ||
-                      `Comfortable stay with excellent service and a convenient location for your ${destinationName} trip.`}
-                  </p>
-
-                  {/* HOTEL FEATURES */}
-
-                  <div className="hotel-features">
-
-                    <span>
-                      <FiCheck />
-                      Comfortable Rooms
-                    </span>
-
-                    <span>
-                      <FiCheck />
-                      Great Location
-                    </span>
-
-                    <span>
-                      <FiCheck />
-                      Highly Rated
-                    </span>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-            {/* ===============================================
-                PREFERENCES
-                HOTEL KE JUST NICHE
-            =============================================== */}
-
-            <div className="preferences-card">
-
-              {/* =============================================
-                  TRAVEL PREFERENCE
-              ============================================= */}
-
-              <div className="preference-block">
-
-                <div className="preference-heading">
-
-                  <div className="preference-icon">
-                    <FiNavigation />
-                  </div>
-
-                  <div>
-
-                    <span>
-                      TRAVEL PREFERENCE
-                    </span>
-
-                    <h3>
-                      {transport}
-                    </h3>
-
-                  </div>
-
-                </div>
-
-                <p>
-                  Your transportation will be
-                  planned according to your
-                  selected travel preference.
-                </p>
-
-              </div>
-
-              {/* DIVIDER */}
-
-              <div className="preference-divider" />
-
-              {/* =============================================
-                  TRIP TYPE
-              ============================================= */}
-
-              <div className="preference-block">
-
-                <div className="preference-heading">
-
-                  <div className="preference-icon">
-                    <FiUsers />
-                  </div>
-
-                  <div>
-
-                    <span>
-                      TRIP TYPE
-                    </span>
-
-                    <h3>
-                      {travelType}
-                    </h3>
-
-                  </div>
-
-                </div>
-
-                <p>
-                  Your {destinationName} trip is
-                  planned for {travellers}{" "}
-                  {travellers === 1
-                    ? "traveller"
-                    : "travellers"}.
-                </p>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* =================================================
-              RIGHT SIDE
-              PRICE
-          ================================================= */}
-
-          <div className="price-box">
-
-            <div className="price-heading">
-
-              <div>
-
-                <span>
-                  TRIP COST
-                </span>
-
-                <h2>
-                  Estimated Price
-                </h2>
-
-              </div>
-
-              <div className="rupee-icon">
-                ₹
-              </div>
-
-            </div>
-
-            {/* ===============================================
-                SELECTED BUDGET
-            =============================================== */}
-
-            <div className="selected-budget">
-
-              <small>
-                YOUR SELECTED BUDGET
-              </small>
-
-              <strong>
-                {budget}
-              </strong>
-
-            </div>
-
-            {/* ===============================================
-                ESTIMATED PRICE
-            =============================================== */}
-
-            <div className="estimated-price">
-
-              <span>
-                ESTIMATED TOTAL
-              </span>
-
-              <strong>
-                ₹
-                {estimatedPrice.toLocaleString(
-                  "en-IN"
+                {/* FAMILY */}
+
+                {travelType ===
+                  "Family" && (
+                  <>
+                    <div>
+                      <span>
+                        Adults
+                      </span>
+
+                      <strong>
+                        {adults}
+                      </strong>
+                    </div>
+
+                    <div>
+                      <span>
+                        Children
+                      </span>
+
+                      <strong>
+                        {children}
+                      </strong>
+                    </div>
+                  </>
                 )}
-              </strong>
 
-              <small>
-                Approx. ₹
-                {perPerson.toLocaleString(
-                  "en-IN"
-                )}{" "}
-                per traveller
-              </small>
+                {/* PRICE PER ADULT */}
 
-            </div>
+                <div>
+                  <span>
+                    Base Price
+                  </span>
 
-            {/* ===============================================
-                PRICE DETAILS
-            =============================================== */}
+                  <strong>
+                    ₹
+                    {basePrice.toLocaleString(
+                      "en-IN"
+                    )}
+                  </strong>
+                </div>
 
-            <div className="price-row">
+                <div>
+                  <span>
+                    Budget Range
+                  </span>
 
-              <span>
-                Stay
-              </span>
+                  <strong className="bd-blue">
+                    {budget}
+                  </strong>
+                </div>
 
-              <strong>
-                {stayType}
-              </strong>
+              </div>
 
-            </div>
+              {/* PLACES */}
 
-            <div className="price-row">
+              <div className="bd-summary-section">
 
-              <span>
-                Transport
-              </span>
+                <small>
+                  SELECTED PLACES
+                </small>
 
-              <strong>
-                {transport}
-              </strong>
+                <div className="bd-summary-tags">
 
-            </div>
+                  {places.length >
+                  0 ? (
+                    places.map(
+                      (place) => (
+                        <span
+                          key={
+                            place
+                          }
+                        >
+                          {place}
+                        </span>
+                      )
+                    )
+                  ) : (
+                    <p>
+                      No places
+                      selected
+                    </p>
+                  )}
 
-            <div className="price-row">
+                </div>
 
-              <span>
-                Travellers
-              </span>
+              </div>
 
-              <strong>
-                {travellers}
-              </strong>
+              {/* INTERESTS */}
 
-            </div>
+              <div className="bd-summary-section">
 
-            <div className="price-row">
+                <small>
+                  INTERESTS
+                </small>
 
-              <span>
-                Duration
-              </span>
+                <div className="bd-summary-tags">
 
-              <strong>
-                {days} Days
-              </strong>
+                  {interests.length >
+                  0 ? (
+                    interests.map(
+                      (item) => (
+                        <span
+                          key={
+                            item
+                          }
+                        >
+                          {item}
+                        </span>
+                      )
+                    )
+                  ) : (
+                    <p>
+                      No interests
+                      selected
+                    </p>
+                  )}
 
-            </div>
+                </div>
 
-          </div>
+              </div>
 
-        </section>
+              {/* TOTAL */}
 
-        {/* =================================================
-            PLACES + INTERESTS
-        ================================================= */}
+              <div className="bd-total-box">
 
-        <section className="selection-grid">
+                <div className="bd-total-top">
 
-          {/* =================================================
-              PLACES
-          ================================================= */}
+                  <div>
+                    <small>
+                      ESTIMATED TOTAL
+                    </small>
 
-          <div className="selection-card">
+                    <strong>
+                      {formattedAmount}
+                    </strong>
+                  </div>
 
-            <span>
-              SELECTED PLACES
-            </span>
+                  <div className="bd-total-traveller">
+                    For{" "}
+                    {travellers}{" "}
+                    {travellers === 1
+                      ? "Traveller"
+                      : "Travellers"}
+                  </div>
 
-            <h3>
-              Places you want to explore
-            </h3>
+                </div>
 
-            <div className="tag-list">
+                {travelType ===
+                  "Family" ? (
+                  <p>
+                    {adults} adult
+                    {Number(
+                      adults
+                    ) !== 1
+                      ? "s"
+                      : ""}{" "}
+                    + {children}{" "}
+                    child
+                    {Number(
+                      children
+                    ) !== 1
+                      ? "ren"
+                      : ""}.
+                    Children are
+                    calculated at
+                    50% of the
+                    adult price.
+                  </p>
+                ) : (
+                  <p>
+                    Price calculated
+                    for your selected
+                    travellers.
+                  </p>
+                )}
 
-              {places.map(
-                (place, index) => {
-                  const placeName =
-                    typeof place ===
-                    "string"
-                      ? place
-                      : place?.name ||
-                        "Place";
+              </div>
 
-                  return (
-                    <div
-                      className="travel-tag"
-                      key={`${placeName}-${index}`}
-                    >
-                      <FiMapPin />
+              {/* PAYMENT */}
 
-                      <span>
-                        {placeName}
-                      </span>
-
-                    </div>
-                  );
+              <button
+                type="button"
+                className="bd-payment-btn"
+                onClick={
+                  handlePayment
                 }
-              )}
+              >
+                Proceed to Payment
+                <FiArrowRight />
+              </button>
+
+              <p className="bd-payment-note">
+                Final amount will
+                be confirmed before
+                payment.
+              </p>
 
             </div>
 
-          </div>
+          </aside>
 
-          {/* =================================================
-              INTERESTS
-          ================================================= */}
-
-          <div className="selection-card">
-
-            <span>
-              YOUR INTERESTS
-            </span>
-
-            <h3>
-              Things you want to enjoy
-            </h3>
-
-            <div className="tag-list">
-
-              {interests.map(
-                (
-                  interest,
-                  index
-                ) => {
-                  const interestName =
-                    typeof interest ===
-                    "string"
-                      ? interest
-                      : interest?.name ||
-                        "Experience";
-
-                  return (
-                    <div
-                      className="travel-tag"
-                      key={`${interestName}-${index}`}
-                    >
-                      <FiCheck />
-
-                      <span>
-                        {interestName}
-                      </span>
-
-                    </div>
-                  );
-                }
-              )}
-
-            </div>
-
-          </div>
-
-        </section>
-
-        {/* =================================================
-            FINAL CTA
-        ================================================= */}
-
-        <section className="final-card">
-
-          <div>
-
-            <span>
-              YOUR TRIP IS READY
-            </span>
-
-            <h2>
-              Ready to continue?
-            </h2>
-
-            <p>
-              Check your trip details once and
-              continue to the secure booking and
-              payment summary.
-            </p>
-
-          </div>
-
-          <button
-            type="button"
-            className="continue-button"
-            onClick={handleConfirm}
-          >
-
-            <span>
-              Proceed to Payment
-            </span>
-
-            <FiArrowRight />
-
-          </button>
-
-        </section>
+        </div>
 
       </main>
 

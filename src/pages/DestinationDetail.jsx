@@ -34,8 +34,8 @@ const destinations = [
     category: "Beach",
     rating: "4.9",
     reviews: "2,480",
-    price: "₹8,999",
-    days: "3 Days / 2 Nights",
+    price: "₹10,999",
+    days: "2 Days / 2 Nights",
     bestTime: "October – March",
 
     description:
@@ -121,7 +121,7 @@ const destinations = [
     category: "Culture",
     rating: "4.8",
     reviews: "2,360",
-    price: "₹6,499",
+    price: "₹12,499",
     days: "3 Days / 2 Nights",
     bestTime: "October – March",
 
@@ -206,7 +206,7 @@ const destinations = [
     category: "Mountains",
     rating: "4.8",
     reviews: "1,920",
-    price: "₹7,499",
+    price: "₹15,499",
     days: "4 Days / 3 Nights",
     bestTime: "October – June",
 
@@ -291,7 +291,7 @@ const destinations = [
     category: "Heritage",
     rating: "4.8",
     reviews: "1,760",
-    price: "₹6,999",
+    price: "₹19,999",
     days: "3 Days / 2 Nights",
     bestTime: "October – March",
 
@@ -1221,31 +1221,9 @@ const DestinationDetail = () => {
         <div className="plan-trip-info">
 
 
-          <div className="plan-price">
+          
 
-            <span>
-              FROM
-            </span>
-
-            <strong>
-              {destination.price}
-            </strong>
-
-          </div>
-
-
-          <div className="plan-days">
-
-            <span>
-              TRIP LENGTH
-            </span>
-
-            <strong>
-              {destination.days}
-            </strong>
-
-          </div>
-
+          
 <Link
   to="/trip-plan"
   state={{

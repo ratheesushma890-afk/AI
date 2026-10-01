@@ -1,0 +1,737 @@
+/* =========================================================
+   USER REGISTER PAGE
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.user-register-page {
+  width: 100%;
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-columns: 48% 52%;
+
+  background: #f8fbff;
+
+  color: #18243a;
+
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+/* =========================================================
+   LEFT IMAGE
+========================================================= */
+
+.user-register-visual {
+  position: relative;
+
+  min-height: 100vh;
+
+  overflow: hidden;
+}
+
+.user-register-visual > img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.user-register-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 30, 47, 0.18),
+      rgba(8, 28, 45, 0.35) 50%,
+      rgba(6, 24, 39, 0.82)
+    );
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.user-register-logo {
+  position: absolute;
+
+  top: 32px;
+  left: 40px;
+
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  color: #ffffff;
+
+  text-decoration: none;
+}
+
+.user-register-logo-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.4);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(10px);
+
+  font-size: 18px;
+}
+
+.user-register-logo strong,
+.user-register-logo span {
+  display: block;
+}
+
+.user-register-logo strong {
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 22px;
+}
+
+.user-register-logo span {
+  margin-top: 2px;
+
+  color:
+    rgba(255, 255, 255, 0.7);
+
+  font-size: 8px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.4px;
+}
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.user-register-visual-content {
+  position: absolute;
+
+  left: 45px;
+  right: 45px;
+  bottom: 48px;
+
+  z-index: 5;
+
+  color: #ffffff;
+}
+
+.user-register-eyebrow {
+  display: block;
+
+  margin-bottom: 14px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 2.3px;
+}
+
+.user-register-visual-content h1 {
+  margin: 0;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: clamp(
+    42px,
+    5vw,
+    66px
+  );
+
+  font-weight: 500;
+
+  line-height: 1.02;
+
+  letter-spacing: -1.5px;
+}
+
+.user-register-visual-content h1 em {
+  font-weight: 400;
+}
+
+.user-register-visual-content > p {
+  max-width: 520px;
+
+  margin: 18px 0 0;
+
+  color:
+    rgba(255, 255, 255, 0.8);
+
+  font-size: 12px;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.user-register-features {
+  margin-top: 30px;
+
+  padding-top: 20px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 15px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.25);
+}
+
+.user-register-features > div {
+  display: flex;
+
+  gap: 9px;
+}
+
+.user-register-features strong {
+  color:
+    rgba(255, 255, 255, 0.5);
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 13px;
+}
+
+.user-register-features span {
+  color:
+    rgba(255, 255, 255, 0.7);
+
+  font-size: 9px;
+
+  line-height: 1.5;
+}
+
+.user-register-features b {
+  display: block;
+
+  color: #ffffff;
+
+  font-size: 10px;
+}
+
+/* =========================================================
+   RIGHT SIDE
+========================================================= */
+
+.user-register-form-side {
+  position: relative;
+
+  min-height: 100vh;
+
+  padding: 75px 7% 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(71, 151, 226, 0.12),
+      transparent 30%
+    ),
+    #f9fbfd;
+}
+
+/* =========================================================
+   BACK
+========================================================= */
+
+.user-register-back {
+  position: absolute;
+
+  top: 30px;
+  left: 35px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #69768a;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.user-register-back:hover {
+  color: #2877c6;
+}
+
+/* =========================================================
+   WRAPPER
+========================================================= */
+
+.user-register-form-wrapper {
+  width: 100%;
+  max-width: 530px;
+}
+
+.user-register-mobile-logo {
+  display: none;
+}
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.user-register-heading > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #347bc8;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.user-register-heading h2 {
+  margin: 0;
+
+  color: #17253b;
+
+  font-family:
+    "Playfair Display",
+    serif;
+
+  font-size: 38px;
+  font-weight: 500;
+
+  line-height: 1.1;
+}
+
+.user-register-heading h2 em {
+  color: #347bc8;
+
+  font-weight: 400;
+}
+
+.user-register-heading p {
+  margin: 11px 0 0;
+
+  color: #8995a6;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.user-register-form {
+  margin-top: 25px;
+}
+
+.user-register-field {
+  margin-bottom: 14px;
+}
+
+.user-register-field label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #344157;
+
+  font-size: 10px;
+  font-weight: 650;
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.user-register-input {
+  height: 48px;
+
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe7f0;
+
+  border-radius: 9px;
+
+  transition: 0.2s ease;
+}
+
+.user-register-input:focus-within {
+  border-color: #72a7dd;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(52, 123, 200, 0.07);
+}
+
+.user-register-input > svg {
+  flex-shrink: 0;
+
+  color: #8e9aab;
+
+  font-size: 15px;
+}
+
+.user-register-input input {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: #28364b;
+
+  font-family: inherit;
+
+  font-size: 11px;
+}
+
+.user-register-input input::placeholder {
+  color: #aab3c0;
+}
+
+/* =========================================================
+   PASSWORD GRID
+========================================================= */
+
+.user-register-password-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 12px;
+}
+
+/* =========================================================
+   PASSWORD EYE
+========================================================= */
+
+.user-register-password-toggle {
+  width: 28px;
+  height: 28px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #8e9aab;
+
+  cursor: pointer;
+
+  font-size: 15px;
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.user-register-error {
+  margin-bottom: 12px;
+
+  padding: 9px 11px;
+
+  border:
+    1px solid #f2d1d1;
+
+  border-radius: 7px;
+
+  background: #fff1f1;
+
+  color: #c44e4e;
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   TERMS
+========================================================= */
+
+.user-register-terms {
+  margin-bottom: 15px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 8px;
+
+  color: #748196;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+
+  cursor: pointer;
+}
+
+.user-register-terms input {
+  width: 13px;
+  height: 13px;
+
+  margin-top: 1px;
+
+  flex-shrink: 0;
+
+  accent-color: #347bc8;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.user-register-submit {
+  width: 100%;
+  height: 50px;
+
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 0;
+
+  border-radius: 9px;
+
+  background: #1f6fbe;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 24px
+    rgba(31, 111, 190, 0.17);
+
+  transition: 0.2s ease;
+}
+
+.user-register-submit:hover {
+  background: #185fa5;
+
+  transform: translateY(-2px);
+}
+
+.user-register-submit svg {
+  font-size: 16px;
+}
+
+/* =========================================================
+   LOGIN LINK
+========================================================= */
+
+.user-register-login {
+  margin-top: 19px;
+
+  padding: 16px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-top:
+    1px solid #e4eaf1;
+
+  border-bottom:
+    1px solid #e4eaf1;
+}
+
+.user-register-login span {
+  color: #8995a6;
+
+  font-size: 9px;
+}
+
+.user-register-login a {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #2f78c6;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.user-register-footer {
+  margin-top: 16px;
+
+  display: flex;
+  justify-content: space-between;
+
+  color: #abb3bf;
+
+  font-size: 8px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+  .user-register-page {
+    grid-template-columns:
+      42% 58%;
+  }
+
+  .user-register-visual-content {
+    left: 28px;
+    right: 28px;
+  }
+
+  .user-register-features {
+    grid-template-columns: 1fr;
+  }
+
+  .user-register-features
+    > div:nth-child(3) {
+    display: none;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 720px) {
+  .user-register-page {
+    display: block;
+  }
+
+  .user-register-visual {
+    display: none;
+  }
+
+  .user-register-form-side {
+    min-height: 100vh;
+
+    padding:
+      80px 20px 30px;
+
+    align-items: flex-start;
+  }
+
+  .user-register-back {
+    top: 24px;
+    left: 20px;
+  }
+
+  .user-register-mobile-logo {
+    margin-bottom: 28px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #2877c6;
+  }
+
+  .user-register-mobile-logo strong {
+    color: #17253b;
+
+    font-family:
+      "Playfair Display",
+      serif;
+
+    font-size: 21px;
+  }
+
+  .user-register-heading h2 {
+    font-size: 32px;
+  }
+
+  .user-register-password-grid {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+  .user-register-form-side {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .user-register-heading h2 {
+    font-size: 29px;
+  }
+
+  .user-register-login {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 8px;
+  }
+}

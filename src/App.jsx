@@ -33,6 +33,8 @@ import CreateTrip from "./pages/CreateTrip";
 import Destinations from "./pages/Destinations";
 import DestinationDetail from "./pages/DestinationDetail";
 
+/* ORIGINAL WEBSITE LOGIN / SIGNUP */
+
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 
@@ -92,6 +94,15 @@ import ClientCustomers from "./pages/clientAdmin/ClientCustomers";
 import ClientReviews from "./pages/clientAdmin/ClientReviews";
 import ClientMessages from "./pages/clientAdmin/ClientMessages";
 
+/* =====================================================
+   USER ACCOUNT
+===================================================== */
+
+import UserDashboard from "./pages/UserDashboard";
+import UserTrips from "./pages/UserTrips";
+import UserBookings from "./pages/UserBookings";
+import UserWishlist from "./pages/UserWishlist";
+import UserProfile from "./pages/UserProfile";
 /* =====================================================
    SCROLL TO TOP
 ===================================================== */
@@ -182,6 +193,46 @@ const ClientAdminProtectedRoute = ({ children }) => {
 };
 
 /* =====================================================
+   USER PROTECTED ROUTE
+===================================================== */
+
+const UserProtectedRoute = ({ children }) => {
+  let user = null;
+
+  try {
+    const storedUser =
+      localStorage.getItem("tripperUser");
+
+    if (storedUser) {
+      user = JSON.parse(storedUser);
+    }
+  } catch (error) {
+    console.error(
+      "User authentication error:",
+      error
+    );
+
+    user = null;
+  }
+
+  const loggedIn =
+    localStorage.getItem(
+      "tripperUserLoggedIn"
+    ) === "true";
+
+  if (!loggedIn || !user?.loggedIn) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+      />
+    );
+  }
+
+  return children;
+};
+
+/* =====================================================
    APP
 ===================================================== */
 
@@ -193,17 +244,41 @@ const App = () => {
   =================================================== */
 
   const isAdminPage =
-    location.pathname.startsWith("/admin-secret") ||
-    location.pathname.startsWith("/client-admin");
+    location.pathname.startsWith(
+      "/admin-secret"
+    ) ||
+    location.pathname.startsWith(
+      "/client-admin"
+    );
 
   /* ===================================================
-     HIDE FOOTER
+     CHECK USER ACCOUNT PAGE
+  =================================================== */
+
+  const isUserAccountPage =
+    location.pathname.startsWith(
+      "/user/"
+    );
+
+  /* ===================================================
+     HIDE MAIN WEBSITE NAVBAR
+  =================================================== */
+
+  const hideNavbar =
+    isAdminPage ||
+    isUserAccountPage ||
+    location.pathname === "/login" ||
+    location.pathname === "/signup";
+
+  /* ===================================================
+     HIDE MAIN WEBSITE FOOTER
   =================================================== */
 
   const hideFooter =
-    location.pathname === "/signup" ||
+    isAdminPage ||
+    isUserAccountPage ||
     location.pathname === "/login" ||
-    isAdminPage;
+    location.pathname === "/signup";
 
   return (
     <WishlistProvider>
@@ -218,7 +293,7 @@ const App = () => {
           MAIN WEBSITE NAVBAR
       ============================================= */}
 
-      {!isAdminPage && <Navbar />}
+      {!hideNavbar && <Navbar />}
 
       {/* =============================================
           ROUTES
@@ -261,7 +336,7 @@ const App = () => {
         />
 
         {/* =================================================
-            USER AUTH
+            ORIGINAL WEBSITE USER AUTH
         ================================================= */}
 
         <Route
@@ -274,6 +349,50 @@ const App = () => {
           element={<Login />}
         />
 
+        {/* =================================================
+            USER DASHBOARD
+        ================================================= */}
+
+        <Route
+          path="/user/dashboard"
+          element={
+            <UserProtectedRoute>
+              <UserDashboard />
+            </UserProtectedRoute>
+          }
+        />
+<Route
+  path="/user/trips"
+  element={
+    <UserProtectedRoute>
+      <UserTrips />
+    </UserProtectedRoute>
+  }
+/>
+<Route
+  path="/user/bookings"
+  element={
+    <UserProtectedRoute>
+      <UserBookings />
+    </UserProtectedRoute>
+  }
+/>
+<Route
+  path="/user/wishlist"
+  element={
+    <UserProtectedRoute>
+      <UserWishlist />
+    </UserProtectedRoute>
+  }
+/>
+<Route
+  path="/user/profile"
+  element={
+    <UserProtectedRoute>
+      <UserProfile />
+    </UserProtectedRoute>
+  }
+/>
         {/* =================================================
             INFORMATION
         ================================================= */}
@@ -542,7 +661,10 @@ const App = () => {
           WISHLIST DRAWER
       ============================================= */}
 
-      {!isAdminPage && <WishlistDrawer />}
+      {!isAdminPage &&
+        !isUserAccountPage && (
+          <WishlistDrawer />
+        )}
 
     </WishlistProvider>
   );

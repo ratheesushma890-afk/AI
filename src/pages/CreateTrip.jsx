@@ -25,7 +25,9 @@ import {
 } from "react-icons/fi";
 
 import destinations from "../Data/destinations";
+
 import "./CreateTrip.css";
+
 
 /* =========================================================
    FALLBACK IMAGE
@@ -34,722 +36,1217 @@ import "./CreateTrip.css";
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=85";
 
+
 /* =========================================================
-   HOTEL DATA
+   HOTEL / STAY DATA
 ========================================================= */
 
 const stayData = {
+
+  /* =======================================================
+     HOTELS
+  ======================================================= */
+
   Hotel: [
     {
       name: "Grand Heritage Hotel",
+
       type: "Hotel",
+
       location: "City Centre",
+
       rating: "4.8",
+
       reviews: "1,240 reviews",
+
       image:
         "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=85",
     },
+
     {
       name: "Luxury City Hotel",
+
       type: "Hotel",
+
       location: "Central District",
+
       rating: "4.7",
+
       reviews: "980 reviews",
+
       image:
         "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1200&q=85",
     },
+
     {
       name: "Boutique Heritage Hotel",
+
       type: "Hotel",
+
       location: "Heritage Area",
+
       rating: "4.9",
+
       reviews: "720 reviews",
+
       image:
         "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=85",
     },
   ],
 
+
+  /* =======================================================
+     RESORTS
+  ======================================================= */
+
   Resort: [
     {
       name: "Luxury Resort",
+
       type: "Resort",
+
       location: "Scenic Location",
+
       rating: "4.9",
+
       reviews: "1,430 reviews",
+
       image:
         "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=85",
     },
+
     {
       name: "Grand Palace Resort",
+
       type: "Resort",
+
       location: "Premium District",
+
       rating: "4.8",
+
       reviews: "1,050 reviews",
+
       image:
         "https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=1200&q=85",
     },
+
     {
       name: "Nature View Resort",
+
       type: "Resort",
+
       location: "Nature Retreat",
+
       rating: "4.7",
+
       reviews: "840 reviews",
+
       image:
         "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85",
     },
   ],
 
+
+  /* =======================================================
+     VILLAS
+  ======================================================= */
+
   Villa: [
     {
       name: "Luxury Private Villa",
+
       type: "Villa",
+
       location: "Private Estate",
+
       rating: "4.9",
+
       reviews: "540 reviews",
+
       image:
         "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85",
     },
+
     {
       name: "Private Pool Villa",
+
       type: "Villa",
+
       location: "Peaceful Area",
+
       rating: "4.8",
+
       reviews: "430 reviews",
+
       image:
         "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=85",
     },
+
     {
       name: "Modern Holiday Villa",
+
       type: "Villa",
+
       location: "Holiday District",
+
       rating: "4.7",
+
       reviews: "390 reviews",
+
       image:
         "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=85",
     },
   ],
 
+
+  /* =======================================================
+     HOSTELS
+  ======================================================= */
+
   Hostel: [
     {
       name: "Premium Backpackers Hostel",
+
       type: "Hostel",
+
       location: "City Centre",
+
       rating: "4.7",
+
       reviews: "1,180 reviews",
+
       image:
         "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=1200&q=85",
     },
+
     {
       name: "Traveller Hostel",
+
       type: "Hostel",
+
       location: "Main Market",
+
       rating: "4.6",
+
       reviews: "920 reviews",
+
       image:
         "https://images.unsplash.com/photo-1520277739336-7bf67edfa768?auto=format&fit=crop&w=1200&q=85",
     },
+
     {
       name: "Social Stay Hostel",
+
       type: "Hostel",
+
       location: "Tourist Area",
+
       rating: "4.8",
+
       reviews: "780 reviews",
+
       image:
         "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=85",
     },
   ],
 };
 
+
 /* =========================================================
-   HELPERS
+   NORMALIZE TEXT
 ========================================================= */
 
-const normalizeText = (value = "") => {
+const normalizeText = (
+  value = ""
+) => {
+
   return String(value)
+
     .toLowerCase()
+
     .replace(/[’']/g, "")
+
     .replace(/[,.]/g, "")
+
     .replace(/\s+/g, " ")
+
     .trim();
 };
 
-const getDaysNumber = (value, fallback = 3) => {
-  const match = String(value ?? "").match(/\d+/);
+
+/* =========================================================
+   GET DAYS NUMBER
+========================================================= */
+
+const getDaysNumber = (
+  value,
+  fallback = 3
+) => {
+
+  const match =
+    String(
+      value ?? ""
+    ).match(/\d+/);
 
   if (!match) {
     return fallback;
   }
 
-  const number = Number(match[0]);
+  const number =
+    Number(match[0]);
 
   return Number.isFinite(number)
     ? number
     : fallback;
 };
 
+
 /* =========================================================
-   CREATE TRIP
+   CREATE TRIP COMPONENT
 ========================================================= */
 
 const CreateTrip = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+
+  const navigate =
+    useNavigate();
+
+  const location =
+    useLocation();
+
 
   /* =======================================================
      STATES
   ======================================================= */
 
-  const [trip, setTrip] = useState({});
+  const [trip, setTrip] =
+    useState({});
 
-  const [activePlace, setActivePlace] =
-    useState(0);
 
-  const [activeHotel, setActiveHotel] =
-    useState(0);
+  /*
+    Selected place ka index.
 
-  const [activeDay, setActiveDay] =
-    useState(1);
+    Ye place images ko automatic
+    change karne ke liye use hoga.
+  */
+
+  const [
+    activePlace,
+    setActivePlace,
+  ] = useState(0);
+
+
+  /*
+    Selected hotel ka index.
+
+    IMPORTANT:
+    Hotel automatic change nahi hoga.
+    Neeche hotel thumbnail par click karne
+    par hi selected hotel change hoga.
+  */
+
+  const [
+    activeHotel,
+    setActiveHotel,
+  ] = useState(0);
+
+
+  /*
+    Daily journey me selected day.
+  */
+
+  const [
+    activeDay,
+    setActiveDay,
+  ] = useState(1);
+
 
   /* =======================================================
      LOAD TRIP
   ======================================================= */
 
   useEffect(() => {
+
     let savedTrip = {};
 
     try {
-      const stored =
-        localStorage.getItem("tripperTrip");
 
-      savedTrip = stored
-        ? JSON.parse(stored)
-        : {};
+      const stored =
+        localStorage.getItem(
+          "tripperTrip"
+        );
+
+      savedTrip =
+        stored
+          ? JSON.parse(stored)
+          : {};
+
     } catch (error) {
+
       console.error(
         "Trip restore error:",
         error
       );
+
     }
+
+
+    /* =========================
+       ROUTER STATE
+    ========================= */
 
     const stateData =
       location.state || {};
 
+
     const stateTrip =
       stateData?.trip || {};
 
-    /*
-      TripPlan navigate("/create-trip", {
-        state: tripData
-      })
-
-      karta hai.
-
-      Isliye location.state ko bhi preserve
-      karna zaroori hai.
-    */
-
     const finalTrip = {
+
       ...savedTrip,
+
       ...stateTrip,
+
       ...stateData,
+
     };
+
+
+    /*
+      Agar state ke andar trip
+      property thi to duplicate
+      object remove kar do.
+    */
 
     delete finalTrip.trip;
 
-    setTrip(finalTrip);
+
+    setTrip(
+      finalTrip
+    );
+
+
+    /*
+      Latest merged trip ko
+      localStorage me preserve karo.
+    */
 
     if (
-      Object.keys(finalTrip).length > 0
+      Object.keys(
+        finalTrip
+      ).length > 0
     ) {
+
       localStorage.setItem(
+
         "tripperTrip",
-        JSON.stringify(finalTrip)
+
+        JSON.stringify(
+          finalTrip
+        )
+
       );
+
     }
-  }, [location.state]);
+
+  }, [
+    location.state,
+  ]);
+
 
   /* =======================================================
      DESTINATION NAME
   ======================================================= */
 
-  const destinationName = useMemo(() => {
-    const value =
-      trip?.destination ||
-      location.state?.destination ||
-      "Goa";
+  const destinationName =
+    useMemo(() => {
 
-    if (
-      typeof value === "object"
-    ) {
-      return (
-        value?.name ||
-        "Goa"
-      );
-    }
+      const value =
 
-    return String(value);
-  }, [
-    trip?.destination,
-    location.state,
-  ]);
+        trip?.destination ||
+
+        location.state
+          ?.destination ||
+
+        "Goa";
+
+
+      /*
+        Agar destination object
+        ke form me aa gaya.
+      */
+
+      if (
+        typeof value ===
+        "object"
+      ) {
+
+        return (
+          value?.name ||
+          "Goa"
+        );
+
+      }
+
+
+      return String(value);
+
+    }, [
+
+      trip?.destination,
+
+      location.state,
+
+    ]);
+
 
   /* =======================================================
-     FIND DESTINATION FROM SAME destinations.js
+     FIND DESTINATION DATA
 
-     TripPlan bhi isi destinations.js ko use karta hai.
+     TripPlan aur CreateTrip dono
+     same destinations.js use karenge.
   ======================================================= */
 
-  const destinationData = useMemo(() => {
-    const target =
-      normalizeText(
-        destinationName
-      );
+  const destinationData =
+    useMemo(() => {
 
-    if (!target) {
-      return null;
-    }
+      const target =
+        normalizeText(
+          destinationName
+        );
 
-    if (
-      Array.isArray(destinations)
-    ) {
+
+      if (!target) {
+        return null;
+      }
+
+
+      /*
+        destinations.js ARRAY hai
+        to id/name se search karo.
+      */
+
+      if (
+        Array.isArray(
+          destinations
+        )
+      ) {
+
+        return (
+
+          destinations.find(
+            (item) => {
+
+              const id =
+                normalizeText(
+                  item?.id || ""
+                );
+
+
+              const name =
+                normalizeText(
+                  item?.name || ""
+                );
+
+
+              return (
+
+                id === target ||
+
+                name === target
+
+              );
+
+            }
+          ) || null
+
+        );
+
+      }
+
+
+      /*
+        Agar destinations object
+        form me ho.
+      */
+
       return (
-        destinations.find(
-          (item) => {
-            const id =
-              normalizeText(
-                item?.id || ""
-              );
 
-            const name =
-              normalizeText(
-                item?.name || ""
-              );
+        destinations?.[
+          target
+        ] ||
 
-            return (
-              id === target ||
-              name === target
-            );
-          }
-        ) || null
+        null
+
       );
-    }
 
-    return (
-      destinations?.[target] ||
-      null
-    );
-  }, [destinationName]);
+    }, [
+      destinationName,
+    ]);
+
 
   /* =======================================================
      DESTINATION MAIN DATA
   ======================================================= */
 
-  const destination = useMemo(() => {
-    const passedImage =
-      trip?.image ||
-      trip?.destinationImage ||
-      location.state?.image ||
-      location.state
-        ?.destinationImage;
+  const destination =
+    useMemo(() => {
 
-    return {
-      name:
-        destinationData?.name ||
-        destinationName ||
-        "Destination",
+      const passedImage =
 
-      state:
-        trip?.state ||
-        trip?.destinationState ||
-        destinationData?.state ||
-        destinationData?.location ||
-        destinationData?.country ||
-        destinationName,
+        trip?.image ||
 
-      image:
-        passedImage ||
-        destinationData?.image ||
-        FALLBACK_IMAGE,
+        trip?.destinationImage ||
 
-      description:
-        trip?.description ||
-        destinationData
-          ?.description ||
-        "",
+        location.state?.image ||
 
-      bestFor:
-        trip?.bestFor ||
-        destinationData
-          ?.bestFor ||
-        destinationData
-          ?.category ||
-        "Explore • Experience • Discover",
+        location.state
+          ?.destinationImage;
 
-      rating:
-        trip?.rating ||
-        destinationData?.rating ||
-        "4.8",
-    };
-  }, [
-    destinationData,
-    destinationName,
-    trip,
-    location.state,
-  ]);
+
+      return {
+
+        /* NAME */
+
+        name:
+
+          destinationData?.name ||
+
+          destinationName ||
+
+          "Destination",
+
+
+        /* STATE / LOCATION */
+
+        state:
+
+          trip?.state ||
+
+          trip?.destinationState ||
+
+          destinationData?.state ||
+
+          destinationData
+            ?.location ||
+
+          destinationData
+            ?.country ||
+
+          destinationName,
+
+
+        /* MAIN IMAGE */
+
+        image:
+
+          passedImage ||
+
+          destinationData?.image ||
+
+          FALLBACK_IMAGE,
+
+
+        /* DESCRIPTION */
+
+        description:
+
+          trip?.description ||
+
+          destinationData
+            ?.description ||
+
+          "",
+
+
+        /* BEST FOR */
+
+        bestFor:
+
+          trip?.bestFor ||
+
+          destinationData
+            ?.bestFor ||
+
+          destinationData
+            ?.category ||
+
+          "Explore • Experience • Discover",
+
+
+        /* RATING */
+
+        rating:
+
+          trip?.rating ||
+
+          destinationData
+            ?.rating ||
+
+          "4.8",
+
+      };
+
+    }, [
+
+      destinationData,
+
+      destinationName,
+
+      trip,
+
+      location.state,
+
+    ]);
+
 
   /* =======================================================
      AVAILABLE DESTINATION PLACES
-
-     IMPORTANT:
-     TripPlan me jo circles aa rahe hain,
-     woh bhi destinations.js ke places se aa rahe hain.
-
-     Isliye CreateTrip bhi SAME source use karega.
   ======================================================= */
 
-  const availablePlaces = useMemo(() => {
-    if (
-      !destinationData ||
-      !Array.isArray(
-        destinationData?.places
-      )
-    ) {
-      return [];
-    }
+  const availablePlaces =
+    useMemo(() => {
 
-    return destinationData.places
-      .map((place) => {
-        if (
-          typeof place ===
-          "string"
-        ) {
+      /*
+        Agar destination me
+        places nahi hain.
+      */
+
+      if (
+
+        !destinationData ||
+
+        !Array.isArray(
+          destinationData
+            ?.places
+        )
+
+      ) {
+
+        return [];
+
+      }
+
+
+      return destinationData
+        .places
+
+        .map(
+          (place) => {
+
+            /*
+              Agar place sirf string hai.
+            */
+
+            if (
+              typeof place ===
+              "string"
+            ) {
+
+              return {
+
+                name:
+                  place,
+
+                image:
+                  destination.image,
+
+                location:
+                  destination.state,
+
+                description:
+                  `Explore ${place}.`,
+
+                detail:
+                  "",
+
+                highlights: [
+                  "Local Experience",
+                  "Beautiful Views",
+                  "Explore & Discover",
+                ],
+
+              };
+
+            }
+
+
+            /*
+              Agar full place object hai.
+            */
+
+            return {
+
+              ...place,
+
+
+              name:
+
+                place?.name ||
+
+                "",
+
+
+              image:
+
+                place?.image ||
+
+                destination.image,
+
+
+              location:
+
+                place?.location ||
+
+                destination.state,
+
+
+              description:
+
+                place?.description ||
+
+                `Explore ${
+                  place?.name ||
+                  destination.name
+                }.`,
+
+
+              detail:
+
+                place?.detail ||
+
+                "",
+
+
+              highlights:
+
+                Array.isArray(
+                  place?.highlights
+                ) &&
+
+                place.highlights
+                  .length
+
+                  ? place.highlights
+
+                  : [
+                      "Local Experience",
+                      "Beautiful Views",
+                      "Explore & Discover",
+                    ],
+
+            };
+
+          }
+        )
+
+        .filter(
+          (place) =>
+            place.name
+        );
+
+    }, [
+
+      destinationData,
+
+      destination.image,
+
+      destination.state,
+
+      destination.name,
+
+    ]);
+
+
+  /* =======================================================
+     SELECTED PLACES
+
+     TripPlan me selected maximum
+     3 places yahan preserve honge.
+  ======================================================= */
+
+  const selectedPlaces =
+    useMemo(() => {
+
+      let rawPlaces =
+
+        trip?.places ||
+
+        trip?.selectedPlaces ||
+
+        [];
+
+
+      /*
+        Agar array nahi hai aur
+        comma separated string hai.
+      */
+
+      if (
+        !Array.isArray(
+          rawPlaces
+        )
+      ) {
+
+        rawPlaces =
+          String(rawPlaces)
+
+            .split(",")
+
+            .map(
+              (item) =>
+                item.trim()
+            )
+
+            .filter(Boolean);
+
+      }
+
+
+      /*
+        Maximum first 3 places.
+      */
+
+      const firstThree =
+        rawPlaces
+
+          .filter(Boolean)
+
+          .slice(
+            0,
+            3
+          );
+
+
+      /*
+        Agar TripPlan se places
+        nahi aaye to destination
+        ke first 3 fallback.
+      */
+
+      if (
+        firstThree.length ===
+        0
+      ) {
+
+        return (
+          availablePlaces.slice(
+            0,
+            3
+          )
+        );
+
+      }
+
+
+      /*
+        Har selected place ko
+        destination data ke saath
+        match karo.
+
+        IMPORTANT:
+        Kisi selected place ko
+        remove nahi karna.
+      */
+
+      return firstThree.map(
+        (
+          selected,
+          index
+        ) => {
+
+          const selectedName =
+
+            typeof selected ===
+            "string"
+
+              ? selected.trim()
+
+              : String(
+                  selected?.name ||
+                  ""
+                ).trim();
+
+
+          /* =====================
+             FIND MATCH
+          ===================== */
+
+          const matched =
+            availablePlaces.find(
+              (place) =>
+
+                normalizeText(
+                  place?.name
+                ) ===
+
+                normalizeText(
+                  selectedName
+                )
+            );
+
+
+          /* =====================
+             MATCH FOUND
+          ===================== */
+
+          if (matched) {
+
+            return {
+
+              ...matched,
+
+
+              ...(typeof selected ===
+              "object"
+
+                ? selected
+
+                : {}),
+
+
+              name:
+                matched.name,
+
+
+              image:
+
+                (
+                  typeof selected ===
+                    "object" &&
+
+                  selected?.image
+                ) ||
+
+                matched.image ||
+
+                destination.image,
+
+
+              location:
+
+                (
+                  typeof selected ===
+                    "object" &&
+
+                  selected?.location
+                ) ||
+
+                matched.location ||
+
+                destination.state,
+
+
+              description:
+
+                (
+                  typeof selected ===
+                    "object" &&
+
+                  selected
+                    ?.description
+                ) ||
+
+                matched.description ||
+
+                `Explore ${matched.name}.`,
+
+
+              detail:
+
+                (
+                  typeof selected ===
+                    "object" &&
+
+                  selected?.detail
+                ) ||
+
+                matched.detail ||
+
+                "",
+
+
+              highlights:
+
+                typeof selected ===
+                  "object" &&
+
+                Array.isArray(
+                  selected?.highlights
+                ) &&
+
+                selected.highlights
+                  .length
+
+                  ? selected.highlights
+
+                  : matched.highlights,
+
+            };
+
+          }
+
+
+          /* =====================
+             SELECTED OBJECT
+             BUT NO MATCH
+          ===================== */
+
+          if (
+            typeof selected ===
+            "object"
+          ) {
+
+            return {
+
+              ...selected,
+
+
+              name:
+
+                selected?.name ||
+
+                `Place ${
+                  index + 1
+                }`,
+
+
+              image:
+
+                selected?.image ||
+
+                destination.image,
+
+
+              location:
+
+                selected?.location ||
+
+                destination.state,
+
+
+              description:
+
+                selected
+                  ?.description ||
+
+                `Explore ${
+                  selected?.name ||
+                  destination.name
+                }.`,
+
+
+              detail:
+
+                selected?.detail ||
+
+                "",
+
+
+              highlights:
+
+                Array.isArray(
+                  selected
+                    ?.highlights
+                ) &&
+
+                selected.highlights
+                  .length
+
+                  ? selected.highlights
+
+                  : [
+                      "Local Experience",
+                      "Beautiful Views",
+                      "Explore & Discover",
+                    ],
+
+            };
+
+          }
+
+
+          /* =====================
+             STRING PLACE FALLBACK
+          ===================== */
+
           return {
-            name: place,
+
+            name:
+
+              selectedName ||
+
+              `Place ${
+                index + 1
+              }`,
+
 
             image:
               destination.image,
 
+
             location:
               destination.state,
 
-            description:
-              `Explore ${place}.`,
 
-            detail: "",
+            description:
+
+              `Explore ${
+                selectedName ||
+                destination.name
+              }.`,
+
+
+            detail:
+              "",
+
 
             highlights: [
               "Local Experience",
               "Beautiful Views",
               "Explore & Discover",
             ],
+
           };
+
         }
-
-        return {
-          ...place,
-
-          name:
-            place?.name || "",
-
-          image:
-            place?.image ||
-            destination.image,
-
-          location:
-            place?.location ||
-            destination.state,
-
-          description:
-            place?.description ||
-            `Explore ${
-              place?.name ||
-              destination.name
-            }.`,
-
-          detail:
-            place?.detail || "",
-
-          highlights:
-            Array.isArray(
-              place?.highlights
-            ) &&
-            place.highlights.length
-              ? place.highlights
-              : [
-                  "Local Experience",
-                  "Beautiful Views",
-                  "Explore & Discover",
-                ],
-        };
-      })
-      .filter(
-        (place) =>
-          place.name
       );
-  }, [
-    destinationData,
-    destination.image,
-    destination.state,
-    destination.name,
-  ]);
 
-  /* =======================================================
-     SELECTED PLACES
+    }, [
 
-     *** MAIN FIX ***
+      trip?.places,
 
-     Agar TripPlan me:
-     Place 1
-     Place 2
-     Place 3
+      trip?.selectedPlaces,
 
-     tino select hue hain, to tino preserve honge.
+      availablePlaces,
 
-     Koi unmatched place filter/remove nahi hoga.
-  ======================================================= */
+      destination.image,
 
-  const selectedPlaces = useMemo(() => {
-    let rawPlaces =
-      trip?.places ||
-      trip?.selectedPlaces ||
-      [];
+      destination.state,
 
-    if (
-      !Array.isArray(rawPlaces)
-    ) {
-      rawPlaces = String(
-        rawPlaces
-      )
-        .split(",")
-        .map((item) =>
-          item.trim()
-        )
-        .filter(Boolean);
-    }
+      destination.name,
 
-    /*
-      TripPlan maximum 3 places deta hai.
-    */
+    ]);
 
-    const firstThree =
-      rawPlaces
-        .filter(Boolean)
-        .slice(0, 3);
-
-    /*
-      Agar selected place available nahi
-      hai to destination ke first 3
-      fallback rahenge.
-    */
-
-    if (
-      firstThree.length === 0
-    ) {
-      return availablePlaces.slice(
-        0,
-        3
-      );
-    }
-
-    /*
-      HAR selected place ko map karo.
-      Filter karke remove MAT KARO.
-    */
-
-    return firstThree.map(
-      (selected, index) => {
-        const selectedName =
-          typeof selected ===
-          "string"
-            ? selected.trim()
-            : String(
-                selected?.name ||
-                ""
-              ).trim();
-
-        /*
-          Same destinations.js me place find karo.
-        */
-
-        const matched =
-          availablePlaces.find(
-            (place) =>
-              normalizeText(
-                place?.name
-              ) ===
-              normalizeText(
-                selectedName
-              )
-          );
-
-        /*
-          Match mil gaya:
-          destinations.js ki SAME
-          image/detail use hogi.
-        */
-
-        if (matched) {
-          return {
-            ...matched,
-
-            ...(typeof selected ===
-            "object"
-              ? selected
-              : {}),
-
-            name:
-              matched.name,
-
-            image:
-              (typeof selected ===
-                "object" &&
-                selected?.image) ||
-              matched.image ||
-              destination.image,
-
-            location:
-              (typeof selected ===
-                "object" &&
-                selected?.location) ||
-              matched.location ||
-              destination.state,
-
-            description:
-              (typeof selected ===
-                "object" &&
-                selected
-                  ?.description) ||
-              matched.description ||
-              `Explore ${matched.name}.`,
-
-            detail:
-              (typeof selected ===
-                "object" &&
-                selected?.detail) ||
-              matched.detail ||
-              "",
-
-            highlights:
-              typeof selected ===
-                "object" &&
-              Array.isArray(
-                selected?.highlights
-              ) &&
-              selected.highlights
-                .length
-                ? selected.highlights
-                : matched.highlights,
-          };
-        }
-
-        /*
-          Agar kisi reason se exact
-          matching nahi hui tab bhi
-          selected place REMOVE NAHI hoga.
-        */
-
-        if (
-          typeof selected ===
-          "object"
-        ) {
-          return {
-            ...selected,
-
-            name:
-              selected?.name ||
-              `Place ${
-                index + 1
-              }`,
-
-            image:
-              selected?.image ||
-              destination.image,
-
-            location:
-              selected?.location ||
-              destination.state,
-
-            description:
-              selected
-                ?.description ||
-              `Explore ${
-                selected?.name ||
-                destination.name
-              }.`,
-
-            detail:
-              selected?.detail ||
-              "",
-
-            highlights:
-              Array.isArray(
-                selected
-                  ?.highlights
-              ) &&
-              selected.highlights
-                .length
-                ? selected.highlights
-                : [
-                    "Local Experience",
-                    "Beautiful Views",
-                    "Explore & Discover",
-                  ],
-          };
-        }
-
-        /*
-          String selected place.
-          Isko bhi third item ke roop
-          me preserve karo.
-        */
-
-        return {
-          name:
-            selectedName ||
-            `Place ${index + 1}`,
-
-          image:
-            destination.image,
-
-          location:
-            destination.state,
-
-          description:
-            `Explore ${
-              selectedName ||
-              destination.name
-            }.`,
-
-          detail: "",
-
-          highlights: [
-            "Local Experience",
-            "Beautiful Views",
-            "Explore & Discover",
-          ],
-        };
-      }
-    );
-  }, [
-    trip?.places,
-    trip?.selectedPlaces,
-    availablePlaces,
-    destination.image,
-    destination.state,
-    destination.name,
-  ]);
 
   /* =======================================================
      CURRENT PLACE
   ======================================================= */
 
   const currentPlace =
+
     selectedPlaces.length > 0
+
       ? selectedPlaces[
+
           activePlace %
-            selectedPlaces.length
+
+          selectedPlaces.length
+
         ]
+
       : {
+
           name:
             destination.name,
 
@@ -760,99 +1257,126 @@ const CreateTrip = () => {
             destination.state,
 
           description:
+
             destination.description ||
+
             `Explore ${destination.name}.`,
 
-          detail: "",
+          detail:
+            "",
 
           highlights: [
             "Local Experience",
             "Beautiful Views",
             "Explore & Discover",
           ],
-        };
 
-  /* =======================================================
-     AUTO SLIDER
+        };
+          /* =======================================================
+     PLACE AUTO SLIDER
+
   ======================================================= */
 
   useEffect(() => {
+
     if (
-      selectedPlaces.length <=
-      1
+      selectedPlaces.length <= 1
     ) {
       return undefined;
     }
 
-    const interval =
+    const placeInterval =
       setInterval(() => {
+
         setActivePlace(
           (previous) =>
             (previous + 1) %
             selectedPlaces.length
         );
+
       }, 5000);
 
-    return () =>
+
+    return () => {
+
       clearInterval(
-        interval
+        placeInterval
       );
+
+    };
+
   }, [
     selectedPlaces.length,
   ]);
 
+
   /* =======================================================
      RESET PLACE
+
+     Destination ya selected places
+     change hue to first place se
+     start karna hai.
   ======================================================= */
 
   useEffect(() => {
+
     setActivePlace(0);
+
   }, [
     destinationName,
     selectedPlaces.length,
   ]);
 
+
   /* =======================================================
      PREVIOUS PLACE
   ======================================================= */
 
-  const handlePreviousPlace =
-    () => {
-      if (
-        selectedPlaces.length <=
-        1
-      ) {
-        return;
-      }
+  const handlePreviousPlace = () => {
 
-      setActivePlace(
-        (previous) =>
-          previous === 0
-            ? selectedPlaces.length -
-              1
-            : previous - 1
-      );
-    };
+    if (
+      selectedPlaces.length <= 1
+    ) {
+      return;
+    }
+
+
+    setActivePlace(
+      (previous) =>
+
+        previous === 0
+
+          ? selectedPlaces.length - 1
+
+          : previous - 1
+    );
+
+  };
+
 
   /* =======================================================
      NEXT PLACE
   ======================================================= */
 
-  const handleNextPlace =
-    () => {
-      if (
-        selectedPlaces.length <=
-        1
-      ) {
-        return;
-      }
+  const handleNextPlace = () => {
 
-      setActivePlace(
-        (previous) =>
-          (previous + 1) %
-          selectedPlaces.length
-      );
-    };
+    if (
+      selectedPlaces.length <= 1
+    ) {
+      return;
+    }
+
+
+    setActivePlace(
+      (previous) =>
+
+        (previous + 1) %
+
+        selectedPlaces.length
+    );
+
+  };
+
 
   /* =======================================================
      TOTAL DAYS
@@ -860,276 +1384,458 @@ const CreateTrip = () => {
 
   const totalDays =
     Math.max(
+
       1,
+
       getDaysNumber(
+
         trip?.totalDays ||
-          trip?.days ||
-          trip?.duration,
+
+        trip?.days ||
+
+        trip?.duration,
+
         3
+
       )
+
     );
+
 
   /* =======================================================
      STAY TYPE
+
+    
   ======================================================= */
 
   const stayType =
+
     trip?.stay ||
+
     trip?.stayType ||
+
     "Hotel";
 
+
+  /* =======================================================
+     NORMALIZED STAY
+  ======================================================= */
+
   const normalizedStay =
+
     [
       "Hotel",
       "Resort",
       "Villa",
       "Hostel",
     ].find(
+
       (item) =>
+
         item.toLowerCase() ===
+
         String(stayType)
           .toLowerCase()
           .trim()
+
     ) || "Hotel";
 
+
+  /* =======================================================
+     AVAILABLE HOTELS / STAYS
+
+  ======================================================= */
+
   const hotels =
+
     stayData[
       normalizedStay
-    ] || stayData.Hotel;
+    ] ||
+
+    stayData.Hotel;
+
+
+  /* =======================================================
+     SELECTED HOTEL
+  ======================================================= */
 
   const selectedHotel =
-    hotels[
-      activeHotel %
-        hotels.length
-    ];
+
+    hotels.length > 0
+
+      ? hotels[
+          activeHotel %
+          hotels.length
+        ]
+
+      : null;
+
 
   /* =======================================================
      RESET HOTEL
+
+     Stay type change hote hi:
+     first hotel/stay show hoga.
   ======================================================= */
 
   useEffect(() => {
+
     setActiveHotel(0);
-  }, [normalizedStay]);
+
+  }, [
+    normalizedStay,
+  ]);
+
+
+  
+
 
   /* =======================================================
-     DAY
+     MANUAL HOTEL SELECT
+
+     Thumbnail click karne par bhi
+     hotel change hoga.
+  ======================================================= */
+
+  const handleHotelSelect = (
+    index
+  ) => {
+
+    if (
+      index < 0 ||
+      index >= hotels.length
+    ) {
+      return;
+    }
+
+
+    setActiveHotel(
+      index
+    );
+
+  };
+
+
+  /* =======================================================
+     ACTIVE HOTEL NUMBER
+  ======================================================= */
+
+  const activeHotelNumber =
+    String(
+      activeHotel + 1
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  /* =======================================================
+     TOTAL HOTEL NUMBER
+  ======================================================= */
+
+  const totalHotelNumber =
+    String(
+      hotels.length
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  /* =======================================================
+     ACTIVE DAY FIX
+
+     Example:
+     Pehle trip = 5 days
+     activeDay = 5
+
+     Edit karke trip = 3 days
+
+     To activeDay automatically
+     Day 1 par aa jayega.
   ======================================================= */
 
   useEffect(() => {
+
     if (
       activeDay >
       totalDays
     ) {
+
       setActiveDay(1);
+
     }
+
   }, [
     activeDay,
     totalDays,
   ]);
+
+
+  /* =======================================================
+     SCHEDULE PLACE
+
+     Daily Journey ko active day ke hisaab se
+     selected place diya jayega. Isse upar ka
+     5-second place slider schedule ko random
+     change nahi karega.
+  ======================================================= */
+
+  const schedulePlace =
+    selectedPlaces.length > 0
+      ? selectedPlaces[
+          (activeDay - 1) %
+            selectedPlaces.length
+        ]
+      : currentPlace;
+/* =======================================================
+   DAY WISE SCHEDULE
+======================================================= */
+
+const daySchedule = useMemo(() => {
+  const place =
+    selectedPlaces.length > 0
+      ? selectedPlaces[
+          (activeDay - 1) % selectedPlaces.length
+        ]
+      : currentPlace;
+
+  const hotelName =
+    selectedHotel?.name || "your stay";
+
+  const isFirstDay = activeDay === 1;
+  const isLastDay = activeDay === totalDays;
+
+  if (isFirstDay) {
+    return {
+      morningTitle: "Arrival & Breakfast",
+      morningText: `Start your first day at ${hotelName}. Freshen up, enjoy breakfast and get ready to explore ${destination.name}.`,
+
+      exploreTitle:
+        place?.name || destination.name,
+      exploreText:
+        place?.description ||
+        `Explore ${place?.name || destination.name} and enjoy the local attractions.`,
+
+      eveningTitle: "Sunset & Local Experience",
+      eveningText:
+        place?.evening ||
+        `Spend your evening around ${place?.name || destination.name}, explore nearby markets and enjoy the local atmosphere.`,
+
+      nightTitle: `Return to ${hotelName}`,
+      nightText: `Return to ${hotelName}, enjoy dinner and relax after your first day in ${destination.name}.`,
+    };
+  }
+
+  if (isLastDay) {
+    return {
+      morningTitle: "Breakfast & Final Morning",
+      morningText: `Enjoy your final breakfast at ${hotelName} and prepare for the last day of your ${destination.name} journey.`,
+
+      exploreTitle:
+        place?.name || destination.name,
+      exploreText:
+        place?.description ||
+        `Spend your final sightseeing hours exploring ${place?.name || destination.name}.`,
+
+      eveningTitle: "Last Evening & Memories",
+      eveningText:
+        place?.evening ||
+        `Enjoy your final evening in ${destination.name}, take photos and collect some beautiful trip memories.`,
+
+      nightTitle: "Trip Memories & Rest",
+      nightText: `Relax after your final day in ${destination.name} and enjoy the last evening of your journey.`,
+    };
+  }
+
+  return {
+    morningTitle: `Day ${activeDay} Breakfast & Start`,
+    morningText:
+      place?.morning ||
+      `Enjoy breakfast at ${hotelName} and get ready for another beautiful day in ${destination.name}.`,
+
+    exploreTitle:
+      place?.name || destination.name,
+    exploreText:
+      place?.description ||
+      `Explore ${place?.name || destination.name} and discover its popular attractions.`,
+
+    eveningTitle: "Local Experience",
+    eveningText:
+      place?.evening ||
+      `Enjoy a relaxed evening around ${place?.name || destination.name}.`,
+
+    nightTitle: `Return to ${hotelName}`,
+    nightText: `Return to ${hotelName}, relax and prepare for Day ${
+      activeDay + 1
+    } of your ${destination.name} journey.`,
+  };
+}, [
+  activeDay,
+  totalDays,
+  selectedPlaces,
+  currentPlace,
+  selectedHotel,
+  destination.name,
+]);
 
   /* =======================================================
      MORNING TEXT
   ======================================================= */
 
   const getMorningText = () => {
+
     if (
       currentPlace?.morning
     ) {
-      return currentPlace.morning;
+
+      return (
+        currentPlace.morning
+      );
+
     }
+
 
     return `Start your morning exploring ${
       currentPlace?.name ||
       destination.name
     } and enjoy the local atmosphere.`;
+
   };
+
 
   /* =======================================================
      EVENING TEXT
   ======================================================= */
 
-  const getEveningText = () => {
+  const getEveningText = (
+    place = currentPlace
+  ) => {
+
     if (
-      currentPlace?.evening
+      place?.evening
     ) {
-      return currentPlace.evening;
+
+      return (
+        place.evening
+      );
+
     }
 
+
     return `Enjoy a relaxed evening around ${
-      currentPlace?.name ||
+      place?.name ||
       destination.name
     }.`;
+
   };
 
+
   /* =======================================================
-     NIGHT
+     NIGHT TITLE
   ======================================================= */
 
   const getNightTitle = () => {
+
+    /*
+      Last day par hotel return ki
+      jagah trip ending text.
+    */
+
     if (
       activeDay ===
       totalDays
     ) {
-      return "Trip Memories & Rest";
+
+      return (
+        "Trip Memories & Rest"
+      );
+
     }
+
 
     return `Return to ${
       selectedHotel?.name ||
       "your stay"
     }`;
+
   };
 
-  const getNightDescription =
-    () => {
-      if (
-        activeDay ===
-        totalDays
-      ) {
-        return `Relax after your final day in ${destination.name} and enjoy the last evening of your journey.`;
-      }
-
-      return `Return to ${
-        selectedHotel?.name ||
-        "your stay"
-      }, relax and prepare for the next day of your ${destination.name} journey.`;
-    };
 
   /* =======================================================
+     NIGHT DESCRIPTION
+  ======================================================= */
+
+  const getNightDescription = () => {
+
+    if (
+      activeDay ===
+      totalDays
+    ) {
+
+      return `Relax after your final day in ${destination.name} and enjoy the last evening of your journey.`;
+
+    }
+
+
+    return `Return to ${
+      selectedHotel?.name ||
+      "your stay"
+    }, relax and prepare for the next day of your ${destination.name} journey.`;
+
+  };
+    /* =======================================================
      EDIT TRIP
   ======================================================= */
 
   const handleEditTrip = () => {
-    const updatedTrip = {
-      ...trip,
-
-      destination:
-        destination.name,
-
-      image:
-        destination.image,
-
-      destinationImage:
-        destination.image,
-
-      places:
-        selectedPlaces,
-    };
-
-    localStorage.setItem(
-      "tripperTrip",
-      JSON.stringify(
-        updatedTrip
-      )
-    );
-
-    navigate(
-      "/trip-plan",
-      {
-        state: {
-          trip:
-            updatedTrip,
-
-          editMode: true,
-
-          destination:
-            destination.name,
-
-          image:
-            destination.image,
-
-          destinationImage:
-            destination.image,
-
-          places:
-            selectedPlaces,
-        },
-      }
-    );
-  };
-
-  /* =======================================================
-     BOOK HOTEL
-  ======================================================= */
-
-  const handleBookHotel = () => {
-    const selectedBudget =
-      trip?.budget ||
-      trip?.budgetRange ||
-      trip?.budgetText ||
-      "";
-
-    const selectedHotelData =
-      {
-        name:
-          selectedHotel?.name ||
-          "",
-
-        type:
-          selectedHotel?.type ||
-          normalizedStay,
-
-        location:
-          selectedHotel
-            ?.location ||
-          "",
-
-        image:
-          selectedHotel?.image ||
-          "",
-
-        rating:
-          selectedHotel
-            ?.rating ||
-          "",
-
-        reviews:
-          selectedHotel
-            ?.reviews ||
-          "",
-      };
 
     /*
-      IMPORTANT:
-      Yahan bhi tino places full objects
-      ke saath save ho rahe hain.
+      Current trip ke saath
+      latest destination + places
+      preserve karo.
     */
 
     const updatedTrip = {
+
       ...trip,
+
+
+      /* DESTINATION */
 
       destination:
         destination.name,
 
-      destinationId:
-        trip?.destinationId ||
-        normalizeText(
-          destination.name
-        ),
 
       state:
         destination.state,
 
+
       destinationState:
         destination.state,
+
 
       image:
         destination.image,
 
+
       destinationImage:
         destination.image,
+
 
       description:
         destination.description,
 
+
       bestFor:
         destination.bestFor,
+
 
       rating:
         destination.rating,
 
-      /*
-        ALL 3 SELECTED PLACES
-      */
+
+      /* SELECTED PLACES */
 
       places:
         selectedPlaces.map(
@@ -1137,6 +1843,7 @@ const CreateTrip = () => {
             ...place,
           })
         ),
+
 
       selectedPlaces:
         selectedPlaces.map(
@@ -1145,103 +1852,64 @@ const CreateTrip = () => {
           })
         ),
 
+
+      /* DAYS */
+
       totalDays,
 
-      days:
-        trip?.days ||
-        totalDays,
+
+      /* STAY */
 
       stay:
-        selectedHotelData.type,
+        normalizedStay,
 
-      hotel:
-        selectedHotelData,
-
-      hotelImage:
-        selectedHotelData.image,
-
-      budget:
-        selectedBudget,
     };
 
+
+    /* =========================
+       SAVE
+    ========================= */
+
     localStorage.setItem(
+
       "tripperTrip",
+
       JSON.stringify(
         updatedTrip
       )
+
     );
 
-    const bookingData = {
-      trip:
-        updatedTrip,
 
-      destination:
-        destination.name,
-
-      image:
-        destination.image,
-
-      destinationImage:
-        destination.image,
-
-      places:
-        selectedPlaces.map(
-          (place) => ({
-            ...place,
-          })
-        ),
-
-      hotel:
-        selectedHotelData,
-
-      budget:
-        selectedBudget,
-
-      travellers:
-        trip?.travellers ||
-        trip?.travelers ||
-        trip?.guests ||
-        2,
-
-      totalDays,
-
-      stay:
-        selectedHotelData.type,
-    };
-
-    localStorage.setItem(
-      "bookingData",
-      JSON.stringify(
-        bookingData
-      )
-    );
-
-    setTrip(
-      updatedTrip
-    );
+    /* =========================
+       BACK TO TRIP PLAN
+    ========================= */
 
     navigate(
-      "/booking-details",
+      "/trip-plan",
       {
+
         state: {
+
           trip:
             updatedTrip,
+
+
+          editMode:
+            true,
+
 
           destination:
             destination.name,
 
-          state:
-            destination.state,
 
           image:
             destination.image,
 
+
           destinationImage:
             destination.image,
 
-          /*
-            ALL 3 AGAIN
-          */
 
           places:
             selectedPlaces.map(
@@ -1250,41 +1918,716 @@ const CreateTrip = () => {
               })
             ),
 
+        },
+
+      }
+    );
+
+  };
+
+
+  /* =======================================================
+     BOOK HOTEL
+  ======================================================= */
+
+  const handleBookHotel = () => {
+
+    /*
+      Budget wahi use hoga jo
+      TripPlan me user ne select
+      kiya tha.
+
+      Automatic budget yahan
+      dobara calculate nahi hoga.
+    */
+
+    const selectedBudget =
+
+      trip?.budget ||
+
+      trip?.budgetRange ||
+
+      trip?.budgetText ||
+
+      "";
+
+
+    /* =====================================================
+       SELECTED HOTEL DATA
+
+       IMPORTANT:
+       User ne thumbnail se jo hotel
+       select kiya hai, wahi hotel
+       yahan save hoga.
+    ===================================================== */
+
+    const selectedHotelData = {
+
+      name:
+
+        selectedHotel?.name ||
+
+        "",
+
+
+      type:
+
+        selectedHotel?.type ||
+
+        normalizedStay,
+
+
+      location:
+
+        selectedHotel?.location ||
+
+        destination.state ||
+
+        "",
+
+
+      image:
+
+        selectedHotel?.image ||
+
+        FALLBACK_IMAGE,
+
+
+      rating:
+
+        selectedHotel?.rating ||
+
+        "4.8",
+
+
+      reviews:
+
+        selectedHotel?.reviews ||
+
+        "Excellent stay",
+
+    };
+
+
+    /* =====================================================
+       UPDATED TRIP
+    ===================================================== */
+
+    const updatedTrip = {
+
+      ...trip,
+
+
+      /* =========================
+         DESTINATION
+      ========================= */
+
+      destination:
+        destination.name,
+
+
+      destinationId:
+
+        trip?.destinationId ||
+
+        normalizeText(
+          destination.name
+        ),
+
+
+      state:
+        destination.state,
+
+
+      destinationState:
+        destination.state,
+
+
+      image:
+        destination.image,
+
+
+      destinationImage:
+        destination.image,
+
+
+      description:
+        destination.description,
+
+
+      bestFor:
+        destination.bestFor,
+
+
+      rating:
+        destination.rating,
+
+
+      /* =========================
+         ALL SELECTED PLACES
+
+         Maximum 3 selected places
+         full objects ke saath.
+      ========================= */
+
+      places:
+
+        selectedPlaces.map(
+          (place) => ({
+
+            ...place,
+
+          })
+        ),
+
+
+      selectedPlaces:
+
+        selectedPlaces.map(
+          (place) => ({
+
+            ...place,
+
+          })
+        ),
+
+
+      /* =========================
+         DAYS
+      ========================= */
+
+      totalDays,
+
+
+      days:
+
+        trip?.days ||
+
+        totalDays,
+
+
+      /* =========================
+         TRAVELLERS
+      ========================= */
+
+      travellers:
+
+        trip?.travellers ||
+
+        trip?.travelers ||
+
+        trip?.guests ||
+
+        2,
+
+
+      adults:
+
+        trip?.adults ||
+
+        (
+          trip?.travelType ===
+          "Solo"
+
+            ? 1
+
+            : 2
+        ),
+
+
+      children:
+
+        trip?.children ||
+
+        0,
+
+
+      /* =========================
+         TRIP TYPE
+      ========================= */
+
+      travelType:
+
+        trip?.travelType ||
+
+        trip?.tripType ||
+
+        "Couple",
+
+
+      /* =========================
+         STAY TYPE
+      ========================= */
+
+      stay:
+        selectedHotelData.type,
+
+
+      stayType:
+        selectedHotelData.type,
+
+
+      /* =========================
+         SELECTED HOTEL
+
+         Ye bahut important hai.
+
+         BookingDetails me isi
+         object ko use karna.
+      ========================= */
+
+      hotel:
+        selectedHotelData,
+
+
+      selectedHotel:
+        selectedHotelData,
+
+
+      hotelName:
+        selectedHotelData.name,
+
+
+      hotelImage:
+        selectedHotelData.image,
+
+
+      hotelLocation:
+        selectedHotelData.location,
+
+
+      hotelRating:
+        selectedHotelData.rating,
+
+
+      hotelReviews:
+        selectedHotelData.reviews,
+
+
+      /* =========================
+         BUDGET
+
+         User selected budget
+         exactly preserve hoga.
+      ========================= */
+
+      budget:
+        selectedBudget,
+
+
+      /* =========================
+         OTHER PREFERENCES
+      ========================= */
+
+      style:
+
+        trip?.style ||
+
+        "Relaxed",
+
+
+      transport:
+
+        trip?.transport ||
+
+        "Any",
+
+
+      interests:
+
+        Array.isArray(
+          trip?.interests
+        )
+
+          ? [
+              ...trip.interests,
+            ]
+
+          : [],
+
+    };
+
+
+    /* =====================================================
+       SAVE UPDATED TRIP
+    ===================================================== */
+
+    localStorage.setItem(
+
+      "tripperTrip",
+
+      JSON.stringify(
+        updatedTrip
+      )
+
+    );
+
+
+    /* =====================================================
+       BOOKING DATA
+
+       BookingDetails page ko
+       direct clean data milega.
+    ===================================================== */
+
+    const bookingData = {
+
+      /* FULL TRIP */
+
+      trip:
+        updatedTrip,
+
+
+      /* DESTINATION */
+
+      destination:
+        destination.name,
+
+
+      state:
+        destination.state,
+
+
+      image:
+        destination.image,
+
+
+      destinationImage:
+        destination.image,
+
+
+      /* PLACES */
+
+      places:
+
+        selectedPlaces.map(
+          (place) => ({
+
+            ...place,
+
+          })
+        ),
+
+
+      selectedPlaces:
+
+        selectedPlaces.map(
+          (place) => ({
+
+            ...place,
+
+          })
+        ),
+
+
+      /* HOTEL */
+
+      hotel:
+        selectedHotelData,
+
+
+      selectedHotel:
+        selectedHotelData,
+
+
+      hotelName:
+        selectedHotelData.name,
+
+
+      hotelImage:
+        selectedHotelData.image,
+
+
+      /* BUDGET */
+
+      budget:
+        selectedBudget,
+
+
+      /* MEMBERS */
+
+      travellers:
+
+        trip?.travellers ||
+
+        trip?.travelers ||
+
+        trip?.guests ||
+
+        2,
+
+
+      adults:
+
+        trip?.adults ||
+
+        2,
+
+
+      children:
+
+        trip?.children ||
+
+        0,
+
+
+      /* DAYS */
+
+      totalDays,
+
+
+      days:
+        totalDays,
+
+
+      /* STAY */
+
+      stay:
+        selectedHotelData.type,
+
+
+      /* TRAVEL TYPE */
+
+      travelType:
+
+        trip?.travelType ||
+
+        trip?.tripType ||
+
+        "Couple",
+
+    };
+
+
+    /* =====================================================
+       SAVE BOOKING DATA
+    ===================================================== */
+
+    localStorage.setItem(
+
+      "bookingData",
+
+      JSON.stringify(
+        bookingData
+      )
+
+    );
+
+
+    /*
+      Current CreateTrip state bhi
+      latest selected hotel ke saath
+      update kar do.
+    */
+
+    setTrip(
+      updatedTrip
+    );
+
+
+    /* =====================================================
+       GO TO BOOKING DETAILS
+    ===================================================== */
+
+    navigate(
+      "/booking-details",
+      {
+
+        state: {
+
+          /* FULL TRIP */
+
+          trip:
+            updatedTrip,
+
+
+          /* DESTINATION */
+
+          destination:
+            destination.name,
+
+
+          state:
+            destination.state,
+
+
+          image:
+            destination.image,
+
+
+          destinationImage:
+            destination.image,
+
+
+          /* ALL PLACES */
+
+          places:
+
+            selectedPlaces.map(
+              (place) => ({
+
+                ...place,
+
+              })
+            ),
+
+
+          selectedPlaces:
+
+            selectedPlaces.map(
+              (place) => ({
+
+                ...place,
+
+              })
+            ),
+
+
+          /* HOTEL */
+
           hotel:
             selectedHotelData,
 
+
+          selectedHotel:
+            selectedHotelData,
+
+
+          hotelName:
+            selectedHotelData.name,
+
+
+          hotelImage:
+            selectedHotelData.image,
+
+
+          /* BOOKING */
+
           bookingData,
+
+
+          /* BUDGET */
 
           budget:
             selectedBudget,
+
+
+          /* MEMBERS */
+
+          travellers:
+
+            trip?.travellers ||
+
+            trip?.travelers ||
+
+            trip?.guests ||
+
+            2,
+
+
+          adults:
+
+            trip?.adults ||
+
+            2,
+
+
+          children:
+
+            trip?.children ||
+
+            0,
+
+
+          /* DAYS */
+
+          totalDays,
+
+
+          /* STAY */
+
+          stay:
+            selectedHotelData.type,
+
+
+          /* TRIP TYPE */
+
+          travelType:
+
+            trip?.travelType ||
+
+            trip?.tripType ||
+
+            "Couple",
+
         },
+
       }
     );
+
   };
 
+
   /* =======================================================
-     DEBUG
-     Console me check kar sakti ho:
-     3 selected hain to array length 3 aayegi.
+     DEBUG SELECTED PLACES
   ======================================================= */
 
   useEffect(() => {
+
     if (
       selectedPlaces.length
     ) {
-      console.log(
-        "CREATE TRIP SELECTED PLACES:",
-        selectedPlaces
-      );
 
       console.log(
-        "TOTAL SELECTED PLACES:",
-        selectedPlaces.length
+
+        "CREATE TRIP SELECTED PLACES:",
+
+        selectedPlaces
+
       );
+
+
+      console.log(
+
+        "TOTAL SELECTED PLACES:",
+
+        selectedPlaces.length
+
+      );
+
     }
-  }, [selectedPlaces]);
+
+  }, [
+    selectedPlaces,
+  ]);
+
 
   /* =======================================================
+     DEBUG SELECTED HOTEL
+
+     Thumbnail se selected hotel
+     console me check karne ke liye.
+  ======================================================= */
+
+  useEffect(() => {
+
+    if (!selectedHotel) {
+      return;
+    }
+
+
+    console.log(
+
+      "CURRENT HOTEL:",
+
+      selectedHotel.name
+
+    );
+
+  }, [
+    selectedHotel,
+  ]);
+    /* =======================================================
      UI
   ======================================================= */
 
@@ -1292,7 +2635,7 @@ const CreateTrip = () => {
     <main className="create-trip-page">
 
       {/* ===================================================
-          TOP
+          TOP SECTION
       =================================================== */}
 
       <section className="trip-top-section">
@@ -1313,25 +2656,31 @@ const CreateTrip = () => {
 
         </div>
 
+
+        {/* EDIT TRIP */}
+
         <button
           type="button"
           className="edit-trip-btn"
-          onClick={
-            handleEditTrip
-          }
+          onClick={handleEditTrip}
         >
           <FiEdit3 />
 
-          Edit Trip
+          <span>
+            Edit Trip
+          </span>
         </button>
 
       </section>
 
+
       {/* ===================================================
-          INFO
+          TRIP INFO STRIP
       =================================================== */}
 
       <section className="trip-info-strip">
+
+        {/* DESTINATION */}
 
         <div className="trip-info-item">
 
@@ -1353,6 +2702,9 @@ const CreateTrip = () => {
 
         </div>
 
+
+        {/* DURATION */}
+
         <div className="trip-info-item">
 
           <span className="trip-info-icon">
@@ -1366,12 +2718,18 @@ const CreateTrip = () => {
             </span>
 
             <strong>
-              {totalDays} Days
+              {totalDays}{" "}
+              {totalDays === 1
+                ? "Day"
+                : "Days"}
             </strong>
 
           </div>
 
         </div>
+
+
+        {/* TRAVELLERS */}
 
         <div className="trip-info-item">
 
@@ -1396,6 +2754,9 @@ const CreateTrip = () => {
 
         </div>
 
+
+        {/* TRIP TYPE */}
+
         <div className="trip-info-item">
 
           <span className="trip-info-icon">
@@ -1405,7 +2766,7 @@ const CreateTrip = () => {
           <div>
 
             <span>
-              TRIP STYLE
+              TRIP TYPE
             </span>
 
             <strong>
@@ -1421,13 +2782,17 @@ const CreateTrip = () => {
 
       </section>
 
+
       {/* ===================================================
-          EXPERIENCE
+          EXPERIENCE / SELECTED PLACES
       =================================================== */}
 
       <section className="experience-section">
 
-        {/* LEFT IMAGE */}
+
+        {/* =================================================
+            LEFT — AUTO CHANGING IMAGE
+        ================================================= */}
 
         <div className="experience-image">
 
@@ -1435,7 +2800,8 @@ const CreateTrip = () => {
             key={`${currentPlace?.name}-${activePlace}`}
             src={
               currentPlace?.image ||
-              destination.image
+              destination.image ||
+              FALLBACK_IMAGE
             }
             alt={
               currentPlace?.name ||
@@ -1449,19 +2815,36 @@ const CreateTrip = () => {
             }}
           />
 
+
+          {/* DARK/LIGHT IMAGE OVERLAY */}
+
           <div className="experience-image-overlay" />
+
+
+          {/* =================================================
+              AUTO TOUR LABEL
+          ================================================= */}
 
           <div className="experience-auto-label">
 
             <span className="auto-dot" />
 
-            AUTO TOUR
+            <span>
+              AUTO TOUR
+            </span>
 
-            {selectedPlaces.length >
-              1 &&
-              " • 5 SEC"}
+            {selectedPlaces.length > 1 && (
+              <small>
+                • 5 SEC
+              </small>
+            )}
 
           </div>
+
+
+          {/* =================================================
+              LOCATION
+          ================================================= */}
 
           <div className="experience-location">
 
@@ -1474,12 +2857,18 @@ const CreateTrip = () => {
 
           </div>
 
-          {selectedPlaces.length >
-            1 && (
+
+          {/* =================================================
+              LEFT / RIGHT ARROWS
+          ================================================= */}
+
+          {selectedPlaces.length > 1 && (
             <>
+
               <button
                 type="button"
                 className="experience-arrow experience-left"
+                aria-label="Previous place"
                 onClick={
                   handlePreviousPlace
                 }
@@ -1487,17 +2876,27 @@ const CreateTrip = () => {
                 <FiArrowLeft />
               </button>
 
+
               <button
                 type="button"
                 className="experience-arrow experience-right"
+                aria-label="Next place"
                 onClick={
                   handleNextPlace
                 }
               >
                 <FiArrowRight />
               </button>
+
             </>
           )}
+
+
+          {/* =================================================
+              PLACE NUMBER
+
+              01 / 03
+          ================================================= */}
 
           <div className="experience-place-count">
 
@@ -1527,9 +2926,15 @@ const CreateTrip = () => {
 
         </div>
 
-        {/* RIGHT DETAILS */}
+
+        {/* =================================================
+            RIGHT — PLACE DETAILS
+        ================================================= */}
 
         <div className="experience-details">
+
+
+          {/* PLACE NUMBER */}
 
           <div className="experience-number">
 
@@ -1548,10 +2953,16 @@ const CreateTrip = () => {
 
           </div>
 
+
+          {/* PLACE NAME */}
+
           <h2>
             {currentPlace?.name ||
               destination.name}
           </h2>
+
+
+          {/* PLACE LOCATION */}
 
           <div className="experience-place-location">
 
@@ -1564,18 +2975,35 @@ const CreateTrip = () => {
 
           </div>
 
+
+          {/* DESCRIPTION */}
+
           <p className="experience-description">
+
             {currentPlace?.description ||
-              `Explore ${currentPlace?.name || destination.name}.`}
+
+              `Explore ${
+                currentPlace?.name ||
+                destination.name
+              }.`}
+
           </p>
 
+
+          {/* DETAIL */}
+
           {currentPlace?.detail && (
+
             <p className="experience-detail-text">
               {currentPlace.detail}
             </p>
+
           )}
 
-          {/* HIGHLIGHTS */}
+
+          {/* =================================================
+              HIGHLIGHTS
+          ================================================= */}
 
           <div className="experience-highlights">
 
@@ -1583,25 +3011,33 @@ const CreateTrip = () => {
               HIGHLIGHTS
             </span>
 
+
             <div className="highlight-list">
 
-              {(currentPlace
-                ?.highlights ||
-                []).map(
+              {(
+                currentPlace?.highlights ||
+                []
+              ).map(
                 (
                   item,
                   index
                 ) => (
+
                   <div
                     className="highlight-item"
                     key={`${item}-${index}`}
                   >
+
                     <span>
                       <FiCheck />
                     </span>
 
-                    {item}
+                    <strong>
+                      {item}
+                    </strong>
+
                   </div>
+
                 )
               )}
 
@@ -1609,9 +3045,15 @@ const CreateTrip = () => {
 
           </div>
 
-          {/* MORNING / EVENING */}
+
+          {/* =================================================
+              MORNING + EVENING
+          ================================================= */}
 
           <div className="mini-itinerary">
+
+
+            {/* MORNING */}
 
             <div className="mini-plan">
 
@@ -1624,6 +3066,9 @@ const CreateTrip = () => {
               </p>
 
             </div>
+
+
+            {/* EVENING */}
 
             <div className="mini-plan">
 
@@ -1639,9 +3084,15 @@ const CreateTrip = () => {
 
           </div>
 
-          {/* EXACT 3 DOTS WHEN 3 SELECTED */}
+
+          {/* =================================================
+              BOTTOM DOTS
+          ================================================= */}
 
           <div className="experience-bottom">
+
+
+            {/* DOT BUTTONS */}
 
             <div className="experience-dots">
 
@@ -1650,6 +3101,7 @@ const CreateTrip = () => {
                   place,
                   index
                 ) => (
+
                   <button
                     type="button"
                     key={`${place?.name}-${index}`}
@@ -1669,16 +3121,23 @@ const CreateTrip = () => {
                       )
                     }
                   />
+
                 )
               )}
 
             </div>
 
-            <span>
-              {
-                selectedPlaces.length
-              }{" "}
-              selected places
+
+            {/* TOTAL SELECTED */}
+
+            <span className="selected-place-total">
+
+              {selectedPlaces.length}{" "}
+
+              {selectedPlaces.length === 1
+                ? "selected place"
+                : "selected places"}
+
             </span>
 
           </div>
@@ -1686,12 +3145,16 @@ const CreateTrip = () => {
         </div>
 
       </section>
-
-      {/* ===================================================
-          HOTEL
+            {/* ===================================================
+          HOTEL / STAY SECTION
       =================================================== */}
 
       <section className="hotel-stay-section">
+
+
+        {/* =================================================
+            HOTEL HEADER
+        ================================================= */}
 
         <div className="hotel-section-header">
 
@@ -1707,6 +3170,7 @@ const CreateTrip = () => {
 
           </div>
 
+
           <div className="hotel-header-location">
 
             <FiMapPin />
@@ -1719,79 +3183,133 @@ const CreateTrip = () => {
 
         </div>
 
+
+        {/* =================================================
+            HOTEL + DAILY JOURNEY LAYOUT
+        ================================================= */}
+
         <div className="hotel-stay-layout">
 
-          {/* HOTEL LEFT */}
+
+          {/* =================================================
+              LEFT — HOTEL
+          ================================================= */}
 
           <div className="hotel-selection-area">
 
+
+            {/* ===============================================
+                MAIN HOTEL CARD
+            =============================================== */}
+
             <div className="main-hotel-card">
 
+
+              {/* =============================================
+                  MAIN HOTEL IMAGE
+              ============================================= */}
+
               <div className="main-hotel-image">
+  <img
+    src={
+      selectedHotel?.image ||
+      FALLBACK_IMAGE
+    }
+    alt={
+      selectedHotel?.name ||
+      "Selected hotel"
+    }
+    onError={(event) => {
+      event.currentTarget.src =
+        FALLBACK_IMAGE;
+    }}
+  />
 
-                <img
-                  src={
-                    selectedHotel?.image
-                  }
-                  alt={
-                    selectedHotel?.name
-                  }
-                />
+  <div className="hotel-image-overlay" />
 
-                <div className="hotel-image-overlay" />
+  <div className="hotel-card-location">
+    <FiMapPin />
 
-                <div className="hotel-card-location">
+    <span>
+      {selectedHotel?.location ||
+        destination.state}
+    </span>
+  </div>
+</div>
 
-                  <FiMapPin />
 
-                  <span>
-                    {selectedHotel?.location ||
-                      destination.state}
-                  </span>
 
-                </div>
-
-              </div>
+              {/* =============================================
+                  HOTEL INFORMATION
+              ============================================= */}
 
               <div className="main-hotel-info">
+
+
+                {/* RATING */}
 
                 <div className="hotel-rating">
 
                   <FiStar />
 
                   <strong>
+
                     {selectedHotel?.rating ||
                       "4.8"}
+
                   </strong>
 
                   <span>
+
                     {selectedHotel?.reviews ||
                       "Excellent stay"}
+
                   </span>
 
                 </div>
 
+
+                {/* HOTEL NAME */}
+
                 <h3>
-                  {selectedHotel?.name}
+
+                  {selectedHotel?.name ||
+                    "Selected Stay"}
+
                 </h3>
 
+
+                {/* HOTEL DESCRIPTION */}
+
                 <p>
+
                   A carefully selected{" "}
-                  {selectedHotel?.type}{" "}
+
+                  {selectedHotel?.type ||
+                    normalizedStay}{" "}
+
                   for your{" "}
+
                   {destination.name}{" "}
-                  journey. Comfortable
-                  rooms, beautiful
-                  surroundings and easy
-                  access to your selected
-                  places.
+
+                  journey. Comfortable rooms,
+                  beautiful surroundings and easy
+                  access to your selected places.
+
                 </p>
 
               </div>
 
             </div>
 
-            {/* HOTEL THUMBNAILS */}
+
+            {/* ===============================================
+                HOTEL THUMBNAILS
+            =============================================== */}
+
+            <div className="hotel-manual-note">
+              Select a stay below — the main hotel changes only when you click a hotel.
+            </div>
 
             <div className="hotel-thumbnail-row">
 
@@ -1799,60 +3317,101 @@ const CreateTrip = () => {
                 (
                   hotel,
                   index
-                ) => (
-                  <button
-                    type="button"
-                    key={`${hotel.name}-${index}`}
-                    className={`hotel-thumbnail ${
-                      activeHotel ===
-                      index
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      setActiveHotel(
-                        index
-                      )
-                    }
-                  >
+                ) => {
 
-                    <img
-                      src={
-                        hotel.image
+                  const isActive =
+                    activeHotel ===
+                    index;
+
+
+                  return (
+
+                    <button
+                      type="button"
+                      key={`${hotel.name}-${index}`}
+                      className={`hotel-thumbnail ${
+                        isActive
+                          ? "active"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        handleHotelSelect(
+                          index
+                        )
                       }
-                      alt={
-                        hotel.name
-                      }
-                    />
+                      aria-label={`Select ${hotel.name}`}
+                    >
 
-                    <div className="thumbnail-overlay" />
 
-                    <span className="thumbnail-number">
-                      {String(
-                        index + 1
-                      ).padStart(
-                        2,
-                        "0"
-                      )}
-                    </span>
+                      {/* THUMBNAIL IMAGE */}
 
-                    <span className="thumbnail-name">
-                      {hotel.name}
-                    </span>
+                      <img
+                        src={
+                          hotel?.image ||
+                          FALLBACK_IMAGE
+                        }
+                        alt={
+                          hotel?.name ||
+                          `Stay ${index + 1}`
+                        }
+                        onError={(event) => {
 
-                  </button>
-                )
+                          event.currentTarget.src =
+                            FALLBACK_IMAGE;
+
+                        }}
+                      />
+
+
+                      {/* OVERLAY */}
+
+                      <div className="thumbnail-overlay" />
+
+
+                      {/* NUMBER */}
+
+                      <span className="thumbnail-number">
+
+                        {String(
+                          index + 1
+                        ).padStart(
+                          2,
+                          "0"
+                        )}
+
+                      </span>
+
+
+                      {/* NAME */}
+
+                      <span className="thumbnail-name">
+
+                        {hotel.name}
+
+                      </span>
+
+                    </button>
+
+                  );
+
+                }
               )}
 
             </div>
 
-          </div>
+</div>
+
 
           {/* =================================================
-              DAILY JOURNEY
+              RIGHT — DAILY JOURNEY
           ================================================= */}
 
           <div className="hotel-schedule-card">
+
+
+            {/* ===============================================
+                DAILY JOURNEY TOP
+            =============================================== */}
 
             <div className="schedule-top">
 
@@ -1868,6 +3427,7 @@ const CreateTrip = () => {
 
               </div>
 
+
               <div className="schedule-days-count">
 
                 <strong>
@@ -1875,14 +3435,19 @@ const CreateTrip = () => {
                 </strong>
 
                 <span>
-                  days
+                  {totalDays === 1
+                    ? "day"
+                    : "days"}
                 </span>
 
               </div>
 
             </div>
 
-            {/* DAYS */}
+
+            {/* ===============================================
+                DAY SELECTOR
+            =============================================== */}
 
             <div className="day-selector">
 
@@ -1891,10 +3456,14 @@ const CreateTrip = () => {
                   length:
                     totalDays,
                 },
-                (_, index) =>
+                (
+                  _,
+                  index
+                ) =>
                   index + 1
               ).map(
                 (day) => (
+
                   <button
                     type="button"
                     key={day}
@@ -1916,239 +3485,220 @@ const CreateTrip = () => {
                     </span>
 
                     <strong>
+
                       {String(
                         day
                       ).padStart(
                         2,
                         "0"
                       )}
+
                     </strong>
 
                   </button>
+
                 )
               )}
 
             </div>
 
-            {/* SCHEDULE */}
+{/* ===============================================
+    ACTIVE DAY CONTENT
+=============================================== */}
 
-            <div className="active-day-content">
+<div className="active-day-content">
 
-              {/* MORNING */}
+  {/* =============================================
+      MORNING
+  ============================================= */}
 
-              <div className="schedule-row">
+  <div className="schedule-row">
 
-                <div className="schedule-time">
+    <div className="schedule-time">
+      <span>08:00</span>
+      <small>AM</small>
+    </div>
 
-                  <span>
-                    08:00
-                  </span>
+    <div className="day-circle">
+      <FiHome />
+    </div>
 
-                  <small>
-                    AM
-                  </small>
+    <div className="schedule-content">
 
-                </div>
+      <span>
+        MORNING
+      </span>
 
-                <div className="day-circle">
-                  <FiHome />
-                </div>
+      <h4>
+        {daySchedule.morningTitle}
+      </h4>
 
-                <div className="schedule-content">
+      <p>
+        {daySchedule.morningText}
+      </p>
 
-                  <span>
-                    MORNING
-                  </span>
+    </div>
 
-                  <h4>
-                    Breakfast & Start
-                  </h4>
+  </div>
 
-                  <p>
-                    Start your morning
-                    at{" "}
-                    {selectedHotel?.name}{" "}
-                    and prepare for your
-                    day in{" "}
-                    {destination.name}.
-                  </p>
 
-                </div>
+  {/* =============================================
+      EXPLORE
+  ============================================= */}
 
-              </div>
+  <div className="schedule-row">
 
-              {/* EXPLORE */}
+    <div className="schedule-time">
+      <span>10:00</span>
+      <small>AM</small>
+    </div>
 
-              <div className="schedule-row">
+    <div className="day-circle">
+      <FiNavigation />
+    </div>
 
-                <div className="schedule-time">
+    <div className="schedule-content">
 
-                  <span>
-                    10:00
-                  </span>
+      <span>
+        EXPLORE
+      </span>
 
-                  <small>
-                    AM
-                  </small>
+      <h4>
+        {daySchedule.exploreTitle}
+      </h4>
 
-                </div>
+      <p>
+        {daySchedule.exploreText}
+      </p>
 
-                <div className="day-circle">
-                  <FiNavigation />
-                </div>
+    </div>
 
-                <div className="schedule-content">
+  </div>
 
-                  <span>
-                    EXPLORE
-                  </span>
 
-                  <h4>
-                    {currentPlace?.name}
-                  </h4>
+  {/* =============================================
+      EVENING
+  ============================================= */}
 
-                  <p>
-                    {currentPlace?.description}
-                  </p>
+  <div className="schedule-row">
 
-                </div>
+    <div className="schedule-time">
+      <span>06:00</span>
+      <small>PM</small>
+    </div>
 
-              </div>
+    <div className="day-circle">
+      <FiMapPin />
+    </div>
 
-              {/* EVENING */}
+    <div className="schedule-content">
 
-              <div className="schedule-row">
+      <span>
+        EVENING
+      </span>
 
-                <div className="schedule-time">
+      <h4>
+        {daySchedule.eveningTitle}
+      </h4>
 
-                  <span>
-                    06:00
-                  </span>
+      <p>
+        {daySchedule.eveningText}
+      </p>
 
-                  <small>
-                    PM
-                  </small>
+    </div>
 
-                </div>
+  </div>
 
-                <div className="day-circle">
-                  <FiMapPin />
-                </div>
 
-                <div className="schedule-content">
+  {/* =============================================
+      NIGHT
+  ============================================= */}
 
-                  <span>
-                    EVENING
-                  </span>
+  <div className="schedule-row">
 
-                  <h4>
-                    Local Experience
-                  </h4>
+    <div className="schedule-time">
+      <span>10:00</span>
+      <small>PM</small>
+    </div>
 
-                  <p>
-                    {getEveningText()}
-                  </p>
+    <div className="day-circle">
+      <FiClock />
+    </div>
 
-                </div>
+    <div className="schedule-content">
 
-              </div>
+      <span>
+        NIGHT
+      </span>
 
-              {/* NIGHT */}
+      <h4>
+        {daySchedule.nightTitle}
+      </h4>
 
-              <div className="schedule-row">
+      <p>
+        {daySchedule.nightText}
+      </p>
 
-                <div className="schedule-time">
+    </div>
 
-                  <span>
-                    10:00
-                  </span>
+  </div>
 
-                  <small>
-                    PM
-                  </small>
+</div>
 
-                </div>
+</div>
 
-                <div className="day-circle">
-                  <FiClock />
-                </div>
+</div>
 
-                <div className="schedule-content">
 
-                  <span>
-                    NIGHT
-                  </span>
+{/* =================================================
+    BOOK THIS STAY
+================================================= */}
 
-                  <h4>
-                    {getNightTitle()}
-                  </h4>
+<div className="hotel-booking-area">
 
-                  <p>
-                    {getNightDescription()}
-                  </p>
+  <div className="hotel-booking-text">
 
-                </div>
+    <span>
+      READY TO RESERVE?
+    </span>
 
-              </div>
+    <h3>
+      Complete your stay at{" "}
+      <strong>
+        {selectedHotel?.name || "Selected Stay"}
+      </strong>
+    </h3>
 
-            </div>
+    <p>
+      Your destination, all{" "}
+      {selectedPlaces.length}{" "}
+      selected places, images, budget and stay
+      will continue to booking.
+    </p>
 
-          </div>
+  </div>
 
-        </div>
 
-        {/* =================================================
-            BOOK
-        ================================================= */}
+  <button
+    type="button"
+    className="hotel-book-btn"
+    onClick={handleBookHotel}
+  >
 
-        <div className="hotel-booking-area">
+    <span>
+      Book This Stay
+    </span>
 
-          <div className="hotel-booking-text">
+    <FiArrowRight />
 
-            <span>
-              READY TO RESERVE?
-            </span>
+  </button>
 
-            <h3>
-              Complete your stay at{" "}
+</div>
 
-              <strong>
-                {selectedHotel?.name}
-              </strong>
-            </h3>
+</section>
 
-            <p>
-              Your destination, all{" "}
-              {selectedPlaces.length}{" "}
-              selected places, images,
-              budget and stay will
-              continue to booking.
-            </p>
-
-          </div>
-
-          <button
-            type="button"
-            className="hotel-book-btn"
-            onClick={
-              handleBookHotel
-            }
-          >
-
-            <span>
-              Book This Stay
-            </span>
-
-            <FiArrowRight />
-
-          </button>
-
-        </div>
-
-      </section>
-
-    </main>
-  );
+</main>
+);
 };
 
 export default CreateTrip;

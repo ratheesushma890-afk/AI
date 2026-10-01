@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FiArrowUpRight,
   FiMapPin,
@@ -14,6 +15,7 @@ import kerala from "../assets/kerala.jpg";
 
 const destinations = [
   {
+    id: "goa",
     number: "01",
     place: "GOA",
     location: "GOA · INDIA",
@@ -23,6 +25,7 @@ const destinations = [
     stamp: "WEST COAST",
   },
   {
+    id: "manali",
     number: "02",
     place: "MANALI",
     location: "HIMACHAL · INDIA",
@@ -32,6 +35,7 @@ const destinations = [
     stamp: "HIGH ALTITUDE",
   },
   {
+    id: "jaipur",
     number: "03",
     place: "JAIPUR",
     location: "RAJASTHAN · INDIA",
@@ -41,6 +45,7 @@ const destinations = [
     stamp: "THE PINK CITY",
   },
   {
+    id: "kerala",
     number: "04",
     place: "KERALA",
     location: "KERALA · INDIA",
@@ -52,12 +57,27 @@ const destinations = [
 ];
 
 const TravelTape = () => {
+  const navigate = useNavigate();
+
   const [active, setActive] = useState(0);
+  const [tapePaused, setTapePaused] = useState(false);
 
   const current = destinations[active];
 
+  /* =====================================================
+     CHANGE MAIN DESTINATION
+  ===================================================== */
+
   const changeDestination = (index) => {
     setActive(index);
+  };
+
+  /* =====================================================
+     OPEN DESTINATION DETAIL PAGE
+  ===================================================== */
+
+  const openDestination = (item) => {
+    navigate(`/destination/${item.id}`);
   };
 
   return (
@@ -80,9 +100,8 @@ const TravelTape = () => {
           </div>
 
           <h2>
-            Some places<i>&nbsp;stay with you.</i>
-            
-            
+            Some places
+            <i>&nbsp;stay with you.</i>
           </h2>
         </div>
 
@@ -98,14 +117,13 @@ const TravelTape = () => {
 
       </div>
 
-
       {/* =====================================================
           MAIN EXPERIENCE
       ===================================================== */}
 
       <div className="tape-experience">
 
-        {/* LEFT INDEX */}
+        {/* ================= LEFT INDEX ================= */}
 
         <div className="tape-index">
 
@@ -145,8 +163,7 @@ const TravelTape = () => {
 
         </div>
 
-
-        {/* CENTER IMAGE */}
+        {/* ================= CENTER IMAGE ================= */}
 
         <div className="tape-image-card">
 
@@ -177,8 +194,7 @@ const TravelTape = () => {
 
         </div>
 
-
-        {/* RIGHT STORY */}
+        {/* ================= RIGHT STORY ================= */}
 
         <div className="tape-story">
 
@@ -196,7 +212,12 @@ const TravelTape = () => {
             {current.text}
           </p>
 
-          <button className="discover-btn">
+          {/* DISCOVER BUTTON */}
+
+          <button
+            className="discover-btn"
+            onClick={() => openDestination(current)}
+          >
 
             <span>
               Discover {current.place}
@@ -208,8 +229,7 @@ const TravelTape = () => {
 
           </button>
 
-
-          {/* mini metadata */}
+          {/* MINI METADATA */}
 
           <div className="story-meta">
 
@@ -229,35 +249,64 @@ const TravelTape = () => {
 
       </div>
 
-
       {/* =====================================================
           MOVING TAPE
       ===================================================== */}
 
-      <div className="moving-tape">
+      <div
+        className={`moving-tape ${tapePaused ? "paused" : ""}`}
+
+        /* DESKTOP */
+        onMouseEnter={() => setTapePaused(true)}
+        onMouseLeave={() => setTapePaused(false)}
+
+        /* MOBILE / TOUCH */
+        onTouchStart={() => setTapePaused(true)}
+        onTouchEnd={() => setTapePaused(false)}
+        onTouchCancel={() => setTapePaused(false)}
+      >
 
         <div className="moving-track">
 
           {[...destinations, ...destinations].map(
             (item, index) => (
-              <React.Fragment key={index}>
 
-                <span>{item.place}</span>
+              <React.Fragment
+                key={`${item.id}-${index}`}
+              >
+
+                {/* CLICKABLE DESTINATION */}
+
+                <button
+                  type="button"
+                  className="tape-destination-link"
+                  onClick={() => openDestination(item)}
+                >
+                  {item.place}
+                </button>
 
                 <b>✦</b>
 
-                <span>{item.stamp}</span>
+                {/* STAMP ALSO CLICKABLE */}
+
+                <button
+                  type="button"
+                  className="tape-destination-link tape-stamp-link"
+                  onClick={() => openDestination(item)}
+                >
+                  {item.stamp}
+                </button>
 
                 <b>✦</b>
 
               </React.Fragment>
+
             )
           )}
 
         </div>
 
       </div>
-
 
       {/* =====================================================
           BOTTOM NOTE

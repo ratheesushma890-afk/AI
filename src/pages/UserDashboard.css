@@ -1,0 +1,1689 @@
+/* =========================================================
+   USER DASHBOARD
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.user-dashboard-page {
+  min-height: 100vh;
+
+  display: flex;
+
+  background: #f5f8fb;
+
+  color: #17263b;
+
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.user-dashboard-sidebar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 250px;
+
+  padding: 55px 18px 20px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border-right: 1px solid #e7edf4;
+
+  z-index: 1000;
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.user-dashboard-logo {
+  padding: 0 8px 23px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  border-bottom: 1px solid #edf1f5;
+}
+
+.user-dashboard-logo-icon {
+  width: 39px;
+  height: 39px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #eaf4ff;
+
+  color: #2777c8;
+
+  font-size: 18px;
+}
+
+.user-dashboard-logo strong,
+.user-dashboard-logo span {
+  display: block;
+}
+
+.user-dashboard-logo strong {
+  font-family: "Playfair Display", serif;
+
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.user-dashboard-logo span {
+  margin-top: 1px;
+
+  color: #9aa5b4;
+
+  font-size: 8px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+.user-dashboard-close {
+  display: none;
+}
+
+/* =========================================================
+   SIDEBAR PROFILE
+========================================================= */
+
+.user-sidebar-profile {
+  margin: 20px 4px 12px;
+
+  padding: 13px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  border-radius: 10px;
+
+  background: #f5f9fd;
+}
+
+.user-sidebar-avatar,
+.user-top-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #2675c2;
+
+  color: #ffffff;
+
+  font-family: "Playfair Display", serif;
+
+  font-weight: 600;
+}
+
+.user-sidebar-avatar {
+  width: 38px;
+  height: 38px;
+
+  font-size: 16px;
+}
+
+.user-sidebar-profile strong,
+.user-sidebar-profile span {
+  display: block;
+}
+
+.user-sidebar-profile strong {
+  max-width: 145px;
+
+  overflow: hidden;
+
+  color: #24334a;
+
+  font-size: 11px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-sidebar-profile span {
+  max-width: 145px;
+
+  margin-top: 3px;
+
+  overflow: hidden;
+
+  color: #909cad;
+
+  font-size: 8px;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   NAV
+========================================================= */
+
+.user-dashboard-nav {
+  margin-top: 9px;
+
+  flex: 1;
+}
+
+.user-nav-label {
+  display: block;
+
+  padding: 12px 11px 7px;
+
+  color: #adb6c3;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.user-nav-second {
+  margin-top: 11px;
+}
+
+.user-dashboard-nav a {
+  min-height: 43px;
+
+  margin: 3px 0;
+
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  border-radius: 8px;
+
+  color: #66758a;
+
+  text-decoration: none;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  transition: 0.2s ease;
+}
+
+.user-dashboard-nav a > svg {
+  width: 16px;
+
+  font-size: 16px;
+}
+
+.user-dashboard-nav a:hover {
+  background: #f3f8fd;
+
+  color: #2675c2;
+}
+
+.user-dashboard-nav a.active {
+  background: #eaf4ff;
+
+  color: #216eb9;
+}
+
+.user-dashboard-nav a small {
+  min-width: 20px;
+
+  margin-left: auto;
+
+  padding: 3px 5px;
+
+  border-radius: 20px;
+
+  background: #e5eef8;
+
+  text-align: center;
+
+  font-size: 8px;
+}
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.user-sidebar-bottom {
+  padding-top: 13px;
+
+  border-top: 1px solid #edf1f5;
+}
+
+.user-view-website,
+.user-logout-btn {
+  width: 100%;
+  height: 40px;
+
+  padding: 0 11px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #718095;
+
+  font-family: inherit;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.user-view-website:hover {
+  background: #f4f8fc;
+
+  color: #2675c2;
+}
+
+.user-logout-btn {
+  color: #c85b5b;
+}
+
+.user-logout-btn:hover {
+  background: #fff2f2;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.user-dashboard-main {
+  width: calc(100% - 250px);
+
+  min-height: 100vh;
+
+  margin-left: 250px;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.user-dashboard-topbar {
+  height: 70px;
+
+  padding: 0 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 100;
+
+  background: rgba(255, 255, 255, 0.94);
+
+  border-bottom: 1px solid #e7edf4;
+
+  backdrop-filter: blur(12px);
+}
+
+.user-dashboard-topbar-left {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.user-dashboard-topbar-left span,
+.user-dashboard-topbar-left strong {
+  display: block;
+}
+
+.user-dashboard-topbar-left span {
+  margin-bottom: 2px;
+
+  color: #a1acba;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+}
+
+.user-dashboard-topbar-left strong {
+  color: #27364b;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 17px;
+}
+
+.user-mobile-menu {
+  display: none;
+}
+
+.user-dashboard-topbar-right {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+.user-explore-btn {
+  height: 37px;
+
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border: 1px solid #dce6f0;
+  border-radius: 7px;
+
+  color: #516177;
+
+  text-decoration: none;
+
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.user-explore-btn:hover {
+  border-color: #80add9;
+
+  color: #2675c2;
+}
+
+.user-top-avatar {
+  width: 35px;
+  height: 35px;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.user-dashboard-content {
+  width: 100%;
+
+  max-width: 1450px;
+
+  margin: 0 auto;
+
+  padding: 32px 34px 50px;
+}
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.user-welcome-section {
+  margin-bottom: 26px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 25px;
+}
+
+.user-welcome-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #3180cd;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+}
+
+.user-welcome-section h1 {
+  margin: 0;
+
+  color: #17263b;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 34px;
+  font-weight: 500;
+
+  letter-spacing: -0.5px;
+}
+
+.user-welcome-section p {
+  margin: 7px 0 0;
+
+  color: #8592a4;
+
+  font-size: 10px;
+}
+
+.user-plan-trip-btn {
+  height: 42px;
+
+  padding: 0 17px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  border-radius: 8px;
+
+  background: #216fbb;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  box-shadow: 0 8px 20px rgba(33, 111, 187, 0.15);
+}
+
+.user-plan-trip-btn:hover {
+  background: #185fa5;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.user-dashboard-stats {
+  margin-bottom: 27px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 15px;
+}
+
+.user-stat-card {
+  min-height: 115px;
+
+  padding: 19px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  border: 1px solid #e4eaf1;
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  transition: 0.2s ease;
+}
+
+.user-stat-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 30px rgba(31, 54, 81, 0.06);
+}
+
+.user-stat-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #edf6ff;
+
+  color: #2c79c5;
+
+  font-size: 18px;
+}
+
+.user-stat-card span {
+  display: block;
+
+  color: #929dad;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+}
+
+.user-stat-card strong {
+  display: block;
+
+  margin: 3px 0 1px;
+
+  color: #213149;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.user-stat-card p {
+  margin: 0;
+
+  color: #a1abb9;
+
+  font-size: 8px;
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.user-dashboard-grid {
+  margin-bottom: 28px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 270px;
+
+  gap: 18px;
+}
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.user-section-heading {
+  margin-bottom: 13px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.user-section-heading span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #3180cd;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.user-section-heading h2 {
+  margin: 0;
+
+  color: #213149;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.user-section-heading > a {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  color: #668096;
+
+  text-decoration: none;
+
+  font-size: 8px;
+  font-weight: 650;
+}
+
+.user-section-heading > a:hover {
+  color: #2675c2;
+}
+
+/* =========================================================
+   UPCOMING CARD
+========================================================= */
+
+.user-upcoming-card {
+  min-height: 295px;
+
+  display: grid;
+  grid-template-columns: 43% 57%;
+
+  overflow: hidden;
+
+  border: 1px solid #e3eaf1;
+  border-radius: 12px;
+
+  background: #ffffff;
+}
+
+.user-upcoming-image {
+  position: relative;
+
+  min-height: 295px;
+
+  overflow: hidden;
+}
+
+.user-upcoming-image img {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  inset: 0;
+
+  object-fit: cover;
+
+  transition: transform 0.5s ease;
+}
+
+.user-upcoming-card:hover img {
+  transform: scale(1.04);
+}
+
+.user-trip-badge {
+  position: absolute;
+
+  top: 15px;
+  left: 15px;
+
+  padding: 6px 9px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: #2775c1;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+}
+
+.user-upcoming-info {
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.user-trip-location {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  color: #3980c4;
+
+  font-size: 8px;
+  font-weight: 650;
+}
+
+.user-upcoming-info h3 {
+  margin: 9px 0 7px;
+
+  color: #1d2e46;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.user-upcoming-info > p {
+  max-width: 430px;
+
+  margin: 0;
+
+  color: #8996a7;
+
+  font-size: 9px;
+
+  line-height: 1.7;
+}
+
+/* =========================================================
+   TRIP META
+========================================================= */
+
+.user-trip-meta {
+  margin-top: 20px;
+
+  padding: 15px 0;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 10px;
+
+  border-top: 1px solid #edf1f5;
+  border-bottom: 1px solid #edf1f5;
+}
+
+.user-trip-meta > div {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #2c79c4;
+}
+
+.user-trip-meta svg {
+  font-size: 15px;
+}
+
+.user-trip-meta span {
+  color: #405069;
+
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.user-trip-meta small {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #a0aab8;
+
+  font-size: 6px;
+
+  letter-spacing: 0.8px;
+}
+
+/* =========================================================
+   TRIP FOOTER
+========================================================= */
+
+.user-trip-footer {
+  margin-top: auto;
+
+  padding-top: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-trip-footer span,
+.user-trip-footer strong {
+  display: block;
+}
+
+.user-trip-footer span {
+  margin-bottom: 3px;
+
+  color: #a0aab8;
+
+  font-size: 6px;
+
+  letter-spacing: 0.8px;
+}
+
+.user-trip-footer strong {
+  color: #405069;
+
+  font-size: 9px;
+}
+
+.user-trip-footer a {
+  height: 35px;
+
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  border-radius: 7px;
+
+  background: #edf6ff;
+
+  color: #2675c2;
+
+  text-decoration: none;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.user-profile-card {
+  margin-top: 37px;
+
+  padding: 24px 20px;
+
+  border: 1px solid #e3eaf1;
+  border-radius: 12px;
+
+  background: #ffffff;
+
+  text-align: center;
+}
+
+.user-profile-label {
+  display: block;
+
+  color: #3180cd;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.user-profile-avatar {
+  width: 62px;
+  height: 62px;
+
+  margin: 18px auto 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e8f3fe;
+
+  color: #2675c2;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.user-profile-card h3 {
+  margin: 0;
+
+  color: #25354c;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.user-profile-card > p {
+  margin: 4px 0 0;
+
+  color: #96a1af;
+
+  font-size: 8px;
+}
+
+.user-profile-line {
+  margin: 19px 0;
+
+  height: 1px;
+
+  background: #edf1f5;
+}
+
+.user-profile-item {
+  margin-bottom: 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  text-align: left;
+}
+
+.user-profile-item > svg {
+  color: #3980c4;
+
+  font-size: 15px;
+}
+
+.user-profile-item span,
+.user-profile-item strong {
+  display: block;
+}
+
+.user-profile-item span {
+  margin-bottom: 2px;
+
+  color: #a2acb9;
+
+  font-size: 6px;
+
+  letter-spacing: 0.7px;
+}
+
+.user-profile-item strong {
+  color: #48576c;
+
+  font-size: 8px;
+}
+
+.user-profile-edit {
+  height: 36px;
+
+  margin-top: 19px;
+
+  padding: 0 11px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 1px solid #e2e9f0;
+  border-radius: 7px;
+
+  color: #596a80;
+
+  text-decoration: none;
+
+  font-size: 8px;
+  font-weight: 650;
+}
+
+/* =========================================================
+   BOOKINGS
+========================================================= */
+
+.user-recent-section {
+  margin-bottom: 28px;
+}
+
+.user-booking-table {
+  overflow: hidden;
+
+  border: 1px solid #e3eaf1;
+  border-radius: 11px;
+
+  background: #ffffff;
+}
+
+.user-booking-table-head,
+.user-booking-row {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1.3fr 1.2fr 1fr 1fr 35px;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.user-booking-table-head {
+  min-height: 42px;
+
+  padding: 0 18px;
+
+  background: #f8fafc;
+
+  color: #9ca7b5;
+
+  font-size: 6px;
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+}
+
+.user-booking-row {
+  min-height: 59px;
+
+  padding: 0 18px;
+
+  border-top: 1px solid #edf1f5;
+
+  color: #69778b;
+
+  font-size: 9px;
+}
+
+.user-booking-row > strong {
+  color: #34445b;
+
+  font-size: 9px;
+}
+
+.user-booking-destination {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #43546b;
+
+  font-weight: 650;
+}
+
+.user-booking-destination svg {
+  color: #3480c8;
+}
+
+.user-booking-status {
+  width: fit-content;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 7px;
+  font-weight: 700;
+}
+
+.user-booking-status.confirmed {
+  background: #eaf8f0;
+
+  color: #38875d;
+}
+
+.user-booking-status.completed {
+  background: #eaf3ff;
+
+  color: #3b75ad;
+}
+
+.user-booking-row button {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: #f2f6fa;
+
+  color: #6d7d91;
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   DISCOVER
+========================================================= */
+
+.user-dashboard-discover {
+  min-height: 150px;
+
+  padding: 27px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  border-radius: 12px;
+
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(92, 167, 236, 0.22),
+      transparent 32%
+    ),
+    #eaf5ff;
+}
+
+.user-dashboard-discover span {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #327bc1;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.user-dashboard-discover h2 {
+  margin: 0;
+
+  color: #1e314a;
+
+  font-family: "Playfair Display", serif;
+
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.user-dashboard-discover h2 em {
+  color: #347bc4;
+
+  font-weight: 400;
+}
+
+.user-dashboard-discover p {
+  margin: 6px 0 0;
+
+  color: #75869a;
+
+  font-size: 9px;
+}
+
+.user-dashboard-discover > a {
+  height: 40px;
+
+  padding: 0 15px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  border-radius: 7px;
+
+  background: #2675c2;
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.user-dashboard-overlay {
+  display: none;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .user-dashboard-sidebar {
+    width: 220px;
+  }
+
+  .user-dashboard-main {
+    width: calc(100% - 220px);
+
+    margin-left: 220px;
+  }
+
+  .user-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-profile-card {
+    margin-top: 0;
+
+    text-align: left;
+  }
+
+  .user-profile-avatar {
+    margin-left: 0;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .user-dashboard-sidebar {
+    width: 270px;
+
+    transform: translateX(-105%);
+
+    transition: transform 0.3s ease;
+  }
+
+  .user-dashboard-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .user-dashboard-close {
+    width: 32px;
+    height: 32px;
+
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #f2f6fa;
+
+    color: #52647a;
+
+    cursor: pointer;
+  }
+
+  .user-dashboard-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 999;
+
+    display: block;
+
+    border: 0;
+
+    background: rgba(16, 30, 47, 0.4);
+  }
+
+  .user-dashboard-main {
+    width: 100%;
+
+    margin-left: 0;
+  }
+
+  .user-dashboard-topbar {
+    height: 62px;
+
+    padding: 0 18px;
+  }
+
+  .user-mobile-menu {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e0e8f0;
+    border-radius: 7px;
+
+    background: #ffffff;
+
+    color: #506177;
+
+    cursor: pointer;
+  }
+
+  .user-dashboard-content {
+    padding: 25px 18px 40px;
+  }
+
+  .user-dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .user-upcoming-card {
+    grid-template-columns: 1fr;
+  }
+
+  .user-upcoming-image {
+    min-height: 230px;
+  }
+
+  .user-booking-table-head {
+    display: none;
+  }
+
+  .user-booking-row {
+    grid-template-columns: 1fr 1fr;
+
+    padding: 15px;
+
+    gap: 12px;
+  }
+
+  .user-booking-row button {
+    display: none;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+  .user-explore-btn {
+    display: none;
+  }
+
+  .user-welcome-section {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .user-welcome-section h1 {
+    font-size: 29px;
+  }
+
+  .user-plan-trip-btn {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .user-upcoming-info {
+    padding: 20px;
+  }
+
+  .user-upcoming-info h3 {
+    font-size: 24px;
+  }
+
+  .user-trip-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .user-dashboard-discover {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .user-dashboard-discover > a {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+}
+
+
+
+
+
+
+/* =========================================================
+   ONLY FONT SIZE INCREASE
+   NO OTHER DESIGN / SIZE / SPACING CHANGE
+========================================================= */
+
+/* LOGO */
+.user-dashboard-logo-icon {
+  font-size: 20px;
+}
+
+.user-dashboard-logo strong {
+  font-size: 24px;
+}
+
+.user-dashboard-logo span {
+  font-size: 11px;
+}
+
+/* SIDEBAR USER */
+.user-sidebar-avatar {
+  font-size: 18px;
+}
+
+.user-sidebar-profile strong {
+  font-size: 15px;
+}
+
+.user-sidebar-profile span {
+  font-size: 12px;
+}
+
+/* SIDEBAR NAVIGATION */
+.user-nav-label {
+  font-size: 11px;
+}
+
+.user-dashboard-nav a {
+  font-size: 15px;
+}
+
+.user-dashboard-nav a > svg {
+  font-size: 18px;
+}
+
+.user-dashboard-nav a small {
+  font-size: 11px;
+}
+
+/* SIDEBAR BOTTOM */
+.user-view-website,
+.user-logout-btn {
+  font-size: 14px;
+}
+
+/* TOPBAR */
+.user-dashboard-topbar-left span {
+  font-size: 10px;
+}
+
+.user-dashboard-topbar-left strong {
+  font-size: 20px;
+}
+
+.user-explore-btn {
+  font-size: 14px;
+}
+
+.user-top-avatar {
+  font-size: 16px;
+}
+
+/* WELCOME */
+.user-welcome-label {
+  font-size: 11px;
+}
+
+.user-welcome-section h1 {
+  font-size: 40px;
+}
+
+.user-welcome-section p {
+  font-size: 15px;
+}
+
+.user-plan-trip-btn {
+  font-size: 14px;
+}
+
+/* STATS */
+.user-stat-icon {
+  font-size: 20px;
+}
+
+.user-stat-card span {
+  font-size: 11px;
+}
+
+.user-stat-card strong {
+  font-size: 30px;
+}
+
+.user-stat-card p {
+  font-size: 13px;
+}
+
+/* SECTION HEADINGS */
+.user-section-heading span {
+  font-size: 10px;
+}
+
+.user-section-heading h2 {
+  font-size: 25px;
+}
+
+.user-section-heading > a {
+  font-size: 13px;
+}
+
+/* UPCOMING TRIP */
+.user-trip-badge {
+  font-size: 10px;
+}
+
+.user-trip-location {
+  font-size: 13px;
+}
+
+.user-upcoming-info h3 {
+  font-size: 32px;
+}
+
+.user-upcoming-info > p {
+  font-size: 14px;
+}
+
+/* TRIP META */
+.user-trip-meta svg {
+  font-size: 17px;
+}
+
+.user-trip-meta span {
+  font-size: 13px;
+}
+
+.user-trip-meta small {
+  font-size: 10px;
+}
+
+/* TRIP FOOTER */
+.user-trip-footer span {
+  font-size: 10px;
+}
+
+.user-trip-footer strong {
+  font-size: 14px;
+}
+
+.user-trip-footer a {
+  font-size: 13px;
+}
+
+/* PROFILE */
+.user-profile-label {
+  font-size: 10px;
+}
+
+.user-profile-avatar {
+  font-size: 27px;
+}
+
+.user-profile-card h3 {
+  font-size: 21px;
+}
+
+.user-profile-card > p {
+  font-size: 12px;
+}
+
+.user-profile-item > svg {
+  font-size: 17px;
+}
+
+.user-profile-item span {
+  font-size: 10px;
+}
+
+.user-profile-item strong {
+  font-size: 13px;
+}
+
+.user-profile-edit {
+  font-size: 13px;
+}
+
+/* BOOKING TABLE */
+.user-booking-table-head {
+  font-size: 10px;
+}
+
+.user-booking-row {
+  font-size: 13px;
+}
+
+.user-booking-row > strong {
+  font-size: 13px;
+}
+
+.user-booking-destination {
+  font-size: 13px;
+}
+
+.user-booking-status {
+  font-size: 11px;
+}
+
+/* DISCOVER */
+.user-dashboard-discover span {
+  font-size: 10px;
+}
+
+.user-dashboard-discover h2 {
+  font-size: 30px;
+}
+
+.user-dashboard-discover p {
+  font-size: 14px;
+}
+
+.user-dashboard-discover > a {
+  font-size: 13px;
+}
+
+/* MOBILE - ONLY FONT SIZE */
+@media (max-width: 520px) {
+  .user-welcome-section h1 {
+    font-size: 34px;
+  }
+
+  .user-upcoming-info h3 {
+    font-size: 29px;
+  }
+
+  .user-dashboard-discover h2 {
+    font-size: 27px;
+  }
+}

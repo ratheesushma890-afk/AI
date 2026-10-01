@@ -8,6 +8,7 @@ import {
   FiCompass,
   FiMail,
 } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 
 import "./TravelFooter.css";
@@ -139,6 +140,15 @@ const TravelFooter = () => {
 
 
             <div className="footer-social">
+                {/* WHATSAPP */}
+    <a
+      href="https://wa.me/919382345677"
+      target="_blank"
+      rel="noreferrer"
+      aria-label="WhatsApp"
+    >
+      <FaWhatsapp />
+    </a>
 
               <a
                 href="https://instagram.com"
@@ -179,12 +189,7 @@ const TravelFooter = () => {
         {/* =====================================================
             BOTTOM
         ===================================================== */}
-        <button
-  className="admin-login-footer-btn"
-  onClick={() => navigate("/admin-secret")}
->
-  Admin Login
-</button>
+      
         <div className="footer-bottom">
 
           <span>

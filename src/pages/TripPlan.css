@@ -2426,3 +2426,471 @@ body {
   height: 0 !important;
   display: none !important;
 }
+
+/* =========================================================
+   MEMBER DETAILS
+========================================================= */
+
+.member-selection-box {
+  width: 100%;
+  margin-top: 14px;
+}
+
+/* FAMILY ADULT + CHILDREN */
+
+.family-member-grid {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+/* =========================================================
+   FIXED MEMBER CARD
+   SOLO / COUPLE
+========================================================= */
+
+.member-fixed-card {
+  width: 100%;
+
+  padding: 13px 15px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  border: 1px solid #dce9f4;
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f1f8ff
+    );
+
+  box-shadow:
+    0 6px 18px
+    rgba(24, 83, 136, 0.05);
+}
+
+.member-fixed-card > svg {
+  width: 39px;
+  height: 39px;
+
+  padding: 10px;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: #e8f4ff;
+
+  color: #1674e8;
+}
+
+.member-fixed-card > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.member-fixed-card span {
+  color: #8193a5;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.member-fixed-card strong {
+  color: #193b5b;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.member-fixed-card small {
+  color: #8da0b2;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   TOTAL FAMILY / FRIEND MEMBER CARD
+========================================================= */
+
+.total-member-card {
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 12px 15px;
+
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    auto;
+
+  align-items: center;
+
+  column-gap: 15px;
+  row-gap: 3px;
+
+  overflow: hidden;
+
+  border: 1px solid #cfe3f4;
+
+  border-radius: 14px;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(50, 172, 236, 0.12),
+      transparent 45%
+    ),
+    linear-gradient(
+      135deg,
+      #f8fcff,
+      #edf7ff
+    );
+
+  box-shadow:
+    0 7px 18px
+    rgba(20, 82, 137, 0.055);
+}
+
+/* blue small line */
+
+.total-member-card::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 9px;
+  bottom: 9px;
+
+  width: 3px;
+
+  border-radius: 0 10px 10px 0;
+
+  background:
+    linear-gradient(
+      #1674e8,
+      #41bce9
+    );
+}
+
+.total-member-card span {
+  color: #7c90a4;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.total-member-card strong {
+  grid-row: span 2;
+
+  color: #1674e8;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.total-member-card small {
+  color: #496781;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   BUDGET SECTION
+========================================================= */
+
+.budget-info {
+  width: 100%;
+
+  margin: 10px 0 12px;
+
+  padding: 9px;
+
+  display: grid;
+
+  grid-template-columns:
+    1.45fr
+    0.7fr
+    0.85fr;
+
+  gap: 7px;
+
+  border: 1px solid #d8e8f5;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f9fcff,
+      #eef8ff
+    );
+}
+
+
+/* EACH BUDGET INFO CARD */
+
+.budget-info > div {
+  min-width: 0;
+
+  min-height: 58px;
+
+  padding: 9px 11px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 4px;
+
+  border: 1px solid #e0ecf5;
+
+  border-radius: 11px;
+
+  background:
+    rgba(255, 255, 255, 0.88);
+}
+
+
+/* LABEL */
+
+.budget-info small {
+  color: #8194a6;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* VALUE */
+
+.budget-info strong {
+  overflow: hidden;
+
+  color: #234561;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/* MINIMUM BUDGET BLUE */
+
+.budget-info > div:first-child strong {
+  color: #1674e8;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   BUDGET OPTIONS
+========================================================= */
+
+.budget-option-row {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 8px;
+}
+
+
+/* Override old option-pill */
+
+.budget-option-row .option-pill {
+  width: 100%;
+
+  min-height: 45px;
+
+  padding: 9px 12px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: flex-start;
+
+  gap: 7px;
+
+  border: 1px solid #dce8f2;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f5faff
+    );
+
+  color: #49647d;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+
+.budget-option-row .option-pill:hover {
+  transform: translateY(-2px);
+
+  border-color: #9fc9ec;
+
+  box-shadow:
+    0 7px 17px
+    rgba(24, 90, 148, 0.07);
+}
+
+
+/* SELECTED */
+
+.budget-option-row .option-pill.active {
+  border-color: #3184e6;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eaf6ff,
+      #dcefff
+    );
+
+  color: #126ed8;
+
+  box-shadow:
+    0 7px 18px
+    rgba(31, 117, 220, 0.1);
+}
+
+
+/* CHECK ICON */
+
+.budget-option-row .option-pill svg {
+  width: 18px;
+  height: 18px;
+
+  padding: 4px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #1674e8;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   BUDGET HELP TEXT
+========================================================= */
+
+.budget-help-text {
+  margin: 9px 0 0;
+
+  color: #8295a7;
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SECTION DESCRIPTION FIX
+========================================================= */
+
+.planner-section-block .section-description {
+  max-width: 100%;
+
+  margin:
+    -2px 0
+    10px;
+
+  color: #778da2;
+
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .family-member-grid {
+    grid-template-columns: 1fr;
+
+    gap: 9px;
+  }
+
+
+  .total-member-card {
+    padding: 11px 13px;
+  }
+
+
+  .budget-info {
+    grid-template-columns: 1fr;
+
+    gap: 6px;
+  }
+
+
+  .budget-info > div {
+    min-height: 52px;
+  }
+
+
+  .budget-option-row {
+    grid-template-columns: 1fr;
+
+    gap: 7px;
+  }
+
+
+  .budget-option-row .option-pill {
+    min-height: 43px;
+  }
+}

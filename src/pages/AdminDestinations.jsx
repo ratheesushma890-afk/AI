@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -17,6 +17,15 @@ import {
 
 import "./AdminDestinations.css";
 
+import {
+  getDestinations,
+  saveDestinations,
+} from "../utils/destinationStorage";
+
+/* =========================================================
+   DEFAULT DESTINATIONS
+========================================================= */
+
 const initialDestinations = [
   {
     id: "DST-1001",
@@ -33,6 +42,7 @@ const initialDestinations = [
     description:
       "A beautiful mountain destination famous for snow, valleys, adventure activities and peaceful landscapes.",
   },
+
   {
     id: "DST-1002",
     name: "Goa",
@@ -48,6 +58,7 @@ const initialDestinations = [
     description:
       "A popular coastal destination known for beaches, nightlife, water sports and relaxing holidays.",
   },
+
   {
     id: "DST-1003",
     name: "Jaipur",
@@ -63,6 +74,7 @@ const initialDestinations = [
     description:
       "The Pink City offers royal palaces, forts, traditional markets and rich Rajasthani culture.",
   },
+
   {
     id: "DST-1004",
     name: "Kerala",
@@ -78,6 +90,7 @@ const initialDestinations = [
     description:
       "Known for backwaters, lush greenery, beaches, wildlife and peaceful hill stations.",
   },
+
   {
     id: "DST-1005",
     name: "Ladakh",
@@ -93,6 +106,7 @@ const initialDestinations = [
     description:
       "A high-altitude adventure destination featuring dramatic mountains, monasteries and scenic roads.",
   },
+
   {
     id: "DST-1006",
     name: "Udaipur",
@@ -108,6 +122,7 @@ const initialDestinations = [
     description:
       "A romantic city famous for lakes, palaces, heritage hotels and beautiful sunsets.",
   },
+
   {
     id: "DST-1007",
     name: "Rishikesh",
@@ -123,6 +138,7 @@ const initialDestinations = [
     description:
       "A destination for river rafting, trekking, yoga, spirituality and outdoor adventures.",
   },
+
   {
     id: "DST-1008",
     name: "Andaman",
@@ -140,14 +156,39 @@ const initialDestinations = [
   },
 ];
 
+/* =========================================================
+   COMPONENT
+========================================================= */
+
 const AdminDestinations = () => {
   const navigate = useNavigate();
 
-  const [destinations, setDestinations] = useState(initialDestinations);
+  /* =======================================================
+     LOAD DATA FROM LOCAL STORAGE
+  ======================================================= */
+
+  const [destinations, setDestinations] = useState(() =>
+    getDestinations(initialDestinations)
+  );
+
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [status, setStatus] = useState("All");
-  const [selectedDestination, setSelectedDestination] = useState(null);
+
+  const [selectedDestination, setSelectedDestination] =
+    useState(null);
+
+  /* =======================================================
+     SAVE EVERY CHANGE
+  ======================================================= */
+
+  useEffect(() => {
+    saveDestinations(destinations);
+  }, [destinations]);
+
+  /* =======================================================
+     CATEGORIES
+  ======================================================= */
 
   const categories = [
     "All",
@@ -157,6 +198,10 @@ const AdminDestinations = () => {
     "Nature",
     "Adventure",
   ];
+
+  /* =======================================================
+     FILTER DESTINATIONS
+  ======================================================= */
 
   const filteredDestinations = useMemo(() => {
     return destinations.filter((destination) => {
@@ -169,14 +214,24 @@ const AdminDestinations = () => {
         destination.category.toLowerCase().includes(searchText);
 
       const matchesCategory =
-        category === "All" || destination.category === category;
+        category === "All" ||
+        destination.category === category;
 
       const matchesStatus =
-        status === "All" || destination.status === status;
+        status === "All" ||
+        destination.status === status;
 
-      return matchesSearch && matchesCategory && matchesStatus;
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesStatus
+      );
     });
   }, [destinations, search, category, status]);
+
+  /* =======================================================
+     STATS
+  ======================================================= */
 
   const totalDestinations = destinations.length;
 
@@ -189,9 +244,13 @@ const AdminDestinations = () => {
   ).length;
 
   const totalTrips = destinations.reduce(
-    (total, item) => total + item.trips,
+    (total, item) => total + Number(item.trips || 0),
     0
   );
+
+  /* =======================================================
+     DELETE DESTINATION
+  ======================================================= */
 
   const handleDelete = (id) => {
     const confirmDelete = window.confirm(
@@ -201,11 +260,17 @@ const AdminDestinations = () => {
     if (!confirmDelete) return;
 
     setDestinations((prev) =>
-      prev.filter((destination) => destination.id !== id)
+      prev.filter(
+        (destination) => destination.id !== id
+      )
     );
 
     setSelectedDestination(null);
   };
+
+  /* =======================================================
+     ACTIVE / INACTIVE
+  ======================================================= */
 
   const handleToggleStatus = (id) => {
     setDestinations((prev) =>
@@ -221,12 +286,35 @@ const AdminDestinations = () => {
           : destination
       )
     );
+
+    /* Keep modal updated if it is open */
+
+    setSelectedDestination((prev) => {
+      if (!prev || prev.id !== id) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        status:
+          prev.status === "Active"
+            ? "Inactive"
+            : "Active",
+      };
+    });
   };
+
+  /* =======================================================
+     UI
+  ======================================================= */
 
   return (
     <div className="admin-destinations-page">
 
-      {/* HEADER */}
+      {/* ===================================================
+          HEADER
+      =================================================== */}
+
       <div className="destinations-header">
         <div>
           <div className="destinations-breadcrumb">
@@ -236,15 +324,17 @@ const AdminDestinations = () => {
           <h1>Destinations</h1>
 
           <p>
-            Manage travel destinations, locations and destination
-            information.
+            Manage travel destinations, locations and
+            destination information.
           </p>
         </div>
 
         <button
           className="add-destination-btn"
           onClick={() =>
-            navigate("/admin-secret/dashboard/destinations/new")
+            navigate(
+              "/admin-secret/dashboard/destinations/new"
+            )
           }
         >
           <FiPlus />
@@ -252,7 +342,10 @@ const AdminDestinations = () => {
         </button>
       </div>
 
-      {/* STATS */}
+      {/* ===================================================
+          STATS
+      =================================================== */}
+
       <div className="destination-stats">
 
         <div className="destination-stat-card">
@@ -301,10 +394,14 @@ const AdminDestinations = () => {
 
       </div>
 
-      {/* MAIN CARD */}
+      {/* ===================================================
+          MAIN CARD
+      =================================================== */}
+
       <div className="destinations-main-card">
 
         {/* FILTER BAR */}
+
         <div className="destination-filter-bar">
 
           <div className="destination-search">
@@ -314,13 +411,17 @@ const AdminDestinations = () => {
               type="text"
               placeholder="Search destination, state or category..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
             />
           </div>
 
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) =>
+              setCategory(e.target.value)
+            }
           >
             {categories.map((item) => (
               <option key={item} value={item}>
@@ -333,19 +434,34 @@ const AdminDestinations = () => {
 
           <select
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) =>
+              setStatus(e.target.value)
+            }
           >
-            <option value="All">All Status</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
+            <option value="All">
+              All Status
+            </option>
+
+            <option value="Active">
+              Active
+            </option>
+
+            <option value="Inactive">
+              Inactive
+            </option>
           </select>
 
         </div>
 
-        {/* RESULTS INFO */}
+        {/* =================================================
+            RESULT INFO
+        ================================================= */}
+
         <div className="destination-results-row">
           <div>
-            <strong>{filteredDestinations.length}</strong>{" "}
+            <strong>
+              {filteredDestinations.length}
+            </strong>{" "}
             destinations found
           </div>
 
@@ -366,8 +482,12 @@ const AdminDestinations = () => {
           )}
         </div>
 
-        {/* TABLE */}
+        {/* =================================================
+            TABLE
+        ================================================= */}
+
         <div className="destinations-table-wrapper">
+
           <table className="destinations-table">
 
             <thead>
@@ -385,126 +505,155 @@ const AdminDestinations = () => {
             <tbody>
 
               {filteredDestinations.length > 0 ? (
-                filteredDestinations.map((destination) => (
-                  <tr key={destination.id}>
+                filteredDestinations.map(
+                  (destination) => (
+                    <tr key={destination.id}>
 
-                    <td>
-                      <div className="destination-info">
+                      {/* DESTINATION */}
 
-                        <img
-                          src={destination.image}
-                          alt={destination.name}
-                        />
+                      <td>
+                        <div className="destination-info">
 
-                        <div>
-                          <strong>
-                            {destination.name}
-                          </strong>
+                          <img
+                            src={destination.image}
+                            alt={destination.name}
+                          />
 
-                          <span>
-                            {destination.id}
-                          </span>
+                          <div>
+                            <strong>
+                              {destination.name}
+                            </strong>
+
+                            <span>
+                              {destination.id}
+                            </span>
+                          </div>
+
                         </div>
+                      </td>
 
-                      </div>
-                    </td>
+                      {/* LOCATION */}
 
-                    <td>
-                      <div className="location-info">
-                        <FiMapPin />
+                      <td>
+                        <div className="location-info">
 
-                        <div>
-                          <strong>
-                            {destination.state}
-                          </strong>
+                          <FiMapPin />
 
-                          <span>
-                            {destination.country}
-                          </span>
+                          <div>
+                            <strong>
+                              {destination.state}
+                            </strong>
+
+                            <span>
+                              {destination.country}
+                            </span>
+                          </div>
+
                         </div>
-                      </div>
-                    </td>
+                      </td>
 
-                    <td>
-                      <span className="category-badge">
-                        {destination.category}
-                      </span>
-                    </td>
+                      {/* CATEGORY */}
 
-                    <td>
-                      <div className="rating-info">
-                        <FiStar />
-                        <strong>
-                          {destination.rating}
-                        </strong>
-
-                        <span>
-                          ({destination.reviews})
+                      <td>
+                        <span className="category-badge">
+                          {destination.category}
                         </span>
-                      </div>
-                    </td>
+                      </td>
 
-                    <td>
-                      <strong className="trip-count">
-                        {destination.trips}
-                      </strong>
-                    </td>
+                      {/* RATING */}
 
-                    <td>
-                      <button
-                        className={`status-badge ${
-                          destination.status.toLowerCase()
-                        }`}
-                        onClick={() =>
-                          handleToggleStatus(destination.id)
-                        }
-                      >
-                        {destination.status}
-                      </button>
-                    </td>
+                      <td>
+                        <div className="rating-info">
 
-                    <td>
-                      <div className="destination-actions">
+                          <FiStar />
 
+                          <strong>
+                            {destination.rating}
+                          </strong>
+
+                          <span>
+                            ({destination.reviews})
+                          </span>
+
+                        </div>
+                      </td>
+
+                      {/* TRIPS */}
+
+                      <td>
+                        <strong className="trip-count">
+                          {destination.trips}
+                        </strong>
+                      </td>
+
+                      {/* STATUS */}
+
+                      <td>
                         <button
-                          className="action-btn view"
-                          title="View"
+                          className={`status-badge ${destination.status.toLowerCase()}`}
                           onClick={() =>
-                            setSelectedDestination(
-                              destination
+                            handleToggleStatus(
+                              destination.id
                             )
                           }
                         >
-                          <FiEye />
+                          {destination.status}
                         </button>
+                      </td>
 
-                        <button
-                          className="action-btn edit"
-                          title="Edit"
-                          onClick={() =>
-                            navigate(
-                              `/admin-secret/dashboard/destinations/edit/${destination.id}`
-                            )
-                          }
-                        >
-                          <FiEdit3 />
-                        </button>
+                      {/* ACTION */}
 
-                        <button
-                          className="action-btn delete"
-                          title="Delete"
-                          onClick={() =>
-                            handleDelete(destination.id)
-                          }
-                        >
-                          <FiTrash2 />
-                        </button>
+                      <td>
+                        <div className="destination-actions">
 
-                      </div>
-                    </td>
+                          {/* VIEW */}
 
-                  </tr>
-                ))
+                          <button
+                            className="action-btn view"
+                            title="View"
+                            onClick={() =>
+                              setSelectedDestination(
+                                destination
+                              )
+                            }
+                          >
+                            <FiEye />
+                          </button>
+
+                          {/* EDIT */}
+
+                          <button
+                            className="action-btn edit"
+                            title="Edit"
+                            onClick={() =>
+                              navigate(
+                                `/admin-secret/dashboard/destinations/edit/${destination.id}`
+                              )
+                            }
+                          >
+                            <FiEdit3 />
+                          </button>
+
+                          {/* DELETE */}
+
+                          <button
+                            className="action-btn delete"
+                            title="Delete"
+                            onClick={() =>
+                              handleDelete(
+                                destination.id
+                              )
+                            }
+                          >
+                            <FiTrash2 />
+                          </button>
+
+                        </div>
+                      </td>
+
+                    </tr>
+                  )
+                )
               ) : (
                 <tr>
                   <td
@@ -518,7 +667,8 @@ const AdminDestinations = () => {
                     </strong>
 
                     <span>
-                      Try changing your search or filters.
+                      Try changing your search or
+                      filters.
                     </span>
                   </td>
                 </tr>
@@ -527,20 +677,31 @@ const AdminDestinations = () => {
             </tbody>
 
           </table>
+
         </div>
+
       </div>
 
-      {/* VIEW MODAL */}
+      {/* ===================================================
+          VIEW MODAL
+      =================================================== */}
+
       {selectedDestination && (
         <div
           className="destination-modal-overlay"
-          onClick={() => setSelectedDestination(null)}
+          onClick={() =>
+            setSelectedDestination(null)
+          }
         >
 
           <div
             className="destination-modal"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) =>
+              e.stopPropagation()
+            }
           >
+
+            {/* CLOSE */}
 
             <button
               className="modal-close-btn"
@@ -551,11 +712,15 @@ const AdminDestinations = () => {
               <FiX />
             </button>
 
+            {/* IMAGE */}
+
             <img
               className="destination-modal-image"
               src={selectedDestination.image}
               alt={selectedDestination.name}
             />
+
+            {/* CONTENT */}
 
             <div className="destination-modal-content">
 
@@ -572,20 +737,21 @@ const AdminDestinations = () => {
 
                   <p>
                     <FiMapPin />
+
                     {selectedDestination.state},{" "}
                     {selectedDestination.country}
                   </p>
                 </div>
 
                 <span
-                  className={`modal-status ${
-                    selectedDestination.status.toLowerCase()
-                  }`}
+                  className={`modal-status ${selectedDestination.status.toLowerCase()}`}
                 >
                   {selectedDestination.status}
                 </span>
 
               </div>
+
+              {/* DETAILS */}
 
               <div className="modal-details-grid">
 
@@ -619,13 +785,21 @@ const AdminDestinations = () => {
 
               </div>
 
+              {/* DESCRIPTION */}
+
               <div className="modal-description">
-                <h3>About Destination</h3>
+
+                <h3>
+                  About Destination
+                </h3>
 
                 <p>
                   {selectedDestination.description}
                 </p>
+
               </div>
+
+              {/* ACTIONS */}
 
               <div className="modal-actions">
 
@@ -644,7 +818,9 @@ const AdminDestinations = () => {
                 <button
                   className="modal-delete-btn"
                   onClick={() =>
-                    handleDelete(selectedDestination.id)
+                    handleDelete(
+                      selectedDestination.id
+                    )
                   }
                 >
                   <FiTrash2 />
@@ -654,7 +830,9 @@ const AdminDestinations = () => {
               </div>
 
             </div>
+
           </div>
+
         </div>
       )}
 
