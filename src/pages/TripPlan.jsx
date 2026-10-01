@@ -437,9 +437,9 @@ const TripPlan = () => {
       return 1;
     }
 
-    if (type === "Couple") {
-      return 2;
-    }
+   if (type === "Couple") {
+  return Number(adultCount) || 2;
+}
 
     if (type === "Family") {
       return (
@@ -458,24 +458,6 @@ const TripPlan = () => {
   /* =====================================================
      MINIMUM BUDGET CALCULATION
 
-     IMPORTANT:
-     Ye budget ko lock nahi karta.
-
-     Sirf ye decide karta hai ki
-     sabse kam kaunsa budget option
-     dikhna chahiye.
-
-     Example:
-     Family = 4 members
-     Days = 5
-
-     4 × 5 × ₹4,000
-     = ₹80,000
-
-     To ₹50k – ₹1L minimum rahega.
-
-     Isse niche wale options hide.
-     Isse upar wale options show.
   ===================================================== */
 
   const getMinimumBudgetIndex = (
@@ -578,76 +560,62 @@ const TripPlan = () => {
   /* =====================================================
      TRAVEL TYPE CHANGE
   ===================================================== */
+useEffect(() => {
+  // SOLO
+  if (travelType === "Solo") {
+    setAdults("1");
+    setChildren("0");
+    setTravellers("1");
+    return;
+  }
 
-  useEffect(() => {
-    /*
-      SOLO
-      Fixed 1 Adult
-    */
+  // COUPLE
+  if (travelType === "Couple") {
+    setChildren("0");
 
-    if (travelType === "Solo") {
-      setAdults("1");
-      setChildren("0");
-      setTravellers("1");
+    setAdults((current) => {
+      const value = Number(current);
 
-      return;
-    }
+      if ([2, 4, 6, 8, 10].includes(value)) {
+        return String(value);
+      }
 
-    /*
-      COUPLE
-      Fixed 2 Adults
-    */
+      return "2";
+    });
 
-    if (travelType === "Couple") {
-      setAdults("2");
-      setChildren("0");
-      setTravellers("2");
+    return;
+  }
 
-      return;
-    }
+  // FAMILY
+  if (travelType === "Family") {
+    setAdults((current) => {
+      const value = Number(current);
 
-    /*
-      FAMILY
+      if (value >= 1) {
+        return String(value);
+      }
 
-      Family me Adults + Children
-      dono choose kar sakte hain.
-    */
+      return "2";
+    });
 
-    if (travelType === "Family") {
-      setAdults((current) => {
-        const value = Number(current);
+    return;
+  }
 
-        if (value >= 1) {
-          return String(value);
-        }
+  // FRIENDS
+  if (travelType === "Friends") {
+    setChildren("0");
 
-        return "2";
-      });
+    setAdults((current) => {
+      const value = Number(current);
 
-      return;
-    }
+      if (value >= 2) {
+        return String(value);
+      }
 
-    /*
-      FRIENDS
-
-      Minimum 2 friends.
-      Children nahi.
-    */
-
-    if (travelType === "Friends") {
-      setChildren("0");
-
-      setAdults((current) => {
-        const value = Number(current);
-
-        if (value >= 2) {
-          return String(value);
-        }
-
-        return "2";
-      });
-    }
-  }, [travelType]);
+      return "2";
+    });
+  }
+}, [travelType]);
 
   /* =====================================================
      AUTO TOTAL TRAVELLERS
@@ -2442,31 +2410,35 @@ const TripPlan = () => {
 
                 {/* COUPLE */}
 
-                {travelType === "Couple" && (
+                {/* COUPLE */}
 
-                  <div className="member-fixed-card">
+{travelType === "Couple" && (
+  <label className="planner-field">
+    <span>Travellers</span>
 
-                    <FiUsers />
+    <div className="input-wrap">
+      <FiUsers />
 
-                    <div>
+      <select
+        value={adults}
+        onChange={(e) =>
+          setAdults(e.target.value)
+        }
+      >
+        {[2, 4, 6, 8, 10].map((number) => (
+          <option
+            key={number}
+            value={number}
+          >
+            {number} Travellers
+          </option>
+        ))}
+      </select>
+    </div>
 
-                      <span>
-                        Travellers
-                      </span>
-
-                      <strong>
-                        2 Adults
-                      </strong>
-
-                      <small>
-                        Couple trip
-                      </small>
-
-                    </div>
-
-                  </div>
-
-                )}
+    
+  </label>
+)}
 
                 {/* =================================================
                     FAMILY
@@ -2639,17 +2611,7 @@ const TripPlan = () => {
 
                     </label>
 
-                    <div className="total-member-card">
-
-                      <span>
-                        Total Travellers
-                      </span>
-
-                      <strong>
-                        {adults} Friends
-                      </strong>
-
-                    </div>
+                   
 
                   </>
                 )}
