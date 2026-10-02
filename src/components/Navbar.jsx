@@ -32,7 +32,6 @@ const Navbar = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Page ke bilkul top par navbar visible
       if (currentScrollY <= 20) {
         setShowNavbar(true);
       }
@@ -168,16 +167,7 @@ const Navbar = () => {
           </NavLink>
 
           
-          <NavLink
-            to="/privacy-policy"
-            className={({ isActive }) =>
-              `trip-nav-link ${
-                isActive ? "active" : ""
-              }`
-            }
-          >
-            Privacy Policy
-          </NavLink>
+          
 
         </div>
         
@@ -288,13 +278,7 @@ const Navbar = () => {
         >
           My Trips
         </NavLink>
-        <NavLink
-          to="/privacy-policy"
-          onClick={closeMenu}
-          className="mobile-nav-link"
-        >
-          Privacy Policy
-        </NavLink>
+       
 
 
 

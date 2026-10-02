@@ -616,7 +616,7 @@
 ========================================================= */
 
 @media (max-width: 700px) {
-
+ 
   .travel-footer::before {
     width: 240px;
 
@@ -836,6 +836,234 @@
 
 
   .footer-bottom {
+    font-size: 10px;
+  }
+}
+
+
+
+/* =========================================================
+   FOOTER MOBILE CUT FIX
+   ADD THIS AT THE VERY END OF TravelFooter.css
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .travel-footer {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding-bottom: 20px;
+  }
+
+  .footer-container {
+    width: calc(100% - 28px);
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 24px 0 20px;
+  }
+
+  /* ================= TOP ================= */
+
+  .footer-top {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 20px;
+  }
+
+  .footer-heading {
+    width: 100%;
+  }
+
+  .footer-heading h2 {
+    width: 100%;
+    font-size: 34px;
+    line-height: 1.08;
+    white-space: normal;
+  }
+
+  .footer-cta {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .footer-cta p {
+    width: 100%;
+    max-width: 100%;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ================= LINKS ================= */
+
+  .footer-links-area {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 18px;
+    padding: 20px 0;
+  }
+
+  .footer-links {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .footer-links h4,
+  .footer-connect h4 {
+    font-size: 13px;
+  }
+
+  .footer-links a {
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  /* ================= CONNECT BOX ================= */
+
+  .footer-connect {
+    grid-column: 1 / -1;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    padding: 16px;
+
+    justify-self: stretch;
+
+    border-radius: 14px;
+  }
+
+  .footer-email {
+    width: 100%;
+    max-width: 100%;
+
+    font-size: 14px;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .footer-social a {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+  }
+
+  /* ================= BOTTOM ================= */
+
+  .footer-bottom {
+    width: 100%;
+    min-height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin-top: 5px;
+    padding: 14px 0 5px;
+
+    font-size: 11px;
+    line-height: 1.5;
+
+    overflow: visible;
+  }
+
+  .footer-bottom > span,
+  .footer-bottom-center {
+    width: 100%;
+    max-width: 100%;
+
+    text-align: left;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .footer-bottom-center {
+    order: initial;
+    justify-content: flex-start;
+  }
+
+  .admin-login-footer-btn {
+    height: 32px;
+    padding: 0 14px;
+    font-size: 11px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .travel-footer {
+    padding-bottom: 18px;
+  }
+
+  .footer-container {
+    width: calc(100% - 24px);
+    padding-bottom: 18px;
+  }
+
+  .footer-heading h2 {
+    font-size: 31px;
+    line-height: 1.1;
+  }
+
+  .footer-cta p {
+    font-size: 14px;
+  }
+
+  .footer-links-area {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 12px;
+  }
+
+  .footer-links h4,
+  .footer-connect h4 {
+    font-size: 12px;
+  }
+
+  .footer-links a {
+    font-size: 14px;
+  }
+
+  .footer-connect {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 15px;
+  }
+
+  .footer-email {
+    font-size: 13px;
+  }
+
+  .footer-bottom {
+    width: 100%;
+    padding-bottom: 8px;
     font-size: 10px;
   }
 }

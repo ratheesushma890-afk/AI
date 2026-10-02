@@ -300,17 +300,7 @@ const Explore = () => {
           </div>
 
 
-          <Link
-            to="/explore"
-            className="tripExplore-headingLink"
-          >
-            View all destinations
-
-            <span className="tripExplore-headingCircle">
-              <FiArrowUpRight />
-            </span>
-
-          </Link>
+         
 
         </div>
 
