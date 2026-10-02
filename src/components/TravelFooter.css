@@ -656,7 +656,7 @@
   .footer-mini-title {
     margin-bottom: 5px;
 
-    font-size: 9px;
+    font-size: 12px;
   }
 
 
@@ -735,7 +735,7 @@
 
     justify-self: stretch;
 
-    max-width: 50%;
+    max-width: 70%;
 
     padding: 15px 14px;
     margin-left: 40px;
@@ -767,7 +767,7 @@
   .admin-login-footer-btn {
     height: 28px;
 
-    font-size: 12px;
+    font-size: 14px;
   }
 
 
@@ -816,12 +816,12 @@
 
 
   .footer-heading h2 {
-    font-size: 30px;
+    font-size: 34px;
   }
 
 
   .footer-cta p {
-    font-size: 11px;
+    font-size: 16px;
   }
 
 
@@ -831,11 +831,11 @@
 
 
   .footer-links a {
-    font-size: 11px;
+    font-size: 14px;
   }
 
 
   .footer-bottom {
-    font-size: 7.5px;
+    font-size: 10px;
   }
 }

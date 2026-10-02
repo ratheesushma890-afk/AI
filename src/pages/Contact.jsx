@@ -66,9 +66,7 @@ const Contact = () => {
           </span>
 
           <h1>
-            Let's talk about
-            <br />
-            your <em>next journey.</em>
+            Let's talk about your <em>next journey.</em>
           </h1>
 
           <p>

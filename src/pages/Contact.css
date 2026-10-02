@@ -201,11 +201,11 @@
 
   font-family: Georgia, "Times New Roman", serif;
 
-  font-size: clamp(54px, 5.5vw, 78px);
+  font-size: 78px;
 
-  line-height: 0.95;
+  line-height: 0.85;
 
-  letter-spacing: -3px;
+  letter-spacing: -1px;
 
   font-weight: 400;
 }
@@ -224,7 +224,7 @@
 
   color: #607f91;
 
-  font-size: 15px;
+  font-size: 17px;
 
   line-height: 1.7;
 }

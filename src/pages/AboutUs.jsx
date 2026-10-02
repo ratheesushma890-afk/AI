@@ -24,13 +24,10 @@ const AboutUs = () => {
           </span>
 
           <h1>
-            We don't just plan
-            <br />
-            <em>trips.</em>
-            <br />
-            We create memories.
+            We don't just plan<em>&nbsp;trips.</em><br />
+             We create memories.
           </h1>
-
+        
           <p>
             Your journey deserves more than a checklist.
             We help you discover beautiful places, meaningful
@@ -137,8 +134,8 @@ const AboutUs = () => {
 
           <h2>
             Travel should feel
-            <br />
-            <em>personal.</em>
+            
+            <em>&nbsp;personal.</em>
           </h2>
 
           <p>
@@ -218,56 +215,9 @@ const AboutUs = () => {
         </div>
       </section>
 
-      {/* ================= TEAM ================= */}
-      <section className="about-team">
-        <div className="about-team-heading">
-          <div>
-            <span>THE PEOPLE BEHIND THE JOURNEY</span>
-
-            <h2>
-              Built by travellers,
-              <br />
-              <em>for travellers.</em>
-            </h2>
-          </div>
-
-          <p>
-            We're a small team with a big love for discovering
-            new places, meeting new people and creating better
-            ways to experience the world.
-          </p>
-        </div>
-
-        <div className="about-team-image">
-          <img
-            src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=90"
-            alt="Travel team"
-          />
-        </div>
-      </section>
-
-      {/* ================= CTA ================= */}
-      <section className="about-cta">
-        <div className="about-cta-content">
-          <span>YOUR NEXT CHAPTER</span>
-
-          <h2>
-            Where will you
-            <br />
-            <em>go next?</em>
-          </h2>
-
-          <p>
-            Your next unforgettable journey could be closer
-            than you think.
-          </p>
-
-          <Link to="/create-trip" className="about-cta-btn">
-            Start Planning
-            <FiArrowUpRight />
-          </Link>
-        </div>
-      </section>
+      
+        
+      
 
     </main>
   );

@@ -124,11 +124,9 @@ const FAQs = () => {
           </span>
 
           <h1>
-            Questions?
-            <br />
-            We've got
-            <br />
-            <em>answers.</em>
+            Questions?We've got
+
+            <em>&nbsp;answers.</em>
           </h1>
 
           <p>

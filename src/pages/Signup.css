@@ -1303,8 +1303,8 @@ body {
   }
 
   .signup-visual::before {
-    width: 115px;
-    height: 115px;
+    width: 185px;
+    height: 185px;
 
     top: 18px;
     right: 18px;
@@ -1314,7 +1314,7 @@ body {
     top: 53px;
     right: 57px;
 
-    font-size: 30px;
+    font-size: 60px;
   }
 
 
@@ -1331,13 +1331,13 @@ body {
   }
 
   .signup-kicker {
-    margin-bottom: 11px;
+    margin-bottom: 12px;
 
     padding:
       5px
       9px;
 
-    font-size: 9px;
+    font-size: 12px;
 
     letter-spacing: 1.5px;
   }
@@ -1442,14 +1442,14 @@ body {
       5px
       8px;
 
-    font-size: 9px;
+    font-size: 12px;
 
     letter-spacing: 1.4px;
   }
 
   .signup-heading h2 {
     margin:
-      10px 0
+      12px 0
       9px;
 
     font-size: 39px;
@@ -1460,7 +1460,7 @@ body {
   .signup-heading p {
     max-width: 100%;
 
-    font-size: 13px;
+    font-size: 14px;
 
     line-height: 1.55;
   }
@@ -1484,7 +1484,7 @@ body {
   .signup-field label {
     margin-bottom: 6px;
 
-    font-size: 10px;
+    font-size: 13px;
 
     letter-spacing: 1px;
   }
@@ -1508,11 +1508,11 @@ body {
   }
 
   .signup-input > svg {
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .signup-input input {
-    font-size: 14px;
+    font-size: 16px;
   }
 
 
@@ -1540,7 +1540,7 @@ body {
   }
 
   .signup-terms span {
-    font-size: 12px;
+    font-size: 16px;
   }
 
 
@@ -1554,7 +1554,7 @@ body {
     padding:
       0 16px;
 
-    font-size: 13px;
+    font-size: 16px;
   }
 
 
@@ -1565,7 +1565,7 @@ body {
   .signup-login {
     margin-top: 15px;
 
-    font-size: 12px;
+    font-size: 15px;
   }
 }
 

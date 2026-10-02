@@ -1,6 +1,6 @@
-
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+
 import {
   FiArrowUpRight,
   FiBookOpen,
@@ -11,9 +11,14 @@ import {
 
 import "./Guides.css";
 
+/* =========================================================
+   GUIDE DATA
+========================================================= */
+
 const guides = [
   {
     id: 1,
+    slug: "goa",
     title: "The Ultimate Goa Guide",
     location: "Goa, India",
     category: "Beach",
@@ -24,8 +29,10 @@ const guides = [
       "Discover beautiful beaches, hidden cafés, sunset spots and unforgettable experiences in Goa.",
     tag: "Popular",
   },
+
   {
     id: 2,
+    slug: "manali",
     title: "A Slow Weekend in Manali",
     location: "Himachal Pradesh",
     category: "Mountains",
@@ -36,8 +43,10 @@ const guides = [
       "A peaceful mountain escape filled with scenic views, cosy stays and places worth exploring.",
     tag: "Editor's Pick",
   },
+
   {
     id: 3,
+    slug: "jaipur",
     title: "Jaipur Beyond the Palaces",
     location: "Rajasthan, India",
     category: "Heritage",
@@ -48,8 +57,10 @@ const guides = [
       "Explore royal architecture, colourful markets, local food and the hidden charm of Jaipur.",
     tag: "Culture",
   },
+
   {
     id: 4,
+    slug: "kerala",
     title: "Kerala: God's Own Escape",
     location: "Kerala, India",
     category: "Nature",
@@ -60,8 +71,10 @@ const guides = [
       "From peaceful backwaters to lush hills, experience the slower and greener side of Kerala.",
     tag: "Nature",
   },
+
   {
     id: 5,
+    slug: "rishikesh",
     title: "Adventure in Rishikesh",
     location: "Uttarakhand, India",
     category: "Adventure",
@@ -72,8 +85,10 @@ const guides = [
       "Rafting, riverside cafés, mountain views and thrilling experiences for adventure lovers.",
     tag: "Adventure",
   },
+
   {
     id: 6,
+    slug: "udaipur",
     title: "A Royal Escape to Udaipur",
     location: "Rajasthan, India",
     category: "Romantic",
@@ -86,6 +101,10 @@ const guides = [
   },
 ];
 
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
 const categories = [
   "All",
   "Beach",
@@ -96,9 +115,19 @@ const categories = [
   "Romantic",
 ];
 
+/* =========================================================
+   GUIDES COMPONENT
+========================================================= */
+
 const Guides = () => {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] =
+    useState("All");
+
   const [search, setSearch] = useState("");
+
+  /* =======================================================
+     FILTER GUIDES
+  ======================================================= */
 
   const filteredGuides = useMemo(() => {
     return guides.filter((guide) => {
@@ -106,12 +135,20 @@ const Guides = () => {
         activeCategory === "All" ||
         guide.category === activeCategory;
 
-      const searchText = search.toLowerCase();
+      const searchText = search
+        .toLowerCase()
+        .trim();
 
       const searchMatch =
-        guide.title.toLowerCase().includes(searchText) ||
-        guide.location.toLowerCase().includes(searchText) ||
-        guide.category.toLowerCase().includes(searchText);
+        guide.title
+          .toLowerCase()
+          .includes(searchText) ||
+        guide.location
+          .toLowerCase()
+          .includes(searchText) ||
+        guide.category
+          .toLowerCase()
+          .includes(searchText);
 
       return categoryMatch && searchMatch;
     });
@@ -135,14 +172,14 @@ const Guides = () => {
 
           <h1>
             Go beyond
-            <br />
+            
             the <em>guidebook.</em>
           </h1>
 
           <p>
-            Stories, local tips and thoughtful recommendations
-            to help you experience every destination a little
-            differently.
+            Stories, local tips and thoughtful
+            recommendations to help you experience
+            every destination a little differently.
           </p>
 
           <div className="guides-hero-actions">
@@ -156,7 +193,7 @@ const Guides = () => {
             </a>
 
             <Link
-              to="/create-trip"
+              to="/trip-plan"
               className="guides-secondary-btn"
             >
               Plan a Trip
@@ -165,7 +202,6 @@ const Guides = () => {
           </div>
 
         </div>
-
 
         <div className="guides-hero-visual">
 
@@ -179,8 +215,13 @@ const Guides = () => {
             <span>01</span>
 
             <div>
-              <strong>Travel curious?</strong>
-              <small>Start exploring somewhere new.</small>
+              <strong>
+                Travel curious?
+              </strong>
+
+              <small>
+                Start exploring somewhere new.
+              </small>
             </div>
 
           </div>
@@ -188,7 +229,6 @@ const Guides = () => {
         </div>
 
       </section>
-
 
       {/* =================================================
           INTRO STRIP
@@ -202,21 +242,22 @@ const Guides = () => {
         </div>
 
         <div className="guides-intro-text">
+
           <h2>
             Inspiration for
             <br />
             your <em>next escape.</em>
           </h2>
+
         </div>
 
         <p>
-          Whether you're planning a weekend getaway or
-          a long adventure, discover ideas that make
-          travel feel easier and more meaningful.
+          Whether you're planning a weekend getaway
+          or a long adventure, discover ideas that
+          make travel feel easier and more meaningful.
         </p>
 
       </section>
-
 
       {/* =================================================
           FEATURED GUIDE
@@ -231,6 +272,8 @@ const Guides = () => {
 
         <div className="featured-guide">
 
+          {/* IMAGE */}
+
           <div className="featured-guide-image">
 
             <img
@@ -244,11 +287,14 @@ const Guides = () => {
 
           </div>
 
+          {/* CONTENT */}
 
           <div className="featured-guide-content">
 
             <span className="featured-small">
-              {guides[0].category} • {guides[0].time}
+              {guides[0].category}
+              {" • "}
+              {guides[0].time}
             </span>
 
             <h2>
@@ -264,8 +310,12 @@ const Guides = () => {
               {guides[0].description}
             </p>
 
+            {/* ==========================================
+                GOA -> DESTINATION DETAIL
+            ========================================== */}
+
             <Link
-              to="/explore"
+              to={`/destination/${guides[0].slug}`}
               className="featured-read-btn"
             >
               Read Guide
@@ -278,9 +328,8 @@ const Guides = () => {
 
       </section>
 
-
       {/* =================================================
-          SEARCH + FILTER
+          GUIDE LIBRARY
       ================================================= */}
 
       <section
@@ -291,14 +340,19 @@ const Guides = () => {
         <div className="guides-library-heading">
 
           <div>
-            <span>THE GUIDE LIBRARY</span>
+
+            <span>
+              THE GUIDE LIBRARY
+            </span>
 
             <h2>
-              Find your <em>&nbsp;next story.</em>
-              
-              
+              Find your{" "}
+              <em>next story.</em>
             </h2>
+
           </div>
+
+          {/* SEARCH */}
 
           <div className="guides-search">
 
@@ -308,13 +362,17 @@ const Guides = () => {
               type="text"
               placeholder="Search guides..."
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) =>
+                setSearch(e.target.value)
+              }
             />
 
             {search && (
               <button
-                onClick={() => setSearch("")}
                 type="button"
+                onClick={() =>
+                  setSearch("")
+                }
               >
                 Clear
               </button>
@@ -324,21 +382,25 @@ const Guides = () => {
 
         </div>
 
-
-        {/* FILTERS */}
+        {/* =================================================
+            CATEGORY FILTER
+        ================================================= */}
 
         <div className="guides-filters">
 
           {categories.map((category) => (
 
             <button
+              type="button"
               key={category}
               className={
                 activeCategory === category
                   ? "active"
                   : ""
               }
-              onClick={() => setActiveCategory(category)}
+              onClick={() =>
+                setActiveCategory(category)
+              }
             >
               {category}
             </button>
@@ -347,91 +409,118 @@ const Guides = () => {
 
         </div>
 
-
-        {/* GUIDE GRID */}
+        {/* =================================================
+            GUIDE CARDS
+        ================================================= */}
 
         {filteredGuides.length > 0 ? (
 
           <div className="guides-grid">
 
-            {filteredGuides.map((guide, index) => (
+            {filteredGuides.map(
+              (guide, index) => (
 
-              <article
-                className="guide-card"
-                key={guide.id}
-              >
+                <article
+                  className="guide-card"
+                  key={guide.id}
+                >
 
-                <div className="guide-card-image">
+                  {/* IMAGE */}
 
-                  <img
-                    src={guide.image}
-                    alt={guide.title}
-                  />
+                  <div className="guide-card-image">
 
-                  <span className="guide-card-number">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+                    <img
+                      src={guide.image}
+                      alt={guide.title}
+                    />
 
-                  <span className="guide-card-tag">
-                    {guide.tag}
-                  </span>
-
-                </div>
-
-
-                <div className="guide-card-content">
-
-                  <div className="guide-card-meta">
-
-                    <span>
-                      <FiMapPin />
-                      {guide.location}
+                    <span className="guide-card-number">
+                      {String(index + 1)
+                        .padStart(2, "0")}
                     </span>
 
-                    <span>
-                      <FiClock />
-                      {guide.time}
+                    <span className="guide-card-tag">
+                      {guide.tag}
                     </span>
 
                   </div>
 
-                  <h3>
-                    {guide.title}
-                  </h3>
+                  {/* CONTENT */}
 
-                  <p>
-                    {guide.description}
-                  </p>
+                  <div className="guide-card-content">
 
-                  <Link
-                    to="/explore"
-                    className="guide-read-link"
-                  >
-                    Read Guide
-                    <FiArrowUpRight />
-                  </Link>
+                    <div className="guide-card-meta">
 
-                </div>
+                      <span>
+                        <FiMapPin />
+                        {guide.location}
+                      </span>
 
-              </article>
+                      <span>
+                        <FiClock />
+                        {guide.time}
+                      </span>
 
-            ))}
+                    </div>
+
+                    <h3>
+                      {guide.title}
+                    </h3>
+
+                    <p>
+                      {guide.description}
+                    </p>
+
+                    {/* ======================================
+                        IMPORTANT:
+                        EACH GUIDE -> ITS DESTINATION DETAIL
+
+                        Goa       -> /destination/goa
+                        Manali    -> /destination/manali
+                        Jaipur    -> /destination/jaipur
+                        Kerala    -> /destination/kerala
+                        Rishikesh -> /destination/rishikesh
+                        Udaipur   -> /destination/udaipur
+                    ====================================== */}
+
+                    <Link
+                      to={`/destination/${guide.slug}`}
+                      className="guide-read-link"
+                    >
+                      Read Guide
+                      <FiArrowUpRight />
+                    </Link>
+
+                  </div>
+
+                </article>
+
+              )
+            )}
 
           </div>
 
         ) : (
 
+          /* =================================================
+              EMPTY RESULT
+          ================================================= */
+
           <div className="guides-empty">
 
             <FiSearch />
 
-            <h3>No guides found</h3>
+            <h3>
+              No guides found
+            </h3>
 
             <p>
-              Try another search or choose a different category.
+              Try another search or choose
+              a different category.
             </p>
 
             <button
+              type="button"
               onClick={() => {
                 setSearch("");
                 setActiveCategory("All");
@@ -446,57 +535,11 @@ const Guides = () => {
 
       </section>
 
-
-      {/* =================================================
-          TRAVEL TIP BANNER
-      ================================================= */}
-
-      <section className="guides-tip">
-
-        <div className="guides-tip-image">
-
-          <img
-            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=90"
-            alt="Travel road"
-          />
-
-        </div>
-
-        <div className="guides-tip-content">
-
-          <span>TRAVEL TIP</span>
-
-          <h2>
-            Leave a little
-            <br />
-            room for the
-            <br />
-            <em>unexpected.</em>
-          </h2>
-
-          <p>
-            The best travel memories aren't always the ones
-            you planned. Leave space in your itinerary to
-            wander, discover and simply enjoy the moment.
-          </p>
-
-          <Link
-            to="/create-trip"
-            className="guides-tip-btn"
-          >
-            Create Flexible Trip
-            <FiArrowUpRight />
-          </Link>
-
-        </div>
-
-      </section>
-
-
+     
       
+
     </main>
   );
 };
 
 export default Guides;
-

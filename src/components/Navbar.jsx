@@ -167,7 +167,20 @@ const Navbar = () => {
             Plan Trip
           </NavLink>
 
+          
+          <NavLink
+            to="/privacy-policy"
+            className={({ isActive }) =>
+              `trip-nav-link ${
+                isActive ? "active" : ""
+              }`
+            }
+          >
+            Privacy Policy
+          </NavLink>
+
         </div>
+        
 
 
         {/* ================= RIGHT SIDE ================= */}
@@ -275,6 +288,14 @@ const Navbar = () => {
         >
           My Trips
         </NavLink>
+        <NavLink
+          to="/privacy-policy"
+          onClick={closeMenu}
+          className="mobile-nav-link"
+        >
+          Privacy Policy
+        </NavLink>
+
 
 
         {/* MOBILE WISHLIST */}

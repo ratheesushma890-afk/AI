@@ -1758,7 +1758,7 @@ body {
 
   color: #8595a6;
 
-  font-size: 8px;
+  font-size: 11px;
 
   text-transform: uppercase;
 
@@ -1862,7 +1862,7 @@ body {
 
   color: #8595a6;
 
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.5;
 
   text-align: center;
@@ -2187,7 +2187,7 @@ body {
 
     text-align: left;
 
-    font-size: 11px;
+    font-size: 15px;
   }
 
 
@@ -2205,11 +2205,18 @@ body {
   .places-field {
     grid-column: span 1;
   }
-
+  .planner-field > span{
+    font-size: 15px;
+  }
   .input-wrap {
     min-height: 48px;
   }
-
+  .places-select-description{
+    font-size: 13px;
+  }
+.place-option-name{
+  font-size: 15px;
+}
   .input-wrap input,
   .input-wrap select {
     font-size: 13px;
@@ -2217,7 +2224,9 @@ body {
 
 
   /* PLACES */
-
+.places-help-text{
+  font-size: 14px;
+}
   .places-circle-grid {
     grid-template-columns: 1fr;
 
@@ -2237,7 +2246,9 @@ body {
 
 
   /* TRAVEL TYPE */
-
+.section-label{
+  font-size: 15px;
+}
   .travel-type-grid {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
@@ -2250,10 +2261,17 @@ body {
 
     padding: 10px;
   }
+ .budget-help-text{
+    font-size: 16px;
+  }
 
 
   /* TWO COLUMN */
 
+
+   .planner-section-block .section-description{
+  font-size: 14px;
+  }
   .planner-two-column {
     grid-template-columns: 1fr;
 
@@ -2301,8 +2319,8 @@ body {
 
     padding: 10px;
   }
+  
 }
-
 
 /* =========================================================
    SMALL MOBILE - 400PX
@@ -2325,7 +2343,7 @@ body {
   .trip-plan-features div {
     padding: 7px 9px;
   }
-
+ 
   .trip-plan-visual {
     min-height: 205px;
   }
@@ -2370,19 +2388,19 @@ body {
 
     padding: 9px;
   }
-
+  
   .travel-type strong {
-    font-size: 11px;
+    font-size: 15px;
   }
 
   .travel-type span {
-    font-size: 8.5px;
+    font-size: 14px;
   }
 
   .option-pill,
   .mini-options button,
   .interest-chip {
-    font-size: 9px;
+    font-size: 12px;
   }
 
   .trip-selection-summary {
@@ -2390,7 +2408,7 @@ body {
   }
 
   .create-trip-button {
-    font-size: 11px;
+    font-size: 14px;
   }
 }
 
@@ -2830,7 +2848,7 @@ body {
 
   color: #8295a7;
 
-  font-size: 10px;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -2848,7 +2866,7 @@ body {
 
   color: #778da2;
 
-  font-size: 11px;
+  font-size: 15px;
   line-height: 1.55;
 }
 

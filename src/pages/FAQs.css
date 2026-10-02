@@ -114,10 +114,10 @@
 .faq-hero {
   position: relative;
 
-  min-height: 610px;
+  min-height: 530px;
 
   padding:
-    95px 6% 60px;
+    75px 6% 60px;
 
   display: grid;
 
@@ -269,7 +269,7 @@
 
   color: #147ec1;
 
-  font-size: 11px;
+  font-size: 12px;
 
   font-weight: 800;
 
@@ -303,12 +303,11 @@
     "Times New Roman",
     serif;
 
-  font-size:
-    clamp(52px, 5.4vw, 76px);
+  font-size: 66px;
 
   line-height: 0.96;
 
-  letter-spacing: -3px;
+  letter-spacing: -4px;
 
   font-weight: 500;
 
@@ -331,7 +330,7 @@
 
   color: #607f92;
 
-  font-size: 15px;
+  font-size: 18px;
 
   line-height: 1.7;
 }
@@ -505,7 +504,7 @@
 .faq-floating-card strong {
   font-family: Georgia, serif;
 
-  font-size: 15px;
+  font-size: 16px;
 
   font-weight: 500;
 
@@ -516,7 +515,7 @@
 .faq-floating-card span {
   color: #71838b;
 
-  font-size: 10px;
+  font-size: 14px;
 }
 
 
@@ -642,7 +641,7 @@
 
   color: #244b5e;
 
-  font-size: 14px;
+  font-size: 18px;
 }
 
 
@@ -691,7 +690,7 @@
   position: relative;
 
   padding:
-    75px 6% 85px;
+    55px 6% 85px;
 
   display: grid;
 
@@ -1493,7 +1492,7 @@
     0 6% 75px;
 
   padding:
-    32px 34px;
+    22px 34px;
 
   display: grid;
 
@@ -1618,7 +1617,7 @@
 .faq-contact-text > span {
   color: #1683c5;
 
-  font-size: 10px;
+  font-size: 14px;
 
   font-weight: 800;
 
@@ -1647,7 +1646,7 @@
 
   color: #71838b;
 
-  font-size: 13px;
+  font-size: 15px;
 
   line-height: 1.55;
 }
@@ -1679,7 +1678,7 @@
 
   text-decoration: none;
 
-  font-size: 12px;
+  font-size: 15px;
 
   font-weight: 700;
 
@@ -2452,7 +2451,7 @@
 
   .faq-content {
     padding:
-      46px 16px 54px;
+      26px 15px 50px;
   }
 
 
@@ -2462,10 +2461,11 @@
     min-height: 355px;
 
     padding:
-      22px 15px;
+      12px 15px;
 
     border-radius:
       18px 40px 18px 18px;
+      display: none;
   }
 
 

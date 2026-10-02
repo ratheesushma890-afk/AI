@@ -81,7 +81,10 @@ const TravelFooter = () => {
           <div className="footer-links">
 
             <h4>EXPLORE</h4>
-
+            
+            <Link to="/home">
+              Home
+            </Link>
             <Link to="/explore">
               Explore
             </Link>
@@ -90,11 +93,9 @@ const TravelFooter = () => {
               Destinations
             </Link>
 
-            <Link to="/guides">
-              Travel Guides
-            </Link>
+            
 
-            <Link to="/my-trips">
+            <Link to="/trip-plan">
               My Trips
             </Link>
 
@@ -114,8 +115,8 @@ const TravelFooter = () => {
             <Link to="/contact">
               Contact
             </Link>
-            <Link to="/guides">
-              Guides
+            <Link to="/privacy-policy">
+              PrivacyPolicy
             </Link>
             <Link to="/faqs">
               FAQs

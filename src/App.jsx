@@ -29,6 +29,7 @@ import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import TripPlan from "./pages/TripPlan";
 import CreateTrip from "./pages/CreateTrip";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 import Destinations from "./pages/Destinations";
 import DestinationDetail from "./pages/DestinationDetail";
@@ -41,7 +42,7 @@ import Login from "./pages/Login";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import FAQs from "./pages/FAQs";
-import Guides from "./pages/Guides";
+
 
 /* =====================================================
    BOOKING PAGES
@@ -334,6 +335,10 @@ const App = () => {
           path="/destination/:id"
           element={<DestinationDetail />}
         />
+        <Route
+        path="/privacy-policy"
+        element={<PrivacyPolicy />}
+        />
 
         {/* =================================================
             ORIGINAL WEBSITE USER AUTH
@@ -412,10 +417,6 @@ const App = () => {
           element={<FAQs />}
         />
 
-        <Route
-          path="/guides"
-          element={<Guides />}
-        />
 
         {/* =================================================
             BOOKING
